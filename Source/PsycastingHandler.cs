@@ -179,10 +179,11 @@ namespace VPEAutoCastBuffs
         private static bool HandleMendByZone(Pawn __instance, Ability ability)
         {
             IEnumerable<Thing> thingsInStockpile = GetThingsInNamedStockpile(__instance.Map, "mend");
-            Thing target = thingsInStockpile
-                            .Where(thing => thing.HitPoints < thing.MaxHitPoints)
-                            .OrderBy(thing => thing.HitPoints / (float)thing.MaxHitPoints)
-                            .FirstOrDefault();
+            thingsInStockpile
+                .Where(thing => thing.HitPoints < thing.MaxHitPoints)
+                // Avoid several psychic pawns targetting the same item (and wasting their power)
+                // pick a random valid element, generally preferring the less damaged (and thus closest-to-being-done) ones
+                .TryRandomElementByWeight(thing => (float)thing.HitPoints / thing.MaxHitPoints, out Thing target);
 
             return target != null && CastAbilityOnTarget(ability, target);
         }
@@ -191,15 +192,16 @@ namespace VPEAutoCastBuffs
         {
             QualityCategory maxQuality = (QualityCategory)(int)ability.GetPowerForPawn();
 
-            var target = GetThingsInNamedStockpile(__instance.Map, "enchant")
-                         .Where(thing => thing.TryGetQuality(out var quality) && quality < maxQuality)
-                         // Avoid several psychic pawns targetting the same item (and wasting their power)
-                         // pick a random valid element, preferring the higher-quality (and thus closest-to-being-done) ones
-                         .RandomElementByWeight(thing =>
-                         {
-                             thing.TryGetQuality(out var quality);
-                             return (int)quality;
-                         });
+            GetThingsInNamedStockpile(__instance.Map, "enchant")
+                .Where(thing => thing.TryGetQuality(out var quality) && quality < maxQuality)
+                // Avoid several psychic pawns targetting the same item (and wasting their power)
+                // pick a random valid element, generally preferring the higher-quality (and thus closest-to-being-done) ones
+                .TryRandomElementByWeight(thing =>
+                {
+                    thing.TryGetQuality(out var quality);
+                    return (1f + (float)quality);
+                },
+                out Thing target);
 
             return target != null && CastAbilityOnTarget(ability, target);
         }
