@@ -3,14 +3,14 @@ using RimWorld.Planet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
-using static UnityEngine.GraphicsBuffer;
 using Ability = VFECore.Abilities.Ability;
 using static VPEAutoCastBuffs.PawnHelper;
 using static VPEAutoCastBuffs.WeatherHelper;
 using static VPEAutoCastBuffs.ThingHelper;
+using HarmonyLib;
+using VanillaPsycastsExpanded.Technomancer;
+using Verse.AI;
 
 namespace VPEAutoCastBuffs
 {
@@ -180,7 +180,7 @@ namespace VPEAutoCastBuffs
         {
             IEnumerable<Thing> thingsInStockpile = GetThingsInNamedStockpile(__instance.Map, "mend");
             Thing target = thingsInStockpile
-                            .Where(thing => thing.HitPoints < thing.MaxHitPoints * 0.99)
+                            .Where(thing => thing.HitPoints < thing.MaxHitPoints)
                             .OrderBy(thing => thing.HitPoints / (float)thing.MaxHitPoints)
                             .FirstOrDefault();
 
@@ -189,8 +189,17 @@ namespace VPEAutoCastBuffs
 
         public static bool HandleEnchant(Pawn __instance, Ability ability)
         {
+            QualityCategory maxQuality = (QualityCategory)(int)ability.GetPowerForPawn();
+
             var target = GetThingsInNamedStockpile(__instance.Map, "enchant")
-                         .FirstOrDefault(thing => thing.TryGetQuality(out var quality) && quality < QualityCategory.Good);
+                         .Where(thing => thing.TryGetQuality(out var quality) && quality < maxQuality)
+                         // Avoid several psychic pawns targetting the same item (and wasting their power)
+                         // pick a random valid element, preferring the higher-quality (and thus closest-to-being-done) ones
+                         .RandomElementByWeight(thing =>
+                         {
+                             thing.TryGetQuality(out var quality);
+                             return (int)quality;
+                         });
 
             return target != null && CastAbilityOnTarget(ability, target);
         }
