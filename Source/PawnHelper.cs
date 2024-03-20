@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
 
 namespace VPEAutoCastBuffs
@@ -109,6 +107,5 @@ namespace VPEAutoCastBuffs
             return pawns
                 .Where(pawn => pawn.needs.TryGetNeed<Need_Joy>()?.CurLevel < 0.20f);
         }
-
     }
 }

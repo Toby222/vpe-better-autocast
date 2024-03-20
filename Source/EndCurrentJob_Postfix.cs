@@ -1,17 +1,11 @@
-﻿using HarmonyLib;
-using RimWorld.Planet;
+﻿using RimWorld.Planet;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
 using Verse.AI;
 using VFECore.Abilities;
 
 namespace VPEAutoCastBuffs
 {
-
     //[HarmonyPatch(typeof(Pawn_JobTracker), "EndCurrentJob")]
     public static class EndCurrentJob_Postfix
     {

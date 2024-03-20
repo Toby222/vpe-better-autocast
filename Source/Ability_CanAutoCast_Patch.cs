@@ -1,8 +1,4 @@
 ﻿using HarmonyLib;
-using System.Collections.Generic;
-using System.Linq;
-using System;
-using Verse;
 using VFECore.Abilities;
 
 namespace VPEAutoCastBuffs

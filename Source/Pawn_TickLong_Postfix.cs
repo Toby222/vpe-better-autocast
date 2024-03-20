@@ -3,13 +3,7 @@ using Verse;
 using VFECore.Abilities;
 using System.Collections.Generic;
 using Ability = VFECore.Abilities.Ability;
-using RimWorld.Planet;
-using RimWorld;
-using VanillaPsycastsExpanded;
-using System.Security.Cryptography;
-using static UnityEngine.GraphicsBuffer;
 using System;
-using System.Linq;
 
 namespace VPEAutoCastBuffs
 {
@@ -47,6 +41,5 @@ namespace VPEAutoCastBuffs
                 }
             }
         }
-
     }
 }

@@ -108,7 +108,6 @@ namespace VPEAutoCastBuffs
             return target != null && CastAbilityOnTarget(ability, target);
         }
 
-
         public static bool HandleEclipse(Pawn __instance, Ability ability)
         {
             return !EclipseOnMap(__instance.Map) && CastAbilityOnTarget(ability, __instance);
@@ -149,7 +148,6 @@ namespace VPEAutoCastBuffs
             return target != null && CastAbilityOnTarget(ability, target);
         }
 
-
         public static bool HandleWoJ(Pawn __instance, Ability ability)
         {
             float range = ability.GetRangeForPawn();
@@ -161,7 +159,6 @@ namespace VPEAutoCastBuffs
             Pawn target = lowJoyPawns.FirstOrDefault();
             return target != null && CastAbilityOnTarget(ability, target);
         }
-
 
         public static bool HandleMend(Pawn __instance, Ability ability)
         {
@@ -178,6 +175,7 @@ namespace VPEAutoCastBuffs
             Pawn target = pawnsWithDamagedEquipment.FirstOrDefault();
             return target != null && CastAbilityOnTarget(ability, target);
         }
+
         private static bool HandleMendByZone(Pawn __instance, Ability ability)
         {
             IEnumerable<Thing> thingsInStockpile = GetThingsInNamedStockpile(__instance.Map, "mend");
