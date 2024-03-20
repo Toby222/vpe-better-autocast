@@ -1,34 +1,50 @@
-﻿using HarmonyLib;
+﻿using System;
 using System.Reflection;
-using System;
+using HarmonyLib;
 using Verse;
-using RimWorld;
 
 namespace VPEAutoCastBuffs
 {
     [StaticConstructorOnStartup]
-    public static class VPEAutoCastBuffs
+    internal static class VPEAutoCastBuffs
     {
         static VPEAutoCastBuffs()
         {
-            Harmony harmony = new Harmony("NetzachSloth.VanillaExpandedFrameworkRealAutoAbilities");
-            if (!UnregisterPatch(harmony, typeof(Pawn), "TryGetAttackVerb", HarmonyPatchType.Postfix, "OskarPotocki.VFECore"))
+            Harmony harmony = new("NetzachSloth.VanillaExpandedFrameworkRealAutoAbilities");
+            if (
+                UnregisterPatch(
+                    harmony,
+                    typeof(Pawn),
+                    "TryGetAttackVerb",
+                    HarmonyPatchType.Postfix,
+                    "OskarPotocki.VFECore"
+                )
+            )
             {
-                Log.Message("UnregisterPatch failed");
+                Log.Message("UnregisterPatch succeeded");
             }
             else
             {
-                Log.Message("UnregisterPatch succeeded");
+                Log.Message("UnregisterPatch failed");
             }
             harmony.PatchAll();
         }
 
-        public static bool UnregisterPatch(Harmony harmony, Type targetType, string methodName, HarmonyPatchType harmonyPatchType, String harmonyID)
+        internal static bool UnregisterPatch(
+            Harmony harmony,
+            Type targetType,
+            string methodName,
+            HarmonyPatchType harmonyPatchType,
+            string harmonyID
+        )
         {
             try
             {
                 // Get the MethodInfo for the private method using reflection
-                MethodInfo targetMethod = targetType.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
+                MethodInfo targetMethod = targetType.GetMethod(
+                    methodName,
+                    BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public
+                );
 
                 if (targetMethod != null)
                 {
@@ -45,7 +61,7 @@ namespace VPEAutoCastBuffs
             catch (Exception e)
             {
                 // Handle any exceptions that may occur during unregistration
-                Log.Error("Error unregistering Harmony patch: " + e);
+                Log.Error(text: "Error unregistering Harmony patch: " + e);
                 return false;
             }
         }
