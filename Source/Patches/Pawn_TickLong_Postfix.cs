@@ -6,6 +6,8 @@ using Ability = VFECore.Abilities.Ability;
 
 namespace VPEAutoCastBuffs.Patches;
 
+using static Helpers.PawnHelper;
+
 [HarmonyPatch(typeof(Pawn), nameof(Pawn.Tick))]
 internal static class Pawn_Tick_Postfix
 {
@@ -37,11 +39,14 @@ internal static class Pawn_Tick_Postfix
         if (!pawn.IsColonistPlayerControlled)
             return;
 
-        if (!PawnHelper.PawnCanCast(pawn, castThreshold))
+        if (!PawnCanCast(pawn, castThreshold))
             return;
 
         if (
-            pawn.GetComp<CompAbilities>()?.LearnedAbilities?.Find(ability => ability.IsEnabledForPawn(out _) && ability.autoCast)
+            pawn.GetComp<CompAbilities>()
+                ?.LearnedAbilities?.Find(ability =>
+                    ability.IsEnabledForPawn(out _) && ability.autoCast
+                )
             is Ability ability
         )
         {

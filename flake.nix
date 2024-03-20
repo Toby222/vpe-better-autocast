@@ -18,7 +18,6 @@
           nativeBuildInputs = with pkgs; [ dotnet-sdk mono libxslt ];
 
           DOTNET_ROOT = "${pkgs.dotnet-sdk}";
-          TEST = "test";
           SDL_VIDEODRIVER = "X11";
         };
 

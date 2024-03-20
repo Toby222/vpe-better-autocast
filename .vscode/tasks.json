@@ -40,7 +40,7 @@
             ]
         },
         {
-            "label": "run game",
+            "label": "run game (Debug)",
             "type": "shell",
             "group": {
                 "kind": "none",
@@ -50,11 +50,11 @@
             "problemMatcher": [],
             "dependsOn": [
                 "link mod directory",
-                "build mod"
+                "build mod (Debug)"
             ]
         },
         {
-            "label": "run game (quicktest)",
+            "label": "run game (Debug + quicktest)",
             "type": "shell",
             "group": {
                 "kind": "none",
@@ -64,7 +64,7 @@
             "problemMatcher": [],
             "dependsOn": [
                 "link mod directory",
-                "build mod"
+                "build mod (Debug)"
             ]
         },
         {
