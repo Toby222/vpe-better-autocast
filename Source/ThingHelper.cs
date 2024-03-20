@@ -35,7 +35,7 @@ namespace VPEAutoCastBuffs
         {
             if (map == null || string.IsNullOrEmpty(stockpileName))
             {
-                return new List<Thing>(); // Return empty list if pawn is not on a map or stockpileName is null/empty
+                return Enumerable.Empty<Thing>(); // Return empty list if pawn is not on a map or stockpileName is null/empty
             }
 
             return map.listerThings.AllThings.Where(thing => (thing.def.IsWeapon || thing.def.IsApparel) && ThingInNamedStockpile(thing, stockpileName));
