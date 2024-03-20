@@ -10,7 +10,7 @@ namespace VPEAutoCastBuffs
     {
         static VPEAutoCastBuffs()
         {
-            Harmony harmony = new("NetzachSloth.VanillaExpandedFrameworkRealAutoAbilities");
+            Harmony harmony = new("dev.tobot.vpeautocastbuffs");
             if (
                 UnregisterPatch(
                     harmony,

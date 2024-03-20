@@ -20,14 +20,13 @@ internal static class Pawn_Tick_Postfix
         var ticksGame = Find.TickManager.TicksGame;
 
         if (ticksGame % 600 == 0 && !__instance.Drafted)
-            ProcessAbilities(__instance, 0.5f, PsycastingHandler.HandleAbilityUndrafted);
+            ProcessAbilities(__instance, PsycastingHandler.HandleAbilityUndrafted);
         else if (ticksGame % 30 == 0 && __instance.Drafted)
-            ProcessAbilities(__instance, 0.0f, PsycastingHandler.HandleAbilityDrafted);
+            ProcessAbilities(__instance, PsycastingHandler.HandleAbilityDrafted);
     }
 
     private static void ProcessAbilities(
         Pawn pawn,
-        float castThreshold,
         Func<Pawn, Ability, bool> handleAbility
     )
     {
@@ -39,7 +38,7 @@ internal static class Pawn_Tick_Postfix
         if (!pawn.IsColonistPlayerControlled)
             return;
 
-        if (!PawnCanCast(pawn, castThreshold))
+        if (!PawnCanCast(pawn))
             return;
 
         if (

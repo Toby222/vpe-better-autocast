@@ -70,13 +70,12 @@ internal static class PawnHelper
             ) ?? Enumerable.Empty<Pawn>();
     }
 
-    internal static bool PawnCanCast(Pawn pawn, float psyFocusLimit)
+    internal static bool PawnCanCast(Pawn pawn)
     {
         return pawn != null
             && pawn.CurJobDef != JobDefOf.LayDown
             && !pawn.Downed
             && pawn.HasPsylink
-            && pawn.psychicEntropy.CurrentPsyfocus >= psyFocusLimit
             && pawn.jobs?.curDriver?.asleep == false
             && pawn.CurJob?.def.defName != "VFEA_GotoTargetAndUseAbility"
             && pawn.CurJob?.def.defName != "VFEA_UseAbility";
