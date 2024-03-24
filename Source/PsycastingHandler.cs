@@ -7,7 +7,7 @@ using RimWorld.Planet;
 using Verse;
 using Ability = VFECore.Abilities.Ability;
 
-namespace VPEAutoCastBuffs;
+namespace BetterAutocastVPE;
 
 using static Helpers.EnchantHelper;
 using static Helpers.MendHelper;
@@ -43,12 +43,12 @@ internal static class PsycastingHandler
 
     internal static bool GetsCastWhileDrafted(string abilityDefName)
     {
-        return VPEAutoCastBuffs.Settings.DraftedAutoCastDefs.Contains(abilityDefName);
+        return BetterAutocastVPE.Settings.DraftedAutocastDefs.Contains(abilityDefName);
     }
 
     internal static bool GetsCastWhileUndrafted(string abilityDefName)
     {
-        return VPEAutoCastBuffs.Settings.UndraftedAutoCastDefs.Contains(abilityDefName);
+        return BetterAutocastVPE.Settings.UndraftedAutocastDefs.Contains(abilityDefName);
     }
 
     internal static bool HandleAbilityUndrafted(Pawn __instance, Ability ability)
@@ -236,10 +236,10 @@ internal static class PsycastingHandler
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
 
-        return (VPEAutoCastBuffs.Settings.MendPawns && HandleMendByPawn(__instance, ability))
-            || (VPEAutoCastBuffs.Settings.MendInStockpile && HandleMendByZone(__instance, ability))
+        return (BetterAutocastVPE.Settings.MendPawns && HandleMendByPawn(__instance, ability))
+            || (BetterAutocastVPE.Settings.MendInStockpile && HandleMendByZone(__instance, ability))
             || (
-                VPEAutoCastBuffs.Settings.MendInStorage && HandleMendByStorage(__instance, ability)
+                BetterAutocastVPE.Settings.MendInStorage && HandleMendByStorage(__instance, ability)
             );
     }
 
@@ -275,11 +275,11 @@ internal static class PsycastingHandler
             throw new ArgumentNullException(nameof(ability));
 
         return (
-                VPEAutoCastBuffs.Settings.EnchantInStockpile
+                BetterAutocastVPE.Settings.EnchantInStockpile
                 && HandleEnchantByZone(__instance, ability)
             )
             || (
-                VPEAutoCastBuffs.Settings.EnchantInStorage
+                BetterAutocastVPE.Settings.EnchantInStorage
                 && HandleEnchantByStorage(__instance, ability)
             );
     }

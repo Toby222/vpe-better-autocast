@@ -4,7 +4,7 @@ using Verse;
 using VFECore.Abilities;
 using Ability = VFECore.Abilities.Ability;
 
-namespace VPEAutoCastBuffs.Patches;
+namespace BetterAutocastVPE.Patches;
 
 using static Helpers.PawnHelper;
 
@@ -21,14 +21,14 @@ internal static class Pawn_Tick_Postfix
 
         if (
             !__instance.Drafted
-            && ticksGame % VPEAutoCastBuffs.Settings.AutoCastIntervalUndrafted == 0
+            && ticksGame % BetterAutocastVPE.Settings.AutocastIntervalUndrafted == 0
         )
         {
             ProcessAbilities(__instance, PsycastingHandler.HandleAbilityUndrafted);
         }
         else if (
             __instance.Drafted
-            && ticksGame % VPEAutoCastBuffs.Settings.AutoCastIntervalDrafted == 0
+            && ticksGame % BetterAutocastVPE.Settings.AutocastIntervalDrafted == 0
         )
         {
             ProcessAbilities(__instance, PsycastingHandler.HandleAbilityDrafted);

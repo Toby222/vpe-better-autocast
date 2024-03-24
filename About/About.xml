@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-  <packageId>NetzachSloth.VPEAutoCastBuffs</packageId>
-  <name>VPE Auto-Cast Buffs</name>
+  <packageId>dev.tobot.vpe-better-autocast</packageId>
+  <name>Better autocast for Vanilla Psycasts Expanded</name>
   <authors>
     <li>NetzachSloth</li>
     <li>Toby</li>
@@ -11,7 +11,7 @@
     <li>1.4</li>
   </supportedVersions>
   <modVersion IgnoreIfNoMatchingField="True">2.1.0.0</modVersion>
-  <url>https://github.com/Toby222/VPE-Auto-Cast-Buffs/</url>
+  <url>https://github.com/Toby222/vpe-better-autocast/</url>
   <modDependencies/>
   <modDependenciesByVersion>
     <v1.4>
@@ -49,5 +49,9 @@
   <loadBeforeByVersion/>
   <forceLoadBefore/>
   <incompatibleWith/>
-  <incompatibleWithByVersion/>
+  <incompatibleWithByVersion>
+    <v1.4>
+      <li>NetzachSloth.BetterAutocastVPE</li>
+    </v1.4>
+  </incompatibleWithByVersion>
 </ModMetaData>

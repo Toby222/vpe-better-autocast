@@ -5,7 +5,7 @@ using HarmonyLib;
 using Verse;
 using VFECore.Abilities;
 
-namespace VPEAutoCastBuffs.Patches;
+namespace BetterAutocastVPE.Patches;
 
 [HarmonyBefore("legodude17.mvcf")]
 [HarmonyPatch(typeof(Pawn), nameof(Pawn.TryGetAttackVerb))]
@@ -25,12 +25,11 @@ internal static class Pawn_TryGetAttackVerb_Postfix
             return;
         }
 
-        string reason;
         List<Verb_CastAbility> list = compAbilities
             .LearnedAbilities.Where(ability =>
-                ability.AutoCast
+                ability.autoCast
                 && !AbilityIsBlacklisted(ability)
-                && ability.IsEnabledForPawn(out reason)
+                && ability.IsEnabledForPawn(out string reason)
                 && (target == null || ability.CanHitTarget(target))
             )
             .Select(ability => ability.verb)
@@ -38,7 +37,7 @@ internal static class Pawn_TryGetAttackVerb_Postfix
         // List<Verb_CastAbility> list = (
         //     from ab in compAbilities.LearnedAbilities
         //     where
-        //         ab.AutoCast
+        //         ab.Autocast
         //         && !AbilityIsBlacklisted(ab)
         //         && ab.IsEnabledForPawn(out reason)
         //         && (target == null || ab.CanHitTarget(target))

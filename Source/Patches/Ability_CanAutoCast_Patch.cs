@@ -2,10 +2,10 @@
 using HarmonyLib;
 using VFECore.Abilities;
 
-namespace VPEAutoCastBuffs.Patches;
+namespace BetterAutocastVPE.Patches;
 
 [HarmonyPatch(typeof(Ability), nameof(Ability.CanAutoCast), MethodType.Getter)]
-internal static class Ability_CanAutoCast_Patch
+internal static class Ability_CanAutocast_Patch
 {
     [HarmonyPostfix]
     internal static void Postfix(Ability __instance, ref bool __result)

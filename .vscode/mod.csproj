@@ -4,8 +4,8 @@
         <TargetFramework>net480</TargetFramework>
         <PlatformTarget>x64</PlatformTarget>
         <!-- Modify [RootNamespace], [AssemblyName], [OutputPath], [VersionPrefix] -->
-        <RootNamespace>VPEAutoCastBuffs</RootNamespace>
-        <AssemblyName>VPEAutoCastBuffs</AssemblyName>
+        <RootNamespace>BetterAutocastVPE</RootNamespace>
+        <AssemblyName>BetterAutocastVPE</AssemblyName>
         <OutputPath>../1.4/Assemblies</OutputPath>
         <LangVersion>latest</LangVersion>
         <VersionPrefix>2.1.0.0</VersionPrefix>
@@ -17,8 +17,8 @@
         <!-- Contents of About.xml
             See https://rimworldwiki.com/wiki/Modding_Tutorials/About.xml -->
         <ModMetaData>
-            <packageId>NetzachSloth.VPEAutoCastBuffs</packageId>
-            <name>VPE Auto-Cast Buffs</name>
+            <packageId>dev.tobot.vpe-better-autocast</packageId>
+            <name>Better autocast for Vanilla Psycasts Expanded</name>
             <authors>
                 <li>NetzachSloth</li>
                 <li>Toby</li>
@@ -30,7 +30,7 @@
             <modVersion IgnoreIfNoMatchingField="True">
                 <!-- Gets automatically populated with VersionPrefix (see above) -->
             </modVersion>
-            <url>https://github.com/Toby222/VPE-Auto-Cast-Buffs/</url>
+            <url>https://github.com/Toby222/vpe-better-autocast/</url>
             <modDependencies />
             <modDependenciesByVersion>
                 <v1.4>
@@ -68,7 +68,11 @@
             <loadBeforeByVersion />
             <forceLoadBefore />
             <incompatibleWith />
-            <incompatibleWithByVersion />
+            <incompatibleWithByVersion>
+                <v1.4>
+                    <li>NetzachSloth.BetterAutocastVPE</li>
+                </v1.4>
+            </incompatibleWithByVersion>
         </ModMetaData>
     </PropertyGroup>
     <ItemGroup>

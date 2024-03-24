@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-    <VPEAutoCastBuffs.SettingsCategory>VPE Auto-Cast Buffs</VPEAutoCastBuffs.SettingsCategory>
-    <VPEAutoCastBuffs.AutoCastIntervalDrafted>Drafted auto-casting interval: {0} ticks</VPEAutoCastBuffs.AutoCastIntervalDrafted>
-    <VPEAutoCastBuffs.AutoCastIntervalDrafted.Description>Auto-Casting interval while drafted (only applies to patched psycasts)</VPEAutoCastBuffs.AutoCastIntervalDrafted.Description>
-    <VPEAutoCastBuffs.AutoCastIntervalUndrafted>Undrafted auto-casting interval: {0} ticks</VPEAutoCastBuffs.AutoCastIntervalUndrafted>
-    <VPEAutoCastBuffs.AutoCastIntervalUndrafted.Description>Auto-Casting interval while undrafted (only applies to patched psycasts)</VPEAutoCastBuffs.AutoCastIntervalUndrafted.Description>
-    <VPEAutoCastBuffs.MendHealthThreshold>Mend damage threshold: {0}</VPEAutoCastBuffs.MendHealthThreshold>
-    <VPEAutoCastBuffs.MendHealthThreshold.Description>Maximum health for an item to be auto-targeted by "Mend"</VPEAutoCastBuffs.MendHealthThreshold.Description>
-    <VPEAutoCastBuffs.MendPawns>Mend equipped gear</VPEAutoCastBuffs.MendPawns>
-    <VPEAutoCastBuffs.MendInStockpile>Mend items in stockpiles</VPEAutoCastBuffs.MendInStockpile>
-    <VPEAutoCastBuffs.MendInStorage>Mend items in storage (e.g. shelves)</VPEAutoCastBuffs.MendInStorage>
-    <VPEAutoCastBuffs.EnchantInStockpile>Enchant items in stockpiles</VPEAutoCastBuffs.EnchantInStockpile>
-    <VPEAutoCastBuffs.EnchantInStorage>Enchant items in storage (e.g. shelves)</VPEAutoCastBuffs.EnchantInStorage>
-    <VPEAutoCastBuffs.CastDrafted>Cast while drafted</VPEAutoCastBuffs.CastDrafted>
-    <VPEAutoCastBuffs.CastUndrafted>Cast while undrafted</VPEAutoCastBuffs.CastUndrafted>
-    <VPEAutoCastBuffs.VPE_Mend.Explanation>When looking for items in stockpiles, will only look in zones containing the word "mend".\nFor example: `Mending`, `mend`, `The First Amendment`</VPEAutoCastBuffs.VPE_Mend.Explanation>
-    <VPEAutoCastBuffs.VPE_EnchantQuality.Explanation>When looking for items in stockpiles, will only look in zones containing the word "enchant".\nFor example: `Enchanting`, `enchant`, `The Enchantress of Florence`</VPEAutoCastBuffs.VPE_EnchantQuality.Explanation>
+    <BetterAutocastVPE.SettingsCategory>VPE Autocast Buffs</BetterAutocastVPE.SettingsCategory>
+    <BetterAutocastVPE.AutocastIntervalDrafted>Drafted autocasting interval: {0} ticks</BetterAutocastVPE.AutocastIntervalDrafted>
+    <BetterAutocastVPE.AutocastIntervalDrafted.Description>Autocasting interval while drafted (only applies to patched psycasts)</BetterAutocastVPE.AutocastIntervalDrafted.Description>
+    <BetterAutocastVPE.AutocastIntervalUndrafted>Undrafted autocasting interval: {0} ticks</BetterAutocastVPE.AutocastIntervalUndrafted>
+    <BetterAutocastVPE.AutocastIntervalUndrafted.Description>Autocasting interval while undrafted (only applies to patched psycasts)</BetterAutocastVPE.AutocastIntervalUndrafted.Description>
+    <BetterAutocastVPE.MendHealthThreshold>Mend damage threshold: {0}</BetterAutocastVPE.MendHealthThreshold>
+    <BetterAutocastVPE.MendHealthThreshold.Description>Maximum health for an item to be auto-targeted by "Mend"</BetterAutocastVPE.MendHealthThreshold.Description>
+    <BetterAutocastVPE.MendPawns>Mend equipped gear</BetterAutocastVPE.MendPawns>
+    <BetterAutocastVPE.MendInStockpile>Mend items in stockpiles</BetterAutocastVPE.MendInStockpile>
+    <BetterAutocastVPE.MendInStorage>Mend items in storage (e.g. shelves)</BetterAutocastVPE.MendInStorage>
+    <BetterAutocastVPE.EnchantInStockpile>Enchant items in stockpiles</BetterAutocastVPE.EnchantInStockpile>
+    <BetterAutocastVPE.EnchantInStorage>Enchant items in storage (e.g. shelves)</BetterAutocastVPE.EnchantInStorage>
+    <BetterAutocastVPE.CastDrafted>Cast while drafted</BetterAutocastVPE.CastDrafted>
+    <BetterAutocastVPE.CastUndrafted>Cast while undrafted</BetterAutocastVPE.CastUndrafted>
+    <BetterAutocastVPE.VPE_Mend.Explanation>When looking for items in stockpiles, will only look in zones containing the word "mend".\nFor example: `Mending`, `mend`, `The First Amendment`</BetterAutocastVPE.VPE_Mend.Explanation>
+    <BetterAutocastVPE.VPE_EnchantQuality.Explanation>When looking for items in stockpiles, will only look in zones containing the word "enchant".\nFor example: `Enchanting`, `enchant`, `The Enchantress of Florence`</BetterAutocastVPE.VPE_EnchantQuality.Explanation>
     <!-- TODO
-    <VPEAutoCastBuffs.VPE_AdrenalineRush.Explanation>No settings</VPEAutoCastBuffs.VPE_AdrenalineRush.Explanation>
-    <VPEAutoCastBuffs.VPE_BladeFocus.Explanation>No settings</VPEAutoCastBuffs.VPE_BladeFocus.Explanation>
-    <VPEAutoCastBuffs.VPE_ControlledFrenzy.Explanation>No settings</VPEAutoCastBuffs.VPE_ControlledFrenzy.Explanation>
-    <VPEAutoCastBuffs.VPE_Darkvision.Explanation>No settings</VPEAutoCastBuffs.VPE_Darkvision.Explanation>
-    <VPEAutoCastBuffs.VPE_Eclipse.Explanation>No settings</VPEAutoCastBuffs.VPE_Eclipse.Explanation>
-    <VPEAutoCastBuffs.VPE_FiringFocus.Explanation>No settings</VPEAutoCastBuffs.VPE_FiringFocus.Explanation>
-    <VPEAutoCastBuffs.VPE_GuidedShot.Explanation>No settings</VPEAutoCastBuffs.VPE_GuidedShot.Explanation>
-    <VPEAutoCastBuffs.VPE_PsychicGuidance.Explanation>No settings</VPEAutoCastBuffs.VPE_PsychicGuidance.Explanation>
-    <VPEAutoCastBuffs.VPE_SpeedBoost.Explanation>No settings</VPEAutoCastBuffs.VPE_SpeedBoost.Explanation>
-    <VPEAutoCastBuffs.VPE_StealVitality.Explanation>No settings</VPEAutoCastBuffs.VPE_StealVitality.Explanation>
-    <VPEAutoCastBuffs.VPE_WordofJoy.Explanation>No settings</VPEAutoCastBuffs.VPE_WordofJoy.Explanation>
-    <VPEAutoCastBuffs.VPE_WordofProductivity.Explanation>No settings</VPEAutoCastBuffs.VPE_WordofProductivity.Explanation>
-    <VPEAutoCastBuffs.VPE_WordofSerenity.Explanation>No settings</VPEAutoCastBuffs.VPE_WordofSerenity.Explanation>
-    <VPEAutoCastBuffs.VPEP_BrainLeech.Explanation>No settings</VPEAutoCastBuffs.VPEP_BrainLeech.Explanation> -->
+    <BetterAutocastVPE.VPE_AdrenalineRush.Explanation>No settings</BetterAutocastVPE.VPE_AdrenalineRush.Explanation>
+    <BetterAutocastVPE.VPE_BladeFocus.Explanation>No settings</BetterAutocastVPE.VPE_BladeFocus.Explanation>
+    <BetterAutocastVPE.VPE_ControlledFrenzy.Explanation>No settings</BetterAutocastVPE.VPE_ControlledFrenzy.Explanation>
+    <BetterAutocastVPE.VPE_Darkvision.Explanation>No settings</BetterAutocastVPE.VPE_Darkvision.Explanation>
+    <BetterAutocastVPE.VPE_Eclipse.Explanation>No settings</BetterAutocastVPE.VPE_Eclipse.Explanation>
+    <BetterAutocastVPE.VPE_FiringFocus.Explanation>No settings</BetterAutocastVPE.VPE_FiringFocus.Explanation>
+    <BetterAutocastVPE.VPE_GuidedShot.Explanation>No settings</BetterAutocastVPE.VPE_GuidedShot.Explanation>
+    <BetterAutocastVPE.VPE_PsychicGuidance.Explanation>No settings</BetterAutocastVPE.VPE_PsychicGuidance.Explanation>
+    <BetterAutocastVPE.VPE_SpeedBoost.Explanation>No settings</BetterAutocastVPE.VPE_SpeedBoost.Explanation>
+    <BetterAutocastVPE.VPE_StealVitality.Explanation>No settings</BetterAutocastVPE.VPE_StealVitality.Explanation>
+    <BetterAutocastVPE.VPE_WordofJoy.Explanation>No settings</BetterAutocastVPE.VPE_WordofJoy.Explanation>
+    <BetterAutocastVPE.VPE_WordofProductivity.Explanation>No settings</BetterAutocastVPE.VPE_WordofProductivity.Explanation>
+    <BetterAutocastVPE.VPE_WordofSerenity.Explanation>No settings</BetterAutocastVPE.VPE_WordofSerenity.Explanation>
+    <BetterAutocastVPE.VPEP_BrainLeech.Explanation>No settings</BetterAutocastVPE.VPEP_BrainLeech.Explanation> -->
 </LanguageData>

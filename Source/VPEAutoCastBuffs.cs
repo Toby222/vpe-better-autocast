@@ -8,14 +8,14 @@ using Verse;
 using VFECore.Abilities;
 using VFECore.UItils;
 
-namespace VPEAutoCastBuffs;
+namespace BetterAutocastVPE;
 
-public class VPEAutoCastBuffs : Mod
+public class BetterAutocastVPE : Mod
 {
-    public VPEAutoCastBuffs(ModContentPack content)
+    public BetterAutocastVPE(ModContentPack content)
         : base(content)
     {
-        Harmony harmony = new("dev.tobot.vpeautocastbuffs");
+        Harmony harmony = new("dev.tobot.vpe-better-autocast");
         if (
             UnregisterPatch(
                 harmony,
@@ -33,11 +33,11 @@ public class VPEAutoCastBuffs : Mod
             Log.Error("UnregisterPatch failed");
         }
         harmony.PatchAll();
-        Settings = GetSettings<AutoCastModSettings>();
+        Settings = GetSettings<AutocastModSettings>();
     }
 
 #nullable disable
-    public static AutoCastModSettings Settings { get; private set; }
+    public static AutocastModSettings Settings { get; private set; }
 
 #nullable enable
 
@@ -64,21 +64,21 @@ public class VPEAutoCastBuffs : Mod
 
             if (
                 LanguageDatabase.activeLanguage.HaveTextForKey(
-                    $"VPEAutoCastBuffs.{abilityDefName}.Explanation"
+                    $"BetterAutocastVPE.{abilityDefName}.Explanation"
                 )
             )
             {
-                string explanation = $"VPEAutoCastBuffs.{abilityDefName}.Explanation".Translate();
+                string explanation = $"BetterAutocastVPE.{abilityDefName}.Explanation".Translate();
                 Widgets.Label(
                     listing.GetRect(Text.CalcHeight(explanation, listing.ColumnWidth)),
                     explanation
                 );
             }
 
-            bool castWhileDrafted = Settings.DraftedAutoCastDefs.Contains(abilityDefName);
+            bool castWhileDrafted = Settings.DraftedAutocastDefs.Contains(abilityDefName);
             bool castWhileDraftedOriginal = castWhileDrafted;
             listing.CheckboxLabeled(
-                "VPEAutoCastBuffs.CastDrafted".Translate(),
+                "BetterAutocastVPE.CastDrafted".Translate(),
                 ref castWhileDrafted
             );
 
@@ -86,18 +86,18 @@ public class VPEAutoCastBuffs : Mod
             {
                 if (castWhileDrafted)
                 {
-                    Settings.DraftedAutoCastDefs.Add(abilityDefName);
+                    Settings.DraftedAutocastDefs.Add(abilityDefName);
                 }
                 else
                 {
-                    Settings.DraftedAutoCastDefs.Remove(abilityDefName);
+                    Settings.DraftedAutocastDefs.Remove(abilityDefName);
                 }
             }
 
-            bool castWhileUndrafted = Settings.UndraftedAutoCastDefs.Contains(abilityDefName);
+            bool castWhileUndrafted = Settings.UndraftedAutocastDefs.Contains(abilityDefName);
             bool castWhileUndraftedOriginal = castWhileUndrafted;
             listing.CheckboxLabeled(
-                "VPEAutoCastBuffs.CastUndrafted".Translate(),
+                "BetterAutocastVPE.CastUndrafted".Translate(),
                 ref castWhileUndrafted
             );
 
@@ -105,16 +105,16 @@ public class VPEAutoCastBuffs : Mod
             {
                 if (castWhileUndrafted)
                 {
-                    Settings.UndraftedAutoCastDefs.Add(abilityDefName);
+                    Settings.UndraftedAutocastDefs.Add(abilityDefName);
                 }
                 else
                 {
-                    Settings.UndraftedAutoCastDefs.Remove(abilityDefName);
+                    Settings.UndraftedAutocastDefs.Remove(abilityDefName);
                 }
             }
         }
 
-        AutoCastModSettings settings = GetSettings<AutoCastModSettings>();
+        AutocastModSettings settings = GetSettings<AutocastModSettings>();
 
         Listing_Standard listing = new();
 
@@ -122,28 +122,28 @@ public class VPEAutoCastBuffs : Mod
         Widgets.BeginScrollView(inRect, ref settingsScrollPosition, viewRect);
         listing.Begin(new Rect(viewRect.x, viewRect.y, viewRect.width, 10000f));
 
-        settings.AutoCastIntervalDrafted = (int)
+        settings.AutocastIntervalDrafted = (int)
             listing.SliderLabeled(
-                "VPEAutoCastBuffs.AutoCastIntervalDrafted".Translate(
-                    settings.AutoCastIntervalDrafted
+                "BetterAutocastVPE.AutocastIntervalDrafted".Translate(
+                    settings.AutocastIntervalDrafted
                 ),
-                settings.AutoCastIntervalDrafted,
+                settings.AutocastIntervalDrafted,
                 1f,
                 10000f,
-                tooltip: "VPEAutoCastBuffs.AutoCastIntervalDrafted.Description".Translate(
-                    settings.AutoCastIntervalDrafted
+                tooltip: "BetterAutocastVPE.AutocastIntervalDrafted.Description".Translate(
+                    settings.AutocastIntervalDrafted
                 )
             );
-        settings.AutoCastIntervalUndrafted = (int)
+        settings.AutocastIntervalUndrafted = (int)
             listing.SliderLabeled(
-                "VPEAutoCastBuffs.AutoCastIntervalUndrafted".Translate(
-                    settings.AutoCastIntervalUndrafted
+                "BetterAutocastVPE.AutocastIntervalUndrafted".Translate(
+                    settings.AutocastIntervalUndrafted
                 ),
-                settings.AutoCastIntervalUndrafted,
+                settings.AutocastIntervalUndrafted,
                 1f,
                 10000f,
-                tooltip: "VPEAutoCastBuffs.AutoCastIntervalUndrafted.Description".Translate(
-                    settings.AutoCastIntervalUndrafted
+                tooltip: "BetterAutocastVPE.AutocastIntervalUndrafted.Description".Translate(
+                    settings.AutocastIntervalUndrafted
                 )
             );
 
@@ -152,21 +152,21 @@ public class VPEAutoCastBuffs : Mod
         AbilityHeader(listing, "VPE_Mend");
 
         settings.MendHealthThreshold = listing.SliderLabeled(
-            "VPEAutoCastBuffs.MendHealthThreshold".Translate(
+            "BetterAutocastVPE.MendHealthThreshold".Translate(
                 settings.MendHealthThreshold.ToString("P")
             ),
             settings.MendHealthThreshold,
             0.0f,
             1.0f,
-            tooltip: "VPEAutoCastBuffs.MendHealthThreshold.Description".Translate()
+            tooltip: "BetterAutocastVPE.MendHealthThreshold.Description".Translate()
         );
-        listing.CheckboxLabeled("VPEAutoCastBuffs.MendPawns".Translate(), ref settings.MendPawns);
+        listing.CheckboxLabeled("BetterAutocastVPE.MendPawns".Translate(), ref settings.MendPawns);
         listing.CheckboxLabeled(
-            "VPEAutoCastBuffs.MendInStockpile".Translate(),
+            "BetterAutocastVPE.MendInStockpile".Translate(),
             ref settings.MendInStockpile
         );
         listing.CheckboxLabeled(
-            "VPEAutoCastBuffs.MendInStorage".Translate(),
+            "BetterAutocastVPE.MendInStorage".Translate(),
             ref settings.MendInStorage
         );
 
@@ -174,11 +174,11 @@ public class VPEAutoCastBuffs : Mod
 
         AbilityHeader(listing, "VPE_EnchantQuality");
         listing.CheckboxLabeled(
-            "VPEAutoCastBuffs.EnchantInStockpile".Translate(),
+            "BetterAutocastVPE.EnchantInStockpile".Translate(),
             ref settings.EnchantInStockpile
         );
         listing.CheckboxLabeled(
-            "VPEAutoCastBuffs.EnchantInStorage".Translate(),
+            "BetterAutocastVPE.EnchantInStorage".Translate(),
             ref settings.EnchantInStorage
         );
 
@@ -227,7 +227,7 @@ public class VPEAutoCastBuffs : Mod
 
     public override string SettingsCategory()
     {
-        return "VPEAutoCastBuffs.SettingsCategory".Translate();
+        return "BetterAutocastVPE.SettingsCategory".Translate();
     }
 
     private static bool UnregisterPatch(
@@ -267,10 +267,10 @@ public class VPEAutoCastBuffs : Mod
     }
 }
 
-public class AutoCastModSettings : ModSettings
+public class AutocastModSettings : ModSettings
 {
-    public int AutoCastIntervalDrafted = 30;
-    public int AutoCastIntervalUndrafted = 600;
+    public int AutocastIntervalDrafted = 30;
+    public int AutocastIntervalUndrafted = 600;
 
     public float MendHealthThreshold = 0.5f;
     public bool MendPawns = true;
@@ -280,7 +280,7 @@ public class AutoCastModSettings : ModSettings
     public bool EnchantInStorage = true;
     public bool EnchantInStockpile = true;
 
-    public HashSet<string> DraftedAutoCastDefs =
+    public HashSet<string> DraftedAutocastDefs =
         new()
         {
             "VPE_SpeedBoost",
@@ -290,7 +290,7 @@ public class AutoCastModSettings : ModSettings
             "VPE_ControlledFrenzy",
             "VPE_GuidedShot",
         };
-    public HashSet<string> UndraftedAutoCastDefs =
+    public HashSet<string> UndraftedAutocastDefs =
         new()
         {
             "VPE_SpeedBoost",
@@ -310,13 +310,13 @@ public class AutoCastModSettings : ModSettings
     {
         base.ExposeData();
         Scribe_Values.Look(
-            ref AutoCastIntervalDrafted,
-            nameof(AutoCastIntervalDrafted),
+            ref AutocastIntervalDrafted,
+            nameof(AutocastIntervalDrafted),
             defaultValue: 30
         );
         Scribe_Values.Look(
-            ref AutoCastIntervalUndrafted,
-            nameof(AutoCastIntervalUndrafted),
+            ref AutocastIntervalUndrafted,
+            nameof(AutocastIntervalUndrafted),
             defaultValue: 600
         );
 
@@ -329,15 +329,15 @@ public class AutoCastModSettings : ModSettings
         Scribe_Values.Look(ref EnchantInStockpile, nameof(EnchantInStockpile), defaultValue: true);
 
         Scribe_Collections.Look(
-            ref DraftedAutoCastDefs,
-            nameof(DraftedAutoCastDefs),
+            ref DraftedAutocastDefs,
+            nameof(DraftedAutocastDefs),
             LookMode.Value
         );
 
         Scribe_Collections.Look(
-            ref UndraftedAutoCastDefs,
+            ref UndraftedAutocastDefs,
             false,
-            nameof(UndraftedAutoCastDefs),
+            nameof(UndraftedAutocastDefs),
             LookMode.Value
         );
     }

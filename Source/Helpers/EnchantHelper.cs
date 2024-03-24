@@ -4,7 +4,7 @@ using RimWorld;
 using Verse;
 using Ability = VFECore.Abilities.Ability;
 
-namespace VPEAutoCastBuffs.Helpers;
+namespace BetterAutocastVPE.Helpers;
 
 using static ThingHelper;
 

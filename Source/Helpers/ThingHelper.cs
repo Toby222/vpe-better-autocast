@@ -4,7 +4,7 @@ using System.Linq;
 using RimWorld;
 using Verse;
 
-namespace VPEAutoCastBuffs.Helpers;
+namespace BetterAutocastVPE.Helpers;
 
 internal static class ThingHelper
 {

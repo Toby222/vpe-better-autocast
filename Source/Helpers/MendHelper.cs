@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
-namespace VPEAutoCastBuffs.Helpers;
+namespace BetterAutocastVPE.Helpers;
 
 using static ThingHelper;
 
@@ -12,7 +12,7 @@ internal static class MendHelper
     // TODO: This should be configurable
     // Possibly should have an absolute value of damage
     // Also if possible make it use psychic power where appropriate
-    private static float DamageThreshold => VPEAutoCastBuffs.Settings.MendHealthThreshold;
+    private static float DamageThreshold => BetterAutocastVPE.Settings.MendHealthThreshold;
 
     private static bool ThingIsSufficientlyDamaged(Thing thing)
     {
