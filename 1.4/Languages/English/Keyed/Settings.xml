@@ -33,7 +33,7 @@
     <BetterAutocastVPE.VPE_WordofJoy.Explanation>Targets the closest non-downed colonist in range without the Joyfuzz effect</BetterAutocastVPE.VPE_WordofJoy.Explanation>
     <BetterAutocastVPE.WordOfJoyMoodThreshold>Mood threshold: {0}</BetterAutocastVPE.WordOfJoyMoodThreshold>
     <BetterAutocastVPE.WordOfJoyMoodThreshold.Description>Maximum mood for a pawn to be auto-targeted</BetterAutocastVPE.WordOfJoyMoodThreshold.Description>
-    <BetterAutocastVPE.VPE_WordofProductivity.Explanation>Targets a closest non-downed colonist in range that doesn't have the Productivity buff.</BetterAutocastVPE.VPE_WordofProductivity.Explanation>
+    <BetterAutocastVPE.VPE_WordofProductivity.Explanation>Targets a non-downed colonist in range that doesn't have the Productivity buff.</BetterAutocastVPE.VPE_WordofProductivity.Explanation>
     <BetterAutocastVPE.VPE_WordofSerenity.Explanation>Targets a pawn in range with an ongoing mental state.\nThis can target any pawn, including visitors and animals.</BetterAutocastVPE.VPE_WordofSerenity.Explanation>
     <BetterAutocastVPE.VPEP_BrainLeech.Explanation>Targets the closest pawn in range, prioritzing by group in the order below.\nThat is, target prisoners first, if no prisoners are available, then target slaves.</BetterAutocastVPE.VPEP_BrainLeech.Explanation>
     <BetterAutocastVPE.BrainLeechTargetPrisoners>Target prisoners</BetterAutocastVPE.BrainLeechTargetPrisoners>
