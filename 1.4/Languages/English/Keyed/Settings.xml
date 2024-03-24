@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-    <BetterAutocastVPE.SettingsCategory>VPE Autocast Buffs</BetterAutocastVPE.SettingsCategory>
+    <BetterAutocastVPE.SettingsCategory>Better Autocasting for VPE</BetterAutocastVPE.SettingsCategory>
     <BetterAutocastVPE.AutocastIntervalDrafted>Drafted autocasting interval: {0} ticks</BetterAutocastVPE.AutocastIntervalDrafted>
     <BetterAutocastVPE.AutocastIntervalDrafted.Description>Autocasting interval while drafted (only applies to patched psycasts)</BetterAutocastVPE.AutocastIntervalDrafted.Description>
     <BetterAutocastVPE.AutocastIntervalUndrafted>Undrafted autocasting interval: {0} ticks</BetterAutocastVPE.AutocastIntervalUndrafted>
