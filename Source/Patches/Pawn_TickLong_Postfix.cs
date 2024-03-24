@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using HarmonyLib;
 using Verse;
 using VFECore.Abilities;
@@ -48,15 +50,16 @@ internal static class Pawn_Tick_Postfix
         if (!PawnCanCast(pawn))
             return;
 
-        if (
-            pawn.GetComp<CompAbilities>()
-                ?.LearnedAbilities?.Find(ability =>
-                    ability.IsEnabledForPawn(out _) && ability.autoCast
-                )
-            is Ability ability
-        )
+        if (pawn.GetComp<CompAbilities>()?.LearnedAbilities is not List<Ability> abilities)
+            return;
+
+
+        foreach (var ability in abilities)
         {
-            handleAbility(pawn, ability);
+            if (ability is null)
+                continue;
+            if (ability.IsEnabledForPawn(out _) && ability.autoCast && handleAbility(pawn, ability))
+                break;
         }
     }
 }
