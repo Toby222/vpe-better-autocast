@@ -17,7 +17,7 @@
         <!-- Contents of About.xml
             See https://rimworldwiki.com/wiki/Modding_Tutorials/About.xml -->
         <ModMetaData>
-            <packageId>dev.tobot.vpe-better-autocast</packageId>
+            <packageId>dev.tobot.vpe.betterautocast</packageId>
             <name>Better autocast for Vanilla Psycasts Expanded</name>
             <authors>
                 <li>NetzachSloth</li>
