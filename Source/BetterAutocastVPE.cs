@@ -94,22 +94,25 @@ public class BetterAutocastVPE : Mod
                 }
             }
 
-            bool castWhileUndrafted = Settings.UndraftedAutocastDefs.Contains(abilityDefName);
-            bool castWhileUndraftedOriginal = castWhileUndrafted;
-            listing.CheckboxLabeled(
-                "BetterAutocastVPE.CastUndrafted".Translate(),
-                ref castWhileUndrafted
-            );
-
-            if (castWhileUndrafted != castWhileUndraftedOriginal)
+            if (ability.showUndrafted)
             {
-                if (castWhileUndrafted)
+                bool castWhileUndrafted = Settings.UndraftedAutocastDefs.Contains(abilityDefName);
+                bool castWhileUndraftedOriginal = castWhileUndrafted;
+                listing.CheckboxLabeled(
+                    "BetterAutocastVPE.CastUndrafted".Translate(),
+                    ref castWhileUndrafted
+                );
+
+                if (castWhileUndrafted != castWhileUndraftedOriginal)
                 {
-                    Settings.UndraftedAutocastDefs.Add(abilityDefName);
-                }
-                else
-                {
-                    Settings.UndraftedAutocastDefs.Remove(abilityDefName);
+                    if (castWhileUndrafted)
+                    {
+                        Settings.UndraftedAutocastDefs.Add(abilityDefName);
+                    }
+                    else
+                    {
+                        Settings.UndraftedAutocastDefs.Remove(abilityDefName);
+                    }
                 }
             }
         }
@@ -184,6 +187,61 @@ public class BetterAutocastVPE : Mod
 
         listing.GapLine();
 
+        AbilityHeader(listing, "VPE_StealVitality");
+
+        listing.CheckboxLabeled(
+            "BetterAutocastVPE.StealVitalityFromPrisoners".Translate(),
+            ref settings.StealVitalityFromPrisoners
+        );
+        listing.CheckboxLabeled(
+            "BetterAutocastVPE.StealVitalityFromSlaves".Translate(),
+            ref settings.StealVitalityFromSlaves
+        );
+        listing.CheckboxLabeled(
+            "BetterAutocastVPE.StealVitalityFromColonists".Translate(),
+            ref settings.StealVitalityFromColonists
+        );
+        listing.CheckboxLabeled(
+            "BetterAutocastVPE.StealVitalityFromVisitors".Translate(),
+            ref settings.StealVitalityFromVisitors
+        );
+
+        listing.GapLine();
+
+        AbilityHeader(listing, "VPE_WordofJoy");
+
+        settings.WordOfJoyMoodThreshold = listing.SliderLabeled(
+            "BetterAutocastVPE.WordOfJoyMoodThreshold".Translate(
+                settings.WordOfJoyMoodThreshold.ToString("P")
+            ),
+            settings.WordOfJoyMoodThreshold,
+            0.0f,
+            1.0f,
+            tooltip: "BetterAutocastVPE.WordOfJoyMoodThreshold.Description".Translate()
+        );
+
+        listing.GapLine();
+
+        if (
+            ModsConfig.ActiveModsInLoadOrder.Any(modMetaData =>
+                modMetaData.SamePackageId("VanillaExpanded.VPE.Puppeteer", ignorePostfix: true)
+            )
+        )
+        {
+            AbilityHeader(listing, "VPEP_BrainLeech");
+
+            listing.CheckboxLabeled(
+                "BetterAutocastVPE.BrainLeechTargetPrisoners".Translate(),
+                ref settings.BrainLeechTargetPrisoners
+            );
+            listing.CheckboxLabeled(
+                "BetterAutocastVPE.BrainLeechTargetSlaves".Translate(),
+                ref settings.BrainLeechTargetSlaves
+            );
+
+            listing.GapLine();
+        }
+
         AbilityHeader(listing, "VPE_AdrenalineRush");
         listing.GapLine();
         AbilityHeader(listing, "VPE_BladeFocus");
@@ -202,23 +260,9 @@ public class BetterAutocastVPE : Mod
         listing.GapLine();
         AbilityHeader(listing, "VPE_SpeedBoost");
         listing.GapLine();
-        AbilityHeader(listing, "VPE_StealVitality");
-        listing.GapLine();
-        AbilityHeader(listing, "VPE_WordofJoy");
-        listing.GapLine();
         AbilityHeader(listing, "VPE_WordofProductivity");
         listing.GapLine();
         AbilityHeader(listing, "VPE_WordofSerenity");
-        listing.GapLine();
-        if (
-            ModsConfig.ActiveModsInLoadOrder.Any(x =>
-                x.SamePackageId("VanillaExpanded.VPE.Puppeteer", ignorePostfix: true)
-            )
-        )
-        {
-            AbilityHeader(listing, "VPEP_BrainLeech");
-            listing.GapLine();
-        }
 
         listing.End();
         settingsHeight = listing.CurHeight;
@@ -280,6 +324,16 @@ public class AutocastModSettings : ModSettings
     public bool EnchantInStorage = true;
     public bool EnchantInStockpile = true;
 
+    public bool StealVitalityFromPrisoners = true;
+    public bool StealVitalityFromSlaves = true;
+    public bool StealVitalityFromColonists = true;
+    public bool StealVitalityFromVisitors = false;
+
+    public float WordOfJoyMoodThreshold = 0.2f;
+
+    public bool BrainLeechTargetPrisoners = true;
+    public bool BrainLeechTargetSlaves = true;
+
     public HashSet<string> DraftedAutocastDefs =
         new()
         {
@@ -327,6 +381,44 @@ public class AutocastModSettings : ModSettings
 
         Scribe_Values.Look(ref EnchantInStorage, nameof(EnchantInStorage), defaultValue: true);
         Scribe_Values.Look(ref EnchantInStockpile, nameof(EnchantInStockpile), defaultValue: true);
+
+        Scribe_Values.Look(
+            ref StealVitalityFromPrisoners,
+            nameof(StealVitalityFromPrisoners),
+            defaultValue: true
+        );
+        Scribe_Values.Look(
+            ref StealVitalityFromSlaves,
+            nameof(StealVitalityFromSlaves),
+            defaultValue: true
+        );
+        Scribe_Values.Look(
+            ref StealVitalityFromColonists,
+            nameof(StealVitalityFromColonists),
+            defaultValue: true
+        );
+        Scribe_Values.Look(
+            ref StealVitalityFromVisitors,
+            nameof(StealVitalityFromVisitors),
+            defaultValue: false
+        );
+
+        Scribe_Values.Look(
+            ref WordOfJoyMoodThreshold,
+            nameof(WordOfJoyMoodThreshold),
+            defaultValue: 0.2f
+        );
+
+        Scribe_Values.Look(
+            ref BrainLeechTargetPrisoners,
+            nameof(BrainLeechTargetPrisoners),
+            defaultValue: true
+        );
+        Scribe_Values.Look(
+            ref BrainLeechTargetSlaves,
+            nameof(BrainLeechTargetSlaves),
+            defaultValue: true
+        );
 
         Scribe_Collections.Look(
             ref DraftedAutocastDefs,

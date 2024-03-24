@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using RimWorld;
 using RimWorld.Planet;
 using Verse;
 using Ability = VFECore.Abilities.Ability;
@@ -35,8 +34,8 @@ internal static class PsycastingHandler
                 { "VPE_SpeedBoost", HandleSelfBuff },
                 { "VPE_StealVitality", HandleStealVitality },
                 { "VPE_WordofJoy", HandleWordOfJoy },
-                { "VPE_WordofProductivity", HandleWoP },
-                { "VPE_WordofSerenity", HandleWoS },
+                { "VPE_WordofProductivity", HandleWordOfProductivity },
+                { "VPE_WordofSerenity", HandleWordOfSerenity },
                 { "VPEP_BrainLeech", HandleBrainLeech },
             }
         );
@@ -107,9 +106,22 @@ internal static class PsycastingHandler
 
         IEnumerable<Pawn> pawnsInRange = GetPawnsInRange(__instance, ability.GetRangeForPawn());
 
-        return CastAbilityOnTarget(ability, GetHighestSensitivity(GetPrisoners(pawnsInRange)))
-            || CastAbilityOnTarget(ability, GetHighestSensitivity(GetSlaves(pawnsInRange)))
-            || CastAbilityOnTarget(ability, GetHighestSensitivity(GetColonists(pawnsInRange)));
+        return (
+                BetterAutocastVPE.Settings.StealVitalityFromPrisoners
+                && CastAbilityOnTarget(ability, GetHighestSensitivity(GetPrisoners(pawnsInRange)))
+            )
+            || (
+                BetterAutocastVPE.Settings.StealVitalityFromSlaves
+                && CastAbilityOnTarget(ability, GetHighestSensitivity(GetSlaves(pawnsInRange)))
+            )
+            || (
+                BetterAutocastVPE.Settings.StealVitalityFromColonists
+                && CastAbilityOnTarget(ability, GetHighestSensitivity(GetColonists(pawnsInRange)))
+            )
+            || (
+                BetterAutocastVPE.Settings.StealVitalityFromVisitors
+                && CastAbilityOnTarget(ability, GetHighestSensitivity(GetVisitors(pawnsInRange)))
+            );
     }
 
     private static bool HandlePsychicGuidance(Pawn __instance, Ability ability)
@@ -170,14 +182,22 @@ internal static class PsycastingHandler
             return false;
         }
 
-        IEnumerable<Pawn> pawnsInRange = GetPawnsInRange(__instance, ability.GetRangeForPawn());
-        Pawn target =
-            GetPrisoners(pawnsInRange).FirstOrDefault() ?? GetSlaves(pawnsInRange).FirstOrDefault();
+        List<Pawn> pawnsInRange = GetPawnsInRange(__instance, ability.GetRangeForPawn()).ToList();
+        Pawn? target = null;
+
+        if (BetterAutocastVPE.Settings.BrainLeechTargetPrisoners)
+        {
+            GetPrisoners(pawnsInRange).TryRandomElement(out target);
+        }
+        if (BetterAutocastVPE.Settings.BrainLeechTargetSlaves && target is null)
+        {
+            GetSlaves(pawnsInRange).TryRandomElement(out target);
+        }
 
         return target != null && CastAbilityOnTarget(ability, target);
     }
 
-    private static bool HandleWoS(Pawn __instance, Ability ability)
+    private static bool HandleWordOfSerenity(Pawn __instance, Ability ability)
     {
         if (__instance is null)
             throw new ArgumentNullException(nameof(__instance));
@@ -193,7 +213,7 @@ internal static class PsycastingHandler
         return target != null && CastAbilityOnTarget(ability, target);
     }
 
-    private static bool HandleWoP(Pawn __instance, Ability ability)
+    private static bool HandleWordOfProductivity(Pawn __instance, Ability ability)
     {
         if (__instance is null)
             throw new ArgumentNullException(nameof(__instance));

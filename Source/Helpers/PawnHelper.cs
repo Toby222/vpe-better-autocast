@@ -15,6 +15,11 @@ internal static class PawnHelper
         return pawns.Where(pawn => !PawnHasHediff(pawn, hediffDefName));
     }
 
+    internal static IEnumerable<Pawn> GetVisitors(IEnumerable<Pawn> pawns)
+    {
+        return pawns.Where(pawn => !pawn.IsColonist && !pawn.IsSlaveOfColony && !pawn.IsPrisoner);
+    }
+
     internal static IEnumerable<Pawn> GetColonists(IEnumerable<Pawn> pawns)
     {
         return pawns.Where(pawn => pawn.IsColonist);
@@ -83,6 +88,9 @@ internal static class PawnHelper
 
     internal static IEnumerable<Pawn> GetLowJoyPawns(IEnumerable<Pawn> pawns)
     {
-        return pawns.Where(pawn => pawn.needs.TryGetNeed<Need_Joy>()?.CurLevel < 0.20f);
+        return pawns.Where(pawn =>
+            pawn.needs.TryGetNeed<Need_Joy>()?.CurLevel
+            <= BetterAutocastVPE.Settings.WordOfJoyMoodThreshold
+        );
     }
 }
