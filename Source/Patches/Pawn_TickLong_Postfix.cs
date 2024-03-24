@@ -19,16 +19,23 @@ internal static class Pawn_Tick_Postfix
 
         var ticksGame = Find.TickManager.TicksGame;
 
-        if (ticksGame % 600 == 0 && !__instance.Drafted)
+        if (
+            !__instance.Drafted
+            && ticksGame % VPEAutoCastBuffs.Settings.AutoCastIntervalUndrafted == 0
+        )
+        {
             ProcessAbilities(__instance, PsycastingHandler.HandleAbilityUndrafted);
-        else if (ticksGame % 30 == 0 && __instance.Drafted)
+        }
+        else if (
+            __instance.Drafted
+            && ticksGame % VPEAutoCastBuffs.Settings.AutoCastIntervalDrafted == 0
+        )
+        {
             ProcessAbilities(__instance, PsycastingHandler.HandleAbilityDrafted);
+        }
     }
 
-    private static void ProcessAbilities(
-        Pawn pawn,
-        Func<Pawn, Ability, bool> handleAbility
-    )
+    private static void ProcessAbilities(Pawn pawn, Func<Pawn, Ability, bool> handleAbility)
     {
         if (pawn is null)
             throw new ArgumentNullException(nameof(pawn));

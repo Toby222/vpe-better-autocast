@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using RimWorld;
 using RimWorld.Planet;
 using Verse;
 using Ability = VFECore.Abilities.Ability;
@@ -15,42 +16,40 @@ using static Helpers.WeatherHelper;
 
 internal static class PsycastingHandler
 {
-    private static readonly ReadOnlyDictionary<
-        string,
-        Func<Pawn, Ability, bool>
-    > undraftedAbilityHandlers =
+    private static readonly ReadOnlyDictionary<string, Func<Pawn, Ability, bool>> abilityHandlers =
         new(
+            // TODO: Probably sort these more sensibly than alphabetically
+            // Or allow configuring priorities
             new Dictionary<string, Func<Pawn, Ability, bool>>
             {
+                { "VPE_AdrenalineRush", HandleSelfBuff },
+                { "VPE_BladeFocus", HandleSelfBuff },
+                { "VPE_ControlledFrenzy", HandleSelfBuff },
+                { "VPE_Darkvision", HandleDarkVision },
+                { "VPE_Eclipse", HandleEclipse },
+                { "VPE_EnchantQuality", HandleEnchant },
+                { "VPE_FiringFocus", HandleSelfBuff },
+                { "VPE_GuidedShot", HandleSelfBuff },
+                { "VPE_Mend", HandleMend },
+                { "VPE_PsychicGuidance", HandlePsychicGuidance },
                 { "VPE_SpeedBoost", HandleSelfBuff },
                 { "VPE_StealVitality", HandleStealVitality },
-                { "VPEP_BrainLeech", HandleBrainLeech },
-                { "VPE_PsychicGuidance", HandlePsychicGuidance },
-                { "VPE_EnchantQuality", HandleEnchant },
-                { "VPE_Mend", HandleMend },
                 { "VPE_WordofJoy", HandleWordOfJoy },
-                { "VPE_WordofSerenity", HandleWoS },
                 { "VPE_WordofProductivity", HandleWoP },
-                { "VPE_Eclipse", HandleEclipse },
-                { "VPE_Darkvision", HandleDarkVision }
+                { "VPE_WordofSerenity", HandleWoS },
+                { "VPEP_BrainLeech", HandleBrainLeech },
             }
         );
 
-    private static readonly ReadOnlyDictionary<
-        string,
-        Func<Pawn, Ability, bool>
-    > draftedAbilityHandlers =
-        new(
-            new Dictionary<string, Func<Pawn, Ability, bool>>
-            {
-                { "VPE_SpeedBoost", HandleSelfBuff },
-                { "VPE_BladeFocus", HandleSelfBuff },
-                { "VPE_FiringFocus", HandleSelfBuff },
-                { "VPE_AdrenalineRush", HandleSelfBuff },
-                { "VPE_ControlledFrenzy", HandleSelfBuff },
-                { "VPE_GuidedShot", HandleSelfBuff }
-            }
-        );
+    internal static bool GetsCastWhileDrafted(string abilityDefName)
+    {
+        return VPEAutoCastBuffs.Settings.DraftedAutoCastDefs.Contains(abilityDefName);
+    }
+
+    internal static bool GetsCastWhileUndrafted(string abilityDefName)
+    {
+        return VPEAutoCastBuffs.Settings.UndraftedAutoCastDefs.Contains(abilityDefName);
+    }
 
     internal static bool HandleAbilityUndrafted(Pawn __instance, Ability ability)
     {
@@ -59,9 +58,9 @@ internal static class PsycastingHandler
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
 
-        if (undraftedAbilityHandlers.TryGetValue(ability.def.defName, out var handler))
+        if (GetsCastWhileUndrafted(ability.def.defName))
         {
-            return handler(__instance, ability);
+            return abilityHandlers[ability.def.defName](__instance, ability);
         }
 
         return false;
@@ -74,9 +73,9 @@ internal static class PsycastingHandler
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
 
-        if (draftedAbilityHandlers.TryGetValue(ability.def.defName, out var handler))
+        if (GetsCastWhileDrafted(ability.def.defName))
         {
-            return handler(__instance, ability);
+            return abilityHandlers[ability.def.defName](__instance, ability);
         }
 
         return false;
@@ -237,9 +236,11 @@ internal static class PsycastingHandler
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
 
-        return HandleMendByPawn(__instance, ability)
-            || HandleMendByZone(__instance, ability)
-            || HandleMendByStorage(__instance, ability);
+        return (VPEAutoCastBuffs.Settings.MendPawns && HandleMendByPawn(__instance, ability))
+            || (VPEAutoCastBuffs.Settings.MendInStockpile && HandleMendByZone(__instance, ability))
+            || (
+                VPEAutoCastBuffs.Settings.MendInStorage && HandleMendByStorage(__instance, ability)
+            );
     }
 
     private static bool HandleMendByPawn(Pawn __instance, Ability ability)
@@ -273,8 +274,14 @@ internal static class PsycastingHandler
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
 
-        return HandleEnchantByZone(__instance, ability)
-            || HandleEnchantByStorage(__instance, ability);
+        return (
+                VPEAutoCastBuffs.Settings.EnchantInStockpile
+                && HandleEnchantByZone(__instance, ability)
+            )
+            || (
+                VPEAutoCastBuffs.Settings.EnchantInStorage
+                && HandleEnchantByStorage(__instance, ability)
+            );
     }
 
     private static bool HandleEnchantByZone(Pawn __instance, Ability ability)

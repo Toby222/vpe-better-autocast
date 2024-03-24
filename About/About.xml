@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
   <packageId>NetzachSloth.VPEAutoCastBuffs</packageId>
-  <name>VPE Auto Cast Buffs</name>
+  <name>VPE Auto-Cast Buffs</name>
   <authors>
     <li>NetzachSloth</li>
     <li>Toby</li>
@@ -41,6 +41,7 @@
       <li>brrainz.harmony</li>
       <li>OskarPotocki.VanillaFactionsExpanded.Core</li>
       <li>VanillaExpanded.VPsycastsE</li>
+      <li>VanillaExpanded.VPE.Puppeteer</li>
     </v1.4>
   </loadAfterByVersion>
   <forceLoadAfter/>

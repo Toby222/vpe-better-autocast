@@ -12,9 +12,9 @@ internal static class MendHelper
     // TODO: This should be configurable
     // Possibly should have an absolute value of damage
     // Also if possible make it use psychic power where appropriate
-    const float DamageThreshold = 0.5f;
+    private static float DamageThreshold => VPEAutoCastBuffs.Settings.MendHealthThreshold;
 
-    private static bool ThingIsDamaged(Thing thing)
+    private static bool ThingIsSufficientlyDamaged(Thing thing)
     {
         if (thing is null)
             throw new ArgumentNullException(nameof(thing));
@@ -28,7 +28,7 @@ internal static class MendHelper
             throw new ArgumentNullException(nameof(map));
 
         GetThingsInStorage(map)
-            .Where(ThingIsDamaged)
+            .Where(ThingIsSufficientlyDamaged)
             .TryRandomElementByWeight(
                 thing => (float)thing.HitPoints / thing.MaxHitPoints,
                 out var thing
@@ -42,7 +42,7 @@ internal static class MendHelper
             throw new ArgumentNullException(nameof(map));
 
         GetThingsInNamedStockpile(map, "mend")
-            .Where(ThingIsDamaged)
+            .Where(ThingIsSufficientlyDamaged)
             .TryRandomElementByWeight(
                 thing => (float)thing.HitPoints / thing.MaxHitPoints,
                 out var thing
@@ -57,10 +57,13 @@ internal static class MendHelper
 
         return pawns
             .Where(colonist =>
-                (colonist.equipment?.Primary != null && ThingIsDamaged(colonist.equipment.Primary))
+                (
+                    colonist.equipment?.Primary != null
+                    && ThingIsSufficientlyDamaged(colonist.equipment.Primary)
+                )
                 || (
                     colonist.apparel?.WornApparel.Any(apparel =>
-                        ThingIsDamaged(apparel)
+                        ThingIsSufficientlyDamaged(apparel)
                         && apparel.def.label.IndexOf(
                             "warcasket",
                             StringComparison.OrdinalIgnoreCase
