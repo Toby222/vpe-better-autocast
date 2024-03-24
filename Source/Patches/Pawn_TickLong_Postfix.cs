@@ -58,7 +58,7 @@ internal static class Pawn_Tick_Postfix
         {
             if (ability is null)
                 continue;
-            if (ability.IsEnabledForPawn(out _) && ability.autoCast && handleAbility(pawn, ability))
+            if (ability.autoCast && ability.IsEnabledForPawn(out _) && handleAbility(pawn, ability))
                 break;
         }
     }
