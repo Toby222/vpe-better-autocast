@@ -8,7 +8,7 @@
         <AssemblyName>VPEAutoCastBuffs</AssemblyName>
         <OutputPath>../1.4/Assemblies</OutputPath>
         <LangVersion>latest</LangVersion>
-        <VersionPrefix>2.0.0.0</VersionPrefix>
+        <VersionPrefix>2.1.0.0</VersionPrefix>
         <!-- do not generate pdb file -->
         <DebugType>none</DebugType>
         <DebugSymbols>false</DebugSymbols>
@@ -23,7 +23,7 @@
                 <li>NetzachSloth</li>
                 <li>Toby</li>
             </authors>
-            <description>Some changes to Vanilla Psycasts Expanded to reduce Micro Management and add functional autocasts.\n\nOnly autocasts above 50% psyfocus, not yet configurable.\n\nSteal Vitality\n	Auto move to target.\n	Add sensitivity scaling.\n	~Scaling set to caster sensitivity.~\n	Show undrafted.\n	Autocasts in this order, Prisoner, Slave, Colonist\nPsychic Guidance\n	Auto move to target.\n	~Scaling set to caster sensitivity.~\n	Autocasts on colonists.\n\nIf there's any more you think I should add, let me know.\n\nHaven't tested much for performance impact, but there shouldn't be too much. This only does its thing every 600 ticks. It checks all colony pawns for abilities, checks for valid targets, then schedules the cast job.</description>
+            <description>Some changes to Vanilla Psycasts Expanded to reduce Micro Management and add functional autocasts.\n\n(Because I'm lazy, this description should always be considered out of date. Mechanics should be explained in-game in the mod settings)\n\nSteal Vitality\n	Auto move to target.\n	Add sensitivity scaling.\n	~Scaling set to caster sensitivity.~\n	Show undrafted.\n	Autocasts in this order, Prisoner, Slave, Colonist\nPsychic Guidance\n	Auto move to target.\n	~Scaling set to caster sensitivity.~\n	Autocasts on colonists.\n\nIf there's any more you think I should add, let me know.\n\nHaven't tested much for performance impact, but there shouldn't be too much. This only does its thing every 600 ticks. It checks all colony pawns for abilities, checks for valid targets, then schedules the cast job.</description>
             <supportedVersions>
                 <li>1.4</li>
             </supportedVersions>
