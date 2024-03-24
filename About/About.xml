@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
   <packageId>dev.tobot.vpe.betterautocast</packageId>
-  <name>Better autocast for Vanilla Psycasts Expanded</name>
+  <name>Better autocasting for Vanilla Psycasts Expanded</name>
   <authors>
     <li>NetzachSloth</li>
     <li>Toby</li>

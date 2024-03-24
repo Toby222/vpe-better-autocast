@@ -18,7 +18,7 @@
             See https://rimworldwiki.com/wiki/Modding_Tutorials/About.xml -->
         <ModMetaData>
             <packageId>dev.tobot.vpe.betterautocast</packageId>
-            <name>Better autocast for Vanilla Psycasts Expanded</name>
+            <name>Better autocasting for Vanilla Psycasts Expanded</name>
             <authors>
                 <li>NetzachSloth</li>
                 <li>Toby</li>
