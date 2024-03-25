@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -89,8 +89,8 @@ internal static class PsycastingHandler
             throw new ArgumentNullException(nameof(ability));
 
         if (
-            (__instance.Drafted && GetsCastWhileUndrafted(ability.def.defName))
-            || (!__instance.Drafted && GetsCastWhileDrafted(ability.def.defName))
+            (!__instance.Drafted && GetsCastWhileUndrafted(ability.def.defName))
+            || (__instance.Drafted && GetsCastWhileDrafted(ability.def.defName))
         )
         {
             return abilityHandlers[ability.def.defName](__instance, ability);
