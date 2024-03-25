@@ -125,14 +125,17 @@ internal static class PsycastingHandler
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
 
+        Pawn? target = null;
+
         if (
             BetterAutocastVPE.Settings.InvisibilityTargetSelf
             && !PawnHasHediff(__instance, "PsychicInvisibility")
         )
-            return CastAbilityOnTarget(ability, __instance);
+        {
+            target ??= __instance;
+        }
 
-        Pawn? target = null;
-        if (BetterAutocastVPE.Settings.InvisibilityTargetColonists)
+        if (BetterAutocastVPE.Settings.InvisibilityTargetColonists && target is null)
         {
             float range = ability.GetRangeForPawn();
             IEnumerable<Pawn> pawnsInRange = GetPawnsInRange(__instance, range);
@@ -142,7 +145,7 @@ internal static class PsycastingHandler
             );
             IEnumerable<Pawn> eligibleColonists = GetColonists(GetPawnsNotDown(pawnsWithoutHediff));
 
-            target = GetClosestTo(eligibleColonists, __instance);
+            target ??= GetClosestTo(eligibleColonists, __instance);
         }
         return target != null && CastAbilityOnTarget(ability, target);
     }
@@ -248,9 +251,9 @@ internal static class PsycastingHandler
             );
 
             target ??= GetClosestTo(
-               eligibleTargets.Where(pawn => !PawnHasHediff(pawn, "VPE_Darkvision")),
-               __instance
-           );
+                eligibleTargets.Where(pawn => !PawnHasHediff(pawn, "VPE_Darkvision")),
+                __instance
+            );
         }
 
         return target != null && CastAbilityOnTarget(ability, target);
