@@ -37,7 +37,8 @@ public class BetterAutocastVPE : Mod
     }
 
 #nullable disable
-        public static AutocastModSettings Settings { get; private set; }
+    public static AutocastModSettings Settings { get; private set; }
+
 #nullable enable
 
     private static Vector2 settingsScrollPosition = new();

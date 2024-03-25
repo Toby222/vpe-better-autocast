@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -15,6 +15,7 @@ using static Helpers.WeatherHelper;
 
 internal static class PsycastingHandler
 {
+    #region private members
     private static readonly ReadOnlyDictionary<string, Func<Pawn, Ability, bool>> abilityHandlers =
         new(
             // TODO: Probably sort these more sensibly than alphabetically
@@ -39,7 +40,9 @@ internal static class PsycastingHandler
                 { "VPEP_BrainLeech", HandleBrainLeech },
             }
         );
+    #endregion private members
 
+    #region helper functions
     internal static bool HasHandler(string abilityDefName)
     {
         return abilityHandlers.ContainsKey(abilityDefName);
@@ -54,6 +57,28 @@ internal static class PsycastingHandler
     {
         return BetterAutocastVPE.Settings.UndraftedAutocastDefs.Contains(abilityDefName);
     }
+
+    /// <summary>
+    /// Tries to create a job to cast the given ability on the given target
+    /// </summary>
+    /// <returns>If a job was successfully created</returns>
+    private static bool CastAbilityOnTarget(Ability ability, Thing target)
+    {
+        if (ability is null)
+            throw new ArgumentNullException(nameof(ability));
+        if (target is null)
+            return false;
+
+        ability.CreateCastJob(new GlobalTargetInfo(target));
+        return true;
+    }
+    #endregion helper functions
+
+    #region worker functions
+    /// <summary>
+    /// Tries to auto-cast the ability
+    /// </summary>
+    /// <returns>If the ability was successfullly autocast</returns>
     internal static bool HandleAbility(Pawn __instance, Ability ability)
     {
         if (__instance is null)
@@ -71,7 +96,10 @@ internal static class PsycastingHandler
 
         return false;
     }
+    #endregion worker functions
 
+    #region handlers
+    #region generic
     private static bool HandleSelfBuff(Pawn __instance, Ability ability)
     {
         if (__instance is null)
@@ -85,7 +113,9 @@ internal static class PsycastingHandler
         else
             return CastAbilityOnTarget(ability, __instance);
     }
+    #endregion generic
 
+    #region Necropath
     private static bool HandleStealVitality(Pawn __instance, Ability ability)
     {
         if (__instance is null)
@@ -115,7 +145,9 @@ internal static class PsycastingHandler
                 && CastAbilityOnTarget(ability, GetHighestSensitivity(GetVisitors(pawnsInRange)))
             );
     }
+    #endregion Necropath
 
+    #region Harmonist
     private static bool HandlePsychicGuidance(Pawn __instance, Ability ability)
     {
         if (__instance is null)
@@ -131,7 +163,9 @@ internal static class PsycastingHandler
         return eligiblePawns.FirstOrDefault() is Pawn target
             && CastAbilityOnTarget(ability, target);
     }
+    #endregion Harmonist
 
+    #region Nightstalker
     private static bool HandleDarkVision(Pawn __instance, Ability ability)
     {
         if (__instance is null)
@@ -161,7 +195,9 @@ internal static class PsycastingHandler
 
         return !EclipseOnMap(__instance.Map) && CastAbilityOnTarget(ability, __instance);
     }
+    #endregion Nightstalker
 
+    #region Puppeteer
     private static bool HandleBrainLeech(Pawn __instance, Ability ability)
     {
         if (__instance is null)
@@ -188,7 +224,9 @@ internal static class PsycastingHandler
 
         return target != null && CastAbilityOnTarget(ability, target);
     }
+    #endregion Puppeteer
 
+    #region Empath
     private static bool HandleWordOfSerenity(Pawn __instance, Ability ability)
     {
         if (__instance is null)
@@ -202,25 +240,6 @@ internal static class PsycastingHandler
         IEnumerable<Pawn> notDownColonists = GetColonists(GetPawnsNotDown(pawnsWithMentalBreak));
 
         Pawn target = notDownColonists.FirstOrDefault();
-        return target != null && CastAbilityOnTarget(ability, target);
-    }
-
-    private static bool HandleWordOfProductivity(Pawn __instance, Ability ability)
-    {
-        if (__instance is null)
-            throw new ArgumentNullException(nameof(__instance));
-        if (ability is null)
-            throw new ArgumentNullException(nameof(ability));
-
-        float range = ability.GetRangeForPawn();
-        IEnumerable<Pawn> pawnsInRange = GetPawnsInRange(__instance, range);
-        IEnumerable<Pawn> pawnsWithoutHediff = GetPawnsWithoutHediff(
-            pawnsInRange,
-            "VPE_Productivity"
-        );
-        IEnumerable<Pawn> eligibleColonists = GetColonists(GetPawnsNotDown(pawnsWithoutHediff));
-
-        Pawn target = eligibleColonists.FirstOrDefault();
         return target != null && CastAbilityOnTarget(ability, target);
     }
 
@@ -240,7 +259,30 @@ internal static class PsycastingHandler
         Pawn target = lowJoyPawns.FirstOrDefault();
         return target != null && CastAbilityOnTarget(ability, target);
     }
+    #endregion Empath
 
+    #region Archon
+    private static bool HandleWordOfProductivity(Pawn __instance, Ability ability)
+    {
+        if (__instance is null)
+            throw new ArgumentNullException(nameof(__instance));
+        if (ability is null)
+            throw new ArgumentNullException(nameof(ability));
+
+        float range = ability.GetRangeForPawn();
+        IEnumerable<Pawn> pawnsInRange = GetPawnsInRange(__instance, range);
+        IEnumerable<Pawn> pawnsWithoutHediff = GetPawnsWithoutHediff(
+            pawnsInRange,
+            "VPE_Productivity"
+        );
+        IEnumerable<Pawn> eligibleColonists = GetColonists(GetPawnsNotDown(pawnsWithoutHediff));
+
+        Pawn target = eligibleColonists.FirstOrDefault();
+        return target != null && CastAbilityOnTarget(ability, target);
+    }
+    #endregion
+
+    #region Technomancer
     private static bool HandleMend(Pawn __instance, Ability ability)
     {
         if (__instance is null)
@@ -255,6 +297,24 @@ internal static class PsycastingHandler
             );
     }
 
+    private static bool HandleEnchant(Pawn __instance, Ability ability)
+    {
+        if (__instance is null)
+            throw new ArgumentNullException(nameof(__instance));
+        if (ability is null)
+            throw new ArgumentNullException(nameof(ability));
+
+        return (
+                BetterAutocastVPE.Settings.EnchantInStockpile
+                && HandleEnchantByZone(__instance, ability)
+            )
+            || (
+                BetterAutocastVPE.Settings.EnchantInStorage
+                && HandleEnchantByStorage(__instance, ability)
+            );
+    }
+
+    #region Technomancer helpers
     private static bool HandleMendByPawn(Pawn __instance, Ability ability)
     {
         float range = ability.GetRangeForPawn();
@@ -279,23 +339,6 @@ internal static class PsycastingHandler
         return target != null && CastAbilityOnTarget(ability, target);
     }
 
-    private static bool HandleEnchant(Pawn __instance, Ability ability)
-    {
-        if (__instance is null)
-            throw new ArgumentNullException(nameof(__instance));
-        if (ability is null)
-            throw new ArgumentNullException(nameof(ability));
-
-        return (
-                BetterAutocastVPE.Settings.EnchantInStockpile
-                && HandleEnchantByZone(__instance, ability)
-            )
-            || (
-                BetterAutocastVPE.Settings.EnchantInStorage
-                && HandleEnchantByStorage(__instance, ability)
-            );
-    }
-
     private static bool HandleEnchantByZone(Pawn __instance, Ability ability)
     {
         Thing? target = GetRandomEnchantableThingInStockpile(__instance.Map, ability);
@@ -309,13 +352,7 @@ internal static class PsycastingHandler
 
         return target != null && CastAbilityOnTarget(ability, target);
     }
-
-    private static bool CastAbilityOnTarget(Ability ability, Thing target)
-    {
-        if (target == null || ability == null)
-            return false;
-
-        ability.CreateCastJob(new GlobalTargetInfo(target));
-        return true;
-    }
+    #endregion Technomancer helpers
+    #endregion Technomancer
+    #endregion handlers
 }
