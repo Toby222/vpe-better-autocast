@@ -220,11 +220,7 @@ public class BetterAutocastVPE : Mod
 
         listing.GapLine();
 
-        if (
-            ModsConfig.ActiveModsInLoadOrder.Any(modMetaData =>
-                modMetaData.SamePackageId("VanillaExpanded.VPE.Puppeteer", ignorePostfix: true)
-            )
-        )
+        if (ModsConfig.IsActive("VanillaExpanded.VPE.Puppeteer"))
         {
             AbilityHeader(listing, "VPEP_BrainLeech");
 
@@ -261,6 +257,8 @@ public class BetterAutocastVPE : Mod
         AbilityHeader(listing, "VPE_WordofProductivity");
         listing.GapLine();
         AbilityHeader(listing, "VPE_WordofSerenity");
+        listing.GapLine();
+        AbilityHeader(listing, "VPE_Invisibility");
 
         listing.End();
         settingsHeight = listing.CurHeight;

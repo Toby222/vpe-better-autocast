@@ -23,7 +23,7 @@
     <BetterAutocastVPE.VPE_GuidedShot.Explanation>Will autocast whenever the caster does not have the buff applied.</BetterAutocastVPE.VPE_GuidedShot.Explanation>
     <BetterAutocastVPE.VPE_SpeedBoost.Explanation>Will autocast whenever the caster does not have the buff applied.</BetterAutocastVPE.VPE_SpeedBoost.Explanation>
     <BetterAutocastVPE.VPE_Eclipse.Explanation>Will autocast when there is no ongoing eclipse</BetterAutocastVPE.VPE_Eclipse.Explanation>
-    <BetterAutocastVPE.VPE_Darkvision.Explanation>Will target self whenever the caster does not have the buff applied.\nOtherwise will target non-downed colonists in casting range.</BetterAutocastVPE.VPE_Darkvision.Explanation>
+    <BetterAutocastVPE.VPE_Darkvision.Explanation>Will target self whenever the caster does not have the buff applied.\nOtherwise will target non-downed colonist without the buff in casting range.</BetterAutocastVPE.VPE_Darkvision.Explanation>
     <BetterAutocastVPE.VPE_PsychicGuidance.Explanation>Targets the closest non-downed colonist in range that doesn't have the Psychic Guidance buff.</BetterAutocastVPE.VPE_PsychicGuidance.Explanation>
     <BetterAutocastVPE.VPE_StealVitality.Explanation>Targets the pawn with highest psychic sensitivity in range, prioritizing by group in the order below.\nThat is, target prisoners first, if no prisoners are available, then target slaves, and so on.</BetterAutocastVPE.VPE_StealVitality.Explanation>
     <BetterAutocastVPE.StealVitalityFromPrisoners>Target prisoners</BetterAutocastVPE.StealVitalityFromPrisoners>
@@ -38,4 +38,5 @@
     <BetterAutocastVPE.VPEP_BrainLeech.Explanation>Targets the closest pawn in range, prioritzing by group in the order below.\nThat is, target prisoners first, if no prisoners are available, then target slaves.</BetterAutocastVPE.VPEP_BrainLeech.Explanation>
     <BetterAutocastVPE.BrainLeechTargetPrisoners>Target prisoners</BetterAutocastVPE.BrainLeechTargetPrisoners>
     <BetterAutocastVPE.BrainLeechTargetSlaves>Target slaves</BetterAutocastVPE.BrainLeechTargetSlaves>
+    <BetterAutocastVPE.VPE_Invisibility.Explanation>Will target self whenever the caster does not have the buff applied.\nOtherwise will target non-downed colonist without the buff in casting range.</BetterAutocastVPE.VPE_Invisibility.Explanation>
 </LanguageData>

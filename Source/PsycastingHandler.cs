@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using RimWorld.Planet;
 using Verse;
 using Ability = VFECore.Abilities.Ability;
@@ -38,6 +39,7 @@ internal static class PsycastingHandler
                 { "VPE_WordofProductivity", HandleWordOfProductivity },
                 { "VPE_WordofSerenity", HandleWordOfSerenity },
                 { "VPEP_BrainLeech", HandleBrainLeech },
+                { "VPE_Invisibility", HandleInvisibility }
             }
         );
     #endregion private members
@@ -114,6 +116,30 @@ internal static class PsycastingHandler
             return CastAbilityOnTarget(ability, __instance);
     }
     #endregion generic
+
+    #region Protector
+    private static bool HandleInvisibility(Pawn __instance, Ability ability)
+    {
+        if (__instance is null)
+            throw new ArgumentNullException(nameof(__instance));
+        if (ability is null)
+            throw new ArgumentNullException(nameof(ability));
+
+        if (!PawnHasHediff(__instance, "PsychicInvisibility"))
+            return CastAbilityOnTarget(ability, __instance);
+
+        float range = ability.GetRangeForPawn();
+        IEnumerable<Pawn> pawnsInRange = GetPawnsInRange(__instance, range);
+        IEnumerable<Pawn> pawnsWithoutHediff = GetPawnsWithoutHediff(
+            pawnsInRange,
+            "PsychicInvisibility"
+        );
+        IEnumerable<Pawn> eligibleColonists = GetColonists(GetPawnsNotDown(pawnsWithoutHediff));
+
+        Pawn target = eligibleColonists.FirstOrDefault();
+        return target != null && CastAbilityOnTarget(ability, target);
+    }
+    #endregion Protector
 
     #region Necropath
     private static bool HandleStealVitality(Pawn __instance, Ability ability)
