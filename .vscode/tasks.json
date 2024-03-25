@@ -54,6 +54,20 @@
             ]
         },
         {
+            "label": "run game (Release)",
+            "type": "shell",
+            "group": {
+                "kind": "none",
+                "isDefault": true
+            },
+            "command": ".vscode/launch.sh",
+            "problemMatcher": [],
+            "dependsOn": [
+                "link mod directory",
+                "build mod (Release)"
+            ]
+        },
+        {
             "label": "run game (Debug + quicktest)",
             "type": "shell",
             "group": {
