@@ -18,30 +18,24 @@ internal static class Pawn_Tick_Postfix
         if (__instance is null)
             throw new ArgumentNullException(nameof(__instance));
 
-        var ticksGame = Find.TickManager.TicksGame;
-
         if (
-            !__instance.Drafted
-            && ticksGame % BetterAutocastVPE.Settings.AutocastIntervalUndrafted == 0
+            Find.TickManager.TicksGame
+                % (
+                    __instance.Drafted
+                        ? BetterAutocastVPE.Settings.AutocastIntervalDrafted
+                        : BetterAutocastVPE.Settings.AutocastIntervalUndrafted
+                )
+            == 0
         )
         {
-            ProcessAbilities(__instance, PsycastingHandler.HandleAbilityUndrafted);
-        }
-        else if (
-            __instance.Drafted
-            && ticksGame % BetterAutocastVPE.Settings.AutocastIntervalDrafted == 0
-        )
-        {
-            ProcessAbilities(__instance, PsycastingHandler.HandleAbilityDrafted);
+            ProcessAbilities(__instance);
         }
     }
 
-    private static void ProcessAbilities(Pawn pawn, Func<Pawn, Ability, bool> handleAbility)
+    private static void ProcessAbilities(Pawn pawn)
     {
         if (pawn is null)
             throw new ArgumentNullException(nameof(pawn));
-        if (handleAbility is null)
-            throw new ArgumentNullException(nameof(handleAbility));
 
         if (!pawn.IsColonistPlayerControlled)
             return;
@@ -56,8 +50,14 @@ internal static class Pawn_Tick_Postfix
         {
             if (ability is null)
                 continue;
-            if (ability.autoCast && ability.IsEnabledForPawn(out _) && handleAbility(pawn, ability))
+            if (
+                ability.autoCast
+                && ability.IsEnabledForPawn(out _)
+                && PsycastingHandler.HandleAbility(pawn, ability)
+            )
+            {
                 break;
+            }
         }
     }
 }

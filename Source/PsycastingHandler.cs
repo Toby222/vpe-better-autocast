@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -54,30 +54,17 @@ internal static class PsycastingHandler
     {
         return BetterAutocastVPE.Settings.UndraftedAutocastDefs.Contains(abilityDefName);
     }
-
-    internal static bool HandleAbilityUndrafted(Pawn __instance, Ability ability)
+    internal static bool HandleAbility(Pawn __instance, Ability ability)
     {
         if (__instance is null)
             throw new ArgumentNullException(nameof(__instance));
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
 
-        if (GetsCastWhileUndrafted(ability.def.defName))
-        {
-            return abilityHandlers[ability.def.defName](__instance, ability);
-        }
-
-        return false;
-    }
-
-    internal static bool HandleAbilityDrafted(Pawn __instance, Ability ability)
-    {
-        if (__instance is null)
-            throw new ArgumentNullException(nameof(__instance));
-        if (ability is null)
-            throw new ArgumentNullException(nameof(ability));
-
-        if (GetsCastWhileDrafted(ability.def.defName))
+        if (
+            (__instance.Drafted && GetsCastWhileUndrafted(ability.def.defName))
+            || (!__instance.Drafted && GetsCastWhileDrafted(ability.def.defName))
+        )
         {
             return abilityHandlers[ability.def.defName](__instance, ability);
         }
