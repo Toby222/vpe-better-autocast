@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using UnityEngine;
@@ -188,19 +187,19 @@ public class BetterAutocastVPE : Mod
         AbilityHeader(listing, "VPE_StealVitality");
 
         listing.CheckboxLabeled(
-            "BetterAutocastVPE.StealVitalityFromPrisoners".Translate(),
+            "BetterAutocastVPE.TargetPrisoners".Translate(),
             ref Settings.StealVitalityFromPrisoners
         );
         listing.CheckboxLabeled(
-            "BetterAutocastVPE.StealVitalityFromSlaves".Translate(),
+            "BetterAutocastVPE.TargetSlaves".Translate(),
             ref Settings.StealVitalityFromSlaves
         );
         listing.CheckboxLabeled(
-            "BetterAutocastVPE.StealVitalityFromColonists".Translate(),
+            "BetterAutocastVPE.TargetColonists".Translate(),
             ref Settings.StealVitalityFromColonists
         );
         listing.CheckboxLabeled(
-            "BetterAutocastVPE.StealVitalityFromVisitors".Translate(),
+            "BetterAutocastVPE.TargetVisitors".Translate(),
             ref Settings.StealVitalityFromVisitors
         );
 
@@ -225,11 +224,11 @@ public class BetterAutocastVPE : Mod
             AbilityHeader(listing, "VPEP_BrainLeech");
 
             listing.CheckboxLabeled(
-                "BetterAutocastVPE.BrainLeechTargetPrisoners".Translate(),
+                "BetterAutocastVPE.TargetPrisoners".Translate(),
                 ref Settings.BrainLeechTargetPrisoners
             );
             listing.CheckboxLabeled(
-                "BetterAutocastVPE.BrainLeechTargetSlaves".Translate(),
+                "BetterAutocastVPE.TargetSlaves".Translate(),
                 ref Settings.BrainLeechTargetSlaves
             );
 
@@ -243,6 +242,14 @@ public class BetterAutocastVPE : Mod
         AbilityHeader(listing, "VPE_ControlledFrenzy");
         listing.GapLine();
         AbilityHeader(listing, "VPE_Darkvision");
+        listing.CheckboxLabeled(
+            "BetterAutocastVPE.TargetSelf".Translate(),
+            ref Settings.DarkvisionTargetSelf
+        );
+        listing.CheckboxLabeled(
+            "BetterAutocastVPE.TargetColonists".Translate(),
+            ref Settings.DarkvisionTargetColonists
+        );
         listing.GapLine();
         AbilityHeader(listing, "VPE_Eclipse");
         listing.GapLine();
@@ -259,6 +266,36 @@ public class BetterAutocastVPE : Mod
         AbilityHeader(listing, "VPE_WordofSerenity");
         listing.GapLine();
         AbilityHeader(listing, "VPE_Invisibility");
+        listing.CheckboxLabeled(
+            "BetterAutocastVPE.TargetSelf".Translate(),
+            ref Settings.InvisibilityTargetSelf
+        );
+        listing.CheckboxLabeled(
+            "BetterAutocastVPE.TargetColonists".Translate(),
+            ref Settings.InvisibilityTargetColonists
+        );
+        listing.GapLine();
+        AbilityHeader(listing, "VPE_WordofImmunity");
+        listing.CheckboxLabeled(
+            "BetterAutocastVPE.TargetColonists".Translate(),
+            ref Settings.WordOfImmunityTargetColonists
+        );
+        listing.CheckboxLabeled(
+            "BetterAutocastVPE.TargetColonyAnimals".Translate(),
+            ref Settings.WordOfImmunityTargetColonyAnimals
+        );
+        listing.CheckboxLabeled(
+            "BetterAutocastVPE.TargetSlaves".Translate(),
+            ref Settings.WordOfImmunityTargetSlaves
+        );
+        listing.CheckboxLabeled(
+            "BetterAutocastVPE.TargetPrisoners".Translate(),
+            ref Settings.WordOfImmunityTargetPrisoners
+        );
+        listing.CheckboxLabeled(
+            "BetterAutocastVPE.TargetVisitors".Translate(),
+            ref Settings.WordOfImmunityTargetVisitors
+        );
 
         listing.End();
         settingsHeight = listing.CurHeight;
@@ -330,6 +367,18 @@ public class AutocastModSettings : ModSettings
     public bool BrainLeechTargetPrisoners = true;
     public bool BrainLeechTargetSlaves = true;
 
+    public bool DarkvisionTargetSelf = true;
+    public bool DarkvisionTargetColonists = true;
+
+    public bool InvisibilityTargetSelf = true;
+    public bool InvisibilityTargetColonists = true;
+
+    public bool WordOfImmunityTargetColonists = true;
+    public bool WordOfImmunityTargetColonyAnimals = false;
+    public bool WordOfImmunityTargetSlaves = true;
+    public bool WordOfImmunityTargetPrisoners = true;
+    public bool WordOfImmunityTargetVisitors = false;
+
     public HashSet<string> DraftedAutocastDefs =
         new()
         {
@@ -354,6 +403,8 @@ public class AutocastModSettings : ModSettings
             "VPE_WordofProductivity",
             "VPE_Eclipse",
             "VPE_Darkvision",
+            "VPE_Invisibility",
+            "VPE_WordofImmunity",
         };
 
     public override void ExposeData()
@@ -414,6 +465,54 @@ public class AutocastModSettings : ModSettings
             ref BrainLeechTargetSlaves,
             nameof(BrainLeechTargetSlaves),
             defaultValue: true
+        );
+
+        Scribe_Values.Look(
+            ref DarkvisionTargetSelf,
+            nameof(DarkvisionTargetSelf),
+            defaultValue: true
+        );
+        Scribe_Values.Look(
+            ref DarkvisionTargetColonists,
+            nameof(DarkvisionTargetColonists),
+            defaultValue: true
+        );
+
+        Scribe_Values.Look(
+            ref InvisibilityTargetSelf,
+            nameof(InvisibilityTargetSelf),
+            defaultValue: true
+        );
+        Scribe_Values.Look(
+            ref InvisibilityTargetColonists,
+            nameof(InvisibilityTargetColonists),
+            defaultValue: true
+        );
+
+        Scribe_Values.Look(
+            ref WordOfImmunityTargetColonists,
+            nameof(WordOfImmunityTargetColonists),
+            defaultValue: true
+        );
+        Scribe_Values.Look(
+            ref WordOfImmunityTargetColonyAnimals,
+            nameof(WordOfImmunityTargetColonyAnimals),
+            defaultValue: true
+        );
+        Scribe_Values.Look(
+            ref WordOfImmunityTargetSlaves,
+            nameof(WordOfImmunityTargetSlaves),
+            defaultValue: true
+        );
+        Scribe_Values.Look(
+            ref WordOfImmunityTargetPrisoners,
+            nameof(WordOfImmunityTargetPrisoners),
+            defaultValue: true
+        );
+        Scribe_Values.Look(
+            ref WordOfImmunityTargetVisitors,
+            nameof(WordOfImmunityTargetVisitors),
+            defaultValue: false
         );
 
         Scribe_Collections.Look(

@@ -50,27 +50,23 @@ internal static class MendHelper
         return thing;
     }
 
-    internal static Pawn? GetRandomPawnWithDamagedEquipment(IEnumerable<Pawn> pawns)
+    internal static IEnumerable<Pawn> GetRandomPawnsWithDamagedEquipment(IEnumerable<Pawn> pawns)
     {
         if (pawns is null)
             throw new ArgumentNullException(nameof(pawns));
 
-        return pawns
-            .Where(colonist =>
-                (
-                    colonist.equipment?.Primary != null
-                    && ThingIsSufficientlyDamaged(colonist.equipment.Primary)
-                )
-                || (
-                    colonist.apparel?.WornApparel.Any(apparel =>
-                        ThingIsSufficientlyDamaged(apparel)
-                        && apparel.def.label.IndexOf(
-                            "warcasket",
-                            StringComparison.OrdinalIgnoreCase
-                        ) < 0
-                    ) == true
-                )
+        return pawns.Where(colonist =>
+            (
+                colonist.equipment?.Primary != null
+                && ThingIsSufficientlyDamaged(colonist.equipment.Primary)
             )
-            .RandomElementWithFallback();
+            || (
+                colonist.apparel?.WornApparel.Any(apparel =>
+                    ThingIsSufficientlyDamaged(apparel)
+                    && apparel.def.label.IndexOf("warcasket", StringComparison.OrdinalIgnoreCase)
+                        < 0
+                ) == true
+            )
+        );
     }
 }

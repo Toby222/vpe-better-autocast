@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using Verse;
@@ -15,14 +16,34 @@ internal static class PawnHelper
         return pawns.Where(pawn => !PawnHasHediff(pawn, hediffDefName));
     }
 
+    internal static Pawn? GetClosestTo(IEnumerable<Pawn> pawns, Pawn origin)
+    {
+        if (origin is null)
+            throw new ArgumentNullException(nameof(origin));
+
+        return pawns.OrderBy(pawn => origin.Position.DistanceTo(pawn.Position)).FirstOrDefault();
+    }
+
+    internal static IEnumerable<Pawn> GetColonyAnimals(IEnumerable<Pawn> pawns)
+    {
+        return pawns.Where(pawn => pawn.Faction?.IsPlayer == true && pawn.RaceProps.Animal);
+    }
+
     internal static IEnumerable<Pawn> GetVisitors(IEnumerable<Pawn> pawns)
     {
-        return pawns.Where(pawn => !pawn.IsColonist && !pawn.IsSlaveOfColony && !pawn.IsPrisoner);
+        return pawns.Where(pawn =>
+            !pawn.Faction.IsPlayer && !pawn.Faction.HostileTo(Faction.OfPlayer)
+        );
     }
 
     internal static IEnumerable<Pawn> GetColonists(IEnumerable<Pawn> pawns)
     {
         return pawns.Where(pawn => pawn.IsColonist);
+    }
+
+    internal static IEnumerable<Pawn> GetImmunizablePawns(IEnumerable<Pawn> pawns)
+    {
+        return pawns.Where(pawn => pawn.health.hediffSet.HasImmunizableNotImmuneHediff());
     }
 
     internal static IEnumerable<Pawn> GetSlaves(IEnumerable<Pawn> pawns)
