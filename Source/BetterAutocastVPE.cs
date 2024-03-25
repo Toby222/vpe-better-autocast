@@ -37,8 +37,7 @@ public class BetterAutocastVPE : Mod
     }
 
 #nullable disable
-    public static AutocastModSettings Settings { get; private set; }
-
+        public static AutocastModSettings Settings { get; private set; }
 #nullable enable
 
     private static Vector2 settingsScrollPosition = new();
@@ -117,36 +116,34 @@ public class BetterAutocastVPE : Mod
             }
         }
 
-        AutocastModSettings settings = GetSettings<AutocastModSettings>();
-
         Listing_Standard listing = new();
 
         Rect viewRect = new(inRect.x, inRect.y, inRect.width - 16f, settingsHeight);
         Widgets.BeginScrollView(inRect, ref settingsScrollPosition, viewRect);
         listing.Begin(new Rect(viewRect.x, viewRect.y, viewRect.width, 10000f));
 
-        settings.AutocastIntervalDrafted = (int)
+        Settings.AutocastIntervalDrafted = (int)
             listing.SliderLabeled(
                 "BetterAutocastVPE.AutocastIntervalDrafted".Translate(
-                    settings.AutocastIntervalDrafted
+                    Settings.AutocastIntervalDrafted
                 ),
-                settings.AutocastIntervalDrafted,
+                Settings.AutocastIntervalDrafted,
                 1f,
                 10000f,
                 tooltip: "BetterAutocastVPE.AutocastIntervalDrafted.Description".Translate(
-                    settings.AutocastIntervalDrafted
+                    Settings.AutocastIntervalDrafted
                 )
             );
-        settings.AutocastIntervalUndrafted = (int)
+        Settings.AutocastIntervalUndrafted = (int)
             listing.SliderLabeled(
                 "BetterAutocastVPE.AutocastIntervalUndrafted".Translate(
-                    settings.AutocastIntervalUndrafted
+                    Settings.AutocastIntervalUndrafted
                 ),
-                settings.AutocastIntervalUndrafted,
+                Settings.AutocastIntervalUndrafted,
                 1f,
                 10000f,
                 tooltip: "BetterAutocastVPE.AutocastIntervalUndrafted.Description".Translate(
-                    settings.AutocastIntervalUndrafted
+                    Settings.AutocastIntervalUndrafted
                 )
             );
 
@@ -154,23 +151,23 @@ public class BetterAutocastVPE : Mod
 
         AbilityHeader(listing, "VPE_Mend");
 
-        settings.MendHealthThreshold = listing.SliderLabeled(
+        Settings.MendHealthThreshold = listing.SliderLabeled(
             "BetterAutocastVPE.MendHealthThreshold".Translate(
-                settings.MendHealthThreshold.ToString("P")
+                Settings.MendHealthThreshold.ToString("P")
             ),
-            settings.MendHealthThreshold,
+            Settings.MendHealthThreshold,
             0.0f,
             1.0f,
             tooltip: "BetterAutocastVPE.MendHealthThreshold.Description".Translate()
         );
-        listing.CheckboxLabeled("BetterAutocastVPE.MendPawns".Translate(), ref settings.MendPawns);
+        listing.CheckboxLabeled("BetterAutocastVPE.MendPawns".Translate(), ref Settings.MendPawns);
         listing.CheckboxLabeled(
             "BetterAutocastVPE.MendInStockpile".Translate(),
-            ref settings.MendInStockpile
+            ref Settings.MendInStockpile
         );
         listing.CheckboxLabeled(
             "BetterAutocastVPE.MendInStorage".Translate(),
-            ref settings.MendInStorage
+            ref Settings.MendInStorage
         );
 
         listing.GapLine();
@@ -178,11 +175,11 @@ public class BetterAutocastVPE : Mod
         AbilityHeader(listing, "VPE_EnchantQuality");
         listing.CheckboxLabeled(
             "BetterAutocastVPE.EnchantInStockpile".Translate(),
-            ref settings.EnchantInStockpile
+            ref Settings.EnchantInStockpile
         );
         listing.CheckboxLabeled(
             "BetterAutocastVPE.EnchantInStorage".Translate(),
-            ref settings.EnchantInStorage
+            ref Settings.EnchantInStorage
         );
 
         listing.GapLine();
@@ -191,30 +188,30 @@ public class BetterAutocastVPE : Mod
 
         listing.CheckboxLabeled(
             "BetterAutocastVPE.StealVitalityFromPrisoners".Translate(),
-            ref settings.StealVitalityFromPrisoners
+            ref Settings.StealVitalityFromPrisoners
         );
         listing.CheckboxLabeled(
             "BetterAutocastVPE.StealVitalityFromSlaves".Translate(),
-            ref settings.StealVitalityFromSlaves
+            ref Settings.StealVitalityFromSlaves
         );
         listing.CheckboxLabeled(
             "BetterAutocastVPE.StealVitalityFromColonists".Translate(),
-            ref settings.StealVitalityFromColonists
+            ref Settings.StealVitalityFromColonists
         );
         listing.CheckboxLabeled(
             "BetterAutocastVPE.StealVitalityFromVisitors".Translate(),
-            ref settings.StealVitalityFromVisitors
+            ref Settings.StealVitalityFromVisitors
         );
 
         listing.GapLine();
 
         AbilityHeader(listing, "VPE_WordofJoy");
 
-        settings.WordOfJoyMoodThreshold = listing.SliderLabeled(
+        Settings.WordOfJoyMoodThreshold = listing.SliderLabeled(
             "BetterAutocastVPE.WordOfJoyMoodThreshold".Translate(
-                settings.WordOfJoyMoodThreshold.ToString("P")
+                Settings.WordOfJoyMoodThreshold.ToString("P")
             ),
-            settings.WordOfJoyMoodThreshold,
+            Settings.WordOfJoyMoodThreshold,
             0.0f,
             1.0f,
             tooltip: "BetterAutocastVPE.WordOfJoyMoodThreshold.Description".Translate()
@@ -232,11 +229,11 @@ public class BetterAutocastVPE : Mod
 
             listing.CheckboxLabeled(
                 "BetterAutocastVPE.BrainLeechTargetPrisoners".Translate(),
-                ref settings.BrainLeechTargetPrisoners
+                ref Settings.BrainLeechTargetPrisoners
             );
             listing.CheckboxLabeled(
                 "BetterAutocastVPE.BrainLeechTargetSlaves".Translate(),
-                ref settings.BrainLeechTargetSlaves
+                ref Settings.BrainLeechTargetSlaves
             );
 
             listing.GapLine();

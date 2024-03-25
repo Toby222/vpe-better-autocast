@@ -40,6 +40,11 @@ internal static class PsycastingHandler
             }
         );
 
+    internal static bool HasHandler(string abilityDefName)
+    {
+        return abilityHandlers.ContainsKey(abilityDefName);
+    }
+
     internal static bool GetsCastWhileDrafted(string abilityDefName)
     {
         return BetterAutocastVPE.Settings.DraftedAutocastDefs.Contains(abilityDefName);

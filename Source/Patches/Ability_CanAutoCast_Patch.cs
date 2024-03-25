@@ -13,16 +13,7 @@ internal static class Ability_CanAutocast_Patch
         if (__instance is null)
             throw new ArgumentNullException(nameof(__instance));
 
-        if (
-            __instance.def.defName == "VPE_PsychicGuidance"
-            || __instance.def.defName == "VPE_EnchantQuality"
-            || __instance.def.defName == "VPE_Mend"
-            || __instance.def.defName == "VPE_WordofProductivity"
-            || __instance.def.defName == "VPE_WordofSerenity"
-            || __instance.def.defName == "VPE_WordofJoy"
-        )
-        {
-            __result = true;
-        }
+        if (!__result)
+            __result = __result || PsycastingHandler.HasHandler(__instance.def.defName);
     }
 }

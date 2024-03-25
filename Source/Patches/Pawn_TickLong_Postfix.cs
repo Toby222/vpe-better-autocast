@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using HarmonyLib;
 using Verse;
 using VFECore.Abilities;
@@ -52,7 +51,6 @@ internal static class Pawn_Tick_Postfix
 
         if (pawn.GetComp<CompAbilities>()?.LearnedAbilities is not List<Ability> abilities)
             return;
-
 
         foreach (var ability in abilities)
         {
