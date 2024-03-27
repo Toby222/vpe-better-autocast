@@ -22,32 +22,36 @@ internal static class MendHelper
         return thing.def.useHitPoints && thing.HitPoints < (thing.MaxHitPoints * DamageThreshold);
     }
 
-    internal static Thing? GetRandomDamagedThingInStorage(Map map)
+    internal static Thing? GetRandomAllowedDamagedThingInStorage(Map map, Pawn pawn)
     {
         if (map is null)
             throw new ArgumentNullException(nameof(map));
+        if (pawn is null)
+            throw new ArgumentNullException(nameof(pawn));
 
-        GetThingsInStorage(map)
+        if (pawn.MapHeld != map)
+            return null;
+
+        return map.GetThingsInStorage()
             .Where(ThingIsSufficientlyDamaged)
-            .TryRandomElementByWeight(
-                thing => (float)thing.HitPoints / thing.MaxHitPoints,
-                out var thing
-            );
-        return thing;
+            .Where(thing => PawnIsDraftedOrThingIsInAllowedArea(pawn, thing))
+            .GetRandomElement(thing => (float)thing.HitPoints / thing.MaxHitPoints);
     }
 
-    internal static Thing GetRandomDamagedThingInStockpile(Map map)
+    internal static Thing? GetRandomAllowedDamagedThingInStockpile(Map map, Pawn pawn)
     {
         if (map is null)
             throw new ArgumentNullException(nameof(map));
+        if (pawn is null)
+            throw new ArgumentNullException(nameof(pawn));
 
-        GetThingsInNamedStockpile(map, "mend")
+        if (pawn.MapHeld != map)
+            return null;
+
+        return map.GetThingsInNamedStockpile("mend")
+            .Where(thing => PawnIsDraftedOrThingIsInAllowedArea(pawn, thing))
             .Where(ThingIsSufficientlyDamaged)
-            .TryRandomElementByWeight(
-                thing => (float)thing.HitPoints / thing.MaxHitPoints,
-                out var thing
-            );
-        return thing;
+            .GetRandomElement(thing => (float)thing.HitPoints / thing.MaxHitPoints);
     }
 
     internal static IEnumerable<Pawn> GetRandomPawnsWithDamagedEquipment(IEnumerable<Pawn> pawns)

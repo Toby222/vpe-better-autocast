@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using Verse;
 using Ability = VFECore.Abilities.Ability;
 
 namespace BetterAutocastVPE.Helpers;
-
-using static ThingHelper;
 
 internal static class EnchantHelper
 {
@@ -17,47 +16,37 @@ internal static class EnchantHelper
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
 
-        return thing.TryGetQuality(out QualityCategory quality)
+        return thing.GetQuality() is QualityCategory quality
             && quality < (QualityCategory)(int)ability.GetPowerForPawn();
     }
 
-    internal static Thing GetRandomEnchantableThingInStockpile(Map map, Ability ability)
+    private static Thing? GetRandomEnchantableThing(IEnumerable<Thing> things, Ability ability)
     {
-        if (map is null)
-            throw new ArgumentNullException(nameof(map));
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
 
-        GetThingsInNamedStockpile(map, "enchant")
+        return things
             .Where(thing => ThingIsEnchantable(thing, ability))
-            .TryRandomElementByWeight(
-                thing =>
-                {
-                    thing.TryGetQuality(out QualityCategory quality);
-                    return (float)quality + 1.0f;
-                },
-                out Thing target
-            );
-        return target;
+            .GetRandomElement(thing => (float)thing.GetQuality()! + 1.0f);
     }
 
-    internal static Thing GetRandomEnchantableThingInStorage(Map map, Ability ability)
+    internal static Thing? GetRandomEnchantableThingInStockpile(Map map, Ability ability)
     {
         if (map is null)
             throw new ArgumentNullException(nameof(map));
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
 
-        GetThingsInStorage(map)
-            .Where(thing => ThingIsEnchantable(thing, ability))
-            .TryRandomElementByWeight(
-                thing =>
-                {
-                    thing.TryGetQuality(out QualityCategory quality);
-                    return (float)quality + 1.0f;
-                },
-                out Thing target
-            );
-        return target;
+        return GetRandomEnchantableThing(map.GetThingsInNamedStockpile("enchant"), ability);
+    }
+
+    internal static Thing? GetRandomEnchantableThingInStorage(Map map, Ability ability)
+    {
+        if (map is null)
+            throw new ArgumentNullException(nameof(map));
+        if (ability is null)
+            throw new ArgumentNullException(nameof(ability));
+
+        return GetRandomEnchantableThing(map.GetThingsInStorage(), ability);
     }
 }

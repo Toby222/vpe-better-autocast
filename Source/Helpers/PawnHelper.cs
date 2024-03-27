@@ -6,6 +6,8 @@ using Verse;
 
 namespace BetterAutocastVPE.Helpers;
 
+using static ThingHelper;
+
 internal static class PawnHelper
 {
     internal static IEnumerable<Pawn> GetPawnsWithoutHediff(
@@ -13,15 +15,16 @@ internal static class PawnHelper
         string hediffDefName
     )
     {
-        return pawns.Where(pawn => !PawnHasHediff(pawn, hediffDefName));
+        return pawns.Where(pawn => !pawn.HasHediff(hediffDefName));
     }
 
-    internal static Pawn? GetClosestTo(IEnumerable<Pawn> pawns, Pawn origin)
+    internal static T? GetClosestTo<T>(IEnumerable<T> things, Thing origin)
+        where T : Thing
     {
         if (origin is null)
             throw new ArgumentNullException(nameof(origin));
 
-        return pawns.OrderBy(pawn => origin.Position.DistanceTo(pawn.Position)).FirstOrDefault();
+        return things.OrderBy(pawn => origin.Position.DistanceTo(pawn.Position)).FirstOrDefault();
     }
 
     internal static IEnumerable<Pawn> GetColonyAnimals(IEnumerable<Pawn> pawns)
@@ -58,7 +61,7 @@ internal static class PawnHelper
 
     internal static IEnumerable<Pawn> GetPawnsNotDown(IEnumerable<Pawn> pawns)
     {
-        return pawns.Where(pawn => !PawnIsDown(pawn));
+        return pawns.Where(pawn => !pawn.PawnIsDown());
     }
 
     internal static IEnumerable<Pawn> GetPawnsWithMentalBreak(IEnumerable<Pawn> pawns)
@@ -73,13 +76,13 @@ internal static class PawnHelper
             .FirstOrDefault();
     }
 
-    internal static bool PawnHasHediff(Pawn pawn, string hediffDefName)
+    internal static bool HasHediff(this Pawn pawn, string hediffDefName)
     {
         return pawn?.health?.hediffSet?.hediffs.Any(hediff => hediff.def.defName == hediffDefName)
             ?? false;
     }
 
-    internal static bool PawnIsDown(Pawn pawn)
+    internal static bool PawnIsDown(this Pawn pawn)
     {
         return pawn?.CurJobDef == JobDefOf.LayDown
             || pawn?.jobs?.curDriver?.asleep == true
@@ -92,11 +95,12 @@ internal static class PawnHelper
                 pawn != referencePawn
                 && !pawn.Dead
                 && pawn.Spawned
-                && (pawn.Position - referencePawn.Position).LengthHorizontal <= range
+                && pawn.Position.InHorDistOf(referencePawn.Position, range)
+                && PawnIsDraftedOrThingIsInAllowedArea(referencePawn, pawn)
             ) ?? Enumerable.Empty<Pawn>();
     }
 
-    internal static bool PawnCanCast(Pawn pawn)
+    internal static bool CanPsycast(this Pawn pawn)
     {
         return pawn != null
             && pawn.CurJobDef != JobDefOf.LayDown

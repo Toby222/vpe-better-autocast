@@ -40,7 +40,7 @@ internal static class Pawn_Tick_Postfix
         if (!pawn.IsColonistPlayerControlled)
             return;
 
-        if (!PawnCanCast(pawn))
+        if (!pawn.CanPsycast())
             return;
 
         if (pawn.GetComp<CompAbilities>()?.LearnedAbilities is not List<Ability> abilities)

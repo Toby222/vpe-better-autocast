@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
     <BetterAutocastVPE.SettingsCategory>Better Autocasting for VPE</BetterAutocastVPE.SettingsCategory>
+    <BetterAutocastVPE.Clarification>"In range" below considers allowed areas when undrafted, but ignores them when drafted.</BetterAutocastVPE.Clarification>
     <BetterAutocastVPE.TargetSelf>Target self</BetterAutocastVPE.TargetSelf>
     <BetterAutocastVPE.TargetColonists>Target colonists</BetterAutocastVPE.TargetColonists>
     <BetterAutocastVPE.TargetColonyAnimals>Target colony animals</BetterAutocastVPE.TargetColonyAnimals>
@@ -13,15 +14,15 @@
     <BetterAutocastVPE.VPE_ControlledFrenzy.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_ControlledFrenzy.Explanation>
     <BetterAutocastVPE.VPE_Darkvision.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target non-downed colonist without the buff in casting range.</BetterAutocastVPE.VPE_Darkvision.Explanation>
     <BetterAutocastVPE.VPE_Eclipse.Explanation>Will autocast when there is no ongoing eclipse</BetterAutocastVPE.VPE_Eclipse.Explanation>
-    <BetterAutocastVPE.VPE_EnchantQuality.Explanation>Will look for enchantable items in the order listed below.\n\nWhen looking for items in stockpiles, will only look in zones containing the word "enchant".\nFor example: `Enchanting`, `enchant`, `The Enchantress of Florence`</BetterAutocastVPE.VPE_EnchantQuality.Explanation>
+    <BetterAutocastVPE.VPE_EnchantQuality.Explanation>Will look for enchantable items in the order listed below.\nChecks for allowed area.\n\nWhen looking for items in stockpiles, will only look in zones containing the word "enchant".\nFor example: `Enchanting`, `enchant`, `The Enchantress of Florence`</BetterAutocastVPE.VPE_EnchantQuality.Explanation>
     <BetterAutocastVPE.VPE_FiringFocus.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_FiringFocus.Explanation>
     <BetterAutocastVPE.VPE_GuidedShot.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_GuidedShot.Explanation>
     <BetterAutocastVPE.VPE_Invisibility.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target non-downed colonist without the buff in casting range.</BetterAutocastVPE.VPE_Invisibility.Explanation>
-    <BetterAutocastVPE.VPE_Mend.Explanation>Will look for damaged items in the order listed below.\n\nWhen looking for items in stockpiles, will only look in zones containing the word "mend".\nFor example: `Mending`, `mend`, `The First Amendment`</BetterAutocastVPE.VPE_Mend.Explanation>
+    <BetterAutocastVPE.VPE_Mend.Explanation>Will look for damaged items in the order listed below.\nChecks for allowed area.\n\nWhen looking for items in stockpiles, will only look in zones containing the word "mend".\nFor example: `Mending`, `mend`, `The First Amendment`</BetterAutocastVPE.VPE_Mend.Explanation>
     <BetterAutocastVPE.VPE_PsychicGuidance.Explanation>Targets a random non-downed colonist in range that doesn't have the Psychic Guidance buff.</BetterAutocastVPE.VPE_PsychicGuidance.Explanation>
     <BetterAutocastVPE.VPE_SpeedBoost.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_SpeedBoost.Explanation>
     <BetterAutocastVPE.VPE_StealVitality.Explanation>Targets the pawn with highest psychic sensitivity in range, prioritizing by group in the order below.\nThat is, target prisoners first, if no prisoners are available, then target slaves, and so on.</BetterAutocastVPE.VPE_StealVitality.Explanation>
-    <BetterAutocastVPE.VPE_WordofImmunity.Explanation>Will target the closest pawn with an immunizable disease that does not have the Psychic Immunity buff in range, prioritizing by group in the order below.\nThat is, target colonists first, if no colonists are available, then target colony animals, and so on.</BetterAutocastVPE.VPE_WordofImmunity.Explanation>
+    <BetterAutocastVPE.VPE_WordofImmunity.Explanation>Will target the closest pawn in range with an immunizable disease that does not have the Psychic Immunity buff, prioritizing by group in the order below.\nThat is, target colonists first, if no colonists are available, then target colony animals, and so on.</BetterAutocastVPE.VPE_WordofImmunity.Explanation>
     <BetterAutocastVPE.VPE_WordofJoy.Explanation>Targets the closest non-downed colonist in range without the Joyfuzz effect.</BetterAutocastVPE.VPE_WordofJoy.Explanation>
     <BetterAutocastVPE.VPE_WordofProductivity.Explanation>Targets a random non-downed colonist in range that doesn't have the Productivity buff.</BetterAutocastVPE.VPE_WordofProductivity.Explanation>
     <BetterAutocastVPE.VPE_WordofSerenity.Explanation>Targets the closest pawn in range with an ongoing mental state.\nThis can target any pawn, including visitors and animals.</BetterAutocastVPE.VPE_WordofSerenity.Explanation>

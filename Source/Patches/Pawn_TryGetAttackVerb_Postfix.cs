@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BetterAutocastVPE.Helpers;
 using HarmonyLib;
 using Verse;
 using VFECore.Abilities;
@@ -44,42 +45,32 @@ internal static class Pawn_TryGetAttackVerb_Postfix
         //     select ab.verb
         // ).ToList();
         if (list.Count == 0)
-        {
             return;
-        }
 
-        if (target != null)
+        if (target is not null)
         {
-            if (
-                (
-                    from x in list
-                    where x.ability.AICanUseOn(target)
-                    select x into ve
-                    select new Tuple<Verb, float>(ve, ve.ability.Chance)
-                )
-                    .AddItem(new Tuple<Verb, float>(__result, 1f))
-                    .TryRandomElementByWeight((Tuple<Verb, float> t) => t.Item2, out var result)
-            )
+            var result = list.Where(x => x.ability.AICanUseOn(target))
+                .Select(x => new Tuple<Verb, float>(x, x.ability.Chance))
+                .AddItem(new Tuple<Verb, float>(__result, 1f))
+                .GetRandomElement(t => t.Item2);
+
+            if (result is not null)
             {
                 __result = result.Item1;
             }
         }
         else
         {
-            Verb verb = list.AddItem(__result).MaxBy((Verb ve) => ve.verbProps.range);
-            __result = verb;
+            __result = list.AddItem(__result).MaxBy((Verb ve) => ve.verbProps.range);
         }
     }
 
     private static bool AbilityIsBlacklisted(Ability ab)
     {
-        switch (ab.def.defName)
+        return ab.def.defName switch
         {
-            case "VPE_StealVitality":
-            case "VPEP_BrainLeech":
-                return true;
-            default:
-                return false;
-        }
+            "VPE_StealVitality" or "VPEP_BrainLeech" => true,
+            _ => false,
+        };
     }
 }
