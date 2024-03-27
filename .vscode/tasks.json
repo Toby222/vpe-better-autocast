@@ -26,9 +26,7 @@
             "problemMatcher": [
                 "$msCompile"
             ],
-            "dependsOn": [
-                "set up mod directory"
-            ]
+            "dependsOn": []
         },
         {
             "label": "build mod (Release)",
@@ -41,9 +39,7 @@
             "problemMatcher": [
                 "$msCompile"
             ],
-            "dependsOn": [
-                "set up mod directory"
-            ]
+            "dependsOn": []
         },
         {
             "label": "run game (Debug)",
@@ -54,9 +50,10 @@
             },
             "command": ".vscode/launch.sh",
             "problemMatcher": [],
+            "dependsOrder": "sequence",
             "dependsOn": [
-                "set up mod directory",
-                "build mod (Debug)"
+                "build mod (Debug)",
+                "set up mod directory"
             ]
         },
         {
@@ -68,9 +65,10 @@
             },
             "command": ".vscode/launch.sh",
             "problemMatcher": [],
+            "dependsOrder": "sequence",
             "dependsOn": [
-                "set up mod directory",
-                "build mod (Release)"
+                "build mod (Release)",
+                "set up mod directory"
             ]
         },
         {
@@ -82,9 +80,10 @@
             },
             "command": ".vscode/launch.sh -quicktest",
             "problemMatcher": [],
+            "dependsOrder": "sequence",
             "dependsOn": [
-                "set up mod directory",
-                "build mod (Debug)"
+                "build mod (Debug)",
+                "set up mod directory"
             ]
         },
         {
