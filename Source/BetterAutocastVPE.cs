@@ -388,7 +388,9 @@ public class AutocastModSettings : ModSettings
             "VPE_AdrenalineRush",
             "VPE_ControlledFrenzy",
             "VPE_GuidedShot",
+            "VPE_Invisibility",
         };
+
     public HashSet<string> UndraftedAutocastDefs =
         new()
         {
@@ -403,7 +405,6 @@ public class AutocastModSettings : ModSettings
             "VPE_WordofProductivity",
             "VPE_Eclipse",
             "VPE_Darkvision",
-            "VPE_Invisibility",
             "VPE_WordofImmunity",
         };
 
