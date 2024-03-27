@@ -4,10 +4,10 @@
         ".direnv": true,
         ".vscode/obj": true,
         "*/Assemblies/": true,
-        "About/": true,
     },
     "files.readonlyInclude": {
         "log/rimworld.log": true,
+        "About/About.xml": true,
     },
     "omnisharp.organizeImportsOnFormat": true,
     "dotnet.inlayHints.enableInlayHintsForParameters": true,

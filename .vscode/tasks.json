@@ -25,6 +25,9 @@
             "command": ".vscode/build.sh",
             "problemMatcher": [
                 "$msCompile"
+            ],
+            "dependsOn": [
+                "set up mod directory"
             ]
         },
         {
@@ -37,6 +40,9 @@
             "command": ".vscode/build.sh Release",
             "problemMatcher": [
                 "$msCompile"
+            ],
+            "dependsOn": [
+                "set up mod directory"
             ]
         },
         {
@@ -49,7 +55,7 @@
             "command": ".vscode/launch.sh",
             "problemMatcher": [],
             "dependsOn": [
-                "link mod directory",
+                "set up mod directory",
                 "build mod (Debug)"
             ]
         },
@@ -63,7 +69,7 @@
             "command": ".vscode/launch.sh",
             "problemMatcher": [],
             "dependsOn": [
-                "link mod directory",
+                "set up mod directory",
                 "build mod (Release)"
             ]
         },
@@ -77,12 +83,12 @@
             "command": ".vscode/launch.sh -quicktest",
             "problemMatcher": [],
             "dependsOn": [
-                "link mod directory",
+                "set up mod directory",
                 "build mod (Debug)"
             ]
         },
         {
-            "label": "link mod directory",
+            "label": "set up mod directory",
             "type": "shell",
             "group": {
                 "kind": "none"
