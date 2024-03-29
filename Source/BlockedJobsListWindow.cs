@@ -27,13 +27,27 @@ public class BlockedJobsListWindow : Window
     public override void DoWindowContents(Rect inRect2)
     {
         Text.Font = GameFont.Medium;
-        Widgets.Label(new Rect(0f, 0f, inRect2.width - 150f - 17f, 35f), "BetterAutocastVPE.BlockedJobs".Translate());
+        Widgets.Label(
+            new Rect(0f, 0f, inRect2.width - 150f - 17f, 35f),
+            "BetterAutocastVPE.BlockedJobs".Translate()
+        );
         Text.Font = GameFont.Small;
-        Rect inRect = new Rect(0f, 40f, inRect2.width, inRect2.height - 40f - Window.CloseButSize.y);
+        Rect inRect = new Rect(
+            0f,
+            40f,
+            inRect2.width,
+            inRect2.height - 40f - Window.CloseButSize.y
+        );
 
-        BetterAutocastVPE.DebugLog($"{nameof(BlockedJobsListWindow)}.{nameof(listingHeight)} = {listingHeight}");
+        BetterAutocastVPE.DebugLog(
+            $"{nameof(BlockedJobsListWindow)}.{nameof(listingHeight)} = {listingHeight}"
+        );
         Rect viewRect = new(inRect.x, inRect.y, inRect.width - 16f, listingHeight);
-        Widgets.BeginScrollView(inRect.TopPartPixels(inRect.height - Window.CloseButSize.y), ref scrollPosition, viewRect);
+        Widgets.BeginScrollView(
+            inRect.TopPartPixels(inRect.height - Window.CloseButSize.y),
+            ref scrollPosition,
+            viewRect
+        );
         Listing_Standard listing = new();
         listing.Begin(new Rect(viewRect.x, viewRect.y, viewRect.width, float.PositiveInfinity));
 
@@ -44,14 +58,28 @@ public class BlockedJobsListWindow : Window
         float firstColumnWidth = (listing.ColumnWidth - thirdColumnWidth) / 2f;
         float secondColumnWidth = firstColumnWidth;
         float headerHeight = Math.Max(
-            Text.CalcHeight("BetterAutocastVPE.BlockedJobs.Nonexistent.defNameExplanation".Translate(), firstColumnWidth),
-            Text.CalcHeight("BetterAutocastVPE.BlockedJobs.Nonexistent.reportStringExplanation".Translate(), secondColumnWidth)
+            Text.CalcHeight(
+                "BetterAutocastVPE.BlockedJobs.Nonexistent.defNameExplanation".Translate(),
+                firstColumnWidth
+            ),
+            Text.CalcHeight(
+                "BetterAutocastVPE.BlockedJobs.Nonexistent.reportStringExplanation".Translate(),
+                secondColumnWidth
+            )
         );
         Rect headerRow = listing.GetRect(headerHeight);
-        Widgets.Label(headerRow.TakeLeftPart(firstColumnWidth), "BetterAutocastVPE.BlockedJobs.Nonexistent.defNameExplanation".Translate());
-        Widgets.Label(headerRow.TakeLeftPart(secondColumnWidth), "BetterAutocastVPE.BlockedJobs.Nonexistent.reportStringExplanation".Translate());
+        Widgets.Label(
+            headerRow.TakeLeftPart(firstColumnWidth),
+            "BetterAutocastVPE.BlockedJobs.Nonexistent.defNameExplanation".Translate()
+        );
+        Widgets.Label(
+            headerRow.TakeLeftPart(secondColumnWidth),
+            "BetterAutocastVPE.BlockedJobs.Nonexistent.reportStringExplanation".Translate()
+        );
 
-        List<JobDef> allDefsAlphabetic = DefDatabase<JobDef>.AllDefs.OrderBy(def => def.defName[0]).ToList();
+        List<JobDef> allDefsAlphabetic = DefDatabase<JobDef>
+            .AllDefs.OrderBy(def => def.defName[0])
+            .ToList();
         foreach (JobDef jobDef in allDefsAlphabetic)
         {
             float rowHeight = Math.Max(
@@ -78,8 +106,12 @@ public class BlockedJobsListWindow : Window
 
         listing.Label("BetterAutocastVPE.BlockedJobs.Nonexistent.Explanation".Translate());
 
-        HashSet<string> allDefNames = DefDatabase<JobDef>.AllDefs.Select(def => def.defName).ToHashSet();
-        IEnumerable<string> nonexistentDefNames = BetterAutocastVPE.Settings.BlockedJobDefs.Where(defName => !allDefNames.Contains(defName));
+        HashSet<string> allDefNames = DefDatabase<JobDef>
+            .AllDefs.Select(def => def.defName)
+            .ToHashSet();
+        IEnumerable<string> nonexistentDefNames = BetterAutocastVPE.Settings.BlockedJobDefs.Where(
+            defName => !allDefNames.Contains(defName)
+        );
         foreach (string nonexistentDefName in nonexistentDefNames)
         {
             float rowHeight = Text.CalcHeight("X", listing.ColumnWidth - 20f);

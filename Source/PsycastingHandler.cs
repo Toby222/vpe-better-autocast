@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -247,20 +247,13 @@ internal static class PsycastingHandler
 
         Pawn? target = null;
 
-        if (
-            BetterAutocastVPE.Settings.DarkvisionTargetSelf
-            && !pawn.HasHediff("VPE_Darkvision")
-        )
-        {
+        if (BetterAutocastVPE.Settings.DarkvisionTargetSelf && !pawn.HasHediff("VPE_Darkvision"))
             target ??= pawn;
-        }
 
         if (BetterAutocastVPE.Settings.DarkvisionTargetColonists && target is null)
         {
             IEnumerable<Pawn> eligibleTargets = GetPawnsWithoutHediff(
-                GetColonists(
-                    GetPawnsNotDown(GetPawnsInRange(pawn, ability.GetRangeForPawn()))
-                ),
+                GetColonists(GetPawnsNotDown(GetPawnsInRange(pawn, ability.GetRangeForPawn()))),
                 "VPE_Darkvision"
             );
 
@@ -390,20 +383,10 @@ internal static class PsycastingHandler
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
 
-        if (
-            BetterAutocastVPE.Settings.EnchantInStockpile
-            && HandleEnchantByZone(pawn, ability)
-        )
-        {
+        if (BetterAutocastVPE.Settings.EnchantInStockpile && HandleEnchantByZone(pawn, ability))
             return true;
-        }
-        if (
-            BetterAutocastVPE.Settings.EnchantInStorage
-            && HandleEnchantByStorage(pawn, ability)
-        )
-        {
+        if (BetterAutocastVPE.Settings.EnchantInStorage && HandleEnchantByStorage(pawn, ability))
             return true;
-        }
         return false;
     }
 
