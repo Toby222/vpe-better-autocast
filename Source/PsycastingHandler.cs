@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using BetterAutocastVPE.Helpers;
 using RimWorld.Planet;
 using Verse;
 using Ability = VFECore.Abilities.Ability;
@@ -306,7 +305,10 @@ internal static class PsycastingHandler
 
         float range = ability.GetRangeForPawn();
         IEnumerable<Pawn> pawnsInRange = GetPawnsInRange(__instance, range);
-        IEnumerable<Pawn> pawnsWithMentalBreak = GetPawnsWithMentalBreak(pawnsInRange);
+        IEnumerable<Pawn> pawnsWithMentalBreak = GetPawnsWithMentalBreak(pawnsInRange)
+            // TODO: Add proper deny-/allowlist
+            .Where(pawn => pawn.MentalStateDef.defName != "Crying" && pawn.MentalStateDef.defName != "Giggling")
+        ;
 
         Pawn? target = GetClosestTo(pawnsWithMentalBreak, __instance);
 
