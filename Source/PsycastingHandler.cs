@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -27,6 +27,7 @@ internal static class PsycastingHandler
                 { "VPE_BladeFocus", HandleSelfBuff },
                 { "VPE_ControlledFrenzy", HandleSelfBuff },
                 { "VPE_Darkvision", HandleDarkvision },
+                { "VPE_Deathshield", HandleDeathshield },
                 { "VPE_Eclipse", HandleEclipse },
                 { "VPE_EnchantQuality", HandleEnchant },
                 { "VPE_FiringFocus", HandleSelfBuff },
@@ -213,6 +214,35 @@ internal static class PsycastingHandler
             target ??= GetHighestSensitivity(GetColonists(pawnsInRange));
         if (BetterAutocastVPE.Settings.StealVitalityFromVisitors)
             target ??= GetHighestSensitivity(GetVisitors(pawnsInRange));
+
+        return target is not null && CastAbilityOnTarget(ability, target);
+    }
+
+    private static bool HandleDeathshield(Pawn pawn, Ability ability)
+    {
+        if (pawn is null)
+            throw new ArgumentNullException(nameof(pawn));
+        if (ability is null)
+            throw new ArgumentNullException(nameof(ability));
+
+        Pawn? target = null;
+
+        Pawn[] pawnsInRange = GetPawnsWithoutHediff(
+                GetPawnsInRange(pawn, ability.GetRangeForPawn()),
+                "VPE_DeathShield"
+            )
+            .ToArray();
+
+        if (BetterAutocastVPE.Settings.DeathshieldColonists)
+            target ??= GetClosestTo(GetColonists(pawnsInRange), pawn);
+        if (BetterAutocastVPE.Settings.DeathshieldColonyAnimals)
+            target ??= GetClosestTo(GetColonyAnimals(pawnsInRange), pawn);
+        if (BetterAutocastVPE.Settings.DeathshieldSlaves)
+            target ??= GetClosestTo(GetSlaves(pawnsInRange), pawn);
+        if (BetterAutocastVPE.Settings.DeathshieldPrisoners)
+            target ??= GetClosestTo(GetPrisoners(pawnsInRange), pawn);
+        if (BetterAutocastVPE.Settings.DeathshieldVisitors)
+            target ??= GetClosestTo(GetVisitors(pawnsInRange), pawn);
 
         return target is not null && CastAbilityOnTarget(ability, target);
     }

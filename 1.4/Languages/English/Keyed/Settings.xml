@@ -19,6 +19,7 @@
     <BetterAutocastVPE.VPE_BladeFocus.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_BladeFocus.Explanation>
     <BetterAutocastVPE.VPE_ControlledFrenzy.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_ControlledFrenzy.Explanation>
     <BetterAutocastVPE.VPE_Darkvision.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target non-downed colonist without the buff in casting range.</BetterAutocastVPE.VPE_Darkvision.Explanation>
+    <BetterAutocastVPE.VPE_Deathshield.Explanation>Targets the closest pawn without death shield in range, prioritizing by group in the order below.\nThat is, targets colonists firsts, then colony animals if no colonists are available, and so on.</BetterAutocastVPE.VPE_Deathshield.Explanation>
     <BetterAutocastVPE.VPE_Eclipse.Explanation>Will autocast when there is no ongoing eclipse</BetterAutocastVPE.VPE_Eclipse.Explanation>
     <BetterAutocastVPE.VPE_EnchantQuality.Explanation>Will look for enchantable items in the order listed below.\n\nWhen looking for items in stockpiles, will only look in zones containing the word "enchant".\nFor example: `Enchanting`, `enchant`, `The Enchantress of Florence`</BetterAutocastVPE.VPE_EnchantQuality.Explanation>
     <BetterAutocastVPE.VPE_FiringFocus.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_FiringFocus.Explanation>

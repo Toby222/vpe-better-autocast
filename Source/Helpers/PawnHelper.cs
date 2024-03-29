@@ -24,7 +24,7 @@ internal static class PawnHelper
         if (origin is null)
             throw new ArgumentNullException(nameof(origin));
 
-        return things.OrderBy(pawn => origin.Position.DistanceTo(pawn.Position)).FirstOrDefault();
+        return things.OrderBy(thing => origin.Position.DistanceTo(thing.Position)).FirstOrDefault();
     }
 
     internal static IEnumerable<Pawn> GetColonyAnimals(IEnumerable<Pawn> pawns)

@@ -9,41 +9,43 @@ public class AutocastModSettings : ModSettings
     private readonly HashSet<string> defaultDraftedAutocastDefs =
         new()
         {
-            "VPE_SpeedBoost",
-            "VPE_BladeFocus",
-            "VPE_FiringFocus",
             "VPE_AdrenalineRush",
+            "VPE_BladeFocus",
             "VPE_ControlledFrenzy",
+            "VPE_Deathshield",
+            "VPE_FiringFocus",
             "VPE_GuidedShot",
             "VPE_Invisibility",
+            "VPE_SpeedBoost",
         };
     private readonly HashSet<string> defaultUndraftedAutocastDefs =
         new()
         {
-            "VPE_SpeedBoost",
-            "VPE_StealVitality",
-            "VPEP_BrainLeech",
-            "VPE_PsychicGuidance",
+            "VPE_Darkvision",
+            "VPE_Deathshield",
+            "VPE_Eclipse",
             "VPE_EnchantQuality",
             "VPE_Mend",
-            "VPE_WordofJoy",
-            "VPE_WordofSerenity",
-            "VPE_WordofProductivity",
-            "VPE_Eclipse",
-            "VPE_Darkvision",
+            "VPE_PsychicGuidance",
+            "VPE_SpeedBoost",
+            "VPE_StealVitality",
             "VPE_WordofImmunity",
+            "VPE_WordofJoy",
+            "VPE_WordofProductivity",
+            "VPE_WordofSerenity",
+            "VPEP_BrainLeech",
         };
     private readonly HashSet<string> defaultBlockedJobDefs =
         new()
         {
-            "VFEA_GotoTargetAndUseAbility",
-            "VFEA_UseAbility",
-            "LayDown",
-            "Wait_Asleep",
-            "Wait_Downed",
-            "SpectateCeremony",
             "DeliverToBed",
             "Ingest",
+            "LayDown",
+            "SpectateCeremony",
+            "VFEA_GotoTargetAndUseAbility",
+            "VFEA_UseAbility",
+            "Wait_Asleep",
+            "Wait_Downed",
         };
 
     public AutocastModSettings()
@@ -68,6 +70,12 @@ public class AutocastModSettings : ModSettings
     public bool StealVitalityFromSlaves = true;
     public bool StealVitalityFromColonists = true;
     public bool StealVitalityFromVisitors = false;
+
+    public bool DeathshieldColonists = true;
+    public bool DeathshieldColonyAnimals = false;
+    public bool DeathshieldSlaves = false;
+    public bool DeathshieldPrisoners = false;
+    public bool DeathshieldVisitors = false;
 
     public float WordOfJoyMoodThreshold = 0.2f;
 
@@ -130,6 +138,28 @@ public class AutocastModSettings : ModSettings
         Scribe_Values.Look(
             ref StealVitalityFromVisitors,
             nameof(StealVitalityFromVisitors),
+            defaultValue: false
+        );
+
+        Scribe_Values.Look(
+            ref DeathshieldColonists,
+            nameof(DeathshieldColonists),
+            defaultValue: true
+        );
+        Scribe_Values.Look(
+            ref DeathshieldColonyAnimals,
+            nameof(DeathshieldColonyAnimals),
+            defaultValue: true
+        );
+        Scribe_Values.Look(ref DeathshieldSlaves, nameof(DeathshieldSlaves), defaultValue: false);
+        Scribe_Values.Look(
+            ref DeathshieldPrisoners,
+            nameof(DeathshieldPrisoners),
+            defaultValue: false
+        );
+        Scribe_Values.Look(
+            ref DeathshieldVisitors,
+            nameof(DeathshieldVisitors),
             defaultValue: false
         );
 

@@ -219,6 +219,31 @@ public partial class BetterAutocastVPE : Mod
 
         listing.GapLine();
 
+        AbilityHeader(listing, "VPE_Deathshield");
+
+        listing.CheckboxLabeled(
+            "BetterAutocastVPE.TargetColonists".Translate(),
+            ref Settings.DeathshieldColonists
+        );
+        listing.CheckboxLabeled(
+            "BetterAutocastVPE.TargetColonyAnimals".Translate(),
+            ref Settings.DeathshieldColonists
+        );
+        listing.CheckboxLabeled(
+            "BetterAutocastVPE.TargetSlaves".Translate(),
+            ref Settings.DeathshieldSlaves
+        );
+        listing.CheckboxLabeled(
+            "BetterAutocastVPE.TargetPrisoners".Translate(),
+            ref Settings.DeathshieldPrisoners
+        );
+        listing.CheckboxLabeled(
+            "BetterAutocastVPE.TargetVisitors".Translate(),
+            ref Settings.DeathshieldVisitors
+        );
+
+        listing.GapLine();
+
         AbilityHeader(listing, "VPE_WordofJoy");
 
         Settings.WordOfJoyMoodThreshold = listing.SliderLabeled(
