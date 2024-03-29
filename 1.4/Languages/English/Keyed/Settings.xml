@@ -9,6 +9,12 @@
     <BetterAutocastVPE.TargetSlaves>Target slaves</BetterAutocastVPE.TargetSlaves>
     <BetterAutocastVPE.TargetVisitors>Target visitors</BetterAutocastVPE.TargetVisitors>
     <BetterAutocastVPE.TargetEnemies>Target enemies</BetterAutocastVPE.TargetEnemies>
+    <BetterAutocastVPE.BlockedJobs>Better Autocasting for VPE - Blocked Jobs</BetterAutocastVPE.BlockedJobs>
+    <BetterAutocastVPE.BlockedJobs.Explanation>Manage which jobs should not be interrupted for autocasting.</BetterAutocastVPE.BlockedJobs.Explanation>
+    <BetterAutocastVPE.BlockedJobs.Manager.Explanation>A list of all JobDefs and a toggle on if it should <![CDATA[<b><i>not</i></b>]]> be interrupted for autocasting.</BetterAutocastVPE.BlockedJobs.Manager.Explanation>
+    <BetterAutocastVPE.BlockedJobs.Nonexistent.defNameExplanation>The defName of the JobDef</BetterAutocastVPE.BlockedJobs.Nonexistent.defNameExplanation>
+    <BetterAutocastVPE.BlockedJobs.Nonexistent.reportStringExplanation>The reportString of the JobDef</BetterAutocastVPE.BlockedJobs.Nonexistent.reportStringExplanation>
+    <BetterAutocastVPE.BlockedJobs.Nonexistent.Explanation>JobDefs that don't exist but are still configured.\nBecause they are from uninstalled mods, removed by updates, etc.\nThey can be kept without problem or cleaned up here.</BetterAutocastVPE.BlockedJobs.Nonexistent.Explanation>
     <BetterAutocastVPE.VPE_AdrenalineRush.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_AdrenalineRush.Explanation>
     <BetterAutocastVPE.VPE_BladeFocus.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_BladeFocus.Explanation>
     <BetterAutocastVPE.VPE_ControlledFrenzy.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_ControlledFrenzy.Explanation>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using UnityEngine;
@@ -8,7 +9,7 @@ using VFECore.UItils;
 
 namespace BetterAutocastVPE;
 
-public class BetterAutocastVPE : Mod
+public partial class BetterAutocastVPE : Mod
 {
     public BetterAutocastVPE(ModContentPack content)
         : base(content)
@@ -18,12 +19,8 @@ public class BetterAutocastVPE : Mod
 #else
         const string build = "Release";
 #endif
-        Debug.Log(
-            $"Running Better Autocasting for Vanilla Psycasts Expanded Version {Assembly.GetAssembly(typeof(BetterAutocastVPE)).GetName().Version} "
-                + build
-        );
-        Log.Message(
-            $"Running Better Autocasting for Vanilla Psycasts Expanded Version {Assembly.GetAssembly(typeof(BetterAutocastVPE)).GetName().Version} "
+        Log(
+            $"Running Version {Assembly.GetAssembly(typeof(BetterAutocastVPE)).GetName().Version} "
                 + build
         );
 
@@ -38,17 +35,20 @@ public class BetterAutocastVPE : Mod
             )
         )
         {
-            Log.Message("UnregisterPatch succeeded");
+            Log("UnregisterPatch succeeded");
         }
         else
         {
-            Log.Error("UnregisterPatch failed");
+            Error("UnregisterPatch failed");
         }
         harmony.PatchAll();
         Settings = GetSettings<AutocastModSettings>();
+        // In case some of the values were null (e.g. added between versions), write with default values.
+        WriteSettings();
     }
 
-#nullable disable
+#nullable disable // Set in constructor.
+
     public static AutocastModSettings Settings { get; private set; }
 
 #nullable enable
@@ -122,7 +122,7 @@ public class BetterAutocastVPE : Mod
 
         Rect viewRect = new(inRect.x, inRect.y, inRect.width - 16f, settingsHeight);
         Widgets.BeginScrollView(inRect, ref settingsScrollPosition, viewRect);
-        listing.Begin(new Rect(viewRect.x, viewRect.y, viewRect.width, 10000f));
+        listing.Begin(new Rect(viewRect.x, viewRect.y, viewRect.width, float.PositiveInfinity));
 
         listing.Label("BetterAutocastVPE.Clarification".Translate());
 
@@ -152,6 +152,14 @@ public class BetterAutocastVPE : Mod
                     Settings.AutocastIntervalUndrafted
                 )
             );
+
+        listing.GapLine();
+
+        listing.Label("BetterAutocastVPE.BlockedJobs.Explanation".Translate());
+        if (listing.ButtonText("BetterAutocastVPE.BlockedJobs".Translate()))
+        {
+            Find.WindowStack.Add(new BlockedJobsListWindow());
+        }
 
         listing.GapLine();
 
@@ -337,15 +345,53 @@ public class BetterAutocastVPE : Mod
             }
             else
             {
-                Log.Error($"Method '{methodName}' not found in type '{targetType.FullName}'.");
+                Error($"Method '{methodName}' not found in type '{targetType.FullName}'.");
                 return false; // Method not found
             }
         }
         catch (Exception e)
         {
             // Handle any exceptions that may occur during unregistration
-            Log.Error(text: "Error unregistering Harmony patch: " + e);
+            Error("Error unregistering Harmony patch: " + e);
             return false;
         }
+    }
+
+    const string LogPrefix = "Better Autocasting - ";
+
+    public static void DebugError(string message)
+    {
+#if DEBUG
+        Error(message);
+#endif
+    }
+
+    public static void Error(string message)
+    {
+        Verse.Log.Error(LogPrefix + message);
+    }
+
+    public static void DebugWarn(string message)
+    {
+#if DEBUG
+        Warn(message);
+#endif
+    }
+
+    public static void Warn(string message)
+    {
+        Verse.Log.Warning(LogPrefix + message);
+    }
+
+    public static void DebugLog(string message)
+    {
+#if DEBUG
+        Log(message);
+#endif
+    }
+
+    public static void Log(string message)
+    {
+        Verse.Log.Message(LogPrefix + message);
     }
 }

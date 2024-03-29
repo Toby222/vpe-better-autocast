@@ -102,13 +102,13 @@ internal static class PawnHelper
 
     internal static bool CanPsycast(this Pawn pawn)
     {
-        return pawn != null
-            && pawn.CurJobDef != JobDefOf.LayDown
-            && !pawn.Downed
+        return pawn?.Downed == false
             && pawn.HasPsylink
-            && pawn.jobs?.curDriver?.asleep == false
-            && pawn.CurJob?.def.defName != "VFEA_GotoTargetAndUseAbility"
-            && pawn.CurJob?.def.defName != "VFEA_UseAbility";
+            && pawn.Awake()
+            && (
+                pawn.CurJob is null
+                || !BetterAutocastVPE.Settings.BlockedJobDefs.Contains(pawn.CurJobDef.defName)
+            );
     }
 
     internal static IEnumerable<Pawn> GetLowJoyPawns(IEnumerable<Pawn> pawns)

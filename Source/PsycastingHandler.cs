@@ -89,12 +89,21 @@ internal static class PsycastingHandler
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
 
+        string? jobBeforeCast = __instance.CurJobDef?.defName ?? "<none>";
+
         if (
             (!__instance.Drafted && GetsCastWhileUndrafted(ability.def.defName))
             || (__instance.Drafted && GetsCastWhileDrafted(ability.def.defName))
         )
         {
-            return abilityHandlers[ability.def.defName](__instance, ability);
+            bool wasAutocast = abilityHandlers[ability.def.defName](__instance, ability);
+            if (wasAutocast)
+            {
+                BetterAutocastVPE.Log(
+                    $"{__instance.Name} autocast {ability.def.defName} - previous job: {jobBeforeCast}"
+                );
+            }
+            return wasAutocast;
         }
 
         return false;
