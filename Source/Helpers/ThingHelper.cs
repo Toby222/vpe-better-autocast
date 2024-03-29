@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using Verse;
+using Verse.AI;
 
 namespace BetterAutocastVPE.Helpers;
 
@@ -41,20 +42,14 @@ internal static class ThingHelper
             .SelectMany(buildingStorage => buildingStorage.slotGroup.HeldThings);
     }
 
-    internal static bool PawnIsDraftedOrThingIsInAllowedArea(Pawn pawn, Thing thing)
+    internal static bool PawnIsDraftedOrThingIsAllowedAndReservable(Pawn pawn, Thing thing)
     {
         if (pawn is null)
             throw new ArgumentNullException(nameof(pawn));
         if (thing is null)
             throw new ArgumentNullException(nameof(thing));
 
-        if (pawn.Drafted)
-            return true;
-
-        if (thing.MapHeld is not Map thingMap || thingMap != pawn.MapHeld)
-            return false;
-
-        return thing.PositionHeld.InAllowedArea(pawn);
+        return pawn.Drafted || (!thing.IsForbidden(pawn) && pawn.CanReserve(thing));
     }
 
     internal static T? GetRandomElement<T>(

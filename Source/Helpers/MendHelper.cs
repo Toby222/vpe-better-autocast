@@ -34,7 +34,7 @@ internal static class MendHelper
 
         return map.GetThingsInStorage()
             .Where(ThingIsSufficientlyDamaged)
-            .Where(thing => PawnIsDraftedOrThingIsInAllowedArea(pawn, thing))
+            .Where(thing => PawnIsDraftedOrThingIsAllowedAndReservable(pawn, thing))
             .GetRandomElement(thing => (float)thing.HitPoints / thing.MaxHitPoints);
     }
 
@@ -49,7 +49,7 @@ internal static class MendHelper
             return null;
 
         return map.GetThingsInNamedStockpile("mend")
-            .Where(thing => PawnIsDraftedOrThingIsInAllowedArea(pawn, thing))
+            .Where(thing => PawnIsDraftedOrThingIsAllowedAndReservable(pawn, thing))
             .Where(ThingIsSufficientlyDamaged)
             .GetRandomElement(thing => (float)thing.HitPoints / thing.MaxHitPoints);
     }

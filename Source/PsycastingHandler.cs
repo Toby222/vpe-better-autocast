@@ -307,8 +307,9 @@ internal static class PsycastingHandler
         IEnumerable<Pawn> pawnsInRange = GetPawnsInRange(__instance, range);
         IEnumerable<Pawn> pawnsWithMentalBreak = GetPawnsWithMentalBreak(pawnsInRange)
             // TODO: Add proper deny-/allowlist
-            .Where(pawn => pawn.MentalStateDef.defName != "Crying" && pawn.MentalStateDef.defName != "Giggling")
-        ;
+            .Where(pawn =>
+                pawn.MentalStateDef.defName != "Crying" && pawn.MentalStateDef.defName != "Giggling"
+            );
 
         Pawn? target = GetClosestTo(pawnsWithMentalBreak, __instance);
 

@@ -18,8 +18,9 @@ public class BetterAutocastVPE : Mod
 #else
         const string build = "Release";
 #endif
-        Debug.Log($"Running Better Autocasting for Vanilla Psycasts Expanded Version {Assembly.GetAssembly(typeof(BetterAutocastVPE)).GetName().Version} "
-                    + build
+        Debug.Log(
+            $"Running Better Autocasting for Vanilla Psycasts Expanded Version {Assembly.GetAssembly(typeof(BetterAutocastVPE)).GetName().Version} "
+                + build
         );
         Log.Message(
             $"Running Better Autocasting for Vanilla Psycasts Expanded Version {Assembly.GetAssembly(typeof(BetterAutocastVPE)).GetName().Version} "

@@ -96,7 +96,7 @@ internal static class PawnHelper
                 && !pawn.Dead
                 && pawn.Spawned
                 && pawn.Position.InHorDistOf(referencePawn.Position, range)
-                && PawnIsDraftedOrThingIsInAllowedArea(referencePawn, pawn)
+                && PawnIsDraftedOrThingIsAllowedAndReservable(referencePawn, pawn)
             ) ?? Enumerable.Empty<Pawn>();
     }
 
