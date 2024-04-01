@@ -5,7 +5,7 @@ using UnityEngine;
 using Verse;
 using VFECore.UItils;
 
-namespace BetterAutocastVPE;
+namespace BetterAutocastVPE.Settings.Windows;
 
 public class BlockedJobsListWindow : Window
 {
@@ -20,7 +20,7 @@ public class BlockedJobsListWindow : Window
     private static float listingHeight;
 
     private Vector2 scrollPosition = new();
-    public override Vector2 InitialSize => new Vector2(900f, 700f);
+    public override Vector2 InitialSize => new(900f, 700f);
 
     public override RimWorld.QuickSearchWidget CommonSearchWidget => base.CommonSearchWidget;
 
@@ -32,12 +32,7 @@ public class BlockedJobsListWindow : Window
             "BetterAutocastVPE.BlockedJobs".Translate()
         );
         Text.Font = GameFont.Small;
-        Rect inRect = new Rect(
-            0f,
-            40f,
-            inRect2.width,
-            inRect2.height - 40f - Window.CloseButSize.y
-        );
+        Rect inRect = new(0f, 40f, inRect2.width, inRect2.height - 40f - Window.CloseButSize.y);
 
         BetterAutocastVPE.DebugLog(
             $"{nameof(BlockedJobsListWindow)}.{nameof(listingHeight)} = {listingHeight}"
@@ -54,32 +49,35 @@ public class BlockedJobsListWindow : Window
         listing.Label("BetterAutocastVPE.BlockedJobs.Manager.Explanation".Translate());
         listing.GapLine();
 
-        float thirdColumnWidth = 24f;
+        const float thirdColumnWidth = 24f;
         float firstColumnWidth = (listing.ColumnWidth - thirdColumnWidth) / 2f;
         float secondColumnWidth = firstColumnWidth;
         float headerHeight = Math.Max(
             Text.CalcHeight(
-                "BetterAutocastVPE.BlockedJobs.Nonexistent.defNameExplanation".Translate(),
+                "BetterAutocastVPE.BlockedJobs.defNameExplanation".Translate(),
                 firstColumnWidth
             ),
             Text.CalcHeight(
-                "BetterAutocastVPE.BlockedJobs.Nonexistent.reportStringExplanation".Translate(),
+                "BetterAutocastVPE.BlockedJobs.reportStringExplanation".Translate(),
                 secondColumnWidth
             )
         );
         Rect headerRow = listing.GetRect(headerHeight);
         Widgets.Label(
             headerRow.TakeLeftPart(firstColumnWidth),
-            "BetterAutocastVPE.BlockedJobs.Nonexistent.defNameExplanation".Translate()
+            "BetterAutocastVPE.BlockedJobs.defNameExplanation".Translate()
         );
         Widgets.Label(
             headerRow.TakeLeftPart(secondColumnWidth),
-            "BetterAutocastVPE.BlockedJobs.Nonexistent.reportStringExplanation".Translate()
+            "BetterAutocastVPE.BlockedJobs.reportStringExplanation".Translate()
         );
+
+        listing.Gap();
 
         List<JobDef> allDefsAlphabetic = DefDatabase<JobDef>
             .AllDefs.OrderBy(def => def.defName[0])
             .ToList();
+        bool highlight = false;
         foreach (JobDef jobDef in allDefsAlphabetic)
         {
             float rowHeight = Math.Max(
@@ -87,6 +85,14 @@ public class BlockedJobsListWindow : Window
                 Text.CalcHeight(jobDef.reportString.TrimEnd('.'), secondColumnWidth)
             );
             Rect jobDefRow = listing.GetRect(rowHeight);
+            if (highlight)
+            {
+                Color oldColor = GUI.color;
+                GUI.color = new Color(0.75f, 0.75f, 0.85f, 1f);
+                GUI.DrawTexture(jobDefRow, TexUI.HighlightTex);
+                GUI.color = oldColor;
+            }
+            highlight = !highlight;
             Rect toggleButtonRect = jobDefRow.TakeRightPart(thirdColumnWidth);
             Widgets.Label(jobDefRow.LeftHalf(), jobDef.defName);
             Widgets.Label(jobDefRow.RightHalf(), jobDef.reportString.TrimEnd('.'));
@@ -109,18 +115,33 @@ public class BlockedJobsListWindow : Window
         HashSet<string> allDefNames = DefDatabase<JobDef>
             .AllDefs.Select(def => def.defName)
             .ToHashSet();
-        IEnumerable<string> nonexistentDefNames = BetterAutocastVPE.Settings.BlockedJobDefs.Where(
-            defName => !allDefNames.Contains(defName)
-        );
+        HashSet<string> nonexistentDefNames = BetterAutocastVPE
+            .Settings.BlockedJobDefs.Where(defName => !allDefNames.Contains(defName))
+            .ToHashSet();
+
+        highlight = false;
         foreach (string nonexistentDefName in nonexistentDefNames)
         {
-            float rowHeight = Text.CalcHeight("X", listing.ColumnWidth - 20f);
+            float rowHeight = Math.Max(
+                Text.CalcHeight(nonexistentDefName, listing.ColumnWidth - 20f),
+                Text.CalcHeight("X", 20f)
+            );
             Rect row = listing.GetRect(rowHeight);
+            if (highlight)
+            {
+                Color oldColor = GUI.color;
+                GUI.color = new Color(0.75f, 0.75f, 0.85f, 1f);
+                GUI.DrawTexture(row, TexUI.HighlightTex);
+                GUI.color = oldColor;
+            }
+            highlight = !highlight;
             Rect buttonRect = row.TakeRightPart(rowHeight);
             Widgets.Label(row, nonexistentDefName);
             if (Widgets.ButtonText(buttonRect, "X"))
                 BetterAutocastVPE.Settings.BlockedJobDefs.Remove(nonexistentDefName);
         }
+        if (nonexistentDefNames.Count == 0)
+            listing.Label("BetterAutocastVPE.NoNonexistentDefs".Translate());
 
         listingHeight = listing.CurHeight;
         listing.End();

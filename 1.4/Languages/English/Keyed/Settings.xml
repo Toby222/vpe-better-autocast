@@ -2,18 +2,20 @@
 <LanguageData>
     <BetterAutocastVPE.SettingsCategory>Better Autocasting for VPE</BetterAutocastVPE.SettingsCategory>
     <BetterAutocastVPE.Clarification>"In range" below considers allowed areas when undrafted, but ignores them when drafted.\n\nForbidden targets are ignored unless drafted.\nThis includes checking if they are in allowed areas, or reserved by a pawn.</BetterAutocastVPE.Clarification>
+    <BetterAutocastVPE.NoNonexistentDefs>&lt;b&gt;No nonexistent defs configured, nothing to do here.&lt;/b&gt;</BetterAutocastVPE.NoNonexistentDefs>
     <BetterAutocastVPE.TargetSelf>Target self</BetterAutocastVPE.TargetSelf>
     <BetterAutocastVPE.TargetColonists>Target colonists</BetterAutocastVPE.TargetColonists>
     <BetterAutocastVPE.TargetColonyAnimals>Target colony animals</BetterAutocastVPE.TargetColonyAnimals>
+    <BetterAutocastVPE.TargetWildAnimals>Target wild animals</BetterAutocastVPE.TargetWildAnimals>
     <BetterAutocastVPE.TargetPrisoners>Target prisoners</BetterAutocastVPE.TargetPrisoners>
     <BetterAutocastVPE.TargetSlaves>Target slaves</BetterAutocastVPE.TargetSlaves>
     <BetterAutocastVPE.TargetVisitors>Target visitors</BetterAutocastVPE.TargetVisitors>
     <BetterAutocastVPE.TargetEnemies>Target enemies</BetterAutocastVPE.TargetEnemies>
-    <BetterAutocastVPE.BlockedJobs>Better Autocasting for VPE - Blocked Jobs</BetterAutocastVPE.BlockedJobs>
+    <BetterAutocastVPE.BlockedJobs>Blocked Jobs</BetterAutocastVPE.BlockedJobs>
     <BetterAutocastVPE.BlockedJobs.Explanation>Manage which jobs should not be interrupted for autocasting.</BetterAutocastVPE.BlockedJobs.Explanation>
     <BetterAutocastVPE.BlockedJobs.Manager.Explanation>A list of all JobDefs and a toggle on if it should <![CDATA[<b><i>not</i></b>]]> be interrupted for autocasting.</BetterAutocastVPE.BlockedJobs.Manager.Explanation>
-    <BetterAutocastVPE.BlockedJobs.Nonexistent.defNameExplanation>The defName of the JobDef</BetterAutocastVPE.BlockedJobs.Nonexistent.defNameExplanation>
-    <BetterAutocastVPE.BlockedJobs.Nonexistent.reportStringExplanation>The reportString of the JobDef</BetterAutocastVPE.BlockedJobs.Nonexistent.reportStringExplanation>
+    <BetterAutocastVPE.BlockedJobs.defNameExplanation>The defName of the JobDef</BetterAutocastVPE.BlockedJobs.defNameExplanation>
+    <BetterAutocastVPE.BlockedJobs.reportStringExplanation>The reportString of the JobDef</BetterAutocastVPE.BlockedJobs.reportStringExplanation>
     <BetterAutocastVPE.BlockedJobs.Nonexistent.Explanation>JobDefs that don't exist but are still configured.\nBecause they are from uninstalled mods, removed by updates, etc.\nThey can be kept without problem or cleaned up here.</BetterAutocastVPE.BlockedJobs.Nonexistent.Explanation>
     <BetterAutocastVPE.VPE_AdrenalineRush.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_AdrenalineRush.Explanation>
     <BetterAutocastVPE.VPE_BladeFocus.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_BladeFocus.Explanation>
@@ -32,7 +34,7 @@
     <BetterAutocastVPE.VPE_WordofImmunity.Explanation>Will target the closest pawn in range with an immunizable disease that does not have the Psychic Immunity buff, prioritizing by group in the order below.\nThat is, target colonists first, if no colonists are available, then target colony animals, and so on.</BetterAutocastVPE.VPE_WordofImmunity.Explanation>
     <BetterAutocastVPE.VPE_WordofJoy.Explanation>Targets the closest non-downed colonist in range without the Joyfuzz effect.</BetterAutocastVPE.VPE_WordofJoy.Explanation>
     <BetterAutocastVPE.VPE_WordofProductivity.Explanation>Targets a random non-downed colonist in range that doesn't have the Productivity buff.</BetterAutocastVPE.VPE_WordofProductivity.Explanation>
-    <BetterAutocastVPE.VPE_WordofSerenity.Explanation>Targets the closest pawn in range with an ongoing mental state.\nThis can target any pawn, including visitors and animals.\nIgnores babies' crying and giggling mental states.</BetterAutocastVPE.VPE_WordofSerenity.Explanation>
+    <BetterAutocastVPE.VPE_WordofSerenity.Explanation>Targets the closest pawn in range with an ongoing mental state.</BetterAutocastVPE.VPE_WordofSerenity.Explanation>
     <BetterAutocastVPE.VPEP_BrainLeech.Explanation>Targets the closest pawn in range, prioritzing by group in the order below.\nThat is, target prisoners first, if no prisoners are available, then target slaves.</BetterAutocastVPE.VPEP_BrainLeech.Explanation>
     <BetterAutocastVPE.AutocastIntervalDrafted>Drafted autocasting interval: {0} ticks</BetterAutocastVPE.AutocastIntervalDrafted>
     <BetterAutocastVPE.AutocastIntervalDrafted.Description>Autocasting interval while drafted (only applies to patched psycasts)</BetterAutocastVPE.AutocastIntervalDrafted.Description>
@@ -49,4 +51,11 @@
     <BetterAutocastVPE.CastUndrafted>Cast while undrafted</BetterAutocastVPE.CastUndrafted>
     <BetterAutocastVPE.WordOfJoyMoodThreshold>Mood threshold: {0}</BetterAutocastVPE.WordOfJoyMoodThreshold>
     <BetterAutocastVPE.WordOfJoyMoodThreshold.Description>Maximum mood for a pawn to be auto-targeted</BetterAutocastVPE.WordOfJoyMoodThreshold.Description>
+    <BetterAutocastVPE.WordOfSerenityTargetScaria>Target pawns with scaria</BetterAutocastVPE.WordOfSerenityTargetScaria>
+    <BetterAutocastVPE.IgnoredMentalStates>Ignored mental states</BetterAutocastVPE.IgnoredMentalStates>
+    <BetterAutocastVPE.IgnoredMentalStates.Explanation>Manage which mental states should <![CDATA[<b><i>not</i></b>]]> be targeted by pawns autocasting Word of Serenity.</BetterAutocastVPE.IgnoredMentalStates.Explanation>
+    <BetterAutocastVPE.IgnoredMentalStates.Manager.Explanation>A list of all MentalStateDefs and a toggle on if they should <![CDATA[<b><i>not</i></b>]]> be targeted by pawns autocasting by Word of Serenity.</BetterAutocastVPE.IgnoredMentalStates.Manager.Explanation>
+    <BetterAutocastVPE.IgnoredMentalStates.defNameExplanation>The defName of the MentalStateDefs</BetterAutocastVPE.IgnoredMentalStates.defNameExplanation>
+    <BetterAutocastVPE.IgnoredMentalStates.labelExplanation>The label of the MentalStateDefs</BetterAutocastVPE.IgnoredMentalStates.labelExplanation>
+    <BetterAutocastVPE.IgnoredMentalStates.Nonexistent.Explanation>MentalStateDefs that don't exist but are still configured.\nBecause they are from uninstalled mods, removed by updates, etc.\nThey can be kept without problem or cleaned up here.</BetterAutocastVPE.IgnoredMentalStates.Nonexistent.Explanation>
 </LanguageData>

@@ -29,7 +29,12 @@ internal static class PawnHelper
 
     internal static IEnumerable<Pawn> GetColonyAnimals(IEnumerable<Pawn> pawns)
     {
-        return pawns.Where(pawn => pawn.Faction?.IsPlayer == true && pawn.RaceProps.Animal);
+        return pawns.Where(pawn => pawn.Faction?.IsPlayer is true && pawn.RaceProps.Animal);
+    }
+
+    internal static IEnumerable<Pawn> GetWildAnimals(IEnumerable<Pawn> pawns)
+    {
+        return pawns.Where(pawn => pawn.Faction is null && pawn.RaceProps.Animal);
     }
 
     internal static IEnumerable<Pawn> GetVisitors(IEnumerable<Pawn> pawns)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using RimWorld;
 using RimWorld.Planet;
 using Verse;
 using Ability = VFECore.Abilities.Ability;
@@ -17,7 +18,7 @@ using static Helpers.WeatherHelper;
 internal static class PsycastingHandler
 {
     #region private members
-    private static readonly ReadOnlyDictionary<string, Func<Pawn, Ability, bool>> abilityHandlers =
+    internal static readonly ReadOnlyDictionary<string, Func<Pawn, Ability, bool>> abilityHandlers =
         new(
             // TODO: Probably sort these more sensibly than alphabetically
             // Or allow configuring priorities
@@ -336,14 +337,31 @@ internal static class PsycastingHandler
             throw new ArgumentNullException(nameof(ability));
 
         float range = ability.GetRangeForPawn();
-        IEnumerable<Pawn> pawnsInRange = GetPawnsInRange(pawn, range);
-        IEnumerable<Pawn> pawnsWithMentalBreak = GetPawnsWithMentalBreak(pawnsInRange)
-            // TODO: Add proper deny-/allowlist
+        IEnumerable<Pawn> eligiblePawns = GetPawnsInRange(pawn, range);
+
+        if (!BetterAutocastVPE.Settings.WordOfSerenityTargetScaria)
+            eligiblePawns = GetPawnsWithoutHediff(eligiblePawns, HediffDefOf.Scaria.defName);
+
+        eligiblePawns = GetPawnsWithMentalBreak(eligiblePawns)
             .Where(pawn =>
-                pawn.MentalStateDef.defName != "Crying" && pawn.MentalStateDef.defName != "Giggling"
+                !BetterAutocastVPE.Settings.WordOfSerenityIgnoredMentalStateDefs.Contains(
+                    pawn.MentalStateDef.defName
+                )
             );
 
-        Pawn? target = GetClosestTo(pawnsWithMentalBreak, pawn);
+        Pawn? target = null;
+        if (BetterAutocastVPE.Settings.WordOfSerenityTargetColonists && target is null)
+            target = GetClosestTo(GetColonists(eligiblePawns), pawn);
+        if (BetterAutocastVPE.Settings.WordOfSerenityTargetColonyAnimals && target is null)
+            target = GetClosestTo(GetColonyAnimals(eligiblePawns), pawn);
+        if (BetterAutocastVPE.Settings.WordOfSerenityTargetWildAnimals && target is null)
+            target = GetClosestTo(GetWildAnimals(eligiblePawns), pawn);
+        if (BetterAutocastVPE.Settings.WordOfSerenityTargetSlaves && target is null)
+            target = GetClosestTo(GetSlaves(eligiblePawns), pawn);
+        if (BetterAutocastVPE.Settings.WordOfSerenityTargetPrisoners && target is null)
+            target = GetClosestTo(GetPrisoners(eligiblePawns), pawn);
+        if (BetterAutocastVPE.Settings.WordOfSerenityTargetVisitors && target is null)
+            target = GetClosestTo(GetVisitors(eligiblePawns), pawn);
 
         return target is not null && CastAbilityOnTarget(ability, target);
     }
