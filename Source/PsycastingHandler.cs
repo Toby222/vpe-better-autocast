@@ -101,7 +101,7 @@ internal static class PsycastingHandler
             bool wasAutocast = abilityHandlers[ability.def.defName](pawn, ability);
             if (wasAutocast)
             {
-                BetterAutocastVPE.Log(
+                BetterAutocastVPE.DebugLog(
                     $"{pawn.Name} autocast {ability.def.defName} - previous job: {jobBeforeCast}"
                 );
             }
