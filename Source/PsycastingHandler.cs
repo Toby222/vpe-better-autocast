@@ -150,14 +150,12 @@ internal static class PsycastingHandler
         if (BetterAutocastVPE.Settings.InvisibilityTargetColonists && target is null)
         {
             float range = ability.GetRangeForPawn();
-            IEnumerable<Pawn> pawnsInRange = GetPawnsInRange(pawn, range);
-            IEnumerable<Pawn> pawnsWithoutHediff = GetPawnsWithoutHediff(
-                pawnsInRange,
-                "PsychicInvisibility"
-            );
-            IEnumerable<Pawn> eligibleColonists = GetColonists(GetPawnsNotDown(pawnsWithoutHediff));
-
-            target ??= GetClosestTo(eligibleColonists, pawn);
+            target ??= pawn.GetPawnsInRange(range)
+                .WithoutHediff("PsychicInvisibility")
+                .PsychicallySensitive()
+                .NotDown()
+                .Colonists()
+                .ClosestTo(pawn);
         }
 
         return target is not null && CastAbilityOnTarget(ability, target);
@@ -171,22 +169,23 @@ internal static class PsycastingHandler
             throw new ArgumentNullException(nameof(ability));
 
         float range = ability.GetRangeForPawn();
-        IEnumerable<Pawn> pawnsInRange = GetPawnsInRange(pawn, range);
-        IEnumerable<Pawn> pawnsWithoutHediff = GetPawnsWithoutHediff(pawnsInRange, "VPE_Immunity");
-        Pawn[] eligiblePawns = GetImmunizablePawns(pawnsWithoutHediff).ToArray();
+        Pawn[] eligiblePawns = pawn.GetPawnsInRange(range)
+            .WithoutHediff("VPE_Immunity")
+            .Immunizable()
+            .ToArray();
 
         Pawn? target = null;
 
         if (BetterAutocastVPE.Settings.WordOfImmunityTargetColonists)
-            target ??= GetClosestTo(GetColonists(eligiblePawns), pawn);
+            target ??= eligiblePawns.Colonists().ClosestTo(pawn);
         if (BetterAutocastVPE.Settings.WordOfImmunityTargetColonyAnimals)
-            target ??= GetClosestTo(GetColonyAnimals(eligiblePawns), pawn);
+            target ??= eligiblePawns.ColonyAnimals().ClosestTo(pawn);
         if (BetterAutocastVPE.Settings.WordOfImmunityTargetSlaves)
-            target ??= GetClosestTo(GetSlaves(eligiblePawns), pawn);
+            target ??= eligiblePawns.Slaves().ClosestTo(pawn);
         if (BetterAutocastVPE.Settings.WordOfImmunityTargetPrisoners)
-            target ??= GetClosestTo(GetPrisoners(eligiblePawns), pawn);
+            target ??= eligiblePawns.Prisoners().ClosestTo(pawn);
         if (BetterAutocastVPE.Settings.WordOfImmunityTargetVisitors)
-            target ??= GetClosestTo(GetVisitors(eligiblePawns), pawn);
+            target ??= eligiblePawns.Visitors().ClosestTo(pawn);
 
         return target is not null && CastAbilityOnTarget(ability, target);
     }
@@ -203,18 +202,20 @@ internal static class PsycastingHandler
         if (pawn.HasHediff("VPE_GainedVitality"))
             return false;
 
-        Pawn[] pawnsInRange = GetPawnsInRange(pawn, ability.GetRangeForPawn()).ToArray();
+        Pawn[] eligiblePawns = pawn.GetPawnsInRange(ability.GetRangeForPawn())
+            .PsychicallySensitive()
+            .ToArray();
 
         Pawn? target = null;
 
         if (BetterAutocastVPE.Settings.StealVitalityFromPrisoners)
-            target ??= GetHighestSensitivity(GetPrisoners(pawnsInRange));
+            target ??= eligiblePawns.Prisoners().HighestSensitivity();
         if (BetterAutocastVPE.Settings.StealVitalityFromSlaves)
-            target ??= GetHighestSensitivity(GetSlaves(pawnsInRange));
+            target ??= eligiblePawns.Slaves().HighestSensitivity();
         if (BetterAutocastVPE.Settings.StealVitalityFromColonists)
-            target ??= GetHighestSensitivity(GetColonists(pawnsInRange));
+            target ??= eligiblePawns.Colonists().HighestSensitivity();
         if (BetterAutocastVPE.Settings.StealVitalityFromVisitors)
-            target ??= GetHighestSensitivity(GetVisitors(pawnsInRange));
+            target ??= eligiblePawns.Visitors().HighestSensitivity();
 
         return target is not null && CastAbilityOnTarget(ability, target);
     }
@@ -228,22 +229,20 @@ internal static class PsycastingHandler
 
         Pawn? target = null;
 
-        Pawn[] pawnsInRange = GetPawnsWithoutHediff(
-                GetPawnsInRange(pawn, ability.GetRangeForPawn()),
-                "VPE_DeathShield"
-            )
+        Pawn[] pawnsInRange = pawn.GetPawnsInRange(ability.GetRangeForPawn())
+            .WithoutHediff("VPE_DeathShield")
             .ToArray();
 
         if (BetterAutocastVPE.Settings.DeathshieldColonists)
-            target ??= GetClosestTo(GetColonists(pawnsInRange), pawn);
+            target ??= pawnsInRange.Colonists().ClosestTo(pawn);
         if (BetterAutocastVPE.Settings.DeathshieldColonyAnimals)
-            target ??= GetClosestTo(GetColonyAnimals(pawnsInRange), pawn);
+            target ??= pawnsInRange.ColonyAnimals().ClosestTo(pawn);
         if (BetterAutocastVPE.Settings.DeathshieldSlaves)
-            target ??= GetClosestTo(GetSlaves(pawnsInRange), pawn);
+            target ??= pawnsInRange.Slaves().ClosestTo(pawn);
         if (BetterAutocastVPE.Settings.DeathshieldPrisoners)
-            target ??= GetClosestTo(GetPrisoners(pawnsInRange), pawn);
+            target ??= pawnsInRange.Prisoners().ClosestTo(pawn);
         if (BetterAutocastVPE.Settings.DeathshieldVisitors)
-            target ??= GetClosestTo(GetVisitors(pawnsInRange), pawn);
+            target ??= pawnsInRange.Visitors().ClosestTo(pawn);
 
         return target is not null && CastAbilityOnTarget(ability, target);
     }
@@ -257,14 +256,14 @@ internal static class PsycastingHandler
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
 
-        float range = ability.GetRangeForPawn();
-        IEnumerable<Pawn> pawnsInRange = GetPawnsInRange(pawn, range);
-        IEnumerable<Pawn> eligiblePawns = GetColonists(GetPawnsNotDown(pawnsInRange))
-            .Where(pawn => !pawn.HasHediff("VPE_PsychicGuidance"));
-
-        Pawn? target = eligiblePawns.GetRandomElement(weightSelector: null);
-
-        return target is not null && CastAbilityOnTarget(ability, target);
+        return pawn.GetPawnsInRange((float)ability.GetRangeForPawn())
+                .NotDown()
+                .PsychicallySensitive()
+                .Colonists()
+                .WithoutHediff("VPE_PsychicGuidance")
+                .GetRandomElement(weightSelector: null)
+                is Pawn target
+            && CastAbilityOnTarget(ability, target);
     }
     #endregion Harmonist
 
@@ -283,12 +282,12 @@ internal static class PsycastingHandler
 
         if (BetterAutocastVPE.Settings.DarkvisionTargetColonists && target is null)
         {
-            IEnumerable<Pawn> eligibleTargets = GetPawnsWithoutHediff(
-                GetColonists(GetPawnsNotDown(GetPawnsInRange(pawn, ability.GetRangeForPawn()))),
-                "VPE_Darkvision"
-            );
-
-            target ??= GetClosestTo(eligibleTargets, pawn);
+            target ??= pawn.GetPawnsInRange(ability.GetRangeForPawn())
+                .NotDown()
+                .PsychicallySensitive()
+                .Colonists()
+                .WithoutHediff("VPE_Darkvision")
+                .ClosestTo(pawn);
         }
 
         return target is not null && CastAbilityOnTarget(ability, target);
@@ -316,13 +315,15 @@ internal static class PsycastingHandler
         if (pawn.HasHediff("VPEP_Leeching"))
             return false;
 
-        List<Pawn> pawnsInRange = GetPawnsInRange(pawn, ability.GetRangeForPawn()).ToList();
+        Pawn[] eligiblePawns = pawn.GetPawnsInRange(ability.GetRangeForPawn())
+            .PsychicallySensitive()
+            .ToArray();
         Pawn? target = null;
 
-        if (BetterAutocastVPE.Settings.BrainLeechTargetPrisoners)
-            GetPrisoners(pawnsInRange).TryRandomElement(out target);
+        if (BetterAutocastVPE.Settings.BrainLeechTargetPrisoners && target is null)
+            target = eligiblePawns.Prisoners().RandomElementWithFallback();
         if (BetterAutocastVPE.Settings.BrainLeechTargetSlaves && target is null)
-            GetSlaves(pawnsInRange).TryRandomElement(out target);
+            target = eligiblePawns.Slaves().RandomElementWithFallback();
 
         return target is not null && CastAbilityOnTarget(ability, target);
     }
@@ -337,12 +338,14 @@ internal static class PsycastingHandler
             throw new ArgumentNullException(nameof(ability));
 
         float range = ability.GetRangeForPawn();
-        IEnumerable<Pawn> eligiblePawns = GetPawnsInRange(pawn, range);
+        IEnumerable<Pawn> eligiblePawns = pawn.GetPawnsInRange(range);
 
         if (!BetterAutocastVPE.Settings.WordOfSerenityTargetScaria)
-            eligiblePawns = GetPawnsWithoutHediff(eligiblePawns, HediffDefOf.Scaria.defName);
+            eligiblePawns = eligiblePawns.WithoutHediff(HediffDefOf.Scaria.defName);
 
-        eligiblePawns = GetPawnsWithMentalBreak(eligiblePawns)
+        eligiblePawns = eligiblePawns
+            .WithMentalBreak()
+            .PsychicallySensitive()
             .Where(pawn =>
                 !BetterAutocastVPE.Settings.WordOfSerenityIgnoredMentalStateDefs.Contains(
                     pawn.MentalStateDef.defName
@@ -351,17 +354,17 @@ internal static class PsycastingHandler
 
         Pawn? target = null;
         if (BetterAutocastVPE.Settings.WordOfSerenityTargetColonists && target is null)
-            target = GetClosestTo(GetColonists(eligiblePawns), pawn);
+            target = eligiblePawns.Colonists().ClosestTo(pawn);
         if (BetterAutocastVPE.Settings.WordOfSerenityTargetColonyAnimals && target is null)
-            target = GetClosestTo(GetColonyAnimals(eligiblePawns), pawn);
+            target = eligiblePawns.ColonyAnimals().ClosestTo(pawn);
         if (BetterAutocastVPE.Settings.WordOfSerenityTargetWildAnimals && target is null)
-            target = GetClosestTo(GetWildAnimals(eligiblePawns), pawn);
+            target = eligiblePawns.WildAnimals().ClosestTo(pawn);
         if (BetterAutocastVPE.Settings.WordOfSerenityTargetSlaves && target is null)
-            target = GetClosestTo(GetSlaves(eligiblePawns), pawn);
+            target = eligiblePawns.Slaves().ClosestTo(pawn);
         if (BetterAutocastVPE.Settings.WordOfSerenityTargetPrisoners && target is null)
-            target = GetClosestTo(GetPrisoners(eligiblePawns), pawn);
+            target = eligiblePawns.Prisoners().ClosestTo(pawn);
         if (BetterAutocastVPE.Settings.WordOfSerenityTargetVisitors && target is null)
-            target = GetClosestTo(GetVisitors(eligiblePawns), pawn);
+            target = eligiblePawns.Visitors().ClosestTo(pawn);
 
         return target is not null && CastAbilityOnTarget(ability, target);
     }
@@ -374,12 +377,14 @@ internal static class PsycastingHandler
             throw new ArgumentNullException(nameof(ability));
 
         float range = ability.GetRangeForPawn();
-        IEnumerable<Pawn> pawnsInRange = GetPawnsInRange(pawn, range);
-        IEnumerable<Pawn> pawnsWithoutHediff = GetPawnsWithoutHediff(pawnsInRange, "Joyfuzz");
-        IEnumerable<Pawn> notDownColonists = GetColonists(GetPawnsNotDown(pawnsWithoutHediff));
-        IEnumerable<Pawn> lowJoyPawns = GetLowJoyPawns(notDownColonists);
 
-        lowJoyPawns.TryRandomElement(out Pawn? target);
+        Pawn? target = pawn.GetPawnsInRange(range)
+            .WithoutHediff("Joyfuzz")
+            .PsychicallySensitive()
+            .Colonists()
+            .NotDown()
+            .LowJoy()
+            .RandomElementWithFallback();
 
         return target is not null && CastAbilityOnTarget(ability, target);
     }
@@ -394,14 +399,12 @@ internal static class PsycastingHandler
             throw new ArgumentNullException(nameof(ability));
 
         float range = ability.GetRangeForPawn();
-        IEnumerable<Pawn> pawnsInRange = GetPawnsInRange(pawn, range);
-        IEnumerable<Pawn> pawnsWithoutHediff = GetPawnsWithoutHediff(
-            pawnsInRange,
-            "VPE_Productivity"
-        );
-        IEnumerable<Pawn> eligibleColonists = GetColonists(GetPawnsNotDown(pawnsWithoutHediff));
 
-        eligibleColonists.TryRandomElement(out Pawn? target);
+        Pawn? target = pawn.GetPawnsInRange(range)
+            .WithoutHediff("VPE_Productivity")
+            .NotDown()
+            .Colonists()
+            .RandomElementWithFallback();
 
         return target is not null && CastAbilityOnTarget(ability, target);
     }
@@ -441,41 +444,36 @@ internal static class PsycastingHandler
     #region Technomancer helpers
     private static bool HandleMendByPawn(Pawn pawn, Ability ability)
     {
-        float range = ability.GetRangeForPawn();
-        IEnumerable<Pawn> pawnsInRange = GetPawnsInRange(pawn, range);
-        IEnumerable<Pawn> colonistPawns = GetColonists(pawnsInRange);
-
-        GetRandomPawnsWithDamagedEquipment(colonistPawns).TryRandomElement(out Pawn? target);
-
-        return target is not null && CastAbilityOnTarget(ability, target);
+        return pawn.GetPawnsInRange(ability.GetRangeForPawn())
+                .Colonists()
+                .WithDamagedEquipment()
+                .RandomElementWithFallback()
+                is Pawn target
+            && CastAbilityOnTarget(ability, target);
     }
 
     private static bool HandleMendByZone(Pawn pawn, Ability ability)
     {
-        Thing? target = GetRandomAllowedDamagedThingInStockpile(pawn.Map, pawn);
-
-        return target is not null && CastAbilityOnTarget(ability, target);
+        return GetRandomAllowedDamagedThingInStockpile(pawn.Map, pawn) is Thing target
+            && CastAbilityOnTarget(ability, target);
     }
 
     private static bool HandleMendByStorage(Pawn pawn, Ability ability)
     {
-        Thing? target = GetRandomAllowedDamagedThingInStorage(pawn.Map, pawn);
-
-        return target is not null && CastAbilityOnTarget(ability, target);
+        return GetRandomAllowedDamagedThingInStorage(pawn.Map, pawn) is Thing target
+            && CastAbilityOnTarget(ability, target);
     }
 
     private static bool HandleEnchantByZone(Pawn pawn, Ability ability)
     {
-        Thing? target = GetRandomEnchantableThingInStockpile(pawn.Map, ability);
-
-        return target is not null && CastAbilityOnTarget(ability, target);
+        return GetRandomEnchantableThingInStockpile(pawn.Map, ability) is Thing target
+            && CastAbilityOnTarget(ability, target);
     }
 
     private static bool HandleEnchantByStorage(Pawn pawn, Ability ability)
     {
-        Thing? target = GetRandomEnchantableThingInStorage(pawn.Map, ability);
-
-        return target is not null && CastAbilityOnTarget(ability, target);
+        return GetRandomEnchantableThingInStorage(pawn.Map, ability) is Thing target
+            && CastAbilityOnTarget(ability, target);
     }
     #endregion Technomancer helpers
     #endregion Technomancer

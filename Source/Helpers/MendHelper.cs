@@ -54,7 +54,13 @@ internal static class MendHelper
             .GetRandomElement(thing => (float)thing.HitPoints / thing.MaxHitPoints);
     }
 
-    internal static IEnumerable<Pawn> GetRandomPawnsWithDamagedEquipment(IEnumerable<Pawn> pawns)
+    [Obsolete]
+    internal static IEnumerable<Pawn> GetPawnsWithDamagedEquipment(IEnumerable<Pawn> pawns)
+    {
+        return pawns.WithDamagedEquipment();
+    }
+
+    internal static IEnumerable<Pawn> WithDamagedEquipment(this IEnumerable<Pawn> pawns)
     {
         if (pawns is null)
             throw new ArgumentNullException(nameof(pawns));

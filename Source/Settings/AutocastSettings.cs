@@ -6,48 +6,50 @@ namespace BetterAutocastVPE.Settings;
 public class AutocastSettings : ModSettings
 {
     private readonly HashSet<string> defaultDraftedAutocastDefs =
-        new()
-        {
-            "VPE_AdrenalineRush",
-            "VPE_BladeFocus",
-            "VPE_ControlledFrenzy",
-            "VPE_Deathshield",
-            "VPE_FiringFocus",
-            "VPE_GuidedShot",
-            "VPE_Invisibility",
-            "VPE_SpeedBoost",
-        };
+    [
+        "VPE_AdrenalineRush",
+        "VPE_BladeFocus",
+        "VPE_ControlledFrenzy",
+        "VPE_Deathshield",
+        "VPE_FiringFocus",
+        "VPE_GuidedShot",
+        "VPE_Invisibility",
+        "VPE_SpeedBoost",
+    ];
     private readonly HashSet<string> defaultUndraftedAutocastDefs =
-        new()
-        {
-            "VPE_Darkvision",
-            "VPE_Deathshield",
-            "VPE_Eclipse",
-            "VPE_EnchantQuality",
-            "VPE_Mend",
-            "VPE_PsychicGuidance",
-            "VPE_SpeedBoost",
-            "VPE_StealVitality",
-            "VPE_WordofImmunity",
-            "VPE_WordofJoy",
-            "VPE_WordofProductivity",
-            "VPE_WordofSerenity",
-            "VPEP_BrainLeech",
-        };
+    [
+        "VPE_Darkvision",
+        "VPE_Deathshield",
+        "VPE_Eclipse",
+        "VPE_EnchantQuality",
+        "VPE_Mend",
+        "VPE_PsychicGuidance",
+        "VPE_SpeedBoost",
+        "VPE_StealVitality",
+        "VPE_WordofImmunity",
+        "VPE_WordofJoy",
+        "VPE_WordofProductivity",
+        "VPE_WordofSerenity",
+        "VPEP_BrainLeech",
+    ];
     private readonly HashSet<string> defaultBlockedJobDefs =
-        new()
-        {
-            "DeliverToBed",
-            "Ingest",
-            "LayDown",
-            "SpectateCeremony",
-            "VFEA_GotoTargetAndUseAbility",
-            "VFEA_UseAbility",
-            "Wait_Asleep",
-            "Wait_Downed",
-        };
+    [
+        "DeliverToBed",
+        "Ingest",
+        "LayDown",
+        "SpectateCeremony",
+        "VFEA_GotoTargetAndUseAbility",
+        "VFEA_UseAbility",
+        "Wait_Asleep",
+        "Wait_Downed",
+    ];
     private readonly HashSet<string> defaultWordOfSerenityIgnoredMentalStateDefs =
-        new() { "Crying", "Giggling", "BerserkTrance", "BerserkWarcall" };
+    [
+        "Crying",
+        "Giggling",
+        "BerserkTrance",
+        "BerserkWarcall"
+    ];
 
     public AutocastSettings()
     {
