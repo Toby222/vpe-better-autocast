@@ -5,6 +5,7 @@ using Verse;
 
 namespace BetterAutocastVPE;
 
+using RimWorld;
 using Settings;
 using UnityEngine;
 
@@ -22,6 +23,12 @@ public class BetterAutocastVPE : Mod
             $"Running Version {Assembly.GetAssembly(typeof(BetterAutocastVPE)).GetName().Version} "
                 + build
         );
+        if (VersionControl.CurrentVersion >= new Version(1, 5))
+        {
+            Warn(
+                "This version of the mod is built for 1.4, support for 1.5 and up is not guaranteed, it will not receive any more updates"
+            );
+        }
 
         Harmony harmony = new("dev.tobot.vpe-better-autocast");
         if (

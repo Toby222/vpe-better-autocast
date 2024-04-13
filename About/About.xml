@@ -10,7 +10,7 @@
   <supportedVersions>
     <li>1.4</li>
   </supportedVersions>
-  <modVersion IgnoreIfNoMatchingField="True">3.0.0.1</modVersion>
+  <modVersion IgnoreIfNoMatchingField="True">3.0.0.2</modVersion>
   <url>https://github.com/Toby222/vpe-better-autocast/</url>
   <modDependencies/>
   <modDependenciesByVersion>

@@ -15,10 +15,9 @@
         # Rust dev environment
         devShells.default = pkgs.mkShell {
           inputsFrom = [ config.treefmt.build.devShell ];
-          nativeBuildInputs = with pkgs; [ dotnet-sdk mono libxslt ];
+          nativeBuildInputs = with pkgs; [ dotnet-sdk_8 mono libxslt ];
 
-          DOTNET_ROOT = "${pkgs.dotnet-sdk}";
-          SDL_VIDEODRIVER = "X11";
+          DOTNET_ROOT = "${pkgs.dotnet-sdk_8}";
         };
 
         # Add your auto-formatters here.

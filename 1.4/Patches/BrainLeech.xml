@@ -1,12 +1,13 @@
 <Patch>
-    <Operation Class="PatchOperationSequence">
-        <operations>
-            <li Class="PatchOperationAdd">
-                <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPEP_BrainLeech"]</xpath>
-                <value>
-                    <showUndrafted>true</showUndrafted>
-                </value>
-            </li>
-        </operations>
+    <Operation Class="PatchOperationFindMod">
+        <mods>
+            <li>Vanilla Psycasts Expanded - Puppeteer</li>
+        </mods>
+        <match Class="PatchOperationAdd">
+            <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPEP_BrainLeech"]</xpath>
+            <value>
+                <showUndrafted>true</showUndrafted>
+            </value>
+        </match>
     </Operation>
 </Patch>
