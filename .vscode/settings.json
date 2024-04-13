@@ -8,6 +8,7 @@
     "files.readonlyInclude": {
         "log/rimworld.log": true,
         "About/About.xml": true,
+        "1.4/**": true,
     },
     "omnisharp.organizeImportsOnFormat": true,
     "dotnet.inlayHints.enableInlayHintsForParameters": true,

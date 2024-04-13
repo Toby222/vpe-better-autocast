@@ -23,18 +23,6 @@ public class BetterAutocastVPE : Mod
             $"Running Version {Assembly.GetAssembly(typeof(BetterAutocastVPE)).GetName().Version} "
                 + build
         );
-        if (VersionControl.CurrentVersion >= new Version(1, 5))
-        {
-            Warn(
-                "This version of the mod is built for 1.4, support for 1.5 and up is not guaranteed, it will not receive any more updates"
-            );
-        }
-        else
-        {
-            Warn(
-                "This is the last version of the mod for 1.4, I will not add features to version 1.4 until further notice"
-            );
-        }
 
         Harmony harmony = new("dev.tobot.vpe-better-autocast");
         if (

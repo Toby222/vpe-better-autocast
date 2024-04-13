@@ -7,7 +7,7 @@ pushd $script_dir
 configuration=${1:-Debug}
 
 # build dll
-rm -f ../1.4/Assemblies/*
+rm -f ../1.5/Assemblies/*
 dotnet build mod.csproj -c ${configuration}
 
 # generate About.xml
