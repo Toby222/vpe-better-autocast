@@ -311,7 +311,8 @@ public static class AutocastSettingsWindow
         if (configuredDefs.Count > 0)
         {
             BetterAutocastVPE.DebugWarn(
-                "Config doesn't properly config everything. Missing: " + configuredDefs.ToCommaList(true)
+                "Config doesn't properly config everything. Missing: "
+                    + configuredDefs.ToCommaList(true)
             );
         }
 #endif

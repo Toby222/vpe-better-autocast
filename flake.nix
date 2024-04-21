@@ -42,7 +42,6 @@
           treefmt.config = {
             projectRootFile = "flake.nix";
             programs = {
-              nixpkgs-fmt.enable = true;
               csharpier.enable = true;
               prettier.enable = true;
               nixfmt-rfc-style.enable = true;

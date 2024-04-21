@@ -8,7 +8,9 @@ configuration=${1:-Debug}
 
 # build dll
 rm -f ../1.5/Assemblies/*
-dotnet build mod.csproj -c ${configuration}
+dotnet build mod.csproj -c ${configuration} -p:GAME_VERSION=v1.5
+rm -f ../1.4/Assemblies/*
+dotnet build mod.csproj -c ${configuration} -p:GAME_VERSION=v1.4
 
 # generate About.xml
 rm -f ../About/About.xml

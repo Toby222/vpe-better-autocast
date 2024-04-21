@@ -5,7 +5,6 @@ using Verse;
 
 namespace BetterAutocastVPE;
 
-using RimWorld;
 using Settings;
 using UnityEngine;
 
@@ -14,14 +13,22 @@ public class BetterAutocastVPE : Mod
     public BetterAutocastVPE(ModContentPack content)
         : base(content)
     {
+#if v1_5
+        const string GAME_VERSION = "v1.5";
+#elif v1_4
+        const string GAME_VERSION = "v1.4";
+#else
+#error No version defined
+        const string GAME_VERSION = "UNDEFINED";
+#endif
+
 #if DEBUG
         const string build = "Debug";
 #else
         const string build = "Release";
 #endif
         Log(
-            $"Running Version {Assembly.GetAssembly(typeof(BetterAutocastVPE)).GetName().Version} "
-                + build
+            $"Running Version {Assembly.GetAssembly(typeof(BetterAutocastVPE)).GetName().Version} {build} compiled for RimWorld version {GAME_VERSION}"
         );
 
         Harmony harmony = new("dev.tobot.vpe-better-autocast");

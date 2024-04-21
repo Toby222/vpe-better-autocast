@@ -1,4 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup Condition="'$(GAME_VERSION)'==''">
+        <DefineConstants>v1_5</DefineConstants>
+        <OutputPath>../1.5/Assemblies</OutputPath>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(GAME_VERSION)'=='v1.5'">
+        <DefineConstants>v1_5</DefineConstants>
+        <OutputPath>../1.5/Assemblies</OutputPath>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(GAME_VERSION)'=='v1.4'">
+        <DefineConstants>v1_4</DefineConstants>
+        <OutputPath>../1.4/Assemblies</OutputPath>
+    </PropertyGroup>
     <PropertyGroup>
         <OutputType>Library</OutputType>
         <TargetFramework>net480</TargetFramework>
@@ -6,7 +18,6 @@
         <!-- Modify [RootNamespace], [AssemblyName], [OutputPath], [VersionPrefix] -->
         <RootNamespace>BetterAutocastVPE</RootNamespace>
         <AssemblyName>BetterAutocastVPE</AssemblyName>
-        <OutputPath>../1.5/Assemblies</OutputPath>
         <LangVersion>latest</LangVersion>
         <VersionPrefix>4.1.0.0</VersionPrefix>
         <!-- do not generate pdb file -->
@@ -105,14 +116,23 @@
             </incompatibleWithByVersion>
         </ModMetaData>
     </PropertyGroup>
+    <ItemGroup Condition="'$(GAME_VERSION)'==''">
+        <PackageReference Include="Krafs.Rimworld.Ref"
+                          Version="1.5.4063" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(GAME_VERSION)'=='v1.5'">
+        <PackageReference Include="Krafs.Rimworld.Ref"
+                          Version="1.5.4063" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(GAME_VERSION)'=='v1.4'">
+        <PackageReference Include="Krafs.Rimworld.Ref"
+                          Version="1.4.3901" />
+    </ItemGroup>
     <ItemGroup>
         <!-- Mod -->
         <Compile Include="../Source/**/*" />
-        <PackageReference Include="Krafs.Rimworld.Ref"
-                          Version="1.5.4063" />
-        <!-- Set IncludeAssets to 'compile' to enable Harmony -->
         <PackageReference Include="Lib.Harmony"
-                          Version="2.2.2"
+                          Version="2.3.3"
                           IncludeAssets="compile" />
         <PackageReference Include="roslynator.analyzers"
                           Version="4.12.0"

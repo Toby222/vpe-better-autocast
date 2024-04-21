@@ -17,10 +17,11 @@ internal static class EnchantHelper
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
 
-        QualityCategory maxQuality = Traverse.Create(ability).Property<QualityCategory>("MaxQuality").Value;
-        BetterAutocastVPE.DebugLog($"{ability.pawn} max quality {maxQuality} - {ability.GetType().FullName}");
-        return thing.GetQuality() is QualityCategory quality
-            && quality < maxQuality;
+        QualityCategory maxQuality = Traverse
+            .Create(ability)
+            .Property<QualityCategory>("MaxQuality")
+            .Value;
+        return thing.GetQuality() is QualityCategory quality && quality < maxQuality;
     }
 
     private static Thing? GetRandomEnchantableThing(IEnumerable<Thing> things, Ability ability)
