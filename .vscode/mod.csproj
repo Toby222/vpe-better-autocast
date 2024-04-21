@@ -119,14 +119,38 @@
     <ItemGroup Condition="'$(GAME_VERSION)'==''">
         <PackageReference Include="Krafs.Rimworld.Ref"
                           Version="1.5.4063" />
+        <Reference Include="VanillaPsycastsExpanded"
+                   HintPath="..\..\VanillaPsycastsExpanded\1.5\Assemblies\VanillaPsycastsExpanded.dll"
+                   IncludeAssets="compile"
+                   Private="false" />
+        <Reference Include="VFECore"
+                   HintPath="..\..\VanillaExpandedFramework\1.5\Assemblies\VFECore.dll"
+                   IncludeAssets="compile"
+                   Private="false" />
     </ItemGroup>
     <ItemGroup Condition="'$(GAME_VERSION)'=='v1.5'">
         <PackageReference Include="Krafs.Rimworld.Ref"
                           Version="1.5.4063" />
+        <Reference Include="VanillaPsycastsExpanded"
+                   HintPath="..\..\VanillaPsycastsExpanded\1.5\Assemblies\VanillaPsycastsExpanded.dll"
+                   IncludeAssets="compile"
+                   Private="false" />
+        <Reference Include="VFECore"
+                   HintPath="..\..\VanillaExpandedFramework\1.5\Assemblies\VFECore.dll"
+                   IncludeAssets="compile"
+                   Private="false" />
     </ItemGroup>
     <ItemGroup Condition="'$(GAME_VERSION)'=='v1.4'">
         <PackageReference Include="Krafs.Rimworld.Ref"
                           Version="1.4.3901" />
+        <Reference Include="VanillaPsycastsExpanded"
+                   HintPath="..\..\VanillaPsycastsExpanded\1.4\Assemblies\VanillaPsycastsExpanded.dll"
+                   IncludeAssets="compile"
+                   Private="false" />
+        <Reference Include="VFECore"
+                   HintPath="..\..\VanillaExpandedFramework\1.4\Assemblies\VFECore.dll"
+                   IncludeAssets="compile"
+                   Private="false" />
     </ItemGroup>
     <ItemGroup>
         <!-- Mod -->
@@ -142,13 +166,5 @@
                           Version="4.12.0"
                           IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive"
                           PrivateAssets="all" />
-        <Reference Include="VanillaPsycastsExpanded"
-                   HintPath="..\..\VanillaPsycastsExpanded\1.5\Assemblies\VanillaPsycastsExpanded.dll"
-                   IncludeAssets="compile"
-                   Private="false" />
-        <Reference Include="VFECore"
-                   HintPath="..\..\VanillaExpandedFramework\1.5\Assemblies\VFECore.dll"
-                   IncludeAssets="compile"
-                   Private="false" />
     </ItemGroup>
 </Project>
