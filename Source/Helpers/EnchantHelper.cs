@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyLib;
 using RimWorld;
 using Verse;
 using Ability = VFECore.Abilities.Ability;
@@ -16,8 +17,10 @@ internal static class EnchantHelper
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
 
+        QualityCategory maxQuality = Traverse.Create(ability).Property<QualityCategory>("MaxQuality").Value;
+        BetterAutocastVPE.DebugLog($"{ability.pawn} max quality {maxQuality} - {ability.GetType().FullName}");
         return thing.GetQuality() is QualityCategory quality
-            && quality < (QualityCategory)(int)ability.GetPowerForPawn();
+            && quality < maxQuality;
     }
 
     private static Thing? GetRandomEnchantableThing(IEnumerable<Thing> things, Ability ability)

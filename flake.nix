@@ -26,7 +26,10 @@
           devShells.default = pkgs.mkShell {
             inputsFrom = [ config.treefmt.build.devShell ];
             nativeBuildInputs = with pkgs; [
-              dotnet-sdk_8
+              dotnetCorePackages.dotnet_8.sdk
+              dotnetCorePackages.dotnet_8.runtime
+              nixfmt-rfc-style
+              omnisharp-roslyn
               mono
               libxslt
             ];

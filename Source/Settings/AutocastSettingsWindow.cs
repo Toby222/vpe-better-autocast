@@ -310,8 +310,8 @@ public static class AutocastSettingsWindow
         configuredDefs.SymmetricExceptWith(PsycastingHandler.abilityHandlers.Keys.ToHashSet());
         if (configuredDefs.Count > 0)
         {
-            BetterAutocastVPE.DebugError(
-                "Config doesn't properly config everything " + configuredDefs.ToCommaList(true)
+            BetterAutocastVPE.DebugWarn(
+                "Config doesn't properly config everything. Missing: " + configuredDefs.ToCommaList(true)
             );
         }
 #endif
