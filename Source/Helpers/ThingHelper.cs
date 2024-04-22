@@ -52,17 +52,44 @@ internal static class ThingHelper
         return pawn.Drafted || (!thing.IsForbidden(pawn) && pawn.CanReserve(thing));
     }
 
-    internal static T? GetRandomElement<T>(
+    internal static T? GetRandomClass<T>(
         this IEnumerable<T> things,
-        Func<T, float>? weightSelector
+        Func<T, float>? weightSelector = null
     )
+        where T : class
     {
         T? result;
         if (weightSelector is null)
-            things.TryRandomElement(out result);
+        {
+            if (things.TryRandomElement(out result))
+                return result;
+        }
         else
-            things.TryRandomElementByWeight(weightSelector, out result);
-        return result;
+        {
+            if (things.TryRandomElementByWeight(weightSelector, out result))
+                return result;
+        }
+        return null;
+    }
+
+    internal static T? GetRandomStruct<T>(
+        this IEnumerable<T> things,
+        Func<T, float>? weightSelector = null
+    )
+        where T : struct
+    {
+        T result;
+        if (weightSelector is null)
+        {
+            if (things.TryRandomElement(out result))
+                return result;
+        }
+        else
+        {
+            if (things.TryRandomElementByWeight(weightSelector, out result))
+                return result;
+        }
+        return null;
     }
 
     internal static QualityCategory? GetQuality(this Thing thing)

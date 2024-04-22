@@ -1,6 +1,6 @@
 <Patch>
     <Operation Class="PatchOperationAdd">
-        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_Invisibility"]</xpath>
+        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_SpeedBoost"]</xpath>
         <value>
             <showUndrafted>true</showUndrafted>
         </value>

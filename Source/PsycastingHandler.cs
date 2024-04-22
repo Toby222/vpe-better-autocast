@@ -9,6 +9,7 @@ using Ability = VFECore.Abilities.Ability;
 
 namespace BetterAutocastVPE;
 
+using static Helpers.AreaHelper;
 using static Helpers.EnchantHelper;
 using static Helpers.MendHelper;
 using static Helpers.PawnHelper;
@@ -33,6 +34,7 @@ internal static class PsycastingHandler
                 { "VPE_EnchantQuality", HandleEnchant },
                 { "VPE_FiringFocus", HandleSelfBuff },
                 { "VPE_GuidedShot", HandleSelfBuff },
+                { "VPE_IceCrystal", HandleIceCrystal },
                 { "VPE_Invisibility", HandleInvisibility },
                 { "VPE_Mend", HandleMend },
                 { "VPE_PsychicGuidance", HandlePsychicGuidance },
@@ -75,6 +77,15 @@ internal static class PsycastingHandler
             throw new ArgumentNullException(nameof(target));
 
         ability.CreateCastJob(new GlobalTargetInfo(target));
+        return true;
+    }
+
+    private static bool CastAbilityOnTarget(Ability ability, IntVec3 target)
+    {
+        if (ability is null)
+            throw new ArgumentNullException(nameof(ability));
+
+        ability.CreateCastJob(new GlobalTargetInfo(target, ability.pawn.MapHeld));
         return true;
     }
     #endregion helper functions
@@ -261,7 +272,7 @@ internal static class PsycastingHandler
                 .PsychicallySensitive()
                 .Colonists()
                 .WithoutHediff("VPE_PsychicGuidance")
-                .GetRandomElement(weightSelector: null)
+                .GetRandomClass(weightSelector: null)
                 is Pawn target
             && CastAbilityOnTarget(ability, target);
     }
@@ -477,5 +488,13 @@ internal static class PsycastingHandler
     }
     #endregion Technomancer helpers
     #endregion Technomancer
+
+    #region Frostshaper
+    private static bool HandleIceCrystal(Pawn pawn, Ability ability)
+    {
+        return GetRandomUnoccupiedCellInArea<Area_IceCrystal>(pawn.Map) is IntVec3 target
+            && CastAbilityOnTarget(ability, target);
+    }
+    #endregion Frostshaper
     #endregion handlers
 }

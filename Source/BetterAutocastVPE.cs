@@ -64,6 +64,7 @@ public class BetterAutocastVPE : Mod
     public void ResetSettings()
     {
         Settings = new();
+        WriteSettings();
     }
 
     public override void DoSettingsWindowContents(Rect inRect) =>

@@ -9,9 +9,9 @@ using static ThingHelper;
 
 internal static class MendHelper
 {
-    // TODO: This should be configurable
+    // TODO:
     // Possibly should have an absolute value of damage
-    // Also if possible make it use psychic power where appropriate
+    // If possible make it use psychic power where appropriate
     private static float DamageThreshold => BetterAutocastVPE.Settings.MendHealthThreshold;
 
     private static bool ThingIsSufficientlyDamaged(Thing thing)
@@ -35,7 +35,7 @@ internal static class MendHelper
         return map.GetThingsInStorage()
             .Where(ThingIsSufficientlyDamaged)
             .Where(thing => PawnIsDraftedOrThingIsAllowedAndReservable(pawn, thing))
-            .GetRandomElement(thing => (float)thing.HitPoints / thing.MaxHitPoints);
+            .GetRandomClass(thing => (float)thing.HitPoints / thing.MaxHitPoints);
     }
 
     internal static Thing? GetRandomAllowedDamagedThingInStockpile(Map map, Pawn pawn)
@@ -51,7 +51,7 @@ internal static class MendHelper
         return map.GetThingsInNamedStockpile("mend")
             .Where(thing => PawnIsDraftedOrThingIsAllowedAndReservable(pawn, thing))
             .Where(ThingIsSufficientlyDamaged)
-            .GetRandomElement(thing => (float)thing.HitPoints / thing.MaxHitPoints);
+            .GetRandomClass(thing => (float)thing.HitPoints / thing.MaxHitPoints);
     }
 
     [Obsolete]

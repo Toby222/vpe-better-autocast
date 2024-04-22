@@ -52,7 +52,7 @@ internal static class Pawn_TryGetAttackVerb_Postfix
             var result = list.Where(x => x.ability.AICanUseOn(target))
                 .Select(x => new Tuple<Verb, float>(x, x.ability.Chance))
                 .AddItem(new Tuple<Verb, float>(__result, 1f))
-                .GetRandomElement(t => t.Item2);
+                .GetRandomClass(t => t.Item2);
 
             if (result is not null)
             {

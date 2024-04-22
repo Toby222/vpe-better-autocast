@@ -79,7 +79,7 @@ public static class AutocastSettingsWindow
     }
 
 #if DEBUG
-    private readonly static HashSet<string> configuredDefs = new();
+    private readonly static HashSet<string> configuredDefs = [];
 #endif
 
     public static void DoSettingsWindowContents(Rect inRect)
@@ -112,6 +112,9 @@ public static class AutocastSettingsWindow
         listing.GapLine();
 
         #region General
+        if (listing.ButtonText("BetterAutocastVPE.ResetSettings".Translate()))
+            LoadedModManager.GetMod<BetterAutocastVPE>().ResetSettings();
+
         Settings.AutocastIntervalDrafted = (int)
             listing.SliderLabeled(
                 "BetterAutocastVPE.AutocastIntervalDrafted".Translate(
@@ -302,6 +305,11 @@ public static class AutocastSettingsWindow
         Checkbox("TargetVisitors", ref Settings.WordOfImmunityTargetVisitors);
         #endregion Word of Immunity
 
+        #region Ice Crystal
+        listing.GapLine();
+        AbilityHeader("VPE_IceCrystal");
+        #endregion Ice Crystal
+
         listing.End();
         settingsHeight = listing.CurHeight;
         Widgets.EndScrollView();
@@ -318,8 +326,5 @@ public static class AutocastSettingsWindow
 #endif
     }
 
-    public static string SettingsCategory()
-    {
-        return "BetterAutocastVPE.SettingsCategory".Translate();
-    }
+    public static string SettingsCategory() => "BetterAutocastVPE.SettingsCategory".Translate();
 }

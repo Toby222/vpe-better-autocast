@@ -31,7 +31,7 @@ internal static class EnchantHelper
 
         return things
             .Where(thing => ThingIsEnchantable(thing, ability))
-            .GetRandomElement(thing => (float)thing.GetQuality()! + 1.0f);
+            .GetRandomClass(thing => (float)thing.GetQuality()! + 1.0f);
     }
 
     internal static Thing? GetRandomEnchantableThingInStockpile(Map map, Ability ability)

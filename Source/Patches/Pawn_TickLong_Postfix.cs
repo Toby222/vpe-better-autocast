@@ -18,15 +18,10 @@ internal static class Pawn_Tick_Postfix
         if (__instance is null)
             throw new ArgumentNullException(nameof(__instance));
 
-        if (
-            Find.TickManager.TicksGame
-                % (
-                    __instance.Drafted
-                        ? BetterAutocastVPE.Settings.AutocastIntervalDrafted
-                        : BetterAutocastVPE.Settings.AutocastIntervalUndrafted
-                )
-            == 0
-        )
+        int interval = __instance.Drafted
+            ? BetterAutocastVPE.Settings.AutocastIntervalDrafted
+            : BetterAutocastVPE.Settings.AutocastIntervalUndrafted;
+        if (__instance.HashOffsetTicks() % interval == 0)
         {
             ProcessAbilities(__instance);
         }

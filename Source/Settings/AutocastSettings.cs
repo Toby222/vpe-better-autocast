@@ -31,6 +31,7 @@ public class AutocastSettings : ModSettings
         "VPE_WordofProductivity",
         "VPE_WordofSerenity",
         "VPEP_BrainLeech",
+        "VPE_IceCrystal",
     ];
     private readonly HashSet<string> defaultBlockedJobDefs =
     [
@@ -39,6 +40,7 @@ public class AutocastSettings : ModSettings
         "LayDown",
         "SpectateCeremony",
         "VFEA_GotoTargetAndUseAbility",
+        "BetterAutocastVPE_GotoLocationAndCastAbilityOnce",
         "VFEA_UseAbility",
         "Wait_Asleep",
         "Wait_Downed",
