@@ -22,8 +22,10 @@ public class AutocastSettings : ModSettings
         "VPE_Deathshield",
         "VPE_Eclipse",
         "VPE_EnchantQuality",
+        "VPE_IceCrystal",
         "VPE_Mend",
         "VPE_PsychicGuidance",
+        "VPE_SolarPinhole",
         "VPE_SpeedBoost",
         "VPE_StealVitality",
         "VPE_WordofImmunity",
@@ -31,33 +33,32 @@ public class AutocastSettings : ModSettings
         "VPE_WordofProductivity",
         "VPE_WordofSerenity",
         "VPEP_BrainLeech",
-        "VPE_IceCrystal",
     ];
     private readonly HashSet<string> defaultBlockedJobDefs =
     [
+        "BetterAutocastVPE_GotoLocationAndCastAbilityOnce",
         "DeliverToBed",
         "Ingest",
         "LayDown",
         "SpectateCeremony",
         "VFEA_GotoTargetAndUseAbility",
-        "BetterAutocastVPE_GotoLocationAndCastAbilityOnce",
         "VFEA_UseAbility",
         "Wait_Asleep",
         "Wait_Downed",
     ];
     private readonly HashSet<string> defaultWordOfSerenityIgnoredMentalStateDefs =
     [
+        "BerserkTrance",
+        "BerserkWarcall",
         "Crying",
         "Giggling",
-        "BerserkTrance",
-        "BerserkWarcall"
     ];
 
     public AutocastSettings()
     {
+        BlockedJobDefs ??= defaultBlockedJobDefs;
         DraftedAutocastDefs ??= defaultDraftedAutocastDefs;
         UndraftedAutocastDefs ??= defaultUndraftedAutocastDefs;
-        BlockedJobDefs ??= defaultBlockedJobDefs;
         WordOfSerenityIgnoredMentalStateDefs ??= defaultWordOfSerenityIgnoredMentalStateDefs;
     }
 

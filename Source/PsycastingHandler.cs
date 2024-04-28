@@ -38,6 +38,7 @@ internal static class PsycastingHandler
                 { "VPE_Invisibility", HandleInvisibility },
                 { "VPE_Mend", HandleMend },
                 { "VPE_PsychicGuidance", HandlePsychicGuidance },
+                { "VPE_SolarPinhole", HandleSolarPinhole },
                 { "VPE_SpeedBoost", HandleSelfBuff },
                 { "VPE_StealVitality", HandleStealVitality },
                 { "VPE_WordofImmunity", HandleWordOfImmunity },
@@ -104,11 +105,17 @@ internal static class PsycastingHandler
 
         string? jobBeforeCast = pawn.CurJobDef?.defName ?? "<none>";
 
+        BetterAutocastVPE.DebugLog(
+            $"Checking autocast of {ability.def.defName} for {pawn.NameFullColored}"
+        );
         if (
             (!pawn.Drafted && GetsCastWhileUndrafted(ability.def.defName))
             || (pawn.Drafted && GetsCastWhileDrafted(ability.def.defName))
         )
         {
+            BetterAutocastVPE.DebugLog(
+                $"Autocasting {ability.def.defName} for {pawn.NameFullColored}"
+            );
             bool wasAutocast = abilityHandlers[ability.def.defName](pawn, ability);
             if (wasAutocast)
             {
@@ -483,7 +490,7 @@ internal static class PsycastingHandler
 
     private static bool HandleEnchantByStorage(Pawn pawn, Ability ability)
     {
-        return GetRandomEnchantableThingInStorage(pawn.Map, ability) is Thing target
+        return GetRandomEnchantableThingInStorage(pawn.MapHeld, ability) is Thing target
             && CastAbilityOnTarget(ability, target);
     }
     #endregion Technomancer helpers
@@ -492,9 +499,32 @@ internal static class PsycastingHandler
     #region Frostshaper
     private static bool HandleIceCrystal(Pawn pawn, Ability ability)
     {
-        return GetRandomUnoccupiedCellInArea<Area_IceCrystal>(pawn.Map) is IntVec3 target
+        return GetRandomValidCellInArea<Area_IceCrystal>(
+                pawn.MapHeld,
+                cell => !cell.Filled(pawn.MapHeld) && cell.GetFirstBuilding(pawn.MapHeld) is null
+            )
+                is IntVec3 target
             && CastAbilityOnTarget(ability, target);
     }
     #endregion Frostshaper
+
+    #region Skipmaster
+    private static bool HandleSolarPinhole(Pawn pawn, Ability ability)
+    {
+        IntVec3? target_ = GetRandomValidCellInArea<Area_SolarPinhole>(
+            pawn.MapHeld,
+            cell =>
+                 // !cell.Filled(pawn.MapHeld)
+                 // &&
+                 !pawn
+                    .MapHeld.thingGrid.ThingsListAtFast(cell)
+                    .Any(thing => thing.def.defName == "SolarPinhole")
+        );
+        BetterAutocastVPE.DebugLog(
+            $"HandleSolarPinhole({pawn.NameFullColored}, {ability.def.defName}) -> ({target_.ToStringSafe()})"
+        );
+        return target_ is IntVec3 target && CastAbilityOnTarget(ability, target);
+    }
+    #endregion Skipmaster
     #endregion handlers
 }

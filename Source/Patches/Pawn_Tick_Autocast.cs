@@ -10,7 +10,7 @@ namespace BetterAutocastVPE.Patches;
 using static Helpers.PawnHelper;
 
 [HarmonyPatch(typeof(Pawn), nameof(Pawn.Tick))]
-internal static class Pawn_Tick_Postfix
+internal static class Pawn_Tick_Autocast
 {
     [HarmonyPostfix]
     internal static void Postfix(Pawn __instance)
@@ -41,18 +41,14 @@ internal static class Pawn_Tick_Postfix
         if (pawn.GetComp<CompAbilities>()?.LearnedAbilities is not List<Ability> abilities)
             return;
 
-        foreach (var ability in abilities)
+        foreach (Ability ability in abilities)
         {
-            if (ability is null)
+            if (!ability.autoCast)
                 continue;
-            if (
-                ability.autoCast
-                && ability.IsEnabledForPawn(out _)
-                && PsycastingHandler.HandleAbility(pawn, ability)
-            )
-            {
+            if (!ability.IsEnabledForPawn(out _))
+                continue;
+            if (PsycastingHandler.HandleAbility(pawn, ability))
                 break;
-            }
         }
     }
 }

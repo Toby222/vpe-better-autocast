@@ -310,6 +310,11 @@ public static class AutocastSettingsWindow
         AbilityHeader("VPE_IceCrystal");
         #endregion Ice Crystal
 
+        #region Solar Pinhole
+        listing.GapLine();
+        AbilityHeader("VPE_SolarPinhole");
+        #endregion Solar Pinhole
+
         listing.End();
         settingsHeight = listing.CurHeight;
         Widgets.EndScrollView();

@@ -7,6 +7,7 @@ namespace BetterAutocastVPE;
 
 using Settings;
 using UnityEngine;
+using VFECore.Abilities;
 
 public class BetterAutocastVPE : Mod
 {
@@ -49,6 +50,26 @@ public class BetterAutocastVPE : Mod
             Error("UnregisterPatch failed");
         }
         harmony.PatchAll();
+
+        HarmonyMethod postfix = new(Patches.CanAutoCast_EnableHandledPsycasts.Postfix);
+
+        MethodInfo ability = typeof(Ability).GetMethod(
+            "get_" + nameof(Ability.CanAutoCast),
+            BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.Public
+        );
+        MethodInfo ability_spawn = typeof(Ability_Spawn).GetMethod(
+            "get_" + nameof(Ability_Spawn.CanAutoCast),
+            BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.Public
+        );
+        MethodInfo ability_spawnbuilding = typeof(Ability_SpawnBuilding).GetMethod(
+            "get_" + nameof(Ability_SpawnBuilding.CanAutoCast),
+            BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.Public
+        );
+
+        harmony.Patch(ability, postfix: postfix);
+        harmony.Patch(ability_spawn, postfix: postfix);
+        harmony.Patch(ability_spawnbuilding, postfix: postfix);
+
         Settings = GetSettings<AutocastSettings>();
         // In case some of the values were null (e.g. added between versions), write with default values.
         // Also prevents repeat errors for namespace change of Settings class

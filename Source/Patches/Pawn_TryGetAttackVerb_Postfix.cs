@@ -20,11 +20,8 @@ internal static class Pawn_TryGetAttackVerb_Postfix
         if (__result is null)
             throw new ArgumentNullException(nameof(__result));
 
-        CompAbilities compAbilities = __instance.TryGetComp<CompAbilities>();
-        if (compAbilities == null)
-        {
+        if (__instance.TryGetComp<CompAbilities>() is not CompAbilities compAbilities)
             return;
-        }
 
         List<Verb_CastAbility> list = compAbilities
             .LearnedAbilities.Where(ability =>
