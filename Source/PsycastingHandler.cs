@@ -514,9 +514,8 @@ internal static class PsycastingHandler
         IntVec3? target_ = GetRandomValidCellInArea<Area_SolarPinhole>(
             pawn.MapHeld,
             cell =>
-                 // !cell.Filled(pawn.MapHeld)
-                 // &&
-                 !pawn
+                !cell.Filled(pawn.MapHeld)
+                && !pawn
                     .MapHeld.thingGrid.ThingsListAtFast(cell)
                     .Any(thing => thing.def.defName == "SolarPinhole")
         );

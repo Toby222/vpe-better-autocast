@@ -56,6 +56,7 @@ public class AutocastSettings : ModSettings
 
     public AutocastSettings()
     {
+        BetterAutocastVPE.DebugLog("Initiating settings");
         BlockedJobDefs ??= defaultBlockedJobDefs;
         DraftedAutocastDefs ??= defaultDraftedAutocastDefs;
         UndraftedAutocastDefs ??= defaultUndraftedAutocastDefs;
