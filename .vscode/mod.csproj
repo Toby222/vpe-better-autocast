@@ -118,7 +118,7 @@
     </PropertyGroup>
     <ItemGroup Condition="'$(GAME_VERSION)'==''">
         <PackageReference Include="Krafs.Rimworld.Ref"
-                          Version="1.5.4063" />
+                          Version="1.5.4104" />
         <Reference Include="VanillaPsycastsExpanded"
                    HintPath="..\..\VanillaPsycastsExpanded\1.5\Assemblies\VanillaPsycastsExpanded.dll"
                    IncludeAssets="compile"
@@ -133,7 +133,7 @@
     </ItemGroup>
     <ItemGroup Condition="'$(GAME_VERSION)'=='v1.5'">
         <PackageReference Include="Krafs.Rimworld.Ref"
-                          Version="1.5.4063" />
+                          Version="1.5.4104" />
         <Reference Include="VanillaPsycastsExpanded"
                    HintPath="..\..\VanillaPsycastsExpanded\1.5\Assemblies\VanillaPsycastsExpanded.dll"
                    IncludeAssets="compile"
