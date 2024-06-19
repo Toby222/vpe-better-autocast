@@ -8,6 +8,7 @@ using VFECore.Abilities;
 
 namespace BetterAutocastVPE.Patches;
 
+// Modified from Vanilla Expanded Framework's code
 [HarmonyBefore("legodude17.mvcf")]
 [HarmonyPatch(typeof(Pawn), nameof(Pawn.TryGetAttackVerb))]
 internal static class Pawn_TryGetAttackVerb_Postfix
@@ -23,28 +24,29 @@ internal static class Pawn_TryGetAttackVerb_Postfix
 
         IEnumerable<Verb_CastAbility> castableVerbs = compAbilities
             .LearnedAbilities.Where(ability =>
-                ability.autoCast
+                ability.AutoCast
                 && !AbilityIsBlacklisted(ability)
-                && ability.IsEnabledForPawn(out string reason)
+                && ability.IsEnabledForPawn(out string _)
                 && (target == null || ability.CanHitTarget(target))
             )
             .Select(ability => ability.verb);
 
         if (target is not null)
         {
-            var result = castableVerbs.Where(x => x.ability.AICanUseOn(target))
-                .Select(x => new Tuple<Verb, float>(x, x.ability.Chance))
-                .AddItem(new Tuple<Verb, float>(__result, 1f))
-                .GetRandomClass(t => t.Item2);
+            (Verb, float)? result = castableVerbs
+                .Where(x => x.ability.AICanUseOn(target))
+                .Select(x => (x as Verb, x.ability.Chance))
+                .AddItem((__result, 1f))
+                .GetRandomStruct(t => t.Item2);
 
-            if (result is not null)
+            if (result?.Item1 is Verb castVerb)
             {
-                __result = result.Item1;
+                __result = castVerb;
             }
         }
         else
         {
-            __result = castableVerbs.AddItem(__result).MaxBy((Verb ve) => ve.verbProps.range);
+            __result = castableVerbs.AddItem(__result).MaxBy(verb => verb.verbProps.range);
         }
     }
 
