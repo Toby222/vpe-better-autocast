@@ -32,7 +32,18 @@ internal static class MendHelper
         if (pawn.MapHeld != map)
             return null;
 
-        return map.GetThingsInStorage()
+        IEnumerable<Thing> things = BetterAutocastVPE.Settings.MendOnlyNamedStorageGroups
+            ? map.GetThingsInNamedStorageGroup("mend")
+            : map.GetThingsInStorage();
+
+#if DEBUG
+        things = things.ToList();
+        BetterAutocastVPE.DebugLog(
+            "DamagedThings" + string.Join(",", things.Select(thing => thing.ToStringSafe()))
+        );
+#endif
+
+        return things
             .Where(ThingIsSufficientlyDamaged)
             .Where(thing => PawnIsDraftedOrThingIsAllowedAndReservable(pawn, thing))
             .GetRandomClass(thing => (float)thing.HitPoints / thing.MaxHitPoints);
@@ -48,7 +59,11 @@ internal static class MendHelper
         if (pawn.MapHeld != map)
             return null;
 
-        return map.GetThingsInNamedStockpile("mend")
+        IEnumerable<Thing> things = BetterAutocastVPE.Settings.MendOnlyNamedStockpiles
+            ? map.GetThingsInNamedStockpile("mend")
+            : map.GetThingsInAllStockpiles();
+
+        return things
             .Where(thing => PawnIsDraftedOrThingIsAllowedAndReservable(pawn, thing))
             .Where(ThingIsSufficientlyDamaged)
             .GetRandomClass(thing => (float)thing.HitPoints / thing.MaxHitPoints);

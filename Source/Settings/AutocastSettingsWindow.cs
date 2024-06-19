@@ -160,14 +160,28 @@ public static class AutocastSettingsWindow
         );
         Checkbox("MendPawns", ref Settings.MendPawns);
         Checkbox("MendInStockpile", ref Settings.MendInStockpile);
+        Checkbox("EnchantOnlyNamedStockpiles", ref Settings.MendOnlyNamedStockpiles);
         Checkbox("MendInStorage", ref Settings.MendInStorage);
+#if v1_4
+#elif v1_5
+        Checkbox("MendOnlyNamedStorageGroups", ref Settings.MendOnlyNamedStorageGroups);
+#else
+        throw new NotImplementedException();
+#endif
         #endregion Mend
 
         #region Enchant quality
         listing.GapLine();
         AbilityHeader("VPE_EnchantQuality");
         Checkbox("EnchantInStockpile", ref Settings.EnchantInStockpile);
+        Checkbox("EnchantOnlyNamedStockpiles", ref Settings.EnchantOnlyNamedStockpiles);
         Checkbox("EnchantInStorage", ref Settings.EnchantInStorage);
+#if v1_4
+#elif v1_5
+        Checkbox("EnchantOnlyNamedStorageGroups", ref Settings.EnchantOnlyNamedStorageGroups);
+#else
+        throw new NotImplementedException();
+#endif
         #endregion Enchant quality
 
         #region Steal vitality

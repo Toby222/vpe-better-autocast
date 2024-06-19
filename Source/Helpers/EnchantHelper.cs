@@ -17,11 +17,15 @@ internal static class EnchantHelper
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
 
+        if (thing.GetQuality() is not QualityCategory quality)
+            return false;
+
         QualityCategory maxQuality = Traverse
             .Create(ability)
             .Property<QualityCategory>("MaxQuality")
             .Value;
-        return thing.GetQuality() is QualityCategory quality && quality < maxQuality;
+
+        return quality < maxQuality;
     }
 
     private static Thing? GetRandomEnchantableThing(IEnumerable<Thing> things, Ability ability)
@@ -41,7 +45,11 @@ internal static class EnchantHelper
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
 
-        return GetRandomEnchantableThing(map.GetThingsInNamedStockpile("enchant"), ability);
+        IEnumerable<Thing> things = BetterAutocastVPE.Settings.EnchantOnlyNamedStockpiles
+            ? map.GetThingsInNamedStockpile("enchant")
+            : map.GetThingsInAllStockpiles();
+
+        return GetRandomEnchantableThing(things, ability);
     }
 
     internal static Thing? GetRandomEnchantableThingInStorage(Map map, Ability ability)
@@ -51,6 +59,10 @@ internal static class EnchantHelper
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
 
-        return GetRandomEnchantableThing(map.GetThingsInStorage(), ability);
+        IEnumerable<Thing> things = BetterAutocastVPE.Settings.EnchantOnlyNamedStorageGroups
+            ? map.GetThingsInNamedStorageGroup("enchant")
+            : map.GetThingsInStorage();
+
+        return GetRandomEnchantableThing(things, ability);
     }
 }

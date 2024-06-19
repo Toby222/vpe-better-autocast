@@ -24,13 +24,13 @@
     <BetterAutocastVPE.VPE_Darkvision.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychically sensitive colonist without the buff in casting range.</BetterAutocastVPE.VPE_Darkvision.Explanation>
     <BetterAutocastVPE.VPE_Deathshield.Explanation>Targets the closest pawn without death shield in range, prioritizing by group in the order below.\nThat is, targets colonists firsts, then colony animals if no colonists are available, and so on.</BetterAutocastVPE.VPE_Deathshield.Explanation>
     <BetterAutocastVPE.VPE_Eclipse.Explanation>Will autocast when there is no ongoing eclipse</BetterAutocastVPE.VPE_Eclipse.Explanation>
-    <BetterAutocastVPE.VPE_EnchantQuality.Explanation>Will look for enchantable items in the order listed below.\n\nWhen looking for items in stockpiles, will only look in zones containing the word "enchant".\nFor example: `Enchanting`, `enchant`, `The Enchantress of Florence`</BetterAutocastVPE.VPE_EnchantQuality.Explanation>
+    <BetterAutocastVPE.VPE_EnchantQuality.Explanation>Will look for enchantable items in the order listed below.\n\nWhen looking for items in "appropriately named" places, will look for names containing the word "enchant".\nFor example: `Enchanting`, `enchant`, `The Enchantress of Florence`</BetterAutocastVPE.VPE_EnchantQuality.Explanation>
     <BetterAutocastVPE.VPE_FiringFocus.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_FiringFocus.Explanation>
     <BetterAutocastVPE.VPE_GuidedShot.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_GuidedShot.Explanation>
     <BetterAutocastVPE.VPE_Invisibility.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychic sensitive colonist without the buff in casting range.</BetterAutocastVPE.VPE_Invisibility.Explanation>
     <BetterAutocastVPE.VPE_IceCrystal.Explanation>Will create ice crystals on a random cell in the Ice Crystal Spot area.\nWill only target cells without buildings.</BetterAutocastVPE.VPE_IceCrystal.Explanation>
     <BetterAutocastVPE.VPE_SolarPinhole.Explanation>Will create solar pinholes on a random cell in the Solar Pinhole Spot area.\nWill only target cells that don't already have a solar pinhole.</BetterAutocastVPE.VPE_SolarPinhole.Explanation>
-    <BetterAutocastVPE.VPE_Mend.Explanation>Will look for damaged items in the order listed below.\n\nWhen looking for items in stockpiles, will only look in zones containing the word "mend".\nFor example: `Mending`, `mend`, `The First Amendment`</BetterAutocastVPE.VPE_Mend.Explanation>
+    <BetterAutocastVPE.VPE_Mend.Explanation>Will look for damaged items in the order listed below.\n\nWhen looking for items in "appropriately named" places, will look for names containing the word "mend".\nFor example: `Mending`, `mend`, `The First Amendment`</BetterAutocastVPE.VPE_Mend.Explanation>
     <BetterAutocastVPE.VPE_PsychicGuidance.Explanation>Targets a random non-downed psychically sensitive colonist in range that doesn't have the Psychic Guidance buff.</BetterAutocastVPE.VPE_PsychicGuidance.Explanation>
     <BetterAutocastVPE.VPE_SpeedBoost.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_SpeedBoost.Explanation>
     <BetterAutocastVPE.VPE_StealVitality.Explanation>Targets the pawn with highest psychic sensitivity in range, ignoring those that have no psychic sensitivity, prioritizing by group in the order below.\nThat is, target prisoners first, if no prisoners are available, then target slaves, and so on.</BetterAutocastVPE.VPE_StealVitality.Explanation>
@@ -43,13 +43,17 @@
     <BetterAutocastVPE.AutocastIntervalDrafted.Description>Autocasting interval while drafted (only applies to patched psycasts)</BetterAutocastVPE.AutocastIntervalDrafted.Description>
     <BetterAutocastVPE.AutocastIntervalUndrafted>Undrafted autocasting interval: {0} ticks</BetterAutocastVPE.AutocastIntervalUndrafted>
     <BetterAutocastVPE.AutocastIntervalUndrafted.Description>Autocasting interval while undrafted (only applies to patched psycasts)</BetterAutocastVPE.AutocastIntervalUndrafted.Description>
-    <BetterAutocastVPE.MendHealthThreshold>Mend damage threshold: {0}</BetterAutocastVPE.MendHealthThreshold>
+    <BetterAutocastVPE.MendHealthThreshold>Mend health threshold (maximum): {0}</BetterAutocastVPE.MendHealthThreshold>
     <BetterAutocastVPE.MendHealthThreshold.Description>Maximum health for an item to be auto-targeted</BetterAutocastVPE.MendHealthThreshold.Description>
     <BetterAutocastVPE.MendPawns>Mend equipped gear</BetterAutocastVPE.MendPawns>
     <BetterAutocastVPE.MendInStockpile>Mend items in stockpiles</BetterAutocastVPE.MendInStockpile>
+    <BetterAutocastVPE.MendOnlyNamedStockpiles>Only mend items in appropriately named stockpiles</BetterAutocastVPE.MendOnlyNamedStockpiles>
     <BetterAutocastVPE.MendInStorage>Mend items in storage (e.g. shelves)</BetterAutocastVPE.MendInStorage>
+    <BetterAutocastVPE.MendOnlyNamedStorageGroups>Only mend items in appropriately named storage groups</BetterAutocastVPE.MendOnlyNamedStorageGroups>
     <BetterAutocastVPE.EnchantInStockpile>Enchant items in stockpiles</BetterAutocastVPE.EnchantInStockpile>
+    <BetterAutocastVPE.EnchantOnlyNamedStockpiles>Only enchant items in appropriately named stockpiles</BetterAutocastVPE.EnchantOnlyNamedStockpiles>
     <BetterAutocastVPE.EnchantInStorage>Enchant items in storage (e.g. shelves)</BetterAutocastVPE.EnchantInStorage>
+    <BetterAutocastVPE.EnchantOnlyNamedStorageGroups>Only enchant items in appropriately named storage groups</BetterAutocastVPE.EnchantOnlyNamedStorageGroups>
     <BetterAutocastVPE.CastDrafted>Cast while drafted</BetterAutocastVPE.CastDrafted>
     <BetterAutocastVPE.CastUndrafted>Cast while undrafted</BetterAutocastVPE.CastUndrafted>
     <BetterAutocastVPE.WordOfJoyMoodThreshold>Mood threshold: {0}</BetterAutocastVPE.WordOfJoyMoodThreshold>

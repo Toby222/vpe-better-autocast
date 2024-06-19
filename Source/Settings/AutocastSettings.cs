@@ -71,11 +71,15 @@ public class AutocastSettings : ModSettings
 
     public float MendHealthThreshold = 0.5f;
     public bool MendPawns = true;
-    public bool MendInStorage = true;
     public bool MendInStockpile = true;
+    public bool MendOnlyNamedStockpiles = true;
+    public bool MendInStorage = true;
+    public bool MendOnlyNamedStorageGroups = false;
 
-    public bool EnchantInStorage = true;
     public bool EnchantInStockpile = true;
+    public bool EnchantOnlyNamedStockpiles = true;
+    public bool EnchantInStorage = true;
+    public bool EnchantOnlyNamedStorageGroups = false;
 
     public bool StealVitalityFromPrisoners = true;
     public bool StealVitalityFromSlaves = true;
@@ -155,13 +159,17 @@ public class AutocastSettings : ModSettings
         #region Mend
         LookField(ref MendHealthThreshold, nameof(MendHealthThreshold), 0.5f);
         LookField(ref MendPawns, nameof(MendPawns), true);
-        LookField(ref MendInStorage, nameof(MendInStorage), true);
         LookField(ref MendInStockpile, nameof(MendInStockpile), true);
+        LookField(ref MendOnlyNamedStockpiles, nameof(MendOnlyNamedStockpiles), true);
+        LookField(ref MendInStorage, nameof(MendInStorage), true);
+        LookField(ref MendOnlyNamedStorageGroups, nameof(MendOnlyNamedStorageGroups), false);
         #endregion Mend
 
         #region Enchant Quality
-        LookField(ref EnchantInStorage, nameof(EnchantInStorage), true);
         LookField(ref EnchantInStockpile, nameof(EnchantInStockpile), true);
+        LookField(ref EnchantOnlyNamedStockpiles, nameof(EnchantOnlyNamedStockpiles), true);
+        LookField(ref EnchantInStorage, nameof(EnchantInStorage), true);
+        LookField(ref EnchantOnlyNamedStorageGroups, nameof(EnchantOnlyNamedStorageGroups), false);
         #endregion Enchant Quality
 
         #region Steal Vitality

@@ -9,6 +9,32 @@ namespace BetterAutocastVPE.Helpers;
 
 internal static class ThingHelper
 {
+    internal static IEnumerable<Thing> GetThingsInNamedStorageGroup(
+        this Map map,
+        string storageGroupName
+    )
+    {
+        if (map is null)
+            throw new ArgumentNullException(nameof(map));
+        if (storageGroupName is null)
+            throw new ArgumentNullException(nameof(storageGroupName));
+
+#if v1_4
+        return Enumerable.Empty<Thing>();
+#elif v1_5
+        return HarmonyLib
+            .Traverse.Create(map.storageGroups)
+            .Field<List<StorageGroup>>("groups")
+            .Value.Where(group =>
+                group.RenamableLabel.IndexOf(storageGroupName, StringComparison.OrdinalIgnoreCase)
+                >= 0
+            )
+            .SelectMany(group => group.HeldThings);
+#else
+        throw new NotImplementedException();
+#endif
+    }
+
     internal static IEnumerable<Thing> GetThingsInNamedStockpile(this Map map, string stockpileName)
     {
         if (map is null)
@@ -16,20 +42,22 @@ internal static class ThingHelper
         if (stockpileName is null)
             throw new ArgumentNullException(nameof(stockpileName));
 
-        return map.listerThings.AllThings.Where(thing => thing.IsInNamedStockpile(stockpileName));
+        return map
+            .zoneManager.AllZones.OfType<Zone_Stockpile>()
+            .Where(zone =>
+                zone.label.IndexOf(stockpileName, StringComparison.OrdinalIgnoreCase) >= 0
+            )
+            .SelectMany(zone => zone.AllContainedThings);
     }
 
-    private static bool IsInNamedStockpile(this Thing thing, string stockpileName)
+    internal static IEnumerable<Thing> GetThingsInAllStockpiles(this Map map)
     {
-        if (thing is null)
-            throw new ArgumentNullException(nameof(thing));
-        if (stockpileName is null)
-            throw new ArgumentNullException(nameof(stockpileName));
+        if (map is null)
+            throw new ArgumentNullException(nameof(map));
 
-        // Check if the thing is in a stockpile zone with the specified name
-        Zone zone = thing.Position.GetZone(thing.Map);
-        return zone is Zone_Stockpile
-            && zone.label.IndexOf(stockpileName, StringComparison.OrdinalIgnoreCase) >= 0;
+        return map
+            .zoneManager.AllZones.OfType<Zone_Stockpile>()
+            .SelectMany(zone => zone.AllContainedThings);
     }
 
     internal static IEnumerable<Thing> GetThingsInStorage(this Map map)
