@@ -1,3 +1,4 @@
 .direnv
 .vscode/obj
 log
+node_modules

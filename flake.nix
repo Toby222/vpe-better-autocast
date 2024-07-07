@@ -4,7 +4,10 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     systems.url = "github:nix-systems/default";
     # Dev tools
-    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -22,7 +25,6 @@
           ...
         }:
         {
-          # Rust dev environment
           devShells.default = pkgs.mkShell {
             inputsFrom = [ config.treefmt.build.devShell ];
             nativeBuildInputs = with pkgs; [
@@ -32,6 +34,7 @@
               omnisharp-roslyn
               mono
               libxslt
+              nodePackages.npm
             ];
 
             DOTNET_ROOT = "${pkgs.dotnet-sdk_8}";
@@ -43,9 +46,27 @@
             projectRootFile = "flake.nix";
             programs = {
               csharpier.enable = true;
-              prettier.enable = true;
-              nixfmt-rfc-style.enable = true;
+              nixfmt.enable = true;
+              shfmt.enable = true;
+              prettier = {
+                enable = true;
+                includes = [
+                  "*.xml"
+                  "*.xslt"
+                  "*.json"
+                  "*.csproj"
+                ];
+                settings = {
+                  plugins = [ "@prettier/plugin-xml" ];
+                  bracketSameLine = true;
+                };
+              };
             };
+            settings.global.excludes = [
+              "*.ase"
+              "*.dll"
+              "*.png"
+            ];
           };
         };
     };

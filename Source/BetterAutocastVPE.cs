@@ -93,7 +93,9 @@ public class BetterAutocastVPE : Mod
     public void Uninstall()
     {
         string fileNamePrefix = DateTime.Now.ToString("s", CultureInfo.InvariantCulture);
-        GameDataSaveLoader.SaveGame(fileNamePrefix + " - " + "BetterAutocastVPE.BeforeUninstall".Translate());
+        GameDataSaveLoader.SaveGame(
+            fileNamePrefix + " - " + "BetterAutocastVPE.BeforeUninstall".Translate()
+        );
         Find.TickManager.Pause();
         foreach (Map map in Find.Maps)
         {
@@ -114,9 +116,15 @@ public class BetterAutocastVPE : Mod
             }
         }
         List<ModContentPack> original = LoadedModManager.RunningMods.ToList();
-        Traverse<List<ModContentPack>> traverse = Traverse.Create(typeof(LoadedModManager)).Field<List<ModContentPack>>("runningMods");
-        traverse.Value = original.Where(x => !x.ModMetaData.SamePackageId(Content.PackageId)).ToList();
-        GameDataSaveLoader.SaveGame(fileNamePrefix + " - " + "BetterAutocastVPE.AfterUninstall".Translate());
+        Traverse<List<ModContentPack>> traverse = Traverse
+            .Create(typeof(LoadedModManager))
+            .Field<List<ModContentPack>>("runningMods");
+        traverse.Value = original
+            .Where(x => !x.ModMetaData.SamePackageId(Content.PackageId))
+            .ToList();
+        GameDataSaveLoader.SaveGame(
+            fileNamePrefix + " - " + "BetterAutocastVPE.AfterUninstall".Translate()
+        );
         traverse.Value = original;
         GenScene.GoToMainMenu();
     }

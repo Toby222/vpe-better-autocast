@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
     <BetterAutocastVPE.SettingsCategory>Better Autocasting for VPE</BetterAutocastVPE.SettingsCategory>
     <BetterAutocastVPE.Clarification>"In range" below considers allowed areas when undrafted, but ignores them when drafted.\n\nForbidden targets are ignored unless drafted.\nThis includes checking if they are in allowed areas, or reserved by a pawn.</BetterAutocastVPE.Clarification>

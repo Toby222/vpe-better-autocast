@@ -1,11 +1,9 @@
-<xsl:stylesheet version="1.0"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-    <xsl:output method="xml"
-                encoding="utf-8"
-                indent="yes" />
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:output method="xml" encoding="utf-8" indent="yes" />
     <xsl:strip-space elements="*" />
     <!-- Match ModMetaData and its descendants, modify modVersion element -->
-    <xsl:template match="/Project/PropertyGroup/ModMetaData|ModMetaData/@*|ModMetaData//node()">
+    <xsl:template
+    match="/Project/PropertyGroup/ModMetaData|ModMetaData/@*|ModMetaData//node()">
         <xsl:copy>
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>

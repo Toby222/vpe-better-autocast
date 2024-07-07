@@ -17,6 +17,6 @@ dotnet build $script_dir/mod.csproj -c ${configuration} -p:GAME_VERSION=v1.4
 
 # generate About.xml
 rm -f $mod_dir/About/About.xml
-xsltproc -o $mod_dir/About/About.xml $script_dir/about.xml.xslt $script_dir/mod.csproj 
+xsltproc -o $mod_dir/About/About.xml $script_dir/about.xml.xslt $script_dir/mod.csproj
 
 popd
