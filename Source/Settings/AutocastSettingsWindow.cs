@@ -112,6 +112,19 @@ public static class AutocastSettingsWindow
         listing.GapLine();
 
         #region General
+
+        bool inGame = Current.Game is not null;
+        string uninstallLabel = inGame
+            ? "BetterAutocastVPE.Uninstall"
+            : "BetterAutocastVPE.Uninstall.Disabled";
+
+        listing.Label("BetterAutocastVPE.Uninstall.Explanation".Translate());
+
+        if (listing.ButtonText(uninstallLabel.Translate()) && inGame)
+            LoadedModManager.GetMod<BetterAutocastVPE>().Uninstall();
+
+        listing.GapLine();
+
         if (listing.ButtonText("BetterAutocastVPE.ResetSettings".Translate()))
             LoadedModManager.GetMod<BetterAutocastVPE>().ResetSettings();
 

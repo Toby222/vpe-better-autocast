@@ -5,6 +5,9 @@ using Verse;
 
 namespace BetterAutocastVPE;
 
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using Settings;
 using UnityEngine;
 using VFECore.Abilities;
@@ -86,6 +89,37 @@ public class BetterAutocastVPE : Mod
     public static AutocastSettings Settings { get; private set; }
 
 #nullable enable
+
+    public void Uninstall()
+    {
+        string fileNamePrefix = DateTime.Now.ToString("s", CultureInfo.InvariantCulture);
+        GameDataSaveLoader.SaveGame(fileNamePrefix + " - " + "BetterAutocastVPE.BeforeUninstall".Translate());
+        Find.TickManager.Pause();
+        foreach (Map map in Find.Maps)
+        {
+            map.areaManager.AllAreas.RemoveAll(area =>
+                area is Area_IceCrystal or Area_SolarPinhole
+            );
+
+            foreach (Pawn pawn in map.mapPawns.AllPawns)
+            {
+                if (pawn.TryGetComp<CompAbilities>() is not CompAbilities compAbilities)
+                    continue;
+
+                foreach (Ability ability in compAbilities.LearnedAbilities)
+                {
+                    if (PsycastingHandler.HasHandler(ability.def.defName))
+                        ability.autoCast = false;
+                }
+            }
+        }
+        List<ModContentPack> original = LoadedModManager.RunningMods.ToList();
+        Traverse<List<ModContentPack>> traverse = Traverse.Create(typeof(LoadedModManager)).Field<List<ModContentPack>>("runningMods");
+        traverse.Value = original.Where(x => !x.ModMetaData.SamePackageId(Content.PackageId)).ToList();
+        GameDataSaveLoader.SaveGame(fileNamePrefix + " - " + "BetterAutocastVPE.AfterUninstall".Translate());
+        traverse.Value = original;
+        GenScene.GoToMainMenu();
+    }
 
     public void ResetSettings()
     {

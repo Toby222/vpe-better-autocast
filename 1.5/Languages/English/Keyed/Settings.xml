@@ -3,6 +3,9 @@
     <BetterAutocastVPE.SettingsCategory>Better Autocasting for VPE</BetterAutocastVPE.SettingsCategory>
     <BetterAutocastVPE.Clarification>"In range" below considers allowed areas when undrafted, but ignores them when drafted.\n\nForbidden targets are ignored unless drafted.\nThis includes checking if they are in allowed areas, or reserved by a pawn.</BetterAutocastVPE.Clarification>
     <BetterAutocastVPE.NoNonexistentDefs>&lt;b&gt;No nonexistent defs configured, nothing to do here.&lt;/b&gt;</BetterAutocastVPE.NoNonexistentDefs>
+    <BetterAutocastVPE.Uninstall.Explanation>Removes all elements of this mod from the currently loaded game so you can safely uninstall the mod.\nCreates a backup save both before and after the removal, then puts you in the main menu.\n\nAlso turns off autocasting for all patched psycasts. For technical reasons, this does not check if they can be autocast without the mod and may need to be re-enabled on reload.\n\nOnly works if you currently have a save loaded.</BetterAutocastVPE.Uninstall.Explanation>
+    <BetterAutocastVPE.Uninstall>Uninstall the mod from the current game</BetterAutocastVPE.Uninstall>
+    <BetterAutocastVPE.Uninstall.Disabled>Load a save to uninstall this mod from it</BetterAutocastVPE.Uninstall.Disabled>
     <BetterAutocastVPE.ResetSettings>Reset Settings</BetterAutocastVPE.ResetSettings>
     <BetterAutocastVPE.TargetSelf>Target self</BetterAutocastVPE.TargetSelf>
     <BetterAutocastVPE.TargetColonists>Target colonists</BetterAutocastVPE.TargetColonists>
