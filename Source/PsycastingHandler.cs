@@ -46,6 +46,7 @@ internal static class PsycastingHandler
                 { "VPE_WordofProductivity", HandleWordOfProductivity },
                 { "VPE_WordofSerenity", HandleWordOfSerenity },
                 { "VPEP_BrainLeech", HandleBrainLeech },
+                { "VPE_Overshield", HandleOvershield },
             }
         );
     #endregion private members
@@ -168,8 +169,39 @@ internal static class PsycastingHandler
         if (BetterAutocastVPE.Settings.InvisibilityTargetColonists && target is null)
         {
             float range = ability.GetRangeForPawn();
-            target ??= pawn.GetPawnsInRange(range)
+            target = pawn.GetPawnsInRange(range)
                 .WithoutHediff("PsychicInvisibility")
+                .PsychicallySensitive()
+                .NotDown()
+                .Colonists()
+                .ClosestTo(pawn);
+        }
+
+        return target is not null && CastAbilityOnTarget(ability, target);
+    }
+
+    private static bool HandleOvershield(Pawn pawn, Ability ability)
+    {
+        if (pawn is null)
+            throw new ArgumentNullException(nameof(pawn));
+        if (ability is null)
+            throw new ArgumentNullException(nameof(ability));
+
+        Pawn? target = null;
+
+        if (
+            BetterAutocastVPE.Settings.OvershieldTargetSelf
+            && !pawn.HasHediff("VPE_Overshield")
+        )
+        {
+            target ??= pawn;
+        }
+
+        if (BetterAutocastVPE.Settings.OvershieldTargetColonists && target is null)
+        {
+            float range = ability.GetRangeForPawn();
+            target = pawn.GetPawnsInRange(range)
+                .WithoutHediff("VPE_Overshield")
                 .PsychicallySensitive()
                 .NotDown()
                 .Colonists()

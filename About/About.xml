@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
   <packageId>dev.tobot.vpe.betterautocast</packageId>
   <name>Better autocasting for Vanilla Psycasts Expanded</name>
@@ -11,9 +11,9 @@
     <li>1.4</li>
     <li>1.5</li>
   </supportedVersions>
-  <modVersion IgnoreIfNoMatchingField="True">4.5.1.0</modVersion>
+  <modVersion IgnoreIfNoMatchingField="True">4.6.0.0</modVersion>
   <url>https://github.com/Toby222/vpe-better-autocast/</url>
-  <modDependencies />
+  <modDependencies/>
   <modDependenciesByVersion>
     <v1.4>
       <li>
@@ -56,7 +56,7 @@
       </li>
     </v1.5>
   </modDependenciesByVersion>
-  <loadAfter />
+  <loadAfter/>
   <loadAfterByVersion>
     <v1.4>
       <li>brrainz.harmony</li>
@@ -71,11 +71,11 @@
       <li>VanillaExpanded.VPE.Puppeteer</li>
     </v1.5>
   </loadAfterByVersion>
-  <forceLoadAfter />
-  <loadBefore />
-  <loadBeforeByVersion />
-  <forceLoadBefore />
-  <incompatibleWith />
+  <forceLoadAfter/>
+  <loadBefore/>
+  <loadBeforeByVersion/>
+  <forceLoadBefore/>
+  <incompatibleWith/>
   <incompatibleWithByVersion>
     <v1.4>
       <li>NetzachSloth.BetterAutocastVPE</li>

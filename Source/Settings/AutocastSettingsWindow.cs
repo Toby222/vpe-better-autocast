@@ -322,6 +322,13 @@ public static class AutocastSettingsWindow
         Checkbox("TargetColonists", ref Settings.InvisibilityTargetColonists);
         #endregion Invisibility
 
+        #region Overshield
+        listing.GapLine();
+        AbilityHeader("VPE_Overshield");
+        Checkbox("TargetSelf", ref Settings.OvershieldTargetSelf);
+        Checkbox("TargetColonists", ref Settings.OvershieldTargetColonists);
+        #endregion Overshield
+
         #region Word of Immunity
         listing.GapLine();
         AbilityHeader("VPE_WordofImmunity");

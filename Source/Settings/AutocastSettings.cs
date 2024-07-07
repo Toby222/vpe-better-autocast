@@ -14,6 +14,7 @@ public class AutocastSettings : ModSettings
         "VPE_FiringFocus",
         "VPE_GuidedShot",
         "VPE_Invisibility",
+        "VPE_Overshield",
         "VPE_SpeedBoost",
     ];
     private readonly HashSet<string> defaultUndraftedAutocastDefs =
@@ -111,6 +112,9 @@ public class AutocastSettings : ModSettings
 
     public bool InvisibilityTargetSelf = true;
     public bool InvisibilityTargetColonists = true;
+
+    public bool OvershieldTargetSelf = true;
+    public bool OvershieldTargetColonists = true;
 
     public bool WordOfImmunityTargetColonists = true;
     public bool WordOfImmunityTargetColonyAnimals = false;
@@ -228,6 +232,11 @@ public class AutocastSettings : ModSettings
         LookField(ref InvisibilityTargetSelf, nameof(InvisibilityTargetSelf), true);
         LookField(ref InvisibilityTargetColonists, nameof(InvisibilityTargetColonists), true);
         #endregion Invisibility
+
+        #region Overshield
+        LookField(ref OvershieldTargetSelf, nameof(OvershieldTargetSelf), true);
+        LookField(ref OvershieldTargetColonists, nameof(OvershieldTargetColonists), true);
+        #endregion Overshield
 
         #region Word of Immunity
         LookField(ref WordOfImmunityTargetColonists, nameof(WordOfImmunityTargetColonists), true);
