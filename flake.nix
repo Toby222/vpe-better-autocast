@@ -51,21 +51,34 @@
               prettier = {
                 enable = true;
                 includes = [
-                  "*.xml"
-                  "*.xslt"
-                  "*.json"
-                  "*.csproj"
+                  "**/*.xml"
+                  "**/*.xslt"
+                  "**/*.json"
+                  "**/*.csproj"
                 ];
                 settings = {
                   plugins = [ "@prettier/plugin-xml" ];
                   bracketSameLine = true;
+                  printWidth = 1000;
+                  overrides = [
+                    {
+                      files = "*.xml";
+                      options = {
+                        xmlQuoteAttributes = "double";
+                        xmlSortAttributesByKey = true;
+                        xmlWhitespaceSensitivity = "preserve";
+                      };
+                    }
+                  ];
                 };
               };
             };
             settings.global.excludes = [
+              "1.4/**/*"
               "*.ase"
               "*.dll"
               "*.png"
+              "About/About.xml"
             ];
           };
         };

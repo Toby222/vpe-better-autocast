@@ -189,10 +189,7 @@ internal static class PsycastingHandler
 
         Pawn? target = null;
 
-        if (
-            BetterAutocastVPE.Settings.OvershieldTargetSelf
-            && !pawn.HasHediff("VPE_Overshield")
-        )
+        if (BetterAutocastVPE.Settings.OvershieldTargetSelf && !pawn.HasHediff("VPE_Overshield"))
         {
             target ??= pawn;
         }
