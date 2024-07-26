@@ -349,6 +349,11 @@ public static class AutocastSettingsWindow
         AbilityHeader("VPE_SolarPinhole");
         #endregion Solar Pinhole
 
+        #region Large Solar Pinhole
+        listing.GapLine();
+        AbilityHeader("VPE_SolarPinholeSunlamp");
+        #endregion Large Solar Pinhole
+
         listing.End();
         settingsHeight = listing.CurHeight;
         Widgets.EndScrollView();

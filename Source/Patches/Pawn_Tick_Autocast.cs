@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using HarmonyLib;
+using VanillaPsycastsExpanded;
 using Verse;
 using VFECore.Abilities;
 using Ability = VFECore.Abilities.Ability;
@@ -41,8 +43,12 @@ internal static class Pawn_Tick_Autocast
         if (pawn.GetComp<CompAbilities>()?.LearnedAbilities is not List<Ability> abilities)
             return;
 
-        foreach (Ability ability in abilities)
+        foreach (
+            Ability ability in abilities
+                .OrderByDescending(ability => ability.def.defName is "VPE_SolarPinholeSunlamp")
+        )
         {
+            BetterAutocastVPE.DebugLog($"Checking autocast for {ability.def.defName}");
             if (!ability.autoCast)
                 continue;
             if (!ability.IsEnabledForPawn(out _))

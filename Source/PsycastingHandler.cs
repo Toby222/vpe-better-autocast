@@ -39,6 +39,7 @@ internal static class PsycastingHandler
                 { "VPE_Mend", HandleMend },
                 { "VPE_PsychicGuidance", HandlePsychicGuidance },
                 { "VPE_SolarPinhole", HandleSolarPinhole },
+                { "VPE_SolarPinholeSunlamp", HandleSolarPinhole },
                 { "VPE_SpeedBoost", HandleSelfBuff },
                 { "VPE_StealVitality", HandleStealVitality },
                 { "VPE_WordofImmunity", HandleWordOfImmunity },
@@ -546,7 +547,7 @@ internal static class PsycastingHandler
                 !cell.Filled(pawn.MapHeld)
                 && !pawn
                     .MapHeld.thingGrid.ThingsListAtFast(cell)
-                    .Any(thing => thing.def.defName == "SolarPinhole")
+                    .Any(thing => thing.def.defName is "SolarPinhole" or "SolarPinholeSunlamp")
         );
         BetterAutocastVPE.DebugLog(
             $"HandleSolarPinhole({pawn.NameFullColored}, {ability.def.defName}) -> ({target_.ToStringSafe()})"

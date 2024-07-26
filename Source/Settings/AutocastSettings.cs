@@ -27,6 +27,7 @@ public class AutocastSettings : ModSettings
         "VPE_Mend",
         "VPE_PsychicGuidance",
         "VPE_SolarPinhole",
+        "VPE_SolarPinholeSunlamp",
         "VPE_SpeedBoost",
         "VPE_StealVitality",
         "VPE_WordofImmunity",
