@@ -350,8 +350,11 @@ public static class AutocastSettingsWindow
         #endregion Solar Pinhole
 
         #region Large Solar Pinhole
-        listing.GapLine();
-        AbilityHeader("VPE_SolarPinholeSunlamp");
+        if (ModsConfig.IsActive("dgrb.solarpinholeadditions"))
+        {
+            listing.GapLine();
+            AbilityHeader("VPE_SolarPinholeSunlamp");
+        }
         #endregion Large Solar Pinhole
 
         listing.End();

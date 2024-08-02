@@ -44,8 +44,9 @@ internal static class Pawn_Tick_Autocast
             return;
 
         foreach (
-            Ability ability in abilities
-                .OrderByDescending(ability => ability.def.defName is "VPE_SolarPinholeSunlamp")
+            Ability ability in abilities.OrderByDescending(ability =>
+                ability.def.defName is "VPE_SolarPinholeSunlamp"
+            )
         )
         {
             BetterAutocastVPE.DebugLog($"Checking autocast for {ability.def.defName}");
