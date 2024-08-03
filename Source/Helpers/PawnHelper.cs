@@ -83,7 +83,7 @@ internal static class PawnHelper
 
     internal static IEnumerable<Pawn> PsychicallySensitive(this IEnumerable<Pawn> pawns)
     {
-        return pawns.Where(pawn => pawn.psychicEntropy.IsPsychicallySensitive);
+        return pawns.Where(pawn => pawn.psychicEntropy?.IsPsychicallySensitive is true);
     }
 
     internal static bool HasHediff(this Pawn pawn, string hediffDefName)
