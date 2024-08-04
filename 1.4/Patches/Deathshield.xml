@@ -1,8 +1,9 @@
 <Patch>
-    <Operation Class="PatchOperationAdd">
-        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_Deathshield"]</xpath>
-        <value>
-            <showUndrafted>true</showUndrafted>
-        </value>
-    </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_Deathshield"]</xpath>
+    <value>
+      <showUndrafted>true</showUndrafted>
+      <jobDef>BetterAutocastVPE_GotoLocationAndCastAbilityOnce</jobDef>
+    </value>
+  </Operation>
 </Patch>

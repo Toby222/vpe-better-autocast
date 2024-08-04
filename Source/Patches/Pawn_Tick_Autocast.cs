@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
-using VanillaPsycastsExpanded;
 using Verse;
 using VFECore.Abilities;
 using Ability = VFECore.Abilities.Ability;

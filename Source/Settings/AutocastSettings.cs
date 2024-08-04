@@ -16,6 +16,9 @@ public class AutocastSettings : ModSettings
         "VPE_Invisibility",
         "VPE_Overshield",
         "VPE_SpeedBoost",
+        "VPE_IceShield",
+        "VPE_FireShield",
+        "VPE_StaticAura",
     ];
     private readonly HashSet<string> defaultUndraftedAutocastDefs =
     [
@@ -43,6 +46,7 @@ public class AutocastSettings : ModSettings
         "Ingest",
         "LayDown",
         "SpectateCeremony",
+        "Goto",
         "VFEA_GotoTargetAndUseAbility",
         "VFEA_UseAbility",
         "Wait_Asleep",
@@ -122,6 +126,21 @@ public class AutocastSettings : ModSettings
     public bool WordOfImmunityTargetSlaves = true;
     public bool WordOfImmunityTargetPrisoners = true;
     public bool WordOfImmunityTargetVisitors = false;
+
+    public bool IceShieldTargetSelf = true;
+    public bool IceShieldTargetColonists = true;
+    public bool IceShieldTargetSlaves = false;
+    public bool IceShieldTargetVisitors = false;
+
+    public bool FireShieldTargetSelf = true;
+    public bool FireShieldTargetColonists = true;
+    public bool FireShieldTargetSlaves = false;
+    public bool FireShieldTargetVisitors = false;
+
+    public bool StaticAuraTargetSelf = true;
+    public bool StaticAuraTargetColonists = true;
+    public bool StaticAuraTargetSlaves = false;
+    public bool StaticAuraTargetVisitors = false;
 
     #region Scribe Helpers
     private static void LookField<T>(ref T value, string label, T defaultValue)
@@ -250,6 +269,27 @@ public class AutocastSettings : ModSettings
         LookField(ref WordOfImmunityTargetPrisoners, nameof(WordOfImmunityTargetPrisoners), true);
         LookField(ref WordOfImmunityTargetVisitors, nameof(WordOfImmunityTargetVisitors), false);
         #endregion Word of Immunity
+
+        #region Ice Shield
+        LookField(ref IceShieldTargetSelf, nameof(IceShieldTargetSelf), true);
+        LookField(ref IceShieldTargetColonists, nameof(IceShieldTargetColonists), true);
+        LookField(ref IceShieldTargetSlaves, nameof(IceShieldTargetSlaves), false);
+        LookField(ref IceShieldTargetVisitors, nameof(IceShieldTargetVisitors), false);
+        #endregion Ice Shield
+
+        #region Fire Shield
+        LookField(ref FireShieldTargetSelf, nameof(FireShieldTargetSelf), true);
+        LookField(ref FireShieldTargetColonists, nameof(FireShieldTargetColonists), true);
+        LookField(ref FireShieldTargetSlaves, nameof(FireShieldTargetSlaves), false);
+        LookField(ref FireShieldTargetVisitors, nameof(FireShieldTargetVisitors), false);
+        #endregion Fire Shield
+
+        #region Static Aura
+        LookField(ref StaticAuraTargetSelf, nameof(StaticAuraTargetSelf), true);
+        LookField(ref StaticAuraTargetColonists, nameof(StaticAuraTargetColonists), true);
+        LookField(ref StaticAuraTargetSlaves, nameof(StaticAuraTargetSlaves), false);
+        LookField(ref StaticAuraTargetVisitors, nameof(StaticAuraTargetVisitors), false);
+        #endregion Static Aura
 
         #region General
         LookHashSet(

@@ -16,6 +16,7 @@ internal static class Pawn_TryGetAttackVerb_Postfix
     [HarmonyPostfix]
     internal static void Postfix(Pawn __instance, ref Verb __result, Thing target)
     {
+        ref var _result = ref __result;
         if (__instance is null)
             throw new ArgumentNullException(nameof(__instance));
 
@@ -33,29 +34,42 @@ internal static class Pawn_TryGetAttackVerb_Postfix
 
         if (target is not null)
         {
-            (Verb, float)? result = castableVerbs
-                .Where(x => x.ability.AICanUseOn(target))
-                .Select(x => (x as Verb, x.ability.Chance))
-                .AddItem((__result, 1f))
-                .GetRandomStruct(t => t.Item2);
 
-            if (result?.Item1 is Verb castVerb)
+            (Verb verb, float chance)? result = castableVerbs
+                .Where(verbAbility => verbAbility.ability.AICanUseOn(target))
+                .Select(verbAbility => (verb: (Verb?)verbAbility, chance: verbAbility.ability.Chance))
+                .AddItem((verb: _result, chance: 1f))
+                .Where(verbChance => verbChance.verb is not null)
+                .Select(verbChance => (verb: verbChance.verb!, chance: verbChance.chance))
+                .GetRandomStruct(verbChance => verbChance.chance);
+
+            if (result?.verb is Verb castVerb)
             {
-                __result = castVerb;
+                _result = castVerb;
             }
         }
         else
         {
-            __result = castableVerbs.AddItem(__result).MaxBy(verb => verb.verbProps.range);
+            _result = castableVerbs
+                .AddItem(_result)
+                .Where(verb => verb is not null)
+                .MaxBy(verb => verb.verbProps.range);
+        }
+
+        if (compAbilities.LearnedAbilities.Count > 0)
+        {
+            string targetString = target?.LabelCap is string targetLabel
+                ? " targetting " + targetLabel
+                : string.Empty;
+            BetterAutocastVPE.DebugLog(
+                $"Pawn_TryGetAttackVerb_Postfix for {__instance.NameFullColored} set verb to {_result?.ReportLabel.ToStringSafe()}{targetString}"
+            );
         }
     }
 
-    private static bool AbilityIsBlacklisted(Ability ab)
+    private static bool AbilityIsBlacklisted(Ability ability)
     {
-        return ab.def.defName switch
-        {
-            "VPE_StealVitality" or "VPEP_BrainLeech" => true,
-            _ => false,
-        };
+        // Defs that apparently need special handling
+        return PsycastingHandler.abilityHandlers.ContainsKey(ability.def.defName);
     }
 }

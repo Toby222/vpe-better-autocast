@@ -40,7 +40,8 @@ internal static class PawnHelper
     internal static IEnumerable<Pawn> Visitors(this IEnumerable<Pawn> pawns)
     {
         return pawns.Where(pawn =>
-            !pawn.Faction.IsPlayer && !pawn.Faction.HostileTo(Faction.OfPlayer)
+            pawn.Faction is not null
+            && !(pawn.Faction.IsPlayer || pawn.Faction.HostileTo(Faction.OfPlayer))
         );
     }
 

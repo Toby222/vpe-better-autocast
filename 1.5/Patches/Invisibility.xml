@@ -1,8 +1,8 @@
 <Patch>
-    <Operation Class="PatchOperationAdd">
-        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_Invisibility"]</xpath>
-        <value>
-            <showUndrafted>true</showUndrafted>
-        </value>
-    </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_Invisibility"]</xpath>
+    <value>
+      <showUndrafted>true</showUndrafted>
+    </value>
+  </Operation>
 </Patch>

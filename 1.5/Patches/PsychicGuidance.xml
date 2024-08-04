@@ -1,36 +1,36 @@
 <Patch>
-    <Operation Class="PatchOperationSequence">
-        <operations>
-            <li Class="PatchOperationReplace">
-                <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_PsychicGuidance"]/abilityClass</xpath>
-                <value>
-                    <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
-                </value>
-            </li>
-            <li Class="PatchOperationReplace">
-                <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_PsychicGuidance"]/range</xpath>
-                <value>
-                    <range>999999</range>
-                </value>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_PsychicGuidance"]</xpath>
-                <value>
-                    <distanceToTarget>4.9</distanceToTarget>
-                </value>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_PsychicGuidance"]</xpath>
-                <value>
-                    <jobDef>VFEA_GotoTargetAndUseAbility</jobDef>
-                </value>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_PsychicGuidance"]</xpath>
-                <value>
-                    <requireLineOfSight>false</requireLineOfSight>
-                </value>
-            </li>
-        </operations>
-    </Operation>
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_PsychicGuidance"]/abilityClass</xpath>
+        <value>
+          <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+        </value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_PsychicGuidance"]/range</xpath>
+        <value>
+          <range>999999</range>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_PsychicGuidance"]</xpath>
+        <value>
+          <distanceToTarget>4.9</distanceToTarget>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_PsychicGuidance"]</xpath>
+        <value>
+          <jobDef>VFEA_GotoTargetAndUseAbility</jobDef>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_PsychicGuidance"]</xpath>
+        <value>
+          <requireLineOfSight>false</requireLineOfSight>
+        </value>
+      </li>
+    </operations>
+  </Operation>
 </Patch>

@@ -1,41 +1,41 @@
 <Patch>
-    <Operation Class="PatchOperationSequence">
-        <operations>
-            <li Class="PatchOperationReplace">
-                <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_StealVitality"]/abilityClass</xpath>
-                <value>
-                    <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
-                </value>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_StealVitality"]</xpath>
-                <value>
-                    <jobDef>VFEA_GotoTargetAndUseAbility</jobDef>
-                    <requireLineOfSight>false</requireLineOfSight>
-                    <distanceToTarget>6</distanceToTarget>
-                    <showUndrafted>true</showUndrafted>
-                </value>
-            </li>
-            <li Class="PatchOperationReplace">
-                <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_StealVitality"]/range</xpath>
-                <value>
-                    <range>999999</range>
-                </value>
-            </li>
-            <li Class="PatchOperationReplace">
-                <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_StealVitality"]/modExtensions/li[@Class="VFECore.Abilities.AbilityExtension_Hediff"]</xpath>
-                <value>
-                    <li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-                        <onCaster>
-                            <li>VPE_GainedVitality</li>
-                        </onCaster>
-                        <onTarget>
-                            <li>VPE_LostVitality</li>
-                        </onTarget>
-                        <durationMultiplier>PsychicSensitivity</durationMultiplier>
-                    </li>
-                </value>
-            </li>
-        </operations>
-    </Operation>
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_StealVitality"]/abilityClass</xpath>
+        <value>
+          <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_StealVitality"]</xpath>
+        <value>
+          <jobDef>VFEA_GotoTargetAndUseAbility</jobDef>
+          <requireLineOfSight>false</requireLineOfSight>
+          <distanceToTarget>6</distanceToTarget>
+          <showUndrafted>true</showUndrafted>
+        </value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_StealVitality"]/range</xpath>
+        <value>
+          <range>999999</range>
+        </value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_StealVitality"]/modExtensions/li[@Class="VFECore.Abilities.AbilityExtension_Hediff"]</xpath>
+        <value>
+          <li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
+            <onCaster>
+              <li>VPE_GainedVitality</li>
+            </onCaster>
+            <onTarget>
+              <li>VPE_LostVitality</li>
+            </onTarget>
+            <durationMultiplier>PsychicSensitivity</durationMultiplier>
+          </li>
+        </value>
+      </li>
+    </operations>
+  </Operation>
 </Patch>

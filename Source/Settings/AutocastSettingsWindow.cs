@@ -344,6 +344,33 @@ public static class AutocastSettingsWindow
         AbilityHeader("VPE_IceCrystal");
         #endregion Ice Crystal
 
+        #region Ice Shield
+        listing.GapLine();
+        AbilityHeader("VPE_IceShield");
+        Checkbox("TargetSelf", ref Settings.IceShieldTargetSelf);
+        Checkbox("TargetColonists", ref Settings.IceShieldTargetColonists);
+        Checkbox("TargetSlaves", ref Settings.IceShieldTargetSlaves);
+        Checkbox("TargetVisitors", ref Settings.IceShieldTargetVisitors);
+        #endregion Ice Shield
+
+        #region Fire Shield
+        listing.GapLine();
+        AbilityHeader("VPE_FireShield");
+        Checkbox("TargetSelf", ref Settings.FireShieldTargetSelf);
+        Checkbox("TargetColonists", ref Settings.FireShieldTargetColonists);
+        Checkbox("TargetSlaves", ref Settings.FireShieldTargetSlaves);
+        Checkbox("TargetVisitors", ref Settings.FireShieldTargetVisitors);
+        #endregion Fire Shield
+
+        #region Static Aura
+        listing.GapLine();
+        AbilityHeader("VPE_StaticAura");
+        Checkbox("TargetSelf", ref Settings.StaticAuraTargetSelf);
+        Checkbox("TargetColonists", ref Settings.StaticAuraTargetColonists);
+        Checkbox("TargetSlaves", ref Settings.StaticAuraTargetSlaves);
+        Checkbox("TargetVisitors", ref Settings.StaticAuraTargetVisitors);
+        #endregion Static Aura
+
         #region Solar Pinhole
         listing.GapLine();
         AbilityHeader("VPE_SolarPinhole");
