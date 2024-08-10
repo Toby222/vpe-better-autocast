@@ -19,6 +19,8 @@ public static class AutocastSettingsWindow
 
     static void AbilityHeader(Listing_Standard listing, string abilityDefName)
     {
+        listing.GapLine();
+
         AbilityDef abilityDef = DefDatabase<AbilityDef>.GetNamed(abilityDefName);
         Rect abilityLabelRow = listing.GetRect(
             Text.CalcHeight(abilityDef.LabelCap, listing.ColumnWidth)
@@ -160,7 +162,6 @@ public static class AutocastSettingsWindow
         #endregion General
 
         #region Mend
-        listing.GapLine();
         AbilityHeader("VPE_Mend");
         Settings.MendHealthThreshold = listing.SliderLabeled(
             "BetterAutocastVPE.MendHealthThreshold".Translate(
@@ -173,8 +174,8 @@ public static class AutocastSettingsWindow
         );
         Checkbox("MendPawns", ref Settings.MendPawns);
         Checkbox("MendInStockpile", ref Settings.MendInStockpile);
-        Checkbox("EnchantOnlyNamedStockpiles", ref Settings.MendOnlyNamedStockpiles);
-        Checkbox("MendInStorage", ref Settings.MendInStorage);
+        Checkbox("MendOnlyNamedStockpiles", ref Settings.MendOnlyNamedStockpiles);
+        Checkbox("MendInStorage", value: ref Settings.MendInStorage);
 #if v1_4
 #elif v1_5
         Checkbox("MendOnlyNamedStorageGroups", ref Settings.MendOnlyNamedStorageGroups);
@@ -184,7 +185,6 @@ public static class AutocastSettingsWindow
         #endregion Mend
 
         #region Enchant quality
-        listing.GapLine();
         AbilityHeader("VPE_EnchantQuality");
         Checkbox("EnchantInStockpile", ref Settings.EnchantInStockpile);
         Checkbox("EnchantOnlyNamedStockpiles", ref Settings.EnchantOnlyNamedStockpiles);
@@ -198,7 +198,6 @@ public static class AutocastSettingsWindow
         #endregion Enchant quality
 
         #region Steal vitality
-        listing.GapLine();
         AbilityHeader("VPE_StealVitality");
         Checkbox("TargetPrisoners", ref Settings.StealVitalityFromPrisoners);
         Checkbox("TargetSlaves", ref Settings.StealVitalityFromSlaves);
@@ -207,7 +206,6 @@ public static class AutocastSettingsWindow
         #endregion Steal vitality
 
         #region Deathshield
-        listing.GapLine();
         AbilityHeader("VPE_Deathshield");
         Checkbox("TargetColonists", ref Settings.DeathshieldColonists);
         Checkbox("TargetColonyAnimals", ref Settings.DeathshieldColonists);
@@ -216,8 +214,20 @@ public static class AutocastSettingsWindow
         Checkbox("TargetVisitors", ref Settings.DeathshieldVisitors);
         #endregion Deathshield
 
+        #region Enthrall
+        AbilityHeader("VPE_Enthrall");
+        Checkbox("EnthrallInStockpile", ref Settings.EnthrallInStockpile);
+        Checkbox("EnthrallOnlyNamedStockpiles", ref Settings.EnthrallOnlyNamedStockpiles);
+        Checkbox("EnthrallInStorage", ref Settings.EnthrallInStorage);
+#if v1_4
+#elif v1_5
+        Checkbox("EnthrallOnlyNamedStorageGroups", ref Settings.EnthrallOnlyNamedStorageGroups);
+#else
+        throw new NotImplementedException();
+#endif
+        #endregion Enthrall
+
         #region Word of Joy
-        listing.GapLine();
         AbilityHeader("VPE_WordofJoy");
         Settings.WordOfJoyMoodThreshold = listing.SliderLabeled(
             "BetterAutocastVPE.WordOfJoyMoodThreshold".Translate(
@@ -233,7 +243,6 @@ public static class AutocastSettingsWindow
         #region Puppeteer
         if (ModsConfig.IsActive("VanillaExpanded.VPE.Puppeteer"))
         {
-            listing.GapLine();
             AbilityHeader("VPEP_BrainLeech");
 
             Checkbox("TargetPrisoners", ref Settings.BrainLeechTargetPrisoners);
@@ -242,59 +251,48 @@ public static class AutocastSettingsWindow
         #endregion Puppeteer
 
         #region Adrenaline Rush
-        listing.GapLine();
         AbilityHeader("VPE_AdrenalineRush");
         #endregion Adrenaline Rush
 
         #region Blade Focus
-        listing.GapLine();
         AbilityHeader("VPE_BladeFocus");
         #endregion Blade Focus
 
         #region Controlled Frenzy
-        listing.GapLine();
         AbilityHeader("VPE_ControlledFrenzy");
         #endregion Controlled Frenzy
 
         #region Darkvision
-        listing.GapLine();
         AbilityHeader("VPE_Darkvision");
         Checkbox("TargetSelf", ref Settings.DarkvisionTargetSelf);
         Checkbox("TargetColonists", ref Settings.DarkvisionTargetColonists);
         #endregion Darkvision
 
         #region Eclipse
-        listing.GapLine();
         AbilityHeader("VPE_Eclipse");
         #endregion Eclipse
 
         #region Firing Focus
-        listing.GapLine();
         AbilityHeader("VPE_FiringFocus");
         #endregion Firing Focus
 
         #region Guided Shot
-        listing.GapLine();
         AbilityHeader("VPE_GuidedShot");
         #endregion Guided Shot
 
         #region Psychic Guidance
-        listing.GapLine();
         AbilityHeader("VPE_PsychicGuidance");
         #endregion Psychic Guidance
 
         #region Speed boost
-        listing.GapLine();
         AbilityHeader("VPE_SpeedBoost");
         #endregion Speed boost
 
         #region Word of Productivity
-        listing.GapLine();
         AbilityHeader("VPE_WordofProductivity");
         #endregion Word of Productivity
 
         #region Word of Serenity
-        listing.GapLine();
         AbilityHeader("VPE_WordofSerenity");
 
         Checkbox("WordOfSerenityTargetScaria", ref Settings.WordOfSerenityTargetScaria);
@@ -316,21 +314,18 @@ public static class AutocastSettingsWindow
         #endregion Word of Serenity
 
         #region Invisibility
-        listing.GapLine();
         AbilityHeader("VPE_Invisibility");
         Checkbox("TargetSelf", ref Settings.InvisibilityTargetSelf);
         Checkbox("TargetColonists", ref Settings.InvisibilityTargetColonists);
         #endregion Invisibility
 
         #region Overshield
-        listing.GapLine();
         AbilityHeader("VPE_Overshield");
         Checkbox("TargetSelf", ref Settings.OvershieldTargetSelf);
         Checkbox("TargetColonists", ref Settings.OvershieldTargetColonists);
         #endregion Overshield
 
         #region Word of Immunity
-        listing.GapLine();
         AbilityHeader("VPE_WordofImmunity");
         Checkbox("TargetColonists", ref Settings.WordOfImmunityTargetColonists);
         Checkbox("TargetColonyAnimals", ref Settings.WordOfImmunityTargetColonyAnimals);
@@ -340,12 +335,10 @@ public static class AutocastSettingsWindow
         #endregion Word of Immunity
 
         #region Ice Crystal
-        listing.GapLine();
         AbilityHeader("VPE_IceCrystal");
         #endregion Ice Crystal
 
         #region Ice Shield
-        listing.GapLine();
         AbilityHeader("VPE_IceShield");
         Checkbox("TargetSelf", ref Settings.IceShieldTargetSelf);
         Checkbox("TargetColonists", ref Settings.IceShieldTargetColonists);
@@ -354,7 +347,6 @@ public static class AutocastSettingsWindow
         #endregion Ice Shield
 
         #region Fire Shield
-        listing.GapLine();
         AbilityHeader("VPE_FireShield");
         Checkbox("TargetSelf", ref Settings.FireShieldTargetSelf);
         Checkbox("TargetColonists", ref Settings.FireShieldTargetColonists);
@@ -363,7 +355,6 @@ public static class AutocastSettingsWindow
         #endregion Fire Shield
 
         #region Static Aura
-        listing.GapLine();
         AbilityHeader("VPE_StaticAura");
         Checkbox("TargetSelf", ref Settings.StaticAuraTargetSelf);
         Checkbox("TargetColonists", ref Settings.StaticAuraTargetColonists);
@@ -372,14 +363,12 @@ public static class AutocastSettingsWindow
         #endregion Static Aura
 
         #region Solar Pinhole
-        listing.GapLine();
         AbilityHeader("VPE_SolarPinhole");
         #endregion Solar Pinhole
 
         #region Large Solar Pinhole
         if (ModsConfig.IsActive("dgrb.solarpinholeadditions"))
         {
-            listing.GapLine();
             AbilityHeader("VPE_SolarPinholeSunlamp");
         }
         #endregion Large Solar Pinhole

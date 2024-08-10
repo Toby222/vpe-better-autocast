@@ -34,6 +34,7 @@ internal static class PsycastingHandler
                 { "VPE_Deathshield", HandleDeathshield },
                 { "VPE_Eclipse", HandleEclipse },
                 { "VPE_EnchantQuality", HandleEnchant },
+                { "VPE_Enthrall", HandleEnthrall },
                 { "VPE_FireShield", HandleFireShield },
                 { "VPE_FiringFocus", HandleSelfBuff },
                 { "VPE_GuidedShot", HandleSelfBuff },
@@ -370,6 +371,46 @@ internal static class PsycastingHandler
             true /* Mind the different capitalization */
         );
     }
+
+    private static bool HandleEnthrall(Pawn pawn, Ability ability)
+    {
+        if (BetterAutocastVPE.Settings.EnthrallInStockpile && HandleEnthrallByZone(pawn, ability))
+            return true;
+        if (BetterAutocastVPE.Settings.EnthrallInStorage && HandleEnthrallByStorage(pawn, ability))
+            return true;
+
+        return false;
+    }
+
+    #region Necropath helpers
+    private static bool HandleEnthrallByZone(Pawn pawn, Ability ability)
+    {
+        Map map = pawn.MapHeld;
+        Corpse? target = (
+            BetterAutocastVPE.Settings.EnthrallOnlyNamedStockpiles
+                ? map.GetThingsInNamedStockpile("thrall")
+                : map.GetThingsInAllStockpiles()
+        )
+            .OfType<Corpse>()
+            .ClosestTo(pawn);
+
+        return target is not null && CastAbilityOnTarget(ability, target);
+    }
+
+    private static bool HandleEnthrallByStorage(Pawn pawn, Ability ability)
+    {
+        Map map = pawn.MapHeld;
+        Corpse? target = (
+            BetterAutocastVPE.Settings.EnthrallOnlyNamedStockpiles
+                ? map.GetThingsInNamedStorageGroup("thrall")
+                : map.GetThingsInStorage()
+        )
+            .OfType<Corpse>()
+            .ClosestTo(pawn);
+
+        return target is not null && CastAbilityOnTarget(ability, target);
+    }
+    #endregion Necropath helpers
     #endregion Necropath
 
     #region Harmonist

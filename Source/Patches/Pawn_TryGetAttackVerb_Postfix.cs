@@ -34,10 +34,11 @@ internal static class Pawn_TryGetAttackVerb_Postfix
 
         if (target is not null)
         {
-
             (Verb verb, float chance)? result = castableVerbs
                 .Where(verbAbility => verbAbility.ability.AICanUseOn(target))
-                .Select(verbAbility => (verb: (Verb?)verbAbility, chance: verbAbility.ability.Chance))
+                .Select(verbAbility =>
+                    (verb: (Verb?)verbAbility, chance: verbAbility.ability.Chance)
+                )
                 .AddItem((verb: _result, chance: 1f))
                 .Where(verbChance => verbChance.verb is not null)
                 .Select(verbChance => (verb: verbChance.verb!, chance: verbChance.chance))

@@ -28,8 +28,12 @@
   <BetterAutocastVPE.VPE_Deathshield.Explanation>Targets the closest pawn without death shield in range, prioritizing by group in the order below.\nThat is, targets colonists firsts, then colony animals if no colonists are available, and so on.</BetterAutocastVPE.VPE_Deathshield.Explanation>
   <BetterAutocastVPE.VPE_Eclipse.Explanation>Will autocast when there is no ongoing eclipse</BetterAutocastVPE.VPE_Eclipse.Explanation>
   <BetterAutocastVPE.VPE_EnchantQuality.Explanation>Will look for enchantable items in the order listed below.\n\nWhen looking for items in "appropriately named" places, will look for names containing the word "enchant".\nFor example: `Enchanting`, `enchant`, `The Enchantress of Florence`</BetterAutocastVPE.VPE_EnchantQuality.Explanation>
+  <BetterAutocastVPE.VPE_Enthrall.Explanation>Will look for corpses in the order listed below.\n\nWhen looking for items in "appropriately named" places, will look for names containing the word "thrall".\nFor example: `Thrall corpses`, `Enthralling`, `thrall`</BetterAutocastVPE.VPE_Enthrall.Explanation>
   <BetterAutocastVPE.VPE_FiringFocus.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_FiringFocus.Explanation>
   <BetterAutocastVPE.VPE_GuidedShot.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_GuidedShot.Explanation>
+  <BetterAutocastVPE.VPE_IceShield.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychic sensitive pawn without the buff in casting range, in the order below.</BetterAutocastVPE.VPE_IceShield.Explanation>
+  <BetterAutocastVPE.VPE_FireShield.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychic sensitive pawn without the buff in casting range, in the order below.</BetterAutocastVPE.VPE_FireShield.Explanation>
+  <BetterAutocastVPE.VPE_StaticAura.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychic sensitive pawn without the buff in casting range, in the order below.</BetterAutocastVPE.VPE_StaticAura.Explanation>
   <BetterAutocastVPE.VPE_Invisibility.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychic sensitive colonist without the buff in casting range.</BetterAutocastVPE.VPE_Invisibility.Explanation>
   <BetterAutocastVPE.VPE_Overshield.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychic sensitive colonist without the buff in casting range.</BetterAutocastVPE.VPE_Overshield.Explanation>
   <BetterAutocastVPE.VPE_IceCrystal.Explanation>Will create ice crystals on a random cell in the Ice Crystal Spot area.\nWill only target cells without buildings.</BetterAutocastVPE.VPE_IceCrystal.Explanation>
@@ -59,6 +63,10 @@
   <BetterAutocastVPE.EnchantOnlyNamedStockpiles>Only enchant items in appropriately named stockpiles</BetterAutocastVPE.EnchantOnlyNamedStockpiles>
   <BetterAutocastVPE.EnchantInStorage>Enchant items in storage (e.g. shelves)</BetterAutocastVPE.EnchantInStorage>
   <BetterAutocastVPE.EnchantOnlyNamedStorageGroups>Only enchant items in appropriately named storage groups</BetterAutocastVPE.EnchantOnlyNamedStorageGroups>
+  <BetterAutocastVPE.EnthrallInStockpile>Enthrall corpses in stockpiles</BetterAutocastVPE.EnthrallInStockpile>
+  <BetterAutocastVPE.EnthrallOnlyNamedStockpiles>Only enthrall corpses in appropriately named stockpiles</BetterAutocastVPE.EnthrallOnlyNamedStockpiles>
+  <BetterAutocastVPE.EnthrallInStorage>Enthrall corpses in storage (e.g. shelves)</BetterAutocastVPE.EnthrallInStorage>
+  <BetterAutocastVPE.EnthrallOnlyNamedStorageGroups>Only enthrall corpses in appropriately named storage groups</BetterAutocastVPE.EnthrallOnlyNamedStorageGroups>
   <BetterAutocastVPE.CastDrafted>Cast while drafted</BetterAutocastVPE.CastDrafted>
   <BetterAutocastVPE.CastUndrafted>Cast while undrafted</BetterAutocastVPE.CastUndrafted>
   <BetterAutocastVPE.WordOfJoyMoodThreshold>Mood threshold: {0}</BetterAutocastVPE.WordOfJoyMoodThreshold>

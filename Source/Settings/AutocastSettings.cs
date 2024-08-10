@@ -26,6 +26,7 @@ public class AutocastSettings : ModSettings
         "VPE_Deathshield",
         "VPE_Eclipse",
         "VPE_EnchantQuality",
+        "VPE_Enthrall",
         "VPE_IceCrystal",
         "VPE_Mend",
         "VPE_PsychicGuidance",
@@ -142,6 +143,11 @@ public class AutocastSettings : ModSettings
     public bool StaticAuraTargetSlaves = false;
     public bool StaticAuraTargetVisitors = false;
 
+    public bool EnthrallInStockpile = true;
+    public bool EnthrallOnlyNamedStockpiles = true;
+    public bool EnthrallInStorage = true;
+    public bool EnthrallOnlyNamedStorageGroups = true;
+
     #region Scribe Helpers
     private static void LookField<T>(ref T value, string label, T defaultValue)
         where T : struct
@@ -210,6 +216,13 @@ public class AutocastSettings : ModSettings
         LookField(ref DeathshieldPrisoners, nameof(DeathshieldPrisoners), false);
         LookField(ref DeathshieldVisitors, nameof(DeathshieldVisitors), false);
         #endregion Deathshield
+
+        #region Enthrall
+        LookField(ref EnthrallInStockpile, nameof(EnthrallInStockpile), true);
+        LookField(ref EnthrallOnlyNamedStockpiles, nameof(EnthrallOnlyNamedStockpiles), true);
+        LookField(ref EnthrallInStorage, nameof(EnthrallInStorage), true);
+        LookField(ref EnthrallOnlyNamedStorageGroups, nameof(EnthrallOnlyNamedStorageGroups), true);
+        #endregion Enthrall
 
         #region Word of Joy
         LookField(ref WordOfJoyMoodThreshold, nameof(WordOfJoyMoodThreshold), 0.2f);
