@@ -5,4 +5,10 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Style", "IDE0305:Simplify collection initialization", Justification = "[.. <IEnumerable>] looks ugly as heck", Scope = "member", Target = "~M:BetterAutocastVPE.PsycastingHandler.HandleStealVitality(Verse.Pawn,VFECore.Abilities.Ability)~System.Boolean")]
+[assembly: SuppressMessage(
+    "Style",
+    "IDE0305:Simplify collection initialization",
+    Justification = "[.. <IEnumerable>] looks ugly as heck",
+    Scope = "member",
+    Target = "~M:BetterAutocastVPE.PsycastingHandler.HandleStealVitality(Verse.Pawn,VFECore.Abilities.Ability)~System.Boolean"
+)]

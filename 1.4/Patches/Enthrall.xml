@@ -5,7 +5,7 @@
         <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_Enthrall"]</xpath>
         <value>
           <showUndrafted>true</showUndrafted>
-          <jobDef>BetterAutocastVPE_GotoLocationAndCastAbilityOnce</jobDef> 
+          <jobDef>BetterAutocastVPE_GotoLocationAndCastAbilityOnce</jobDef>
           <distanceToTarget>19.9</distanceToTarget>
         </value>
       </li>

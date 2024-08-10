@@ -17,9 +17,13 @@ public static class AutocastSettingsWindow
 
     private static AutocastSettings Settings => BetterAutocastVPE.Settings;
 
-    static void AbilityHeader(Listing_Standard listing, string abilityDefName)
+    private static readonly HashSet<string> expandedDefs = [];
+
+    static bool AbilityHeader(Listing_Standard listing, string abilityDefName)
     {
         listing.GapLine();
+
+        bool expanded = expandedDefs.Contains(abilityDefName);
 
         AbilityDef abilityDef = DefDatabase<AbilityDef>.GetNamed(abilityDefName);
         Rect abilityLabelRow = listing.GetRect(
@@ -27,6 +31,23 @@ public static class AutocastSettingsWindow
         );
 
         Widgets.DrawHighlightIfMouseover(abilityLabelRow);
+        if (Widgets.ButtonInvisible(abilityLabelRow))
+        {
+            if (expanded)
+            {
+                expandedDefs.Remove(abilityDefName);
+            }
+            else
+            {
+                expandedDefs.Add(abilityDefName);
+            }
+            expanded = !expanded;
+        }
+        Widgets.DrawTextureFitted(
+            abilityLabelRow.TakeLeftPart(abilityLabelRow.height),
+            expanded ? TexButton.Collapse : TexButton.Reveal,
+            1.0f
+        );
         Widgets.DrawTextureFitted(
             abilityLabelRow.TakeLeftPart(abilityLabelRow.height),
             abilityDef.icon,
@@ -34,45 +55,53 @@ public static class AutocastSettingsWindow
         );
         Widgets.Label(abilityLabelRow, abilityDef.LabelCap);
 
-        if (
-            LanguageDatabase.activeLanguage.HaveTextForKey(
-                $"BetterAutocastVPE.{abilityDefName}.Explanation"
+        if (expanded)
+        {
+            if (
+                LanguageDatabase.activeLanguage.HaveTextForKey(
+                    $"BetterAutocastVPE.{abilityDefName}.Explanation"
+                )
             )
-        )
-        {
-            string explanation = $"BetterAutocastVPE.{abilityDefName}.Explanation".Translate();
-            listing.Label(explanation);
-        }
+            {
+                string explanation = $"BetterAutocastVPE.{abilityDefName}.Explanation".Translate();
+                listing.Label(explanation);
+            }
 
-        bool castWhileDrafted = Settings.DraftedAutocastDefs.Contains(abilityDefName);
-        bool castWhileDraftedOriginal = castWhileDrafted;
-        listing.CheckboxLabeled("BetterAutocastVPE.CastDrafted".Translate(), ref castWhileDrafted);
-
-        if (castWhileDrafted != castWhileDraftedOriginal)
-        {
-            if (castWhileDrafted)
-                Settings.DraftedAutocastDefs.Add(abilityDefName);
-            else
-                Settings.DraftedAutocastDefs.Remove(abilityDefName);
-        }
-
-        if (abilityDef.showUndrafted)
-        {
-            bool castWhileUndrafted = Settings.UndraftedAutocastDefs.Contains(abilityDefName);
-            bool castWhileUndraftedOriginal = castWhileUndrafted;
+            bool castWhileDrafted = Settings.DraftedAutocastDefs.Contains(abilityDefName);
+            bool castWhileDraftedOriginal = castWhileDrafted;
             listing.CheckboxLabeled(
-                "BetterAutocastVPE.CastUndrafted".Translate(),
-                ref castWhileUndrafted
+                "BetterAutocastVPE.CastDrafted".Translate(),
+                ref castWhileDrafted
             );
 
-            if (castWhileUndrafted != castWhileUndraftedOriginal)
+            if (castWhileDrafted != castWhileDraftedOriginal)
             {
-                if (castWhileUndrafted)
-                    Settings.UndraftedAutocastDefs.Add(abilityDefName);
+                if (castWhileDrafted)
+                    Settings.DraftedAutocastDefs.Add(abilityDefName);
                 else
-                    Settings.UndraftedAutocastDefs.Remove(abilityDefName);
+                    Settings.DraftedAutocastDefs.Remove(abilityDefName);
+            }
+
+            if (abilityDef.showUndrafted)
+            {
+                bool castWhileUndrafted = Settings.UndraftedAutocastDefs.Contains(abilityDefName);
+                bool castWhileUndraftedOriginal = castWhileUndrafted;
+                listing.CheckboxLabeled(
+                    "BetterAutocastVPE.CastUndrafted".Translate(),
+                    ref castWhileUndrafted
+                );
+
+                if (castWhileUndrafted != castWhileUndraftedOriginal)
+                {
+                    if (castWhileUndrafted)
+                        Settings.UndraftedAutocastDefs.Add(abilityDefName);
+                    else
+                        Settings.UndraftedAutocastDefs.Remove(abilityDefName);
+                }
             }
         }
+
+        return expanded;
     }
 
     static void Checkbox(Listing_Standard listing, string labelKey, ref bool value)
@@ -97,12 +126,12 @@ public static class AutocastSettingsWindow
         configuredDefs.Clear();
 #endif
 
-        void AbilityHeader(string abilityDefName)
+        bool AbilityHeader(string abilityDefName)
         {
 #if DEBUG
             configuredDefs.Add(abilityDefName);
 #endif
-            AutocastSettingsWindow.AbilityHeader(listing, abilityDefName);
+            return AutocastSettingsWindow.AbilityHeader(listing, abilityDefName);
         }
 
         Rect viewRect = new(inRect.x, inRect.y, inRect.width - 16f, settingsHeight);
@@ -162,89 +191,101 @@ public static class AutocastSettingsWindow
         #endregion General
 
         #region Mend
-        AbilityHeader("VPE_Mend");
-        Settings.MendHealthThreshold = listing.SliderLabeled(
-            "BetterAutocastVPE.MendHealthThreshold".Translate(
-                Settings.MendHealthThreshold.ToString("P")
-            ),
-            Settings.MendHealthThreshold,
-            0.0f,
-            1.0f,
-            tooltip: "BetterAutocastVPE.MendHealthThreshold.Description".Translate()
-        );
-        Checkbox("MendPawns", ref Settings.MendPawns);
-        Checkbox("MendInStockpile", ref Settings.MendInStockpile);
-        Checkbox("MendOnlyNamedStockpiles", ref Settings.MendOnlyNamedStockpiles);
-        Checkbox("MendInStorage", value: ref Settings.MendInStorage);
+        if (AbilityHeader("VPE_Mend"))
+        {
+            Settings.MendHealthThreshold = listing.SliderLabeled(
+                "BetterAutocastVPE.MendHealthThreshold".Translate(
+                    Settings.MendHealthThreshold.ToString("P")
+                ),
+                Settings.MendHealthThreshold,
+                0.0f,
+                1.0f,
+                tooltip: "BetterAutocastVPE.MendHealthThreshold.Description".Translate()
+            );
+            Checkbox("MendPawns", ref Settings.MendPawns);
+            Checkbox("MendInStockpile", ref Settings.MendInStockpile);
+            Checkbox("MendOnlyNamedStockpiles", ref Settings.MendOnlyNamedStockpiles);
+            Checkbox("MendInStorage", value: ref Settings.MendInStorage);
 #if v1_4
 #elif v1_5
-        Checkbox("MendOnlyNamedStorageGroups", ref Settings.MendOnlyNamedStorageGroups);
+            Checkbox("MendOnlyNamedStorageGroups", ref Settings.MendOnlyNamedStorageGroups);
 #else
-        throw new NotImplementedException();
+            throw new NotImplementedException();
 #endif
+        }
         #endregion Mend
 
         #region Enchant quality
-        AbilityHeader("VPE_EnchantQuality");
-        Checkbox("EnchantInStockpile", ref Settings.EnchantInStockpile);
-        Checkbox("EnchantOnlyNamedStockpiles", ref Settings.EnchantOnlyNamedStockpiles);
-        Checkbox("EnchantInStorage", ref Settings.EnchantInStorage);
+        if (AbilityHeader("VPE_EnchantQuality"))
+        {
+            Checkbox("EnchantInStockpile", ref Settings.EnchantInStockpile);
+            Checkbox("EnchantOnlyNamedStockpiles", ref Settings.EnchantOnlyNamedStockpiles);
+            Checkbox("EnchantInStorage", ref Settings.EnchantInStorage);
 #if v1_4
 #elif v1_5
-        Checkbox("EnchantOnlyNamedStorageGroups", ref Settings.EnchantOnlyNamedStorageGroups);
+            Checkbox("EnchantOnlyNamedStorageGroups", ref Settings.EnchantOnlyNamedStorageGroups);
 #else
-        throw new NotImplementedException();
+            throw new NotImplementedException();
 #endif
+        }
         #endregion Enchant quality
 
         #region Steal vitality
-        AbilityHeader("VPE_StealVitality");
-        Checkbox("TargetPrisoners", ref Settings.StealVitalityFromPrisoners);
-        Checkbox("TargetSlaves", ref Settings.StealVitalityFromSlaves);
-        Checkbox("TargetColonists", ref Settings.StealVitalityFromColonists);
-        Checkbox("TargetVisitors", ref Settings.StealVitalityFromVisitors);
+        if (AbilityHeader("VPE_StealVitality"))
+        {
+            Checkbox("TargetPrisoners", ref Settings.StealVitalityFromPrisoners);
+            Checkbox("TargetSlaves", ref Settings.StealVitalityFromSlaves);
+            Checkbox("TargetColonists", ref Settings.StealVitalityFromColonists);
+            Checkbox("TargetVisitors", ref Settings.StealVitalityFromVisitors);
+        }
         #endregion Steal vitality
 
         #region Deathshield
-        AbilityHeader("VPE_Deathshield");
-        Checkbox("TargetColonists", ref Settings.DeathshieldColonists);
-        Checkbox("TargetColonyAnimals", ref Settings.DeathshieldColonists);
-        Checkbox("TargetSlaves", ref Settings.DeathshieldSlaves);
-        Checkbox("TargetPrisoners", ref Settings.DeathshieldPrisoners);
-        Checkbox("TargetVisitors", ref Settings.DeathshieldVisitors);
+        if (AbilityHeader("VPE_Deathshield"))
+        {
+            Checkbox("TargetColonists", ref Settings.DeathshieldColonists);
+            Checkbox("TargetColonyAnimals", ref Settings.DeathshieldColonists);
+            Checkbox("TargetSlaves", ref Settings.DeathshieldSlaves);
+            Checkbox("TargetPrisoners", ref Settings.DeathshieldPrisoners);
+            Checkbox("TargetVisitors", ref Settings.DeathshieldVisitors);
+        }
         #endregion Deathshield
 
         #region Enthrall
-        AbilityHeader("VPE_Enthrall");
-        Checkbox("EnthrallInStockpile", ref Settings.EnthrallInStockpile);
-        Checkbox("EnthrallOnlyNamedStockpiles", ref Settings.EnthrallOnlyNamedStockpiles);
-        Checkbox("EnthrallInStorage", ref Settings.EnthrallInStorage);
+        if (AbilityHeader("VPE_Enthrall"))
+        {
+            Checkbox("EnthrallInStockpile", ref Settings.EnthrallInStockpile);
+            Checkbox("EnthrallOnlyNamedStockpiles", ref Settings.EnthrallOnlyNamedStockpiles);
+            Checkbox("EnthrallInStorage", ref Settings.EnthrallInStorage);
 #if v1_4
 #elif v1_5
-        Checkbox("EnthrallOnlyNamedStorageGroups", ref Settings.EnthrallOnlyNamedStorageGroups);
+            Checkbox("EnthrallOnlyNamedStorageGroups", ref Settings.EnthrallOnlyNamedStorageGroups);
 #else
-        throw new NotImplementedException();
+            throw new NotImplementedException();
 #endif
+        }
         #endregion Enthrall
 
         #region Word of Joy
-        AbilityHeader("VPE_WordofJoy");
-        Settings.WordOfJoyMoodThreshold = listing.SliderLabeled(
-            "BetterAutocastVPE.WordOfJoyMoodThreshold".Translate(
-                Settings.WordOfJoyMoodThreshold.ToString("P")
-            ),
-            Settings.WordOfJoyMoodThreshold,
-            0.0f,
-            1.0f,
-            tooltip: "BetterAutocastVPE.WordOfJoyMoodThreshold.Description".Translate()
-        );
+        if (AbilityHeader("VPE_WordofJoy"))
+        {
+            Settings.WordOfJoyMoodThreshold = listing.SliderLabeled(
+                "BetterAutocastVPE.WordOfJoyMoodThreshold".Translate(
+                    Settings.WordOfJoyMoodThreshold.ToString("P")
+                ),
+                Settings.WordOfJoyMoodThreshold,
+                0.0f,
+                1.0f,
+                tooltip: "BetterAutocastVPE.WordOfJoyMoodThreshold.Description".Translate()
+            );
+        }
         #endregion Word of Joy
 
         #region Puppeteer
-        if (ModsConfig.IsActive("VanillaExpanded.VPE.Puppeteer"))
+        if (
+            ModsConfig.IsActive("VanillaExpanded.VPE.Puppeteer") && AbilityHeader("VPEP_BrainLeech")
+        )
         {
-            AbilityHeader("VPEP_BrainLeech");
-
             Checkbox("TargetPrisoners", ref Settings.BrainLeechTargetPrisoners);
             Checkbox("TargetSlaves", ref Settings.BrainLeechTargetSlaves);
         }
@@ -263,9 +304,11 @@ public static class AutocastSettingsWindow
         #endregion Controlled Frenzy
 
         #region Darkvision
-        AbilityHeader("VPE_Darkvision");
-        Checkbox("TargetSelf", ref Settings.DarkvisionTargetSelf);
-        Checkbox("TargetColonists", ref Settings.DarkvisionTargetColonists);
+        if (AbilityHeader("VPE_Darkvision"))
+        {
+            Checkbox("TargetSelf", ref Settings.DarkvisionTargetSelf);
+            Checkbox("TargetColonists", ref Settings.DarkvisionTargetColonists);
+        }
         #endregion Darkvision
 
         #region Eclipse
@@ -293,45 +336,49 @@ public static class AutocastSettingsWindow
         #endregion Word of Productivity
 
         #region Word of Serenity
-        AbilityHeader("VPE_WordofSerenity");
+        if (AbilityHeader("VPE_WordofSerenity"))
+        {
+            Checkbox("WordOfSerenityTargetScaria", ref Settings.WordOfSerenityTargetScaria);
+            listing.Gap();
+            Checkbox("TargetColonists", ref Settings.WordOfSerenityTargetColonists);
+            Checkbox("TargetColonyAnimals", ref Settings.WordOfSerenityTargetColonyAnimals);
+            Checkbox("TargetWildAnimals", ref Settings.WordOfSerenityTargetWildAnimals);
+            Checkbox("TargetSlaves", ref Settings.WordOfSerenityTargetSlaves);
+            Checkbox("TargetPrisoners", ref Settings.WordOfSerenityTargetPrisoners);
+            Checkbox("TargetVisitors", ref Settings.WordOfSerenityTargetVisitors);
+            listing.Gap();
 
-        Checkbox("WordOfSerenityTargetScaria", ref Settings.WordOfSerenityTargetScaria);
-
-        listing.Gap();
-
-        Checkbox("TargetColonists", ref Settings.WordOfSerenityTargetColonists);
-        Checkbox("TargetColonyAnimals", ref Settings.WordOfSerenityTargetColonyAnimals);
-        Checkbox("TargetWildAnimals", ref Settings.WordOfSerenityTargetWildAnimals);
-        Checkbox("TargetSlaves", ref Settings.WordOfSerenityTargetSlaves);
-        Checkbox("TargetPrisoners", ref Settings.WordOfSerenityTargetPrisoners);
-        Checkbox("TargetVisitors", ref Settings.WordOfSerenityTargetVisitors);
-
-        listing.Gap();
-
-        listing.Label("BetterAutocastVPE.IgnoredMentalStates.Explanation".Translate());
-        if (listing.ButtonText("BetterAutocastVPE.IgnoredMentalStates".Translate()))
-            Find.WindowStack.Add(new IgnoredMentalStateListWindow());
+            listing.Label("BetterAutocastVPE.IgnoredMentalStates.Explanation".Translate());
+            if (listing.ButtonText("BetterAutocastVPE.IgnoredMentalStates".Translate()))
+                Find.WindowStack.Add(new IgnoredMentalStateListWindow());
+        }
         #endregion Word of Serenity
 
         #region Invisibility
-        AbilityHeader("VPE_Invisibility");
-        Checkbox("TargetSelf", ref Settings.InvisibilityTargetSelf);
-        Checkbox("TargetColonists", ref Settings.InvisibilityTargetColonists);
+        if (AbilityHeader("VPE_Invisibility"))
+        {
+            Checkbox("TargetSelf", ref Settings.InvisibilityTargetSelf);
+            Checkbox("TargetColonists", ref Settings.InvisibilityTargetColonists);
+        }
         #endregion Invisibility
 
         #region Overshield
-        AbilityHeader("VPE_Overshield");
-        Checkbox("TargetSelf", ref Settings.OvershieldTargetSelf);
-        Checkbox("TargetColonists", ref Settings.OvershieldTargetColonists);
+        if (AbilityHeader("VPE_Overshield"))
+        {
+            Checkbox("TargetSelf", ref Settings.OvershieldTargetSelf);
+            Checkbox("TargetColonists", ref Settings.OvershieldTargetColonists);
+        }
         #endregion Overshield
 
         #region Word of Immunity
-        AbilityHeader("VPE_WordofImmunity");
-        Checkbox("TargetColonists", ref Settings.WordOfImmunityTargetColonists);
-        Checkbox("TargetColonyAnimals", ref Settings.WordOfImmunityTargetColonyAnimals);
-        Checkbox("TargetSlaves", ref Settings.WordOfImmunityTargetSlaves);
-        Checkbox("TargetPrisoners", ref Settings.WordOfImmunityTargetPrisoners);
-        Checkbox("TargetVisitors", ref Settings.WordOfImmunityTargetVisitors);
+        if (AbilityHeader("VPE_WordofImmunity"))
+        {
+            Checkbox("TargetColonists", ref Settings.WordOfImmunityTargetColonists);
+            Checkbox("TargetColonyAnimals", ref Settings.WordOfImmunityTargetColonyAnimals);
+            Checkbox("TargetSlaves", ref Settings.WordOfImmunityTargetSlaves);
+            Checkbox("TargetPrisoners", ref Settings.WordOfImmunityTargetPrisoners);
+            Checkbox("TargetVisitors", ref Settings.WordOfImmunityTargetVisitors);
+        }
         #endregion Word of Immunity
 
         #region Ice Crystal
@@ -339,27 +386,33 @@ public static class AutocastSettingsWindow
         #endregion Ice Crystal
 
         #region Ice Shield
-        AbilityHeader("VPE_IceShield");
-        Checkbox("TargetSelf", ref Settings.IceShieldTargetSelf);
-        Checkbox("TargetColonists", ref Settings.IceShieldTargetColonists);
-        Checkbox("TargetSlaves", ref Settings.IceShieldTargetSlaves);
-        Checkbox("TargetVisitors", ref Settings.IceShieldTargetVisitors);
+        if (AbilityHeader("VPE_IceShield"))
+        {
+            Checkbox("TargetSelf", ref Settings.IceShieldTargetSelf);
+            Checkbox("TargetColonists", ref Settings.IceShieldTargetColonists);
+            Checkbox("TargetSlaves", ref Settings.IceShieldTargetSlaves);
+            Checkbox("TargetVisitors", ref Settings.IceShieldTargetVisitors);
+        }
         #endregion Ice Shield
 
         #region Fire Shield
-        AbilityHeader("VPE_FireShield");
-        Checkbox("TargetSelf", ref Settings.FireShieldTargetSelf);
-        Checkbox("TargetColonists", ref Settings.FireShieldTargetColonists);
-        Checkbox("TargetSlaves", ref Settings.FireShieldTargetSlaves);
-        Checkbox("TargetVisitors", ref Settings.FireShieldTargetVisitors);
+        if (AbilityHeader("VPE_FireShield"))
+        {
+            Checkbox("TargetSelf", ref Settings.FireShieldTargetSelf);
+            Checkbox("TargetColonists", ref Settings.FireShieldTargetColonists);
+            Checkbox("TargetSlaves", ref Settings.FireShieldTargetSlaves);
+            Checkbox("TargetVisitors", ref Settings.FireShieldTargetVisitors);
+        }
         #endregion Fire Shield
 
         #region Static Aura
-        AbilityHeader("VPE_StaticAura");
-        Checkbox("TargetSelf", ref Settings.StaticAuraTargetSelf);
-        Checkbox("TargetColonists", ref Settings.StaticAuraTargetColonists);
-        Checkbox("TargetSlaves", ref Settings.StaticAuraTargetSlaves);
-        Checkbox("TargetVisitors", ref Settings.StaticAuraTargetVisitors);
+        if (AbilityHeader("VPE_StaticAura"))
+        {
+            Checkbox("TargetSelf", ref Settings.StaticAuraTargetSelf);
+            Checkbox("TargetColonists", ref Settings.StaticAuraTargetColonists);
+            Checkbox("TargetSlaves", ref Settings.StaticAuraTargetSlaves);
+            Checkbox("TargetVisitors", ref Settings.StaticAuraTargetVisitors);
+        }
         #endregion Static Aura
 
         #region Solar Pinhole
