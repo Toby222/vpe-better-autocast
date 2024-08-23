@@ -19,7 +19,7 @@
         <RootNamespace>BetterAutocastVPE</RootNamespace>
         <AssemblyName>BetterAutocastVPE</AssemblyName>
         <LangVersion>latest</LangVersion>
-        <VersionPrefix>4.8.3.0</VersionPrefix>
+        <VersionPrefix>4.9.0.0</VersionPrefix>
         <!-- do not generate pdb file -->
         <DebugType>none</DebugType>
         <DebugSymbols>false</DebugSymbols>
@@ -138,7 +138,7 @@
     <ItemGroup>
         <!-- Mod -->
         <Compile Include="../Source/**/*.cs" />
-        <PackageReference Include="roslynator.analyzers" Version="4.12.0" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" />
-        <PackageReference Include="roslynator.formatting.analyzers" Version="4.12.0" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" />
+        <PackageReference Include="roslynator.analyzers" Version="4.12.4" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" />
+        <PackageReference Include="roslynator.formatting.analyzers" Version="4.12.4" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" />
     </ItemGroup>
 </Project>

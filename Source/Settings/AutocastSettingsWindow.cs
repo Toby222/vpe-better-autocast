@@ -256,6 +256,10 @@ public static class AutocastSettingsWindow
         }
         #endregion Steal vitality
 
+        #region Ghostwalk
+        AbilityHeader("VPE_Ghostwalk");
+        #endregion Ghostwalk
+
         #region Deathshield
         if (AbilityHeader("VPE_Deathshield"))
         {

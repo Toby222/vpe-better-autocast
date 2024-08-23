@@ -37,21 +37,22 @@ internal static class PsycastingHandler
                 { "VPE_Enthrall", HandleEnthrall },
                 { "VPE_FireShield", HandleFireShield },
                 { "VPE_FiringFocus", HandleSelfBuff },
+                { "VPE_Ghostwalk", HandleSelfBuff },
                 { "VPE_GuidedShot", HandleSelfBuff },
                 { "VPE_IceCrystal", HandleIceCrystal },
                 { "VPE_IceShield", HandleIceShield },
                 { "VPE_Invisibility", HandleInvisibility },
                 { "VPE_Mend", HandleMend },
                 { "VPE_Overshield", HandleOvershield },
-                { "VPE_PsychicGuidance", HandlePsychicGuidance },
+                { "VPE_PsychicGuidance", HandleColonistBuff },
                 { "VPE_SolarPinhole", HandleSolarPinhole },
                 { "VPE_SolarPinholeSunlamp", HandleSolarPinhole },
                 { "VPE_SpeedBoost", HandleSelfBuff },
                 { "VPE_StaticAura", HandleStaticAura },
                 { "VPE_StealVitality", HandleStealVitality },
                 { "VPE_WordofImmunity", HandleWordOfImmunity },
-                { "VPE_WordofJoy", HandleWordOfJoy },
-                { "VPE_WordofProductivity", HandleWordOfProductivity },
+                { "VPE_WordofJoy", HandleColonistBuff },
+                { "VPE_WordofProductivity", HandleColonistBuff },
                 { "VPE_WordofSerenity", HandleWordOfSerenity },
                 { "VPEP_BrainLeech", HandleBrainLeech },
             }
@@ -140,10 +141,11 @@ internal static class PsycastingHandler
 
     #region handlers
     #region generic
-    private static bool HandleSelfBuff(Pawn pawn, Ability ability)
-    {
-        return HandleHediffPsycast(pawn, ability, [TargetType.Self], FinalTargetType.Random, false);
-    }
+    private static bool HandleSelfBuff(Pawn pawn, Ability ability) =>
+        HandleHediffPsycast(pawn, ability, [TargetType.Self], FinalTargetType.Random, false);
+
+    private static bool HandleColonistBuff(Pawn pawn, Ability ability) =>
+        HandleHediffPsycast(pawn, ability, [TargetType.Colonists], FinalTargetType.Random, false);
 
     private enum TargetType
     {
@@ -238,12 +240,30 @@ internal static class PsycastingHandler
         string? hediffDefName = null
     )
     {
+        if (hediffDefName is null)
+        {
+            AbilityExtension_Hediff? hediffExtension =
+                ability.def.GetModExtension<AbilityExtension_Hediff>();
+
+            if (hediffExtension is null)
+            {
+                BetterAutocastVPE.Warn(
+                    $"Ability {ability.def.defName} does not have an {nameof(AbilityExtension_Hediff)} for handling HediffPsycast; falling back to ability defName. Please report this issue!"
+                );
+                hediffDefName ??= ability.def.defName;
+            }
+            else
+            {
+                hediffDefName = hediffExtension.hediff.defName;
+            }
+        }
+
         return HandleTargetedPsycast(
             pawn,
             ability,
             targetPriority,
             finalTarget,
-            pawn => !pawn.HasHediff(hediffDefName ?? ability.def.defName),
+            pawn => !pawn.HasHediff(hediffDefName),
             allowDowned
         );
     }
@@ -265,8 +285,7 @@ internal static class PsycastingHandler
             ability,
             targets.ToArray(),
             FinalTargetType.Closest,
-            false,
-            "PsychicInvisibility"
+            false
         );
     }
 
@@ -284,8 +303,7 @@ internal static class PsycastingHandler
             ability,
             targets.ToArray(),
             FinalTargetType.Closest,
-            false,
-            "PsychicInvisibility"
+            false
         );
     }
 
@@ -303,14 +321,7 @@ internal static class PsycastingHandler
         if (BetterAutocastVPE.Settings.WordOfImmunityTargetVisitors)
             targets.Add(TargetType.Visitors);
 
-        return HandleHediffPsycast(
-            pawn,
-            ability,
-            targets.ToArray(),
-            FinalTargetType.Closest,
-            true,
-            "VPE_Immunity"
-        );
+        return HandleHediffPsycast(pawn, ability, targets.ToArray(), FinalTargetType.Closest, true);
     }
     #endregion Protector
 
@@ -336,8 +347,7 @@ internal static class PsycastingHandler
             ability,
             targets.ToArray(),
             FinalTargetType.MostPsychicallySensitive,
-            true,
-            "VPE_Immunity"
+            true
         );
     }
 
@@ -412,19 +422,6 @@ internal static class PsycastingHandler
     }
     #endregion Necropath helpers
     #endregion Necropath
-
-    #region Harmonist
-    private static bool HandlePsychicGuidance(Pawn pawn, Ability ability)
-    {
-        return HandleHediffPsycast(
-            pawn,
-            ability,
-            [TargetType.Colonists],
-            FinalTargetType.Random,
-            false
-        );
-    }
-    #endregion Harmonist
 
     #region Nightstalker
     private static bool HandleDarkvision(Pawn pawn, Ability ability)
@@ -512,33 +509,7 @@ internal static class PsycastingHandler
             false
         );
     }
-
-    private static bool HandleWordOfJoy(Pawn pawn, Ability ability)
-    {
-        return HandleHediffPsycast(
-            pawn,
-            ability,
-            [TargetType.Colonists],
-            FinalTargetType.Random,
-            false,
-            "Joyfuzz"
-        );
-    }
     #endregion Empath
-
-    #region Archon
-    private static bool HandleWordOfProductivity(Pawn pawn, Ability ability)
-    {
-        return HandleHediffPsycast(
-            pawn,
-            ability,
-            [TargetType.Colonists],
-            FinalTargetType.Random,
-            false,
-            "VPE_Productivity"
-        );
-    }
-    #endregion
 
     #region Technomancer
     private static bool HandleMend(Pawn pawn, Ability ability)
