@@ -6,7 +6,7 @@ namespace BetterAutocastVPE;
 
 public class Area_SolarPinhole : Area
 {
-    public override string Label => "BetterAutocastVPE.SolarPinholeArea".Translate();
+    public override string Label => "BetterAutocastVPE.SolarPinholeArea".TranslateSafe();
 
     public override Color Color => new(0.97f, 0.84f, 0.11f);
 
@@ -71,8 +71,8 @@ public class Designator_Area_SolarPinhole_Expand : Designator_Area_SolarPinhole
     public Designator_Area_SolarPinhole_Expand()
         : base(DesignateMode.Add)
     {
-        defaultLabel = "BetterAutocastVPE.SolarPinholeArea.Expand".Translate();
-        defaultDesc = "BetterAutocastVPE.SolarPinholeArea.Expand.Description".Translate();
+        defaultLabel = "BetterAutocastVPE.SolarPinholeArea.Expand".TranslateSafe();
+        defaultDesc = "BetterAutocastVPE.SolarPinholeArea.Expand.Description".TranslateSafe();
         icon = ContentFinder<Texture2D>.Get("UI/Icons/BetterAutocastVPE/SolarPinholeArea");
         soundDragSustain = SoundDefOf.Designate_DragAreaAdd;
         soundDragChanged = SoundDefOf.Designate_DragZone_Changed;
@@ -85,8 +85,8 @@ public class Designator_Area_SolarPinhole_Clear : Designator_Area_SolarPinhole
     public Designator_Area_SolarPinhole_Clear()
         : base(DesignateMode.Remove)
     {
-        defaultLabel = "BetterAutocastVPE.SolarPinholeArea.Remove".Translate();
-        defaultDesc = "BetterAutocastVPE.SolarPinholeArea.Remove.Description".Translate();
+        defaultLabel = "BetterAutocastVPE.SolarPinholeArea.Remove".TranslateSafe();
+        defaultDesc = "BetterAutocastVPE.SolarPinholeArea.Remove.Description".TranslateSafe();
         icon = ContentFinder<Texture2D>.Get("UI/Icons/BetterAutocastVPE/SolarPinholeAreaOff");
         soundDragSustain = SoundDefOf.Designate_DragAreaDelete;
         soundDragChanged = null;

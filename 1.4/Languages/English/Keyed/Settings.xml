@@ -6,7 +6,8 @@
   <BetterAutocastVPE.Uninstall.Explanation>Removes all elements of this mod from the currently loaded game so you can safely uninstall the mod.\nCreates a backup save both before and after the removal, then puts you in the main menu.\n\nAlso turns off autocasting for all patched psycasts. For technical reasons, this does not check if they can be autocast without the mod and may need to be re-enabled on reload.\n\nOnly works if you currently have a save loaded.</BetterAutocastVPE.Uninstall.Explanation>
   <BetterAutocastVPE.Uninstall>Uninstall the mod from the current game</BetterAutocastVPE.Uninstall>
   <BetterAutocastVPE.Uninstall.Disabled>Load a save to uninstall this mod from it</BetterAutocastVPE.Uninstall.Disabled>
-  <BetterAutocastVPE.ResetSettings>Reset Settings</BetterAutocastVPE.ResetSettings>
+  <BetterAutocastVPE.ResetSettings>Reset settings</BetterAutocastVPE.ResetSettings>
+  <BetterAutocastVPE.ResetSettings.Confirmation>&lt;b&gt;Really reset settings?&lt;/b&gt;</BetterAutocastVPE.ResetSettings.Confirmation>
   <BetterAutocastVPE.TargetSelf>Target self</BetterAutocastVPE.TargetSelf>
   <BetterAutocastVPE.TargetColonists>Target colonists</BetterAutocastVPE.TargetColonists>
   <BetterAutocastVPE.TargetColonyAnimals>Target colony animals</BetterAutocastVPE.TargetColonyAnimals>
@@ -15,6 +16,10 @@
   <BetterAutocastVPE.TargetSlaves>Target slaves</BetterAutocastVPE.TargetSlaves>
   <BetterAutocastVPE.TargetVisitors>Target visitors</BetterAutocastVPE.TargetVisitors>
   <BetterAutocastVPE.TargetEnemies>Target enemies</BetterAutocastVPE.TargetEnemies>
+  <BetterAutocastVPE.BlockedJobs.EnableAll>Check all checkboxes</BetterAutocastVPE.BlockedJobs.EnableAll>
+  <BetterAutocastVPE.BlockedJobs.DisableAll>Uncheck all checkboxes</BetterAutocastVPE.BlockedJobs.DisableAll>
+  <BetterAutocastVPE.BlockedJobs.EnableAll.Confirmation>&lt;b&gt;Really check all checkboxes?&lt;/b&gt;</BetterAutocastVPE.BlockedJobs.EnableAll.Confirmation>
+  <BetterAutocastVPE.BlockedJobs.DisableAll.Confirmation>&lt;b&gt;Really uncheck all checkboxes?&lt;/b&gt;</BetterAutocastVPE.BlockedJobs.DisableAll.Confirmation>
   <BetterAutocastVPE.BlockedJobs>Blocked Jobs</BetterAutocastVPE.BlockedJobs>
   <BetterAutocastVPE.BlockedJobs.Explanation>Manage which jobs should not be interrupted for autocasting.</BetterAutocastVPE.BlockedJobs.Explanation>
   <BetterAutocastVPE.BlockedJobs.Manager.Explanation>A list of all JobDefs and a toggle on if it should <![CDATA[<b><i>not</i></b>]]> be interrupted for autocasting.</BetterAutocastVPE.BlockedJobs.Manager.Explanation>

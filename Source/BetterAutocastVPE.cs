@@ -94,7 +94,7 @@ public class BetterAutocastVPE : Mod
     {
         string fileNamePrefix = DateTime.Now.ToString("s", CultureInfo.InvariantCulture);
         GameDataSaveLoader.SaveGame(
-            fileNamePrefix + " - " + "BetterAutocastVPE.BeforeUninstall".Translate()
+            fileNamePrefix + " - " + "BetterAutocastVPE.BeforeUninstall".TranslateSafe()
         );
         Find.TickManager.Pause();
         foreach (Map map in Find.Maps)
@@ -123,7 +123,7 @@ public class BetterAutocastVPE : Mod
             .Where(x => !x.ModMetaData.SamePackageId(Content.PackageId))
             .ToList();
         GameDataSaveLoader.SaveGame(
-            fileNamePrefix + " - " + "BetterAutocastVPE.AfterUninstall".Translate()
+            fileNamePrefix + " - " + "BetterAutocastVPE.AfterUninstall".TranslateSafe()
         );
         traverse.Value = original;
         GenScene.GoToMainMenu();
@@ -133,6 +133,12 @@ public class BetterAutocastVPE : Mod
     {
         Settings = new();
         WriteSettings();
+    }
+
+    public override void WriteSettings()
+    {
+        base.WriteSettings();
+        AutocastSettingsWindow.confirmReset = false;
     }
 
     public override void DoSettingsWindowContents(Rect inRect) =>
@@ -178,28 +184,34 @@ public class BetterAutocastVPE : Mod
 
     const string LogPrefix = "Better Autocasting - ";
 
-    public static void DebugError(string message)
+    public static void DebugError(string message, int? key = null)
     {
 #if DEBUG
-        Error(message);
+        Error(message, key);
 #endif
     }
 
-    public static void Error(string message)
+    public static void Error(string message, int? key = null)
     {
-        Verse.Log.Error(LogPrefix + message);
+        if (key is int keyNotNull)
+            Verse.Log.ErrorOnce(LogPrefix + message, keyNotNull);
+        else
+            Verse.Log.Error(LogPrefix + message);
     }
 
-    public static void DebugWarn(string message)
+    public static void DebugWarn(string message, int? key = null)
     {
 #if DEBUG
-        Warn(message);
+        Warn(message, key);
 #endif
     }
 
-    public static void Warn(string message)
+    public static void Warn(string message, int? key = null)
     {
-        Verse.Log.Warning(LogPrefix + message);
+        if (key is int keyNotNull)
+            Verse.Log.WarningOnce(LogPrefix + message, keyNotNull);
+        else
+            Verse.Log.Warning(LogPrefix + message);
     }
 
     public static void DebugLog(string message)

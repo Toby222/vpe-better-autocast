@@ -29,7 +29,7 @@ public class IgnoredMentalStateListWindow : Window
         Text.Font = GameFont.Medium;
         Widgets.Label(
             new Rect(0f, 0f, inRect2.width - 150f - 17f, 35f),
-            "BetterAutocastVPE.IgnoredMentalStates".Translate()
+            "BetterAutocastVPE.IgnoredMentalStates".TranslateSafe()
         );
         Text.Font = GameFont.Small;
         Rect inRect = new Rect(
@@ -39,9 +39,6 @@ public class IgnoredMentalStateListWindow : Window
             inRect2.height - 40f - Window.CloseButSize.y
         );
 
-        BetterAutocastVPE.DebugLog(
-            $"{nameof(IgnoredMentalStateListWindow)}.{nameof(listingHeight)} = {listingHeight}"
-        );
         Rect viewRect = new(inRect.x, inRect.y, inRect.width - 16f, listingHeight);
         Widgets.BeginScrollView(
             inRect.TopPartPixels(inRect.height - Window.CloseButSize.y),
@@ -51,7 +48,7 @@ public class IgnoredMentalStateListWindow : Window
         Listing_Standard listing = new();
         listing.Begin(new Rect(viewRect.x, viewRect.y, viewRect.width, float.PositiveInfinity));
 
-        listing.Label("BetterAutocastVPE.IgnoredMentalStates.Manager.Explanation".Translate());
+        listing.Label("BetterAutocastVPE.IgnoredMentalStates.Manager.Explanation".TranslateSafe());
         listing.GapLine();
 
         const float thirdColumnWidth = 24f;
@@ -59,22 +56,22 @@ public class IgnoredMentalStateListWindow : Window
         float secondColumnWidth = firstColumnWidth;
         float headerHeight = Math.Max(
             Text.CalcHeight(
-                "BetterAutocastVPE.IgnoredMentalStates.defNameExplanation".Translate(),
+                "BetterAutocastVPE.IgnoredMentalStates.defNameExplanation".TranslateSafe(),
                 firstColumnWidth
             ),
             Text.CalcHeight(
-                "BetterAutocastVPE.IgnoredMentalStates.labelExplanation".Translate(),
+                "BetterAutocastVPE.IgnoredMentalStates.labelExplanation".TranslateSafe(),
                 secondColumnWidth
             )
         );
         Rect headerRow = listing.GetRect(headerHeight);
         Widgets.Label(
             headerRow.TakeLeftPart(firstColumnWidth),
-            "BetterAutocastVPE.IgnoredMentalStates.defNameExplanation".Translate()
+            "BetterAutocastVPE.IgnoredMentalStates.defNameExplanation".TranslateSafe()
         );
         Widgets.Label(
             headerRow.TakeLeftPart(secondColumnWidth),
-            "BetterAutocastVPE.IgnoredMentalStates.labelExplanation".Translate()
+            "BetterAutocastVPE.IgnoredMentalStates.labelExplanation".TranslateSafe()
         );
 
         listing.Gap();
@@ -126,7 +123,9 @@ public class IgnoredMentalStateListWindow : Window
 
         listing.GapLine();
 
-        listing.Label("BetterAutocastVPE.IgnoredMentalStates.Nonexistent.Explanation".Translate());
+        listing.Label(
+            "BetterAutocastVPE.IgnoredMentalStates.Nonexistent.Explanation".TranslateSafe()
+        );
 
         HashSet<string> allDefNames = DefDatabase<MentalStateDef>
             .AllDefs.Select(def => def.defName)
@@ -162,7 +161,7 @@ public class IgnoredMentalStateListWindow : Window
             }
         }
         if (nonexistentDefNames.Count == 0)
-            listing.Label("BetterAutocastVPE.NoNonexistentDefs".Translate());
+            listing.Label("BetterAutocastVPE.NoNonexistentDefs".TranslateSafe());
 
         listingHeight = listing.CurHeight;
         listing.End();

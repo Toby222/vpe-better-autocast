@@ -15,6 +15,8 @@ public static class AutocastSettingsWindow
 
     private static float settingsHeight;
 
+    public static bool confirmReset;
+
     private static AutocastSettings Settings => BetterAutocastVPE.Settings;
 
     private static readonly HashSet<string> expandedDefs = [];
@@ -63,14 +65,15 @@ public static class AutocastSettingsWindow
                 )
             )
             {
-                string explanation = $"BetterAutocastVPE.{abilityDefName}.Explanation".Translate();
+                string explanation =
+                    $"BetterAutocastVPE.{abilityDefName}.Explanation".TranslateSafe();
                 listing.Label(explanation);
             }
 
             bool castWhileDrafted = Settings.DraftedAutocastDefs.Contains(abilityDefName);
             bool castWhileDraftedOriginal = castWhileDrafted;
             listing.CheckboxLabeled(
-                "BetterAutocastVPE.CastDrafted".Translate(),
+                "BetterAutocastVPE.CastDrafted".TranslateSafe(),
                 ref castWhileDrafted
             );
 
@@ -87,7 +90,7 @@ public static class AutocastSettingsWindow
                 bool castWhileUndrafted = Settings.UndraftedAutocastDefs.Contains(abilityDefName);
                 bool castWhileUndraftedOriginal = castWhileUndrafted;
                 listing.CheckboxLabeled(
-                    "BetterAutocastVPE.CastUndrafted".Translate(),
+                    "BetterAutocastVPE.CastUndrafted".TranslateSafe(),
                     ref castWhileUndrafted
                 );
 
@@ -106,7 +109,7 @@ public static class AutocastSettingsWindow
 
     static void Checkbox(Listing_Standard listing, string labelKey, ref bool value)
     {
-        listing.CheckboxLabeled(("BetterAutocastVPE." + labelKey).Translate(), ref value);
+        listing.CheckboxLabeled(("BetterAutocastVPE." + labelKey).TranslateSafe(), ref value);
     }
 
 #if DEBUG
@@ -138,7 +141,7 @@ public static class AutocastSettingsWindow
         Widgets.BeginScrollView(inRect, ref settingsScrollPosition, viewRect);
         listing.Begin(new Rect(viewRect.x, viewRect.y, viewRect.width, float.PositiveInfinity));
 
-        listing.Label("BetterAutocastVPE.Clarification".Translate());
+        listing.Label("BetterAutocastVPE.Clarification".TranslateSafe());
 
         listing.GapLine();
 
@@ -149,44 +152,57 @@ public static class AutocastSettingsWindow
             ? "BetterAutocastVPE.Uninstall"
             : "BetterAutocastVPE.Uninstall.Disabled";
 
-        listing.Label("BetterAutocastVPE.Uninstall.Explanation".Translate());
+        listing.Label("BetterAutocastVPE.Uninstall.Explanation".TranslateSafe());
 
-        if (listing.ButtonText(uninstallLabel.Translate()) && inGame)
+        if (listing.ButtonText(uninstallLabel.TranslateSafe()) && inGame)
             LoadedModManager.GetMod<BetterAutocastVPE>().Uninstall();
 
         listing.GapLine();
 
-        if (listing.ButtonText("BetterAutocastVPE.ResetSettings".Translate()))
-            LoadedModManager.GetMod<BetterAutocastVPE>().ResetSettings();
+        if (confirmReset)
+        {
+            Color prevColor = GUI.color;
+            GUI.color = Color.red;
+            if (listing.ButtonText("BetterAutocastVPE.ResetSettings.Confirmation".TranslateSafe()))
+            {
+                LoadedModManager.GetMod<BetterAutocastVPE>().ResetSettings();
+                confirmReset = false;
+            }
+            GUI.color = prevColor;
+        }
+        else if (listing.ButtonText("BetterAutocastVPE.ResetSettings".TranslateSafe()))
+        {
+            confirmReset = true;
+        }
 
         Settings.AutocastIntervalDrafted = (int)
             listing.SliderLabeled(
-                "BetterAutocastVPE.AutocastIntervalDrafted".Translate(
+                "BetterAutocastVPE.AutocastIntervalDrafted".TranslateSafe(
                     Settings.AutocastIntervalDrafted
                 ),
                 Settings.AutocastIntervalDrafted,
                 1f,
                 10000f,
-                tooltip: "BetterAutocastVPE.AutocastIntervalDrafted.Description".Translate(
+                tooltip: "BetterAutocastVPE.AutocastIntervalDrafted.Description".TranslateSafe(
                     Settings.AutocastIntervalDrafted
                 )
             );
         Settings.AutocastIntervalUndrafted = (int)
             listing.SliderLabeled(
-                "BetterAutocastVPE.AutocastIntervalUndrafted".Translate(
+                "BetterAutocastVPE.AutocastIntervalUndrafted".TranslateSafe(
                     Settings.AutocastIntervalUndrafted
                 ),
                 Settings.AutocastIntervalUndrafted,
                 1f,
                 10000f,
-                tooltip: "BetterAutocastVPE.AutocastIntervalUndrafted.Description".Translate(
+                tooltip: "BetterAutocastVPE.AutocastIntervalUndrafted.Description".TranslateSafe(
                     Settings.AutocastIntervalUndrafted
                 )
             );
 
         listing.GapLine();
-        listing.Label("BetterAutocastVPE.BlockedJobs.Explanation".Translate());
-        if (listing.ButtonText("BetterAutocastVPE.BlockedJobs".Translate()))
+        listing.Label("BetterAutocastVPE.BlockedJobs.Explanation".TranslateSafe());
+        if (listing.ButtonText("BetterAutocastVPE.BlockedJobs".TranslateSafe()))
             Find.WindowStack.Add(new BlockedJobsListWindow());
         #endregion General
 
@@ -194,13 +210,13 @@ public static class AutocastSettingsWindow
         if (AbilityHeader("VPE_Mend"))
         {
             Settings.MendHealthThreshold = listing.SliderLabeled(
-                "BetterAutocastVPE.MendHealthThreshold".Translate(
+                "BetterAutocastVPE.MendHealthThreshold".TranslateSafe(
                     Settings.MendHealthThreshold.ToString("P")
                 ),
                 Settings.MendHealthThreshold,
                 0.0f,
                 1.0f,
-                tooltip: "BetterAutocastVPE.MendHealthThreshold.Description".Translate()
+                tooltip: "BetterAutocastVPE.MendHealthThreshold.Description".TranslateSafe()
             );
             Checkbox("MendPawns", ref Settings.MendPawns);
             Checkbox("MendInStockpile", ref Settings.MendInStockpile);
@@ -270,13 +286,13 @@ public static class AutocastSettingsWindow
         if (AbilityHeader("VPE_WordofJoy"))
         {
             Settings.WordOfJoyMoodThreshold = listing.SliderLabeled(
-                "BetterAutocastVPE.WordOfJoyMoodThreshold".Translate(
+                "BetterAutocastVPE.WordOfJoyMoodThreshold".TranslateSafe(
                     Settings.WordOfJoyMoodThreshold.ToString("P")
                 ),
                 Settings.WordOfJoyMoodThreshold,
                 0.0f,
                 1.0f,
-                tooltip: "BetterAutocastVPE.WordOfJoyMoodThreshold.Description".Translate()
+                tooltip: "BetterAutocastVPE.WordOfJoyMoodThreshold.Description".TranslateSafe()
             );
         }
         #endregion Word of Joy
@@ -348,8 +364,8 @@ public static class AutocastSettingsWindow
             Checkbox("TargetVisitors", ref Settings.WordOfSerenityTargetVisitors);
             listing.Gap();
 
-            listing.Label("BetterAutocastVPE.IgnoredMentalStates.Explanation".Translate());
-            if (listing.ButtonText("BetterAutocastVPE.IgnoredMentalStates".Translate()))
+            listing.Label("BetterAutocastVPE.IgnoredMentalStates.Explanation".TranslateSafe());
+            if (listing.ButtonText("BetterAutocastVPE.IgnoredMentalStates".TranslateSafe()))
                 Find.WindowStack.Add(new IgnoredMentalStateListWindow());
         }
         #endregion Word of Serenity
@@ -436,11 +452,12 @@ public static class AutocastSettingsWindow
         {
             BetterAutocastVPE.DebugWarn(
                 "Config doesn't properly config everything. Missing: "
-                    + configuredDefs.ToCommaList(true)
+                    + configuredDefs.ToCommaList(true),
+                678901234
             );
         }
 #endif
     }
 
-    public static string SettingsCategory() => "BetterAutocastVPE.SettingsCategory".Translate();
+    public static string SettingsCategory() => "BetterAutocastVPE.SettingsCategory".TranslateSafe();
 }

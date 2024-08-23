@@ -24,19 +24,19 @@ public class BlockedJobsListWindow : Window
 
     public override RimWorld.QuickSearchWidget CommonSearchWidget => base.CommonSearchWidget;
 
+    private bool enableAllConfirm;
+    private bool disableAllConfirm;
+
     public override void DoWindowContents(Rect inRect2)
     {
         Text.Font = GameFont.Medium;
         Widgets.Label(
             new Rect(0f, 0f, inRect2.width - 150f - 17f, 35f),
-            "BetterAutocastVPE.BlockedJobs".Translate()
+            "BetterAutocastVPE.BlockedJobs".TranslateSafe()
         );
         Text.Font = GameFont.Small;
         Rect inRect = new(0f, 40f, inRect2.width, inRect2.height - 40f - Window.CloseButSize.y);
 
-        BetterAutocastVPE.DebugLog(
-            $"{nameof(BlockedJobsListWindow)}.{nameof(listingHeight)} = {listingHeight}"
-        );
         Rect viewRect = new(inRect.x, inRect.y, inRect.width - 16f, listingHeight);
         Widgets.BeginScrollView(
             inRect.TopPartPixels(inRect.height - Window.CloseButSize.y),
@@ -46,37 +46,91 @@ public class BlockedJobsListWindow : Window
         Listing_Standard listing = new();
         listing.Begin(new Rect(viewRect.x, viewRect.y, viewRect.width, float.PositiveInfinity));
 
-        listing.Label("BetterAutocastVPE.BlockedJobs.Manager.Explanation".Translate());
+        listing.Label("BetterAutocastVPE.BlockedJobs.Manager.Explanation".TranslateSafe());
         listing.GapLine();
+        Rect rect = listing.GetRect(30f);
+        if (enableAllConfirm)
+        {
+            Color prevColor = GUI.color;
+            GUI.color = Color.red;
+            if (
+                Widgets.ButtonText(
+                    rect.LeftHalf(),
+                    "BetterAutocastVPE.BlockedJobs.EnableAll.Confirmation".TranslateSafe()
+                )
+            )
+            {
+                BetterAutocastVPE.Settings.BlockedJobDefs.UnionWith(
+                    DefDatabase<JobDef>.AllDefs.Select(jobDef => jobDef.defName)
+                );
+                enableAllConfirm = false;
+            }
+            GUI.color = prevColor;
+        }
+        else if (
+            Widgets.ButtonText(
+                rect.LeftHalf(),
+                "BetterAutocastVPE.BlockedJobs.EnableAll".TranslateSafe()
+            )
+        )
+        {
+            enableAllConfirm = true;
+        }
+
+        if (disableAllConfirm)
+        {
+            Color prevColor = GUI.color;
+            GUI.color = Color.red;
+            if (
+                Widgets.ButtonText(
+                    rect.RightHalf(),
+                    "BetterAutocastVPE.BlockedJobs.DisableAll.Confirmation".TranslateSafe()
+                )
+            )
+            {
+                BetterAutocastVPE.Settings.BlockedJobDefs.Clear();
+                disableAllConfirm = false;
+            }
+            GUI.color = prevColor;
+        }
+        else if (
+            Widgets.ButtonText(
+                rect.RightHalf(),
+                "BetterAutocastVPE.BlockedJobs.DisableAll".TranslateSafe()
+            )
+        )
+        {
+            disableAllConfirm = true;
+        }
 
         const float thirdColumnWidth = 24f;
         float firstColumnWidth = (listing.ColumnWidth - thirdColumnWidth) / 2f;
         float secondColumnWidth = firstColumnWidth;
         float headerHeight = Math.Max(
             Text.CalcHeight(
-                "BetterAutocastVPE.BlockedJobs.defNameExplanation".Translate(),
+                "BetterAutocastVPE.BlockedJobs.defNameExplanation".TranslateSafe(),
                 firstColumnWidth
             ),
             Text.CalcHeight(
-                "BetterAutocastVPE.BlockedJobs.reportStringExplanation".Translate(),
+                "BetterAutocastVPE.BlockedJobs.reportStringExplanation".TranslateSafe(),
                 secondColumnWidth
             )
         );
         Rect headerRow = listing.GetRect(headerHeight);
         Widgets.Label(
             headerRow.TakeLeftPart(firstColumnWidth),
-            "BetterAutocastVPE.BlockedJobs.defNameExplanation".Translate()
+            "BetterAutocastVPE.BlockedJobs.defNameExplanation".TranslateSafe()
         );
         Widgets.Label(
             headerRow.TakeLeftPart(secondColumnWidth),
-            "BetterAutocastVPE.BlockedJobs.reportStringExplanation".Translate()
+            "BetterAutocastVPE.BlockedJobs.reportStringExplanation".TranslateSafe()
         );
 
         listing.Gap();
 
-        List<JobDef> allDefsAlphabetic = DefDatabase<JobDef>
+        JobDef[] allDefsAlphabetic = DefDatabase<JobDef>
             .AllDefs.OrderBy(def => def.defName[0])
-            .ToList();
+            .ToArray();
         bool highlight = false;
         foreach (JobDef jobDef in allDefsAlphabetic)
         {
@@ -110,7 +164,7 @@ public class BlockedJobsListWindow : Window
 
         listing.GapLine();
 
-        listing.Label("BetterAutocastVPE.BlockedJobs.Nonexistent.Explanation".Translate());
+        listing.Label("BetterAutocastVPE.BlockedJobs.Nonexistent.Explanation".TranslateSafe());
 
         HashSet<string> allDefNames = DefDatabase<JobDef>
             .AllDefs.Select(def => def.defName)
@@ -141,7 +195,7 @@ public class BlockedJobsListWindow : Window
                 BetterAutocastVPE.Settings.BlockedJobDefs.Remove(nonexistentDefName);
         }
         if (nonexistentDefNames.Count == 0)
-            listing.Label("BetterAutocastVPE.NoNonexistentDefs".Translate());
+            listing.Label("BetterAutocastVPE.NoNonexistentDefs".TranslateSafe());
 
         listingHeight = listing.CurHeight;
         listing.End();

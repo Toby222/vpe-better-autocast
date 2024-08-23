@@ -6,7 +6,7 @@ namespace BetterAutocastVPE;
 
 public class Area_IceCrystal : Area
 {
-    public override string Label => "BetterAutocastVPE.IceCrystalArea".Translate();
+    public override string Label => "BetterAutocastVPE.IceCrystalArea".TranslateSafe();
 
     public override Color Color => new(0.1f, 0.1f, 0.9f);
 
@@ -71,8 +71,8 @@ public class Designator_Area_IceCrystal_Expand : Designator_Area_IceCrystal
     public Designator_Area_IceCrystal_Expand()
         : base(DesignateMode.Add)
     {
-        defaultLabel = "BetterAutocastVPE.IceCrystalArea.Expand".Translate();
-        defaultDesc = "BetterAutocastVPE.IceCrystalArea.Expand.Description".Translate();
+        defaultLabel = "BetterAutocastVPE.IceCrystalArea.Expand".TranslateSafe();
+        defaultDesc = "BetterAutocastVPE.IceCrystalArea.Expand.Description".TranslateSafe();
         icon = ContentFinder<Texture2D>.Get("UI/Icons/BetterAutocastVPE/IceCrystalArea");
         soundDragSustain = SoundDefOf.Designate_DragAreaAdd;
         soundDragChanged = SoundDefOf.Designate_DragZone_Changed;
@@ -85,8 +85,8 @@ public class Designator_Area_IceCrystal_Clear : Designator_Area_IceCrystal
     public Designator_Area_IceCrystal_Clear()
         : base(DesignateMode.Remove)
     {
-        defaultLabel = "BetterAutocastVPE.IceCrystalArea.Remove".Translate();
-        defaultDesc = "BetterAutocastVPE.IceCrystalArea.Remove.Description".Translate();
+        defaultLabel = "BetterAutocastVPE.IceCrystalArea.Remove".TranslateSafe();
+        defaultDesc = "BetterAutocastVPE.IceCrystalArea.Remove.Description".TranslateSafe();
         icon = ContentFinder<Texture2D>.Get("UI/Icons/BetterAutocastVPE/IceCrystalAreaOff");
         soundDragSustain = SoundDefOf.Designate_DragAreaDelete;
         soundDragChanged = null;
