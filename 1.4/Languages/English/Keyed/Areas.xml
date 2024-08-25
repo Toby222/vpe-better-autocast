@@ -11,4 +11,10 @@
   <BetterAutocastVPE.SolarPinholeArea.Expand.Description>Designate an area where Skipmasters will automatically cast Solar Pinhole.</BetterAutocastVPE.SolarPinholeArea.Expand.Description>
   <BetterAutocastVPE.SolarPinholeArea.Remove>Remove Solar Pinhole spots</BetterAutocastVPE.SolarPinholeArea.Remove>
   <BetterAutocastVPE.SolarPinholeArea.Remove.Description>Removes Solar Pinhole spots. Skipmasters will no longer automatically cast Solar Pinhole in this area.</BetterAutocastVPE.SolarPinholeArea.Remove.Description>
+
+  <BetterAutocastVPE.CraftTimeskipArea>Craft Timeskip workshop</BetterAutocastVPE.CraftTimeskipArea>
+  <BetterAutocastVPE.CraftTimeskipArea.Expand>Add Craft Timeskip workshop</BetterAutocastVPE.CraftTimeskipArea.Expand>
+  <BetterAutocastVPE.CraftTimeskipArea.Expand.Description>Designate an area where Chronopaths will automatically cast Craft Timeskip.</BetterAutocastVPE.CraftTimeskipArea.Expand.Description>
+  <BetterAutocastVPE.CraftTimeskipArea.Remove>Remove Craft Timeskip workshop</BetterAutocastVPE.CraftTimeskipArea.Remove>
+  <BetterAutocastVPE.CraftTimeskipArea.Remove.Description>Removes Craft Timeskip workshop. Chronopaths will no longer automatically cast Craft Timeskip in this area.</BetterAutocastVPE.CraftTimeskipArea.Remove.Description>
 </LanguageData>

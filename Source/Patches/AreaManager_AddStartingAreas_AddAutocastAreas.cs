@@ -14,6 +14,7 @@ internal static class AddAutocastAreas
         );
         __instance.AllAreas.Add(new Area_IceCrystal(__instance));
         __instance.AllAreas.Add(new Area_SolarPinhole(__instance));
+        __instance.AllAreas.Add(new Area_CraftTimeskip(__instance));
         BetterAutocastVPE.DebugLog(
             "Added autocasting areas - currently " + __instance.AllAreas.Count + " areas"
         );

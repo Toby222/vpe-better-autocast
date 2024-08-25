@@ -30,6 +30,7 @@ internal static class PsycastingHandler
                 { "VPE_AdrenalineRush", HandleSelfBuff },
                 { "VPE_BladeFocus", HandleSelfBuff },
                 { "VPE_ControlledFrenzy", HandleSelfBuff },
+                { "VPE_CraftTimeskip", HandleCraftTimeskip },
                 { "VPE_Darkvision", HandleDarkvision },
                 { "VPE_Deathshield", HandleDeathshield },
                 { "VPE_Eclipse", HandleEclipse },
@@ -679,5 +680,12 @@ internal static class PsycastingHandler
         return target_ is IntVec3 target && CastAbilityOnTarget(ability, target);
     }
     #endregion Skipmaster
+
+    #region Chronopath
+    private static bool HandleCraftTimeskip(Pawn pawn, Ability ability)
+    {
+        return ThingsInArea<Area_CraftTimeskip>(pawn.MapHeld).OfType<UnfinishedThing>().Where(thing => !thing.IsForbidden(pawn)).ClosestTo(pawn) is Thing target && CastAbilityOnTarget(ability, target);
+    }
+    #endregion Chronopath
     #endregion handlers
 }

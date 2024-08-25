@@ -15,6 +15,7 @@ public static class AutocastSettingsWindow
 
     private static float settingsHeight;
 
+    public static bool confirmUninstall;
     public static bool confirmReset;
 
     private static AutocastSettings Settings => BetterAutocastVPE.Settings;
@@ -149,19 +150,37 @@ public static class AutocastSettingsWindow
 
         bool inGame = Current.Game is not null;
         string uninstallLabel = inGame
-            ? "BetterAutocastVPE.Uninstall"
+            ? confirmUninstall
+                ? "BetterAutocastVPE.Uninstall.Confirmation"
+                : "BetterAutocastVPE.Uninstall"
             : "BetterAutocastVPE.Uninstall.Disabled";
 
         listing.Label("BetterAutocastVPE.Uninstall.Explanation".TranslateSafe());
 
+        Color prevColor = GUI.color;
+        if (confirmUninstall && inGame)
+        {
+            GUI.color = Color.red;
+        }
+
         if (listing.ButtonText(uninstallLabel.TranslateSafe()) && inGame)
-            LoadedModManager.GetMod<BetterAutocastVPE>().Uninstall();
+        {
+            if (confirmUninstall)
+                LoadedModManager.GetMod<BetterAutocastVPE>().Uninstall();
+            else
+                confirmUninstall = true;
+        }
+
+        if (confirmUninstall)
+        {
+            GUI.color = prevColor;
+        }
 
         listing.GapLine();
 
         if (confirmReset)
         {
-            Color prevColor = GUI.color;
+            prevColor = GUI.color;
             GUI.color = Color.red;
             if (listing.ButtonText("BetterAutocastVPE.ResetSettings.Confirmation".TranslateSafe()))
             {
@@ -445,6 +464,10 @@ public static class AutocastSettingsWindow
             AbilityHeader("VPE_SolarPinholeSunlamp");
         }
         #endregion Large Solar Pinhole
+
+        #region Craft Timeskip
+        AbilityHeader("VPE_CraftTimeskip");
+        #endregion Craft Timeskip
 
         listing.End();
         settingsHeight = listing.CurHeight;

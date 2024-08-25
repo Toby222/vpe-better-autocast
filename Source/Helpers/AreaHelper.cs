@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
@@ -16,5 +17,11 @@ internal static class AreaHelper
         where T : Area
     {
         return map.areaManager.Get<T>().ActiveCells.Where(validator).GetRandomStruct();
+    }
+
+    public static IEnumerable<Thing> ThingsInArea<T>(Map map)
+        where T : Area
+    {
+        return map.areaManager.Get<T>().ActiveCells.SelectMany(cell => map.thingGrid.ThingsListAtFast(cell));
     }
 }

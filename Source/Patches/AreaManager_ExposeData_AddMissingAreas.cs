@@ -13,5 +13,7 @@ internal static class AddMissingAreas
             __instance.AllAreas.Add(new Area_IceCrystal(__instance));
         if (__instance.Get<Area_SolarPinhole>() is null)
             __instance.AllAreas.Add(new Area_SolarPinhole(__instance));
+        if (__instance.Get<Area_CraftTimeskip>() is null)
+            __instance.AllAreas.Add(new Area_CraftTimeskip(__instance));
     }
 }

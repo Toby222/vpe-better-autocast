@@ -23,7 +23,7 @@ public class Area_IceCrystal : Area
     }
 }
 
-public abstract class Designator_Area_IceCrystal : Designator_Cells
+public class Designator_Area_IceCrystal : Designator_Cells
 {
     private readonly DesignateMode mode;
 

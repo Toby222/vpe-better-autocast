@@ -5,6 +5,7 @@
   <BetterAutocastVPE.NoNonexistentDefs>&lt;b&gt;No nonexistent defs configured, nothing to do here.&lt;/b&gt;</BetterAutocastVPE.NoNonexistentDefs>
   <BetterAutocastVPE.Uninstall.Explanation>Removes all elements of this mod from the currently loaded game so you can safely uninstall the mod.\nCreates a backup save both before and after the removal, then puts you in the main menu.\n\nAlso turns off autocasting for all patched psycasts. For technical reasons, this does not check if they can be autocast without the mod and may need to be re-enabled on reload.\n\nOnly works if you currently have a save loaded.</BetterAutocastVPE.Uninstall.Explanation>
   <BetterAutocastVPE.Uninstall>Uninstall the mod from the current game</BetterAutocastVPE.Uninstall>
+  <BetterAutocastVPE.Uninstall.Confirmation>Are you sure you want to uninstall the mod from the current game</BetterAutocastVPE.Uninstall.Confirmation>
   <BetterAutocastVPE.Uninstall.Disabled>Load a save to uninstall this mod from it</BetterAutocastVPE.Uninstall.Disabled>
   <BetterAutocastVPE.ResetSettings>Reset settings</BetterAutocastVPE.ResetSettings>
   <BetterAutocastVPE.ResetSettings.Confirmation>&lt;b&gt;Really reset settings?&lt;/b&gt;</BetterAutocastVPE.ResetSettings.Confirmation>
@@ -31,6 +32,7 @@
   <BetterAutocastVPE.VPE_ControlledFrenzy.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_ControlledFrenzy.Explanation>
   <BetterAutocastVPE.VPE_Darkvision.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychically sensitive colonist without the buff in casting range.</BetterAutocastVPE.VPE_Darkvision.Explanation>
   <BetterAutocastVPE.VPE_Deathshield.Explanation>Targets the closest pawn without death shield in range, prioritizing by group in the order below.\nThat is, targets colonists firsts, then colony animals if no colonists are available, and so on.</BetterAutocastVPE.VPE_Deathshield.Explanation>
+  <BetterAutocastVPE.VPE_Ghostwalk.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_Ghostwalk.Explanation>
   <BetterAutocastVPE.VPE_Eclipse.Explanation>Will autocast when there is no ongoing eclipse</BetterAutocastVPE.VPE_Eclipse.Explanation>
   <BetterAutocastVPE.VPE_EnchantQuality.Explanation>Will look for enchantable items in the order listed below.\n\nWhen looking for items in "appropriately named" places, will look for names containing the word "enchant".\nFor example: `Enchanting`, `enchant`, `The Enchantress of Florence`</BetterAutocastVPE.VPE_EnchantQuality.Explanation>
   <BetterAutocastVPE.VPE_Enthrall.Explanation>Will look for corpses in the order listed below.\n\nWhen looking for items in "appropriately named" places, will look for names containing the word "thrall".\nFor example: `Thrall corpses`, `Enthralling`, `thrall`</BetterAutocastVPE.VPE_Enthrall.Explanation>
@@ -44,6 +46,7 @@
   <BetterAutocastVPE.VPE_IceCrystal.Explanation>Will create ice crystals on a random cell in the Ice Crystal Spot area.\nWill only target cells without buildings.</BetterAutocastVPE.VPE_IceCrystal.Explanation>
   <BetterAutocastVPE.VPE_SolarPinhole.Explanation>Will create solar pinholes on a random cell in the Solar Pinhole Spot area.\nWill only target cells that don't already have a solar pinhole.</BetterAutocastVPE.VPE_SolarPinhole.Explanation>
   <BetterAutocastVPE.VPE_SolarPinholeSunlamp.Explanation>Preferred to normal solar pinhole if both are available to cast. Will create solar pinholes on a random cell in the Solar Pinhole Spot area.\nWill only target cells that don't already have a solar pinhole.\nLarge and normal solar pinholes will prevent the other from being created at that spot.</BetterAutocastVPE.VPE_SolarPinholeSunlamp.Explanation>
+  <BetterAutocastVPE.VPE_CraftTimeskip.Explanation>Will cast craft timeskip on the closest unfinished item the Craft Timeskip Workshop area.\n(Note that this isn't using stockpiles because you rarely store unfinished items.)</BetterAutocastVPE.VPE_CraftTimeskip.Explanation>
   <BetterAutocastVPE.VPE_Mend.Explanation>Will look for damaged items in the order listed below.\n\nWhen looking for items in "appropriately named" places, will look for names containing the word "mend".\nFor example: `Mending`, `mend`, `The First Amendment`</BetterAutocastVPE.VPE_Mend.Explanation>
   <BetterAutocastVPE.VPE_PsychicGuidance.Explanation>Targets a random non-downed psychically sensitive colonist in range that doesn't have the Psychic Guidance buff.</BetterAutocastVPE.VPE_PsychicGuidance.Explanation>
   <BetterAutocastVPE.VPE_SpeedBoost.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_SpeedBoost.Explanation>
