@@ -6,7 +6,7 @@ using VFECore.UItils;
 namespace BetterAutocastVPE.Settings;
 
 using System.Collections.Generic;
-using System.Linq;
+using VanillaPsycastsExpanded;
 using Windows;
 
 public static class AutocastSettingsWindow
@@ -23,6 +23,56 @@ public static class AutocastSettingsWindow
     private static readonly HashSet<string> expandedDefs = [];
     private static readonly HashSet<string> expandedPaths = [];
 
+#if DEBUG
+    private static PsycasterPathDef? currentPsycasterPath = null;
+#endif
+
+    static bool PsycasterPathHeader(Listing_Standard listing, string psycasterPathDefName)
+    {
+        PsycasterPathDef psycasterPathDef = DefDatabase<PsycasterPathDef>.GetNamed(
+            psycasterPathDefName,
+            false
+        );
+        if (psycasterPathDef is null)
+        {
+            BetterAutocastVPE.Warn(
+                $"Tried to configure path {psycasterPathDefName}, but it is not installed",
+                (psycasterPathDefName + "notInstalled").GetHashCode()
+            );
+            return false;
+        }
+        listing.GapLine();
+
+        bool expanded = expandedPaths.Contains(psycasterPathDefName);
+#if DEBUG
+        currentPsycasterPath = psycasterPathDef;
+#endif
+        Rect psycasterPathRow = listing.GetRect(
+            Text.CalcHeight(psycasterPathDef.LabelCap, listing.ColumnWidth)
+        );
+        Widgets.DrawHighlightIfMouseover(psycasterPathRow);
+        if (Widgets.ButtonInvisible(psycasterPathRow))
+        {
+            if (expanded)
+            {
+                expandedPaths.Remove(psycasterPathDefName);
+            }
+            else
+            {
+                expandedPaths.Add(psycasterPathDefName);
+            }
+            expanded = !expanded;
+        }
+        Widgets.DrawTextureFitted(
+            psycasterPathRow.TakeLeftPart(psycasterPathRow.height),
+            expanded ? TexButton.Collapse : TexButton.Reveal,
+            1.0f
+        );
+        Widgets.Label(psycasterPathRow, psycasterPathDef.LabelCap);
+
+        return expanded;
+    }
+
     static bool AbilityHeader(Listing_Standard listing, string abilityDefName)
     {
         listing.GapLine();
@@ -30,8 +80,26 @@ public static class AutocastSettingsWindow
         bool expanded = expandedDefs.Contains(abilityDefName);
 
         AbilityDef abilityDef = DefDatabase<AbilityDef>.GetNamed(abilityDefName);
+        BetterAutocastVPE.DebugError("configuring " + abilityDefName, abilityDefName.GetHashCode());
+#if DEBUG
+        if (currentPsycasterPath is null)
+        {
+            BetterAutocastVPE.DebugError(
+                $"Config for ability {abilityDefName} is not in any path section",
+                (abilityDefName + "_WRONG_PATH!!!!").GetHashCode()
+            );
+        }
+        else if (!currentPsycasterPath.abilities.Contains(abilityDef))
+        {
+            BetterAutocastVPE.DebugError(
+                $"Config for ability {abilityDefName} is in wrong path section {currentPsycasterPath.defName}",
+                (abilityDefName + "_WRONG_PATH!!!!").GetHashCode()
+            );
+        }
+#endif
+
         Rect abilityLabelRow = listing.GetRect(
-            Text.CalcHeight(abilityDef.LabelCap, listing.ColumnWidth)
+            Text.CalcHeight(abilityDef.LabelCap, listing.ColumnWidth - 12f)
         );
 
         Widgets.DrawHighlightIfMouseover(abilityLabelRow);
@@ -74,6 +142,7 @@ public static class AutocastSettingsWindow
 
             bool castWhileDrafted = Settings.DraftedAutocastDefs.Contains(abilityDefName);
             bool castWhileDraftedOriginal = castWhileDrafted;
+
             listing.CheckboxLabeled(
                 "BetterAutocastVPE.CastDrafted".TranslateSafe(),
                 ref castWhileDrafted
@@ -109,19 +178,10 @@ public static class AutocastSettingsWindow
         return expanded;
     }
 
-    static bool PsycasterPathHeader(Listing_Standard listing, string pathDefName)
-    {
-        return expandedPaths.Contains(pathDefName);
-    }
-
     static void Checkbox(Listing_Standard listing, string labelKey, ref bool value)
     {
         listing.CheckboxLabeled(("BetterAutocastVPE." + labelKey).TranslateSafe(), ref value);
     }
-
-#if DEBUG
-    private readonly static HashSet<string> configuredDefs = [];
-#endif
 
     public static void DoSettingsWindowContents(Rect inRect)
     {
@@ -132,16 +192,14 @@ public static class AutocastSettingsWindow
             AutocastSettingsWindow.Checkbox(listing, labelKey, ref value);
         }
 
-#if DEBUG
-        configuredDefs.Clear();
-#endif
-
         bool AbilityHeader(string abilityDefName)
         {
-#if DEBUG
-            configuredDefs.Add(abilityDefName);
-#endif
             return AutocastSettingsWindow.AbilityHeader(listing, abilityDefName);
+        }
+
+        bool PsycasterPathHeader(string psycasterPathDefName)
+        {
+            return AutocastSettingsWindow.PsycasterPathHeader(listing, psycasterPathDefName);
         }
 
         Rect viewRect = new(inRect.x, inRect.y, inRect.width - 16f, settingsHeight);
@@ -231,273 +289,377 @@ public static class AutocastSettingsWindow
             Find.WindowStack.Add(new BlockedJobsListWindow());
         #endregion General
 
-        #region Mend
-        if (AbilityHeader("VPE_Mend"))
+        if (PsycasterPathHeader("VPE_Archon"))
         {
-            Settings.MendHealthThreshold = listing.SliderLabeled(
-                "BetterAutocastVPE.MendHealthThreshold".TranslateSafe(
-                    Settings.MendHealthThreshold.ToString("P")
-                ),
-                Settings.MendHealthThreshold,
-                0.0f,
-                1.0f,
-                tooltip: "BetterAutocastVPE.MendHealthThreshold.Description".TranslateSafe()
-            );
-            Checkbox("MendPawns", ref Settings.MendPawns);
-            Checkbox("MendInStockpile", ref Settings.MendInStockpile);
-            Checkbox("MendOnlyNamedStockpiles", ref Settings.MendOnlyNamedStockpiles);
-            Checkbox("MendInStorage", value: ref Settings.MendInStorage);
+            listing.Indent();
+            listing.ColumnWidth -= 12f;
+
+            #region Word of Productivity
+            AbilityHeader("VPE_WordofProductivity");
+            #endregion Word of Productivity
+
+            listing.ColumnWidth += 12f;
+            listing.Outdent();
+        }
+        // if (PsycasterPathHeader("VPE_Archotechist")) { listing.Indent(); listing.ColumnWidth -= 12f; listing.ColumnWidth += 12f; listing.Outdent(); }
+        if (PsycasterPathHeader("VPE_Chronopath"))
+        {
+            listing.Indent();
+            listing.ColumnWidth -= 12f;
+
+            #region Craft Timeskip
+            AbilityHeader("VPE_CraftTimeskip");
+            #endregion Craft Timeskip
+
+            listing.ColumnWidth += 12f;
+            listing.Outdent();
+        }
+        if (PsycasterPathHeader("VPE_Conflagrator"))
+        {
+            listing.Indent();
+            listing.ColumnWidth -= 12f;
+
+            #region Fire Shield
+            if (AbilityHeader("VPE_FireShield"))
+            {
+                Checkbox("TargetSelf", ref Settings.FireShieldTargetSelf);
+                Checkbox("TargetColonists", ref Settings.FireShieldTargetColonists);
+                Checkbox("TargetSlaves", ref Settings.FireShieldTargetSlaves);
+                Checkbox("TargetVisitors", ref Settings.FireShieldTargetVisitors);
+            }
+            #endregion Fire Shield
+
+            listing.ColumnWidth += 12f;
+            listing.Outdent();
+        }
+        if (PsycasterPathHeader("VPE_Empath"))
+        {
+            listing.Indent();
+            listing.ColumnWidth -= 12f;
+
+            #region Word of Joy
+            if (AbilityHeader("VPE_WordofJoy"))
+            {
+                Settings.WordOfJoyMoodThreshold = listing.SliderLabeled(
+                    "BetterAutocastVPE.WordOfJoyMoodThreshold".TranslateSafe(
+                        Settings.WordOfJoyMoodThreshold.ToString("P")
+                    ),
+                    Settings.WordOfJoyMoodThreshold,
+                    0.0f,
+                    1.0f,
+                    tooltip: "BetterAutocastVPE.WordOfJoyMoodThreshold.Description".TranslateSafe()
+                );
+            }
+            #endregion Word of Joy
+
+            #region Word of Serenity
+            if (AbilityHeader("VPE_WordofSerenity"))
+            {
+                Checkbox("WordOfSerenityTargetScaria", ref Settings.WordOfSerenityTargetScaria);
+                listing.Gap();
+                Checkbox("TargetColonists", ref Settings.WordOfSerenityTargetColonists);
+                Checkbox("TargetColonyAnimals", ref Settings.WordOfSerenityTargetColonyAnimals);
+                Checkbox("TargetWildAnimals", ref Settings.WordOfSerenityTargetWildAnimals);
+                Checkbox("TargetSlaves", ref Settings.WordOfSerenityTargetSlaves);
+                Checkbox("TargetPrisoners", ref Settings.WordOfSerenityTargetPrisoners);
+                Checkbox("TargetVisitors", ref Settings.WordOfSerenityTargetVisitors);
+                listing.Gap();
+
+                listing.Label("BetterAutocastVPE.IgnoredMentalStates.Explanation".TranslateSafe());
+                if (listing.ButtonText("BetterAutocastVPE.IgnoredMentalStates".TranslateSafe()))
+                    Find.WindowStack.Add(new IgnoredMentalStateListWindow());
+            }
+            #endregion Word of Serenity
+
+            listing.ColumnWidth += 12f;
+            listing.Outdent();
+        }
+        if (PsycasterPathHeader("VPE_Frostshaper"))
+        {
+            listing.Indent();
+            listing.ColumnWidth -= 12f;
+
+            #region Ice Crystal
+            AbilityHeader("VPE_IceCrystal");
+            #endregion Ice Crystal
+
+            #region Ice Shield
+            if (AbilityHeader("VPE_IceShield"))
+            {
+                Checkbox("TargetSelf", ref Settings.IceShieldTargetSelf);
+                Checkbox("TargetColonists", ref Settings.IceShieldTargetColonists);
+                Checkbox("TargetSlaves", ref Settings.IceShieldTargetSlaves);
+                Checkbox("TargetVisitors", ref Settings.IceShieldTargetVisitors);
+            }
+            #endregion Ice Shield
+
+            listing.ColumnWidth += 12f;
+            listing.Outdent();
+        }
+        if (PsycasterPathHeader("VPE_Harmonist"))
+        {
+            listing.Indent();
+            listing.ColumnWidth -= 12f;
+
+            #region Psychic Guidance
+            AbilityHeader("VPE_PsychicGuidance");
+            #endregion Psychic Guidance
+        }
+        if (PsycasterPathHeader("VPE_Necropath"))
+        {
+            listing.Indent();
+            listing.ColumnWidth -= 12f;
+
+            #region Deathshield
+            if (AbilityHeader("VPE_Deathshield"))
+            {
+                Checkbox("TargetColonists", ref Settings.DeathshieldColonists);
+                Checkbox("TargetColonyAnimals", ref Settings.DeathshieldColonists);
+                Checkbox("TargetSlaves", ref Settings.DeathshieldSlaves);
+                Checkbox("TargetPrisoners", ref Settings.DeathshieldPrisoners);
+                Checkbox("TargetVisitors", ref Settings.DeathshieldVisitors);
+            }
+            #endregion Deathshield
+
+            #region Enthrall
+            if (AbilityHeader("VPE_Enthrall"))
+            {
+                Checkbox("EnthrallInStockpile", ref Settings.EnthrallInStockpile);
+                Checkbox("EnthrallOnlyNamedStockpiles", ref Settings.EnthrallOnlyNamedStockpiles);
+                Checkbox("EnthrallInStorage", ref Settings.EnthrallInStorage);
 #if v1_4
 #elif v1_5
-            Checkbox("MendOnlyNamedStorageGroups", ref Settings.MendOnlyNamedStorageGroups);
+                Checkbox(
+                    "EnthrallOnlyNamedStorageGroups",
+                    ref Settings.EnthrallOnlyNamedStorageGroups
+                );
 #else
-            throw new NotImplementedException();
+                throw new NotImplementedException();
 #endif
-        }
-        #endregion Mend
+            }
+            #endregion Enthrall
 
-        #region Enchant quality
-        if (AbilityHeader("VPE_EnchantQuality"))
+            #region Ghostwalk
+            AbilityHeader("VPE_Ghostwalk");
+            #endregion Ghostwalk
+
+            #region Steal vitality
+            if (AbilityHeader("VPE_StealVitality"))
+            {
+                Checkbox("TargetPrisoners", ref Settings.StealVitalityFromPrisoners);
+                Checkbox("TargetSlaves", ref Settings.StealVitalityFromSlaves);
+                Checkbox("TargetColonists", ref Settings.StealVitalityFromColonists);
+                Checkbox("TargetVisitors", ref Settings.StealVitalityFromVisitors);
+            }
+            #endregion Steal vitality
+
+            listing.ColumnWidth += 12f;
+            listing.Outdent();
+        }
+        if (PsycasterPathHeader("VPE_Nightstalker"))
         {
-            Checkbox("EnchantInStockpile", ref Settings.EnchantInStockpile);
-            Checkbox("EnchantOnlyNamedStockpiles", ref Settings.EnchantOnlyNamedStockpiles);
-            Checkbox("EnchantInStorage", ref Settings.EnchantInStorage);
+            listing.Indent();
+            listing.ColumnWidth -= 12f;
+
+            #region Darkvision
+            if (AbilityHeader("VPE_Darkvision"))
+            {
+                Checkbox("TargetSelf", ref Settings.DarkvisionTargetSelf);
+                Checkbox("TargetColonists", ref Settings.DarkvisionTargetColonists);
+            }
+            #endregion Darkvision
+
+            #region Eclipse
+            AbilityHeader("VPE_Eclipse");
+            #endregion Eclipse
+
+            listing.ColumnWidth += 12f;
+            listing.Outdent();
+        }
+        if (PsycasterPathHeader("VPE_Protector"))
+        {
+            listing.Indent();
+            listing.ColumnWidth -= 12f;
+
+            #region Invisibility
+            if (AbilityHeader("VPE_Invisibility"))
+            {
+                Checkbox("TargetSelf", ref Settings.InvisibilityTargetSelf);
+                Checkbox("TargetColonists", ref Settings.InvisibilityTargetColonists);
+            }
+            #endregion Invisibility
+
+            #region Overshield
+            if (AbilityHeader("VPE_Overshield"))
+            {
+                Checkbox("TargetSelf", ref Settings.OvershieldTargetSelf);
+                Checkbox("TargetColonists", ref Settings.OvershieldTargetColonists);
+            }
+            #endregion Overshield
+
+            #region Word of Immunity
+            if (AbilityHeader("VPE_WordofImmunity"))
+            {
+                Checkbox("TargetColonists", ref Settings.WordOfImmunityTargetColonists);
+                Checkbox("TargetColonyAnimals", ref Settings.WordOfImmunityTargetColonyAnimals);
+                Checkbox("TargetSlaves", ref Settings.WordOfImmunityTargetSlaves);
+                Checkbox("TargetPrisoners", ref Settings.WordOfImmunityTargetPrisoners);
+                Checkbox("TargetVisitors", ref Settings.WordOfImmunityTargetVisitors);
+            }
+            #endregion Word of Immunity
+
+            listing.ColumnWidth += 12f;
+            listing.Outdent();
+        }
+        if (PsycasterPathHeader("VPEP_Puppeteer"))
+        {
+            listing.Indent();
+            listing.ColumnWidth -= 12f;
+
+            #region Brain Leech
+            if (AbilityHeader("VPEP_BrainLeech"))
+            {
+                Checkbox("TargetPrisoners", ref Settings.BrainLeechTargetPrisoners);
+                Checkbox("TargetSlaves", ref Settings.BrainLeechTargetSlaves);
+            }
+            #endregion Brain Leech
+
+            listing.ColumnWidth += 12f;
+            listing.Outdent();
+        }
+        if (PsycasterPathHeader("VPE_Skipmaster"))
+        {
+            listing.Indent();
+            listing.ColumnWidth -= 12f;
+
+            #region Solar Pinhole
+            AbilityHeader("VPE_SolarPinhole");
+            #endregion Solar Pinhole
+
+            #region Large Solar Pinhole
+            if (ModsConfig.IsActive("dgrb.solarpinholeadditions"))
+            {
+                AbilityHeader("VPE_SolarPinholeSunlamp");
+            }
+            #endregion Large Solar Pinhole
+
+            listing.ColumnWidth += 12f;
+            listing.Outdent();
+        }
+        if (PsycasterPathHeader("VPE_Staticlord"))
+        {
+            listing.Indent();
+            listing.ColumnWidth -= 12f;
+
+            #region Static Aura
+            if (AbilityHeader("VPE_StaticAura"))
+            {
+                Checkbox("TargetSelf", ref Settings.StaticAuraTargetSelf);
+                Checkbox("TargetColonists", ref Settings.StaticAuraTargetColonists);
+                Checkbox("TargetSlaves", ref Settings.StaticAuraTargetSlaves);
+                Checkbox("TargetVisitors", ref Settings.StaticAuraTargetVisitors);
+            }
+            #endregion Static Aura
+
+            listing.ColumnWidth += 12f;
+            listing.Outdent();
+        }
+        if (PsycasterPathHeader("VPE_Technomancer"))
+        {
+            listing.Indent();
+            listing.ColumnWidth -= 12f;
+
+            #region Mend
+            if (AbilityHeader("VPE_Mend"))
+            {
+                Settings.MendHealthThreshold = listing.SliderLabeled(
+                    "BetterAutocastVPE.MendHealthThreshold".TranslateSafe(
+                        Settings.MendHealthThreshold.ToString("P")
+                    ),
+                    Settings.MendHealthThreshold,
+                    0.0f,
+                    1.0f,
+                    tooltip: "BetterAutocastVPE.MendHealthThreshold.Description".TranslateSafe()
+                );
+                Checkbox("MendPawns", ref Settings.MendPawns);
+                Checkbox("MendInStockpile", ref Settings.MendInStockpile);
+                Checkbox("MendOnlyNamedStockpiles", ref Settings.MendOnlyNamedStockpiles);
+                Checkbox("MendInStorage", value: ref Settings.MendInStorage);
 #if v1_4
 #elif v1_5
-            Checkbox("EnchantOnlyNamedStorageGroups", ref Settings.EnchantOnlyNamedStorageGroups);
+                Checkbox("MendOnlyNamedStorageGroups", ref Settings.MendOnlyNamedStorageGroups);
 #else
-            throw new NotImplementedException();
+                throw new NotImplementedException();
 #endif
-        }
-        #endregion Enchant quality
+            }
+            #endregion Mend
 
-        #region Power
-        if (AbilityHeader("VPE_Power"))
-        {
-            Checkbox("PowerBuildings", ref Settings.PowerBuildings);
-            Checkbox("PowerMechs", ref Settings.PowerMechs);
-        }
-        #endregion Power
-
-        #region Steal vitality
-        if (AbilityHeader("VPE_StealVitality"))
-        {
-            Checkbox("TargetPrisoners", ref Settings.StealVitalityFromPrisoners);
-            Checkbox("TargetSlaves", ref Settings.StealVitalityFromSlaves);
-            Checkbox("TargetColonists", ref Settings.StealVitalityFromColonists);
-            Checkbox("TargetVisitors", ref Settings.StealVitalityFromVisitors);
-        }
-        #endregion Steal vitality
-
-        #region Ghostwalk
-        AbilityHeader("VPE_Ghostwalk");
-        #endregion Ghostwalk
-
-        #region Deathshield
-        if (AbilityHeader("VPE_Deathshield"))
-        {
-            Checkbox("TargetColonists", ref Settings.DeathshieldColonists);
-            Checkbox("TargetColonyAnimals", ref Settings.DeathshieldColonists);
-            Checkbox("TargetSlaves", ref Settings.DeathshieldSlaves);
-            Checkbox("TargetPrisoners", ref Settings.DeathshieldPrisoners);
-            Checkbox("TargetVisitors", ref Settings.DeathshieldVisitors);
-        }
-        #endregion Deathshield
-
-        #region Enthrall
-        if (AbilityHeader("VPE_Enthrall"))
-        {
-            Checkbox("EnthrallInStockpile", ref Settings.EnthrallInStockpile);
-            Checkbox("EnthrallOnlyNamedStockpiles", ref Settings.EnthrallOnlyNamedStockpiles);
-            Checkbox("EnthrallInStorage", ref Settings.EnthrallInStorage);
+            #region Enchant quality
+            if (AbilityHeader("VPE_EnchantQuality"))
+            {
+                Checkbox("EnchantInStockpile", ref Settings.EnchantInStockpile);
+                Checkbox("EnchantOnlyNamedStockpiles", ref Settings.EnchantOnlyNamedStockpiles);
+                Checkbox("EnchantInStorage", ref Settings.EnchantInStorage);
 #if v1_4
 #elif v1_5
-            Checkbox("EnthrallOnlyNamedStorageGroups", ref Settings.EnthrallOnlyNamedStorageGroups);
+                Checkbox(
+                    "EnchantOnlyNamedStorageGroups",
+                    ref Settings.EnchantOnlyNamedStorageGroups
+                );
 #else
-            throw new NotImplementedException();
+                throw new NotImplementedException();
 #endif
-        }
-        #endregion Enthrall
+            }
+            #endregion Enchant quality
 
-        #region Word of Joy
-        if (AbilityHeader("VPE_WordofJoy"))
+            #region Power
+            if (AbilityHeader("VPE_Power"))
+            {
+                Checkbox("PowerBuildings", ref Settings.PowerBuildings);
+                Checkbox("PowerMechs", ref Settings.PowerMechs);
+            }
+            #endregion Power
+
+            listing.ColumnWidth += 12f;
+            listing.Outdent();
+        }
+        if (PsycasterPathHeader("VPE_Warlord"))
         {
-            Settings.WordOfJoyMoodThreshold = listing.SliderLabeled(
-                "BetterAutocastVPE.WordOfJoyMoodThreshold".TranslateSafe(
-                    Settings.WordOfJoyMoodThreshold.ToString("P")
-                ),
-                Settings.WordOfJoyMoodThreshold,
-                0.0f,
-                1.0f,
-                tooltip: "BetterAutocastVPE.WordOfJoyMoodThreshold.Description".TranslateSafe()
-            );
+            listing.Indent();
+            listing.ColumnWidth -= 12f;
+
+            #region Adrenaline Rush
+            AbilityHeader("VPE_AdrenalineRush");
+            #endregion Adrenaline Rush
+
+            #region Blade Focus
+            AbilityHeader("VPE_BladeFocus");
+            #endregion Blade Focus
+
+            #region Controlled Frenzy
+            AbilityHeader("VPE_ControlledFrenzy");
+            #endregion Controlled Frenzy
+
+            #region Firing Focus
+            AbilityHeader("VPE_FiringFocus");
+            #endregion Firing Focus
+
+            #region Guided Shot
+            AbilityHeader("VPE_GuidedShot");
+            #endregion Guided Shot
+
+            #region Speed boost
+            AbilityHeader("VPE_SpeedBoost");
+            #endregion Speed boost
+
+            listing.ColumnWidth += 12f;
+            listing.Outdent();
         }
-        #endregion Word of Joy
-
-        #region Puppeteer
-        if (
-            ModsConfig.IsActive("VanillaExpanded.VPE.Puppeteer") && AbilityHeader("VPEP_BrainLeech")
-        )
-        {
-            Checkbox("TargetPrisoners", ref Settings.BrainLeechTargetPrisoners);
-            Checkbox("TargetSlaves", ref Settings.BrainLeechTargetSlaves);
-        }
-        #endregion Puppeteer
-
-        #region Adrenaline Rush
-        AbilityHeader("VPE_AdrenalineRush");
-        #endregion Adrenaline Rush
-
-        #region Blade Focus
-        AbilityHeader("VPE_BladeFocus");
-        #endregion Blade Focus
-
-        #region Controlled Frenzy
-        AbilityHeader("VPE_ControlledFrenzy");
-        #endregion Controlled Frenzy
-
-        #region Darkvision
-        if (AbilityHeader("VPE_Darkvision"))
-        {
-            Checkbox("TargetSelf", ref Settings.DarkvisionTargetSelf);
-            Checkbox("TargetColonists", ref Settings.DarkvisionTargetColonists);
-        }
-        #endregion Darkvision
-
-        #region Eclipse
-        AbilityHeader("VPE_Eclipse");
-        #endregion Eclipse
-
-        #region Firing Focus
-        AbilityHeader("VPE_FiringFocus");
-        #endregion Firing Focus
-
-        #region Guided Shot
-        AbilityHeader("VPE_GuidedShot");
-        #endregion Guided Shot
-
-        #region Psychic Guidance
-        AbilityHeader("VPE_PsychicGuidance");
-        #endregion Psychic Guidance
-
-        #region Speed boost
-        AbilityHeader("VPE_SpeedBoost");
-        #endregion Speed boost
-
-        #region Word of Productivity
-        AbilityHeader("VPE_WordofProductivity");
-        #endregion Word of Productivity
-
-        #region Word of Serenity
-        if (AbilityHeader("VPE_WordofSerenity"))
-        {
-            Checkbox("WordOfSerenityTargetScaria", ref Settings.WordOfSerenityTargetScaria);
-            listing.Gap();
-            Checkbox("TargetColonists", ref Settings.WordOfSerenityTargetColonists);
-            Checkbox("TargetColonyAnimals", ref Settings.WordOfSerenityTargetColonyAnimals);
-            Checkbox("TargetWildAnimals", ref Settings.WordOfSerenityTargetWildAnimals);
-            Checkbox("TargetSlaves", ref Settings.WordOfSerenityTargetSlaves);
-            Checkbox("TargetPrisoners", ref Settings.WordOfSerenityTargetPrisoners);
-            Checkbox("TargetVisitors", ref Settings.WordOfSerenityTargetVisitors);
-            listing.Gap();
-
-            listing.Label("BetterAutocastVPE.IgnoredMentalStates.Explanation".TranslateSafe());
-            if (listing.ButtonText("BetterAutocastVPE.IgnoredMentalStates".TranslateSafe()))
-                Find.WindowStack.Add(new IgnoredMentalStateListWindow());
-        }
-        #endregion Word of Serenity
-
-        #region Invisibility
-        if (AbilityHeader("VPE_Invisibility"))
-        {
-            Checkbox("TargetSelf", ref Settings.InvisibilityTargetSelf);
-            Checkbox("TargetColonists", ref Settings.InvisibilityTargetColonists);
-        }
-        #endregion Invisibility
-
-        #region Overshield
-        if (AbilityHeader("VPE_Overshield"))
-        {
-            Checkbox("TargetSelf", ref Settings.OvershieldTargetSelf);
-            Checkbox("TargetColonists", ref Settings.OvershieldTargetColonists);
-        }
-        #endregion Overshield
-
-        #region Word of Immunity
-        if (AbilityHeader("VPE_WordofImmunity"))
-        {
-            Checkbox("TargetColonists", ref Settings.WordOfImmunityTargetColonists);
-            Checkbox("TargetColonyAnimals", ref Settings.WordOfImmunityTargetColonyAnimals);
-            Checkbox("TargetSlaves", ref Settings.WordOfImmunityTargetSlaves);
-            Checkbox("TargetPrisoners", ref Settings.WordOfImmunityTargetPrisoners);
-            Checkbox("TargetVisitors", ref Settings.WordOfImmunityTargetVisitors);
-        }
-        #endregion Word of Immunity
-
-        #region Ice Crystal
-        AbilityHeader("VPE_IceCrystal");
-        #endregion Ice Crystal
-
-        #region Ice Shield
-        if (AbilityHeader("VPE_IceShield"))
-        {
-            Checkbox("TargetSelf", ref Settings.IceShieldTargetSelf);
-            Checkbox("TargetColonists", ref Settings.IceShieldTargetColonists);
-            Checkbox("TargetSlaves", ref Settings.IceShieldTargetSlaves);
-            Checkbox("TargetVisitors", ref Settings.IceShieldTargetVisitors);
-        }
-        #endregion Ice Shield
-
-        #region Fire Shield
-        if (AbilityHeader("VPE_FireShield"))
-        {
-            Checkbox("TargetSelf", ref Settings.FireShieldTargetSelf);
-            Checkbox("TargetColonists", ref Settings.FireShieldTargetColonists);
-            Checkbox("TargetSlaves", ref Settings.FireShieldTargetSlaves);
-            Checkbox("TargetVisitors", ref Settings.FireShieldTargetVisitors);
-        }
-        #endregion Fire Shield
-
-        #region Static Aura
-        if (AbilityHeader("VPE_StaticAura"))
-        {
-            Checkbox("TargetSelf", ref Settings.StaticAuraTargetSelf);
-            Checkbox("TargetColonists", ref Settings.StaticAuraTargetColonists);
-            Checkbox("TargetSlaves", ref Settings.StaticAuraTargetSlaves);
-            Checkbox("TargetVisitors", ref Settings.StaticAuraTargetVisitors);
-        }
-        #endregion Static Aura
-
-        #region Solar Pinhole
-        AbilityHeader("VPE_SolarPinhole");
-        #endregion Solar Pinhole
-
-        #region Large Solar Pinhole
-        if (ModsConfig.IsActive("dgrb.solarpinholeadditions"))
-        {
-            AbilityHeader("VPE_SolarPinholeSunlamp");
-        }
-        #endregion Large Solar Pinhole
-
-        #region Craft Timeskip
-        AbilityHeader("VPE_CraftTimeskip");
-        #endregion Craft Timeskip
+        // if (PsycasterPathHeader("VPE_Wildspeaker")) { listing.Indent(); listing.ColumnWidth -= 12f; listing.ColumnWidth += 12f; listing.Outdent(); }
 
         listing.End();
         settingsHeight = listing.CurHeight;
         Widgets.EndScrollView();
-
-#if DEBUG
-        configuredDefs.SymmetricExceptWith(PsycastingHandler.abilityHandlers.Keys.ToHashSet());
-        if (configuredDefs.Count > 0)
-        {
-            BetterAutocastVPE.DebugWarn(
-                "Config doesn't properly config everything. Missing: "
-                    + configuredDefs.ToCommaList(true),
-                678901234
-            );
-        }
-#endif
     }
 
     public static string SettingsCategory() => "BetterAutocastVPE.SettingsCategory".TranslateSafe();
