@@ -110,7 +110,7 @@ public class JobDriver_GotoLocationAndCastAbilityOnce : JobDriver_CastAbilityOnc
             },
             handlingFacing = true,
             socialMode = RandomSocialMode.Off,
-            defaultCompleteMode = ToilCompleteMode.Never
+            defaultCompleteMode = ToilCompleteMode.Never,
         };
     }
 }

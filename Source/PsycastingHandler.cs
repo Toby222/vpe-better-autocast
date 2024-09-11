@@ -214,10 +214,9 @@ internal static class PsycastingHandler
             {
                 FinalTargetType.Random => targets.GetRandomClass(),
                 FinalTargetType.Closest => targets.ClosestTo(pawn),
-                FinalTargetType.MostPsychicallySensitive
-                    => targets
-                        .OrderByDescending(pawn => pawn.psychicEntropy.PsychicSensitivity)
-                        .First(),
+                FinalTargetType.MostPsychicallySensitive => targets
+                    .OrderByDescending(pawn => pawn.psychicEntropy.PsychicSensitivity)
+                    .First(),
 #if DEBUG
                 _ => throw new NotImplementedException(),
 #else
@@ -684,7 +683,12 @@ internal static class PsycastingHandler
     #region Chronopath
     private static bool HandleCraftTimeskip(Pawn pawn, Ability ability)
     {
-        return ThingsInArea<Area_CraftTimeskip>(pawn.MapHeld).OfType<UnfinishedThing>().Where(thing => !thing.IsForbidden(pawn)).ClosestTo(pawn) is Thing target && CastAbilityOnTarget(ability, target);
+        return ThingsInArea<Area_CraftTimeskip>(pawn.MapHeld)
+                .OfType<UnfinishedThing>()
+                .Where(thing => !thing.IsForbidden(pawn))
+                .ClosestTo(pawn)
+                is Thing target
+            && CastAbilityOnTarget(ability, target);
     }
     #endregion Chronopath
     #endregion handlers

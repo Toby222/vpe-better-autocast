@@ -22,6 +22,8 @@ internal static class AreaHelper
     public static IEnumerable<Thing> ThingsInArea<T>(Map map)
         where T : Area
     {
-        return map.areaManager.Get<T>().ActiveCells.SelectMany(cell => map.thingGrid.ThingsListAtFast(cell));
+        return map
+            .areaManager.Get<T>()
+            .ActiveCells.SelectMany(cell => map.thingGrid.ThingsListAtFast(cell));
     }
 }
