@@ -36,6 +36,7 @@
   <BetterAutocastVPE.VPE_Eclipse.Explanation>Will autocast when there is no ongoing eclipse</BetterAutocastVPE.VPE_Eclipse.Explanation>
   <BetterAutocastVPE.VPE_EnchantQuality.Explanation>Will look for enchantable items in the order listed below.\n\nWhen looking for items in "appropriately named" places, will look for names containing the word "enchant".\nFor example: `Enchanting`, `enchant`, `The Enchantress of Florence`</BetterAutocastVPE.VPE_EnchantQuality.Explanation>
   <BetterAutocastVPE.VPE_Enthrall.Explanation>Will look for corpses in the order listed below.\n\nWhen looking for items in "appropriately named" places, will look for names containing the word "thrall".\nFor example: `Thrall corpses`, `Enthralling`, `thrall`</BetterAutocastVPE.VPE_Enthrall.Explanation>
+  <BetterAutocastVPE.VPE_Power.Explanation>Targets the building with the biggest power draw. If no buildings currently consuming power are found, targets a random colony mech.</BetterAutocastVPE.VPE_Power.Explanation>
   <BetterAutocastVPE.VPE_FiringFocus.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_FiringFocus.Explanation>
   <BetterAutocastVPE.VPE_GuidedShot.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_GuidedShot.Explanation>
   <BetterAutocastVPE.VPE_IceShield.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychic sensitive pawn without the buff in casting range, in the order below.</BetterAutocastVPE.VPE_IceShield.Explanation>
@@ -67,6 +68,8 @@
   <BetterAutocastVPE.MendOnlyNamedStockpiles>Only mend items in appropriately named stockpiles</BetterAutocastVPE.MendOnlyNamedStockpiles>
   <BetterAutocastVPE.MendInStorage>Mend items in storage (e.g. shelves)</BetterAutocastVPE.MendInStorage>
   <BetterAutocastVPE.MendOnlyNamedStorageGroups>Only mend items in appropriately named storage groups</BetterAutocastVPE.MendOnlyNamedStorageGroups>
+  <BetterAutocastVPE.PowerBuildings>Provide power to buildings</BetterAutocastVPE.PowerBuildings>
+  <BetterAutocastVPE.PowerMechs>Provide power to colony mechs</BetterAutocastVPE.PowerMechs>
   <BetterAutocastVPE.EnchantInStockpile>Enchant items in stockpiles</BetterAutocastVPE.EnchantInStockpile>
   <BetterAutocastVPE.EnchantOnlyNamedStockpiles>Only enchant items in appropriately named stockpiles</BetterAutocastVPE.EnchantOnlyNamedStockpiles>
   <BetterAutocastVPE.EnchantInStorage>Enchant items in storage (e.g. shelves)</BetterAutocastVPE.EnchantInStorage>

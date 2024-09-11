@@ -21,6 +21,7 @@ public static class AutocastSettingsWindow
     private static AutocastSettings Settings => BetterAutocastVPE.Settings;
 
     private static readonly HashSet<string> expandedDefs = [];
+    private static readonly HashSet<string> expandedPaths = [];
 
     static bool AbilityHeader(Listing_Standard listing, string abilityDefName)
     {
@@ -106,6 +107,11 @@ public static class AutocastSettingsWindow
         }
 
         return expanded;
+    }
+
+    static bool PsycasterPathHeader(Listing_Standard listing, string pathDefName)
+    {
+        return expandedPaths.Contains(pathDefName);
     }
 
     static void Checkbox(Listing_Standard listing, string labelKey, ref bool value)
@@ -264,6 +270,14 @@ public static class AutocastSettingsWindow
 #endif
         }
         #endregion Enchant quality
+
+        #region Power
+        if (AbilityHeader("VPE_Power"))
+        {
+            Checkbox("PowerBuildings", ref Settings.PowerBuildings);
+            Checkbox("PowerMechs", ref Settings.PowerMechs);
+        }
+        #endregion Power
 
         #region Steal vitality
         if (AbilityHeader("VPE_StealVitality"))

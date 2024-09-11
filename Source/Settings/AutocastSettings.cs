@@ -31,6 +31,7 @@ public class AutocastSettings : ModSettings
         "VPE_Ghostwalk",
         "VPE_IceCrystal",
         "VPE_Mend",
+        "VPE_Power",
         "VPE_PsychicGuidance",
         "VPE_SolarPinhole",
         "VPE_SolarPinholeSunlamp",
@@ -89,6 +90,9 @@ public class AutocastSettings : ModSettings
     public bool EnchantOnlyNamedStockpiles = true;
     public bool EnchantInStorage = true;
     public bool EnchantOnlyNamedStorageGroups = false;
+
+    public bool PowerBuildings = true;
+    public bool PowerMechs = true;
 
     public bool StealVitalityFromPrisoners = true;
     public bool StealVitalityFromSlaves = true;
@@ -203,6 +207,11 @@ public class AutocastSettings : ModSettings
         LookField(ref EnchantInStorage, nameof(EnchantInStorage), true);
         LookField(ref EnchantOnlyNamedStorageGroups, nameof(EnchantOnlyNamedStorageGroups), false);
         #endregion Enchant Quality
+
+        #region Power
+        LookField(ref PowerBuildings, nameof(PowerBuildings), true);
+        LookField(ref PowerMechs, nameof(PowerMechs), true);
+        #endregion Power
 
         #region Steal Vitality
         LookField(ref StealVitalityFromPrisoners, nameof(StealVitalityFromPrisoners), true);

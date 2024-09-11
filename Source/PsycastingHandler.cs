@@ -6,6 +6,7 @@ using BetterAutocastVPE.Helpers;
 using RimWorld;
 using RimWorld.Planet;
 using VanillaPsycastsExpanded;
+using VanillaPsycastsExpanded.Technomancer;
 using Verse;
 using VFECore.Abilities;
 using Ability = VFECore.Abilities.Ability;
@@ -45,6 +46,7 @@ internal static class PsycastingHandler
                 { "VPE_Invisibility", HandleInvisibility },
                 { "VPE_Mend", HandleMend },
                 { "VPE_Overshield", HandleOvershield },
+                { "VPE_Power", HandlePower },
                 { "VPE_PsychicGuidance", HandleColonistBuff },
                 { "VPE_SolarPinhole", HandleSolarPinhole },
                 { "VPE_SolarPinholeSunlamp", HandleSolarPinhole },
@@ -540,6 +542,40 @@ internal static class PsycastingHandler
         if (BetterAutocastVPE.Settings.EnchantInStorage && HandleEnchantByStorage(pawn, ability))
             return true;
         return false;
+    }
+
+    private static bool HandlePower(Pawn pawn, Ability ability)
+    {
+        BetterAutocastVPE.DebugLog("HandlePower");
+        if (pawn is null)
+            throw new ArgumentNullException(nameof(pawn));
+        if (ability is null)
+            throw new ArgumentNullException(nameof(ability));
+
+        if (!(BetterAutocastVPE.Settings.PowerMechs || BetterAutocastVPE.Settings.PowerBuildings))
+            return false;
+
+        IEnumerable<Thing> poweredThings = pawn.MapHeld.spawnedThings.Where(thing =>
+            (
+                BetterAutocastVPE.Settings.PowerBuildings
+                && thing.TryGetComp<CompPowerTrader>() is { PowerOutput: < 0f }
+            )
+            || (
+                BetterAutocastVPE.Settings.PowerMechs
+                && thing is Pawn { needs.energy: not null } mech
+                && mech.IsMechAlly(pawn)
+            )
+        );
+        // No need to sort if just using the randomly-targeted mechs
+        if (BetterAutocastVPE.Settings.PowerBuildings)
+        {
+            poweredThings = poweredThings.OrderByDescending(thing =>
+                thing.TryGetComp<CompPowerTrader>()?.PowerOutput ?? float.NegativeInfinity
+            );
+        }
+
+        return poweredThings.FirstOrDefault() is Thing target
+            && CastAbilityOnTarget(ability, target);
     }
 
     #region Technomancer helpers
