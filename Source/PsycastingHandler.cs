@@ -50,6 +50,8 @@ internal static class PsycastingHandler
                 { "VPE_PsychicGuidance", HandleColonistBuff },
                 { "VPE_SolarPinhole", HandleSolarPinhole },
                 { "VPE_SolarPinholeSunlamp", HandleSolarPinhole },
+                { "VPE_SootheFemale", HandleSoothe },
+                { "VPE_SootheMale", HandleSoothe },
                 { "VPE_SpeedBoost", HandleSelfBuff },
                 { "VPE_StaticAura", HandleStaticAura },
                 { "VPE_StealVitality", HandleStealVitality },
@@ -510,6 +512,50 @@ internal static class PsycastingHandler
                 ),
             false
         );
+    }
+
+    private static bool HandleSoothe(Pawn pawn, Ability ability)
+    {
+        Gender gender = ability.def.GetModExtension<AbilityExtension_CastPsychicSoothe>().gender;
+        BetterAutocastVPE.DebugLog(ability.def.defName + " - Gender: " + gender);
+        Pawn[] validTargets = pawn
+            .MapHeld.mapPawns.AllPawnsSpawned.Where(mapPawn =>
+                !mapPawn.Dead
+                && mapPawn.gender == gender
+                && !mapPawn.HasHediff("VPE_PsychicSoothe")
+                && mapPawn.needs.mood is Need_Mood mood
+                && (
+                    (
+                        BetterAutocastVPE.Settings.SootheColonistsCheck
+                        && mapPawn.IsColonist
+                        && mood.CurInstantLevelPercentage
+                            <= BetterAutocastVPE.Settings.SootheColonistsMaximumMood
+                    )
+                    || (
+                        BetterAutocastVPE.Settings.SootheSlavesCheck
+                        && mapPawn.IsSlaveOfColony
+                        && mood.CurInstantLevelPercentage
+                            <= BetterAutocastVPE.Settings.SootheSlavesMaximumMood
+                    )
+                    || (
+                        BetterAutocastVPE.Settings.SoothePrisonersCheck
+                        && mapPawn.IsPrisonerOfColony
+                        && mood.CurInstantLevelPercentage
+                            <= BetterAutocastVPE.Settings.SoothePrisonersMaximumMood
+                    )
+                    || (
+                        BetterAutocastVPE.Settings.SootheVisitorsCheck
+                        && !mapPawn.HostileTo(pawn)
+                        && mood.CurInstantLevelPercentage
+                            <= BetterAutocastVPE.Settings.SootheVisitorsMaximumMood
+                    )
+                )
+            )
+            .ToArray();
+
+        BetterAutocastVPE.DebugLog("validTargets - " + validTargets.ToStringSafeEnumerable());
+
+        return validTargets.Length > 0 && CastAbilityOnTarget(ability, pawn);
     }
     #endregion Empath
 

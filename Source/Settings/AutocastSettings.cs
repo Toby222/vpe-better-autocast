@@ -35,6 +35,8 @@ public class AutocastSettings : ModSettings
         "VPE_PsychicGuidance",
         "VPE_SolarPinhole",
         "VPE_SolarPinholeSunlamp",
+        "VPE_SootheFemale",
+        "VPE_SootheMale",
         "VPE_SpeedBoost",
         "VPE_StealVitality",
         "VPE_WordofImmunity",
@@ -115,6 +117,15 @@ public class AutocastSettings : ModSettings
     public bool WordOfSerenityTargetPrisoners = false;
     public bool WordOfSerenityTargetVisitors = false;
     public HashSet<string> WordOfSerenityIgnoredMentalStateDefs;
+
+    public bool SootheColonistsCheck = true;
+    public float SootheColonistsMaximumMood = 0.5f;
+    public bool SootheSlavesCheck = false;
+    public float SootheSlavesMaximumMood = 0.5f;
+    public bool SoothePrisonersCheck = false;
+    public float SoothePrisonersMaximumMood = 0.5f;
+    public bool SootheVisitorsCheck = false;
+    public float SootheVisitorsMaximumMood = 0.5f;
 
     public bool BrainLeechTargetPrisoners = true;
     public bool BrainLeechTargetSlaves = true;
@@ -314,6 +325,17 @@ public class AutocastSettings : ModSettings
         LookField(ref StaticAuraTargetSlaves, nameof(StaticAuraTargetSlaves), false);
         LookField(ref StaticAuraTargetVisitors, nameof(StaticAuraTargetVisitors), false);
         #endregion Static Aura
+
+        #region Soothe (Female/Male)
+        LookField(ref SootheColonistsCheck, nameof(SootheColonistsCheck), true);
+        LookField(ref SootheColonistsMaximumMood, nameof(SootheColonistsMaximumMood), 0.5f);
+        LookField(ref SootheSlavesCheck, nameof(SootheSlavesCheck), false);
+        LookField(ref SootheSlavesMaximumMood, nameof(SootheSlavesMaximumMood), 0.5f);
+        LookField(ref SoothePrisonersCheck, nameof(SoothePrisonersCheck), false);
+        LookField(ref SoothePrisonersMaximumMood, nameof(SoothePrisonersMaximumMood), 0.5f);
+        LookField(ref SootheVisitorsCheck, nameof(SootheVisitorsCheck), false);
+        LookField(ref SootheVisitorsMaximumMood, nameof(SootheVisitorsMaximumMood), 0.5f);
+        #endregion Soothe (Female/Male)
 
         #region General
         LookHashSet(

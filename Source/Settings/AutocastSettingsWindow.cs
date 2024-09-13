@@ -73,6 +73,132 @@ public static class AutocastSettingsWindow
         return expanded;
     }
 
+    static bool AbilityHeader_Soothe(Listing_Standard listing)
+    {
+        listing.GapLine();
+
+        bool expanded = expandedDefs.Contains("VPE_SootheFemale");
+
+        AbilityDef abilityDefFemale = DefDatabase<AbilityDef>.GetNamed("VPE_SootheFemale");
+        AbilityDef abilityDefMale = DefDatabase<AbilityDef>.GetNamed("VPE_SootheMale");
+#if DEBUG
+        if (currentPsycasterPath is null)
+        {
+            BetterAutocastVPE.DebugError(
+                "Config for ability Soothe is not in any path section",
+                "Soothe_WRONG_PATH!!!!".GetHashCode()
+            );
+        }
+        else if (!currentPsycasterPath.abilities.Contains(abilityDefMale))
+        {
+            BetterAutocastVPE.DebugError(
+                $"Config for ability Soothe is in wrong path section {currentPsycasterPath.defName}",
+                "Soothe_WRONG_PATH!!!!".GetHashCode()
+            );
+        }
+#endif
+
+        string labelCap = abilityDefFemale.LabelCap + " & " + abilityDefMale.LabelCap;
+        Rect abilityLabelRow = listing.GetRect(
+            Text.CalcHeight(labelCap, listing.ColumnWidth - 12f)
+        );
+
+        Widgets.DrawHighlightIfMouseover(abilityLabelRow);
+        if (Widgets.ButtonInvisible(abilityLabelRow))
+        {
+            if (expanded)
+            {
+                expandedDefs.Remove("VPE_SootheFemale");
+                expandedDefs.Remove("VPE_SootheMale");
+            }
+            else
+            {
+                expandedDefs.Add("VPE_SootheFemale");
+                expandedDefs.Add("VPE_SootheMale");
+            }
+            expanded = !expanded;
+        }
+        Widgets.DrawTextureFitted(
+            abilityLabelRow.TakeLeftPart(abilityLabelRow.height),
+            expanded ? TexButton.Collapse : TexButton.Reveal,
+            1.0f
+        );
+        Widgets.DrawTextureFitted(
+            abilityLabelRow.TakeLeftPart(abilityLabelRow.height),
+            abilityDefFemale.icon,
+            1.0f
+        );
+        Widgets.DrawTextureFitted(
+            abilityLabelRow.TakeLeftPart(abilityLabelRow.height),
+            abilityDefMale.icon,
+            1.0f
+        );
+        Widgets.Label(abilityLabelRow, labelCap);
+
+        if (expanded)
+        {
+            if (
+                LanguageDatabase.activeLanguage.HaveTextForKey(
+                    "BetterAutocastVPE.Soothe.Explanation"
+                )
+            )
+            {
+                string explanation = "BetterAutocastVPE.Soothe.Explanation".TranslateSafe();
+                listing.Label(explanation);
+            }
+
+            bool castWhileDrafted = Settings.DraftedAutocastDefs.Contains("VPE_SootheFemale");
+            bool castWhileDraftedOriginal = castWhileDrafted;
+
+            listing.CheckboxLabeled(
+                "BetterAutocastVPE.CastDrafted".TranslateSafe(),
+                ref castWhileDrafted
+            );
+
+            if (castWhileDrafted != castWhileDraftedOriginal)
+            {
+                if (castWhileDrafted)
+                {
+                    Settings.DraftedAutocastDefs.Add("VPE_SootheFemale");
+                    Settings.DraftedAutocastDefs.Add("VPE_SootheMale");
+                }
+                else
+                {
+                    Settings.DraftedAutocastDefs.Remove("VPE_SootheFemale");
+                    Settings.DraftedAutocastDefs.Remove("VPE_SootheMale");
+                }
+            }
+
+            if (abilityDefFemale.showUndrafted)
+            {
+                bool castWhileUndrafted = Settings.UndraftedAutocastDefs.Contains(
+                    "VPE_SootheFemale"
+                );
+                bool castWhileUndraftedOriginal = castWhileUndrafted;
+                listing.CheckboxLabeled(
+                    "BetterAutocastVPE.CastUndrafted".TranslateSafe(),
+                    ref castWhileUndrafted
+                );
+
+                if (castWhileUndrafted != castWhileUndraftedOriginal)
+                {
+                    if (castWhileUndrafted)
+                    {
+                        Settings.UndraftedAutocastDefs.Add("VPE_SootheFemale");
+                        Settings.UndraftedAutocastDefs.Add("VPE_SootheMale");
+                    }
+                    else
+                    {
+                        Settings.UndraftedAutocastDefs.Remove("VPE_SootheFemale");
+                        Settings.UndraftedAutocastDefs.Remove("VPE_SootheMale");
+                    }
+                }
+            }
+        }
+
+        return expanded;
+    }
+
     static bool AbilityHeader(Listing_Standard listing, string abilityDefName)
     {
         listing.GapLine();
@@ -80,7 +206,6 @@ public static class AutocastSettingsWindow
         bool expanded = expandedDefs.Contains(abilityDefName);
 
         AbilityDef abilityDef = DefDatabase<AbilityDef>.GetNamed(abilityDefName);
-        BetterAutocastVPE.DebugError("configuring " + abilityDefName, abilityDefName.GetHashCode());
 #if DEBUG
         if (currentPsycasterPath is null)
         {
@@ -336,6 +461,40 @@ public static class AutocastSettingsWindow
         {
             listing.Indent();
             listing.ColumnWidth -= 12f;
+
+            #region Soothe (Female/Male)
+            if (AbilityHeader_Soothe(listing))
+            {
+                Checkbox("SootheColonists", ref Settings.SootheColonistsCheck);
+                Settings.SootheColonistsMaximumMood = listing.SliderLabeled(
+                    "BetterAutocastVPE.SootheTargetMinimumMood".Translate(Settings.SootheColonistsMaximumMood.ToStringPercent()),
+                    Settings.SootheColonistsMaximumMood,
+                    0.0f,
+                    1.0f
+                );
+                Checkbox("SootheSlaves", ref Settings.SootheSlavesCheck);
+                Settings.SootheSlavesMaximumMood = listing.SliderLabeled(
+                    "BetterAutocastVPE.SootheTargetMinimumMood".Translate(Settings.SootheSlavesMaximumMood.ToStringPercent()),
+                    Settings.SootheSlavesMaximumMood,
+                    0.0f,
+                    1.0f
+                );
+                Checkbox("SoothePrisoners", ref Settings.SoothePrisonersCheck);
+                Settings.SoothePrisonersMaximumMood = listing.SliderLabeled(
+                    "BetterAutocastVPE.SootheTargetMinimumMood".Translate(Settings.SoothePrisonersMaximumMood.ToStringPercent()),
+                    Settings.SoothePrisonersMaximumMood,
+                    0.0f,
+                    1.0f
+                );
+                Checkbox("SootheVisitors", ref Settings.SootheVisitorsCheck);
+                Settings.SootheVisitorsMaximumMood = listing.SliderLabeled(
+                    "BetterAutocastVPE.SootheTargetMinimumMood".Translate(Settings.SootheVisitorsMaximumMood.ToStringPercent()),
+                    Settings.SootheVisitorsMaximumMood,
+                    0.0f,
+                    1.0f
+                );
+            }
+            #endregion Soothe (Female/Male)
 
             #region Word of Joy
             if (AbilityHeader("VPE_WordofJoy"))

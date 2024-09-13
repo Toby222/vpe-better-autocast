@@ -57,6 +57,12 @@
   <BetterAutocastVPE.VPE_WordofProductivity.Explanation>Targets a random non-downed colonist in range that doesn't have the Productivity buff.</BetterAutocastVPE.VPE_WordofProductivity.Explanation>
   <BetterAutocastVPE.VPE_WordofSerenity.Explanation>Targets the closest psychically sensitive pawn in range with an ongoing mental state.</BetterAutocastVPE.VPE_WordofSerenity.Explanation>
   <BetterAutocastVPE.VPEP_BrainLeech.Explanation>Targets the closest psychically sensitive pawn in range, prioritzing by group in the order below.\nThat is, target prisoners first, if no prisoners are available, then target slaves.</BetterAutocastVPE.VPEP_BrainLeech.Explanation>
+  <BetterAutocastVPE.Soothe.Explanation>Autocasts if any map pawn is below the given mood and doesn't have the psychic soothe buff.\nPawns get ignored for the check if their category is disabled.</BetterAutocastVPE.Soothe.Explanation>
+  <BetterAutocastVPE.SootheColonists>Check moods of Colonists</BetterAutocastVPE.SootheColonists>
+  <BetterAutocastVPE.SootheTargetMinimumMood>Target minimum mood: {0}</BetterAutocastVPE.SootheTargetMinimumMood>
+  <BetterAutocastVPE.SootheSlaves>Check moods of Slaves</BetterAutocastVPE.SootheSlaves>
+  <BetterAutocastVPE.SoothePrisoners>Check moods of Prisoners</BetterAutocastVPE.SoothePrisoners>
+  <BetterAutocastVPE.SootheVisitors>Check moods of Visitors</BetterAutocastVPE.SootheVisitors>
   <BetterAutocastVPE.AutocastIntervalDrafted>Drafted autocasting interval: {0} ticks</BetterAutocastVPE.AutocastIntervalDrafted>
   <BetterAutocastVPE.AutocastIntervalDrafted.Description>Autocasting interval while drafted (only applies to patched psycasts)</BetterAutocastVPE.AutocastIntervalDrafted.Description>
   <BetterAutocastVPE.AutocastIntervalUndrafted>Undrafted autocasting interval: {0} ticks</BetterAutocastVPE.AutocastIntervalUndrafted>
