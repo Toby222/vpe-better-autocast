@@ -220,7 +220,7 @@ internal static class PsycastingHandler
                 FinalTargetType.Closest => targets.ClosestTo(pawn),
                 FinalTargetType.MostPsychicallySensitive => targets
                     .OrderByDescending(pawn => pawn.psychicEntropy.PsychicSensitivity)
-                    .First(),
+                    .FirstOrDefault(),
 #if DEBUG
                 _ => throw new NotImplementedException(),
 #else
@@ -235,6 +235,8 @@ internal static class PsycastingHandler
         return target is not null && CastAbilityOnTarget(ability, target);
     }
 
+    private static readonly Dictionary<string, string> HediffPsycastCache = [];
+
     private static bool HandleHediffPsycast(
         Pawn pawn,
         Ability ability,
@@ -244,6 +246,8 @@ internal static class PsycastingHandler
         string? hediffDefName = null
     )
     {
+        hediffDefName ??= HediffPsycastCache[ability.def.defName];
+
         if (hediffDefName is null)
         {
             AbilityExtension_Hediff? hediffExtension =
@@ -260,6 +264,7 @@ internal static class PsycastingHandler
             {
                 hediffDefName = hediffExtension.hediff.defName;
             }
+            HediffPsycastCache[ability.def.defName] = hediffDefName;
         }
 
         return HandleTargetedPsycast(
@@ -351,7 +356,8 @@ internal static class PsycastingHandler
             ability,
             targets.ToArray(),
             FinalTargetType.MostPsychicallySensitive,
-            true
+            true,
+            "VPE_LostVitality"
         );
     }
 

@@ -467,28 +467,36 @@ public static class AutocastSettingsWindow
             {
                 Checkbox("SootheColonists", ref Settings.SootheColonistsCheck);
                 Settings.SootheColonistsMaximumMood = listing.SliderLabeled(
-                    "BetterAutocastVPE.SootheTargetMinimumMood".Translate(Settings.SootheColonistsMaximumMood.ToStringPercent()),
+                    "BetterAutocastVPE.SootheTargetMinimumMood".Translate(
+                        Settings.SootheColonistsMaximumMood.ToStringPercent()
+                    ),
                     Settings.SootheColonistsMaximumMood,
                     0.0f,
                     1.0f
                 );
                 Checkbox("SootheSlaves", ref Settings.SootheSlavesCheck);
                 Settings.SootheSlavesMaximumMood = listing.SliderLabeled(
-                    "BetterAutocastVPE.SootheTargetMinimumMood".Translate(Settings.SootheSlavesMaximumMood.ToStringPercent()),
+                    "BetterAutocastVPE.SootheTargetMinimumMood".Translate(
+                        Settings.SootheSlavesMaximumMood.ToStringPercent()
+                    ),
                     Settings.SootheSlavesMaximumMood,
                     0.0f,
                     1.0f
                 );
                 Checkbox("SoothePrisoners", ref Settings.SoothePrisonersCheck);
                 Settings.SoothePrisonersMaximumMood = listing.SliderLabeled(
-                    "BetterAutocastVPE.SootheTargetMinimumMood".Translate(Settings.SoothePrisonersMaximumMood.ToStringPercent()),
+                    "BetterAutocastVPE.SootheTargetMinimumMood".Translate(
+                        Settings.SoothePrisonersMaximumMood.ToStringPercent()
+                    ),
                     Settings.SoothePrisonersMaximumMood,
                     0.0f,
                     1.0f
                 );
                 Checkbox("SootheVisitors", ref Settings.SootheVisitorsCheck);
                 Settings.SootheVisitorsMaximumMood = listing.SliderLabeled(
-                    "BetterAutocastVPE.SootheTargetMinimumMood".Translate(Settings.SootheVisitorsMaximumMood.ToStringPercent()),
+                    "BetterAutocastVPE.SootheTargetMinimumMood".Translate(
+                        Settings.SootheVisitorsMaximumMood.ToStringPercent()
+                    ),
                     Settings.SootheVisitorsMaximumMood,
                     0.0f,
                     1.0f
