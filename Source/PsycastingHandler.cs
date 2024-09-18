@@ -55,6 +55,7 @@ internal static class PsycastingHandler
                 { "VPE_SpeedBoost", HandleSelfBuff },
                 { "VPE_StaticAura", HandleStaticAura },
                 { "VPE_StealVitality", HandleStealVitality },
+                { "VPE_WordofAlliance", HandleWordOfAlliance },
                 { "VPE_WordofImmunity", HandleWordOfImmunity },
                 { "VPE_WordofJoy", HandleColonistBuff },
                 { "VPE_WordofProductivity", HandleColonistBuff },
@@ -753,7 +754,7 @@ internal static class PsycastingHandler
     #region Skipmaster
     private static bool HandleSolarPinhole(Pawn pawn, Ability ability)
     {
-        IntVec3? target_ = GetRandomValidCellInArea<Area_SolarPinhole>(
+        IntVec3? maybeTarget = GetRandomValidCellInArea<Area_SolarPinhole>(
             pawn.MapHeld,
             cell =>
                 !cell.Filled(pawn.MapHeld)
@@ -762,9 +763,9 @@ internal static class PsycastingHandler
                     .Any(thing => thing.def.defName is "SolarPinhole" or "SolarPinholeSunlamp")
         );
         BetterAutocastVPE.DebugLog(
-            $"HandleSolarPinhole({pawn.NameFullColored}, {ability.def.defName}) -> ({target_.ToStringSafe()})"
+            $"HandleSolarPinhole({pawn.NameFullColored}, {ability.def.defName}) -> ({maybeTarget.ToStringSafe()})"
         );
-        return target_ is IntVec3 target && CastAbilityOnTarget(ability, target);
+        return maybeTarget is IntVec3 target && CastAbilityOnTarget(ability, target);
     }
     #endregion Skipmaster
 
@@ -779,5 +780,28 @@ internal static class PsycastingHandler
             && CastAbilityOnTarget(ability, target);
     }
     #endregion Chronopath
+
+    #region Archon
+    private static bool HandleWordOfAlliance(Pawn pawn, Ability ability)
+    {
+        Pawn? target = pawn
+            .MapHeld.mapPawns.AllPawnsSpawned.Where(mapPawn =>
+                (
+                    mapPawn is
+                    {
+                        psychicEntropy.PsychicSensitivity: > 0,
+                        Faction: { IsPlayer: false, HasGoodwill: true }
+                    }
+                )
+                && mapPawn.Faction.PlayerGoodwill
+                    < BetterAutocastVPE.Settings.WordOfAllianceMaxGoodwill
+            )
+            .OrderBy(mapPawn => mapPawn.Faction.PlayerGoodwill)
+            .ThenByDescending(mapPawn => mapPawn.psychicEntropy.PsychicSensitivity)
+            .ThenByDescending(mapPawn => mapPawn.Position.DistanceTo(mapPawn.Position))
+            .FirstOrFallback();
+        return target is not null && CastAbilityOnTarget(ability, target);
+    }
+    #endregion Archon
     #endregion handlers
 }

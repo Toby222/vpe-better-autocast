@@ -146,6 +146,13 @@ public static class AutocastSettingsWindow
                 string explanation = "BetterAutocastVPE.Soothe.Explanation".TranslateSafe();
                 listing.Label(explanation);
             }
+            else
+            {
+                BetterAutocastVPE.DebugError(
+                    "Missing text for key BetterAutocastVPE.Soothe.Explanation",
+                    "Missing text for key BetterAutocastVPE.Soothe.Explanation".GetHashCode()
+                );
+            }
 
             bool castWhileDrafted = Settings.DraftedAutocastDefs.Contains("VPE_SootheFemale");
             bool castWhileDraftedOriginal = castWhileDrafted;
@@ -263,6 +270,15 @@ public static class AutocastSettingsWindow
                 string explanation =
                     $"BetterAutocastVPE.{abilityDefName}.Explanation".TranslateSafe();
                 listing.Label(explanation);
+            }
+            else
+            {
+                BetterAutocastVPE.DebugError(
+                    "Missing text for key " + $"BetterAutocastVPE.{abilityDefName}.Explanation",
+                    (
+                        "Missing text for key " + $"BetterAutocastVPE.{abilityDefName}.Explanation"
+                    ).GetHashCode()
+                );
             }
 
             bool castWhileDrafted = Settings.DraftedAutocastDefs.Contains(abilityDefName);
@@ -418,6 +434,22 @@ public static class AutocastSettingsWindow
         {
             listing.Indent();
             listing.ColumnWidth -= 12f;
+
+            #region Word of Alliance
+            if (AbilityHeader("VPE_WordofAlliance"))
+            {
+                Settings.WordOfAllianceMaxGoodwill = Mathf.RoundToInt(
+                    listing.SliderLabeled(
+                        "BetterAutocastVPE.WordOfAllianceMaxGoodwill".Translate(
+                            Settings.WordOfAllianceMaxGoodwill
+                        ),
+                        Settings.WordOfAllianceMaxGoodwill,
+                        -100,
+                        100
+                    )
+                );
+            }
+            #endregion Word of Alliance
 
             #region Word of Productivity
             AbilityHeader("VPE_WordofProductivity");

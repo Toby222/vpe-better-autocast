@@ -39,6 +39,7 @@ public class AutocastSettings : ModSettings
         "VPE_SootheMale",
         "VPE_SpeedBoost",
         "VPE_StealVitality",
+        "VPE_WordofAlliance",
         "VPE_WordofImmunity",
         "VPE_WordofJoy",
         "VPE_WordofProductivity",
@@ -164,6 +165,8 @@ public class AutocastSettings : ModSettings
     public bool EnthrallOnlyNamedStockpiles = true;
     public bool EnthrallInStorage = true;
     public bool EnthrallOnlyNamedStorageGroups = true;
+
+    public int WordOfAllianceMaxGoodwill = 100;
 
     #region Scribe Helpers
     private static void LookField<T>(ref T value, string label, T defaultValue)
@@ -336,6 +339,10 @@ public class AutocastSettings : ModSettings
         LookField(ref SootheVisitorsCheck, nameof(SootheVisitorsCheck), false);
         LookField(ref SootheVisitorsMaximumMood, nameof(SootheVisitorsMaximumMood), 0.5f);
         #endregion Soothe (Female/Male)
+
+        #region Word of Alliance
+        LookField(ref WordOfAllianceMaxGoodwill, nameof(WordOfAllianceMaxGoodwill), 100);
+        #endregion Word of Alliance
 
         #region General
         LookHashSet(
