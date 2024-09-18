@@ -10,10 +10,6 @@ configuration=${1:-Debug}
 echo "Building for RimWorld 1.5"
 rm -f $mod_dir/1.5/Assemblies/*
 dotnet build $script_dir/mod.csproj -c ${configuration} -p:GAME_VERSION=v1.5
-echo "Building for RimWorld 1.4"
-rsync -av --delete $mod_dir/1.5/ $mod_dir/1.4/
-rm -f $mod_dir/1.4/Assemblies/*
-dotnet build $script_dir/mod.csproj -c ${configuration} -p:GAME_VERSION=v1.4
 
 # generate About.xml
 rm -f $mod_dir/About/About.xml

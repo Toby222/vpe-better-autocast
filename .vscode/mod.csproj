@@ -7,10 +7,6 @@
         <DefineConstants>v1_5</DefineConstants>
         <OutputPath>../1.5/Assemblies</OutputPath>
     </PropertyGroup>
-    <PropertyGroup Condition="'$(GAME_VERSION)'=='v1.4'">
-        <DefineConstants>v1_4</DefineConstants>
-        <OutputPath>../1.4/Assemblies</OutputPath>
-    </PropertyGroup>
     <PropertyGroup>
         <OutputType>Library</OutputType>
         <TargetFramework>net480</TargetFramework>
@@ -128,12 +124,6 @@
         <Reference Include="VanillaPsycastsExpanded" HintPath="..\..\VanillaPsycastsExpanded\1.5\Assemblies\VanillaPsycastsExpanded.dll" IncludeAssets="compile" Private="false" />
         <Reference Include="VFECore" HintPath="..\..\VanillaExpandedFramework\1.5\Assemblies\VFECore.dll" IncludeAssets="compile" Private="false" />
         <PackageReference Include="Lib.Harmony" Version="2.3.3" IncludeAssets="compile" />
-    </ItemGroup>
-    <ItemGroup Condition="'$(GAME_VERSION)'=='v1.4'">
-        <PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3901" />
-        <Reference Include="VanillaPsycastsExpanded" HintPath="..\..\VanillaPsycastsExpanded\1.4\Assemblies\VanillaPsycastsExpanded.dll" IncludeAssets="compile" Private="false" />
-        <Reference Include="VFECore" HintPath="..\..\VanillaExpandedFramework\1.4\Assemblies\VFECore.dll" IncludeAssets="compile" Private="false" />
-        <PackageReference Include="Lib.Harmony" Version="2.2.2" IncludeAssets="compile" />
     </ItemGroup>
     <ItemGroup>
         <!-- Mod -->

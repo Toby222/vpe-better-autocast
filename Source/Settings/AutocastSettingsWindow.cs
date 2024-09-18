@@ -440,7 +440,7 @@ public static class AutocastSettingsWindow
             {
                 Settings.WordOfAllianceMaxGoodwill = Mathf.RoundToInt(
                     listing.SliderLabeled(
-                        "BetterAutocastVPE.WordOfAllianceMaxGoodwill".Translate(
+                        "BetterAutocastVPE.WordOfAllianceMaxGoodwill".TranslateSafe(
                             Settings.WordOfAllianceMaxGoodwill
                         ),
                         Settings.WordOfAllianceMaxGoodwill,
@@ -499,7 +499,7 @@ public static class AutocastSettingsWindow
             {
                 Checkbox("SootheColonists", ref Settings.SootheColonistsCheck);
                 Settings.SootheColonistsMaximumMood = listing.SliderLabeled(
-                    "BetterAutocastVPE.SootheTargetMinimumMood".Translate(
+                    "BetterAutocastVPE.SootheTargetMinimumMood".TranslateSafe(
                         Settings.SootheColonistsMaximumMood.ToStringPercent()
                     ),
                     Settings.SootheColonistsMaximumMood,
@@ -508,7 +508,7 @@ public static class AutocastSettingsWindow
                 );
                 Checkbox("SootheSlaves", ref Settings.SootheSlavesCheck);
                 Settings.SootheSlavesMaximumMood = listing.SliderLabeled(
-                    "BetterAutocastVPE.SootheTargetMinimumMood".Translate(
+                    "BetterAutocastVPE.SootheTargetMinimumMood".TranslateSafe(
                         Settings.SootheSlavesMaximumMood.ToStringPercent()
                     ),
                     Settings.SootheSlavesMaximumMood,
@@ -517,7 +517,7 @@ public static class AutocastSettingsWindow
                 );
                 Checkbox("SoothePrisoners", ref Settings.SoothePrisonersCheck);
                 Settings.SoothePrisonersMaximumMood = listing.SliderLabeled(
-                    "BetterAutocastVPE.SootheTargetMinimumMood".Translate(
+                    "BetterAutocastVPE.SootheTargetMinimumMood".TranslateSafe(
                         Settings.SoothePrisonersMaximumMood.ToStringPercent()
                     ),
                     Settings.SoothePrisonersMaximumMood,
@@ -526,7 +526,7 @@ public static class AutocastSettingsWindow
                 );
                 Checkbox("SootheVisitors", ref Settings.SootheVisitorsCheck);
                 Settings.SootheVisitorsMaximumMood = listing.SliderLabeled(
-                    "BetterAutocastVPE.SootheTargetMinimumMood".Translate(
+                    "BetterAutocastVPE.SootheTargetMinimumMood".TranslateSafe(
                         Settings.SootheVisitorsMaximumMood.ToStringPercent()
                     ),
                     Settings.SootheVisitorsMaximumMood,
@@ -626,8 +626,7 @@ public static class AutocastSettingsWindow
                 Checkbox("EnthrallInStockpile", ref Settings.EnthrallInStockpile);
                 Checkbox("EnthrallOnlyNamedStockpiles", ref Settings.EnthrallOnlyNamedStockpiles);
                 Checkbox("EnthrallInStorage", ref Settings.EnthrallInStorage);
-#if v1_4
-#elif v1_5
+#if v1_5
                 Checkbox(
                     "EnthrallOnlyNamedStorageGroups",
                     ref Settings.EnthrallOnlyNamedStorageGroups
@@ -784,8 +783,7 @@ public static class AutocastSettingsWindow
                 Checkbox("MendInStockpile", ref Settings.MendInStockpile);
                 Checkbox("MendOnlyNamedStockpiles", ref Settings.MendOnlyNamedStockpiles);
                 Checkbox("MendInStorage", value: ref Settings.MendInStorage);
-#if v1_4
-#elif v1_5
+#if v1_5
                 Checkbox("MendOnlyNamedStorageGroups", ref Settings.MendOnlyNamedStorageGroups);
 #else
                 throw new NotImplementedException();
@@ -799,8 +797,7 @@ public static class AutocastSettingsWindow
                 Checkbox("EnchantInStockpile", ref Settings.EnchantInStockpile);
                 Checkbox("EnchantOnlyNamedStockpiles", ref Settings.EnchantOnlyNamedStockpiles);
                 Checkbox("EnchantInStorage", ref Settings.EnchantInStorage);
-#if v1_4
-#elif v1_5
+#if v1_5
                 Checkbox(
                     "EnchantOnlyNamedStorageGroups",
                     ref Settings.EnchantOnlyNamedStorageGroups

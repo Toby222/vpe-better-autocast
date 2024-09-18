@@ -19,10 +19,7 @@ internal static class ThingHelper
         if (storageGroupName is null)
             throw new ArgumentNullException(nameof(storageGroupName));
 
-#if v1_4
-        // Storage groups are a 1.5 feature
-        return Enumerable.Empty<Thing>();
-#elif v1_5
+#if v1_5
         return HarmonyLib
             .Traverse.Create(map.storageGroups)
             .Field<List<StorageGroup>>("groups")

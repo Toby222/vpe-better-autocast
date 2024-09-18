@@ -19,8 +19,6 @@ public class BetterAutocastVPE : Mod
     {
 #if v1_5
         const string GAME_VERSION = "v1.5";
-#elif v1_4
-        const string GAME_VERSION = "v1.4";
 #else
 #error No version defined
         const string GAME_VERSION = "UNDEFINED";
@@ -83,6 +81,25 @@ public class BetterAutocastVPE : Mod
         // Also prevents repeat errors for namespace change of Settings class
         WriteSettings();
     }
+
+#if v1_5
+    [LudeonTK.DebugAction(category = "Better Autocasting", name = "Generate mod description", allowedGameStates = LudeonTK.AllowedGameStates.Invalid)]
+    public static void PrintDescription()
+    {
+        IEnumerable<string> handledAbilityDefNames = PsycastingHandler.abilityHandlers.Keys;
+        IEnumerable<(string label, string modName)> handledAbilies = handledAbilityDefNames.Select(abilityDefName =>
+        {
+            AbilityDef? abilityDef = DefDatabase<AbilityDef>.GetNamed(abilityDefName, false);
+            if (abilityDef is null) Warn(abilityDefName + " def not found");
+            return ((abilityDef?.LabelCap ?? abilityDefName).ToStringSafe()!, (abilityDef?.modContentPack.ModMetaData.GetWorkshopName() ?? "unknown mod").ToStringSafe());
+        });
+        IEnumerable<IGrouping<string, string>>? abilitiesByMod = handledAbilies.GroupBy(ability => ability.modName, ability => ability.label).OrderBy(group => group.Key);
+        IEnumerable<string> abilitiesListByMod = abilitiesByMod.Select(group => group.Key + ":\n" + string.Join("\n", group));
+        string summary = string.Join("\n\n", abilitiesListByMod);
+
+        Log("Handled psycasts:\n" + summary);
+    }
+#endif
 
 #nullable disable // Set in constructor.
 
