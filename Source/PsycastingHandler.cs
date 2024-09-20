@@ -795,6 +795,7 @@ internal static class PsycastingHandler
                 )
                 && mapPawn.Faction.PlayerGoodwill
                     < BetterAutocastVPE.Settings.WordOfAllianceMaxGoodwill
+                && !mapPawn.Faction.def.PermanentlyHostileTo(Find.FactionManager.OfPlayer.def)
             )
             .OrderBy(mapPawn => mapPawn.Faction.PlayerGoodwill)
             .ThenByDescending(mapPawn => mapPawn.psychicEntropy.PsychicSensitivity)
