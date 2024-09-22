@@ -131,11 +131,20 @@ internal static class PsycastingHandler
             BetterAutocastVPE.DebugLog(
                 $"Autocasting {ability.def.defName} for {pawn.NameFullColored}"
             );
-            bool wasAutocast = abilityHandlers[ability.def.defName](pawn, ability);
+            bool wasAutocast = false;
+            try
+            {
+                wasAutocast = abilityHandlers[ability.def.defName](pawn, ability);
+            }
+            catch (Exception ex)
+            {
+                BetterAutocastVPE.Error($"Exception while trying to autocast {ability.def.defName} of {pawn.NameFullColored}:\n{ex}\n{ex.StackTrace}");
+            }
+
             if (wasAutocast)
             {
                 BetterAutocastVPE.DebugLog(
-                    $"{pawn.Name} autocast {ability.def.defName} - previous job: {jobBeforeCast}"
+                    $"{pawn.NameFullColored} autocast {ability.def.defName} - previous job: {jobBeforeCast}"
                 );
             }
             return wasAutocast;
@@ -247,7 +256,10 @@ internal static class PsycastingHandler
         string? hediffDefName = null
     )
     {
-        hediffDefName ??= HediffPsycastCache[ability.def.defName];
+        if (hediffDefName is null)
+        {
+            HediffPsycastCache.TryGetValue(ability.def.defName, out hediffDefName);
+        }
 
         if (hediffDefName is null)
         {
