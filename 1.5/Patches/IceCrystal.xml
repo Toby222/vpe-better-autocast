@@ -10,6 +10,12 @@
           <showUndrafted>true</showUndrafted>
         </value>
       </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_IceCrystal"]/range</xpath>
+        <value>
+          <range>999999</range>
+        </value>
+      </li>
       <li Class="PatchOperationAdd">
         <xpath>/Defs/DesignationCategoryDef[defName="Zone"]/specialDesignatorClasses</xpath>
         <value>

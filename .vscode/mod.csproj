@@ -15,7 +15,7 @@
         <RootNamespace>BetterAutocastVPE</RootNamespace>
         <AssemblyName>BetterAutocastVPE</AssemblyName>
         <LangVersion>latest</LangVersion>
-        <VersionPrefix>4.13.2.0</VersionPrefix>
+        <VersionPrefix>5.0.0.0</VersionPrefix>
         <!-- do not generate pdb file -->
         <DebugType>none</DebugType>
         <DebugSymbols>false</DebugSymbols>
@@ -114,13 +114,15 @@
         </ModMetaData>
     </PropertyGroup>
     <ItemGroup Condition="'$(GAME_VERSION)'==''">
-        <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4104" />
+        <!-- <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4104" /> -->
+        <Reference Include="RimWorld" HintPath="/home/toby/.local/share/Steam/steamapps/common/RimWorld/RimWorldLinux_Data/Managed/Assembly-CSharp.dll" IncludeAssets="compile" Private="false" />
         <Reference Include="VanillaPsycastsExpanded" HintPath="..\..\VanillaPsycastsExpanded\1.5\Assemblies\VanillaPsycastsExpanded.dll" IncludeAssets="compile" Private="false" />
         <Reference Include="VFECore" HintPath="..\..\VanillaExpandedFramework\1.5\Assemblies\VFECore.dll" IncludeAssets="compile" Private="false" />
         <PackageReference Include="Lib.Harmony" Version="2.3.3" IncludeAssets="compile" />
     </ItemGroup>
     <ItemGroup Condition="'$(GAME_VERSION)'=='v1.5'">
         <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4104" />
+        <!-- <Reference Include="RimWorld" HintPath="/home/toby/.local/share/Steam/steamapps/common/RimWorld/RimWorldLinux_Data/Managed/Assembly-CSharp.dll" IncludeAssets="compile" Private="false" /> -->
         <Reference Include="VanillaPsycastsExpanded" HintPath="..\..\VanillaPsycastsExpanded\1.5\Assemblies\VanillaPsycastsExpanded.dll" IncludeAssets="compile" Private="false" />
         <Reference Include="VFECore" HintPath="..\..\VanillaExpandedFramework\1.5\Assemblies\VFECore.dll" IncludeAssets="compile" Private="false" />
         <PackageReference Include="Lib.Harmony" Version="2.3.3" IncludeAssets="compile" />
@@ -128,7 +130,7 @@
     <ItemGroup>
         <!-- Mod -->
         <Compile Include="../Source/**/*.cs" />
-        <PackageReference Include="roslynator.analyzers" Version="4.12.4" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" />
-        <PackageReference Include="roslynator.formatting.analyzers" Version="4.12.4" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" />
+        <PackageReference Include="roslynator.analyzers" Version="4.12.5" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" />
+        <PackageReference Include="roslynator.formatting.analyzers" Version="4.12.5" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" />
     </ItemGroup>
 </Project>

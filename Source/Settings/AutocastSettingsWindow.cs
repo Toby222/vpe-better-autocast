@@ -389,7 +389,7 @@ public static class AutocastSettingsWindow
             GUI.color = Color.red;
             if (listing.ButtonText("BetterAutocastVPE.ResetSettings.Confirmation".TranslateSafe()))
             {
-                LoadedModManager.GetMod<BetterAutocastVPE>().ResetSettings();
+                Settings.Reset();
                 confirmReset = false;
             }
             GUI.color = prevColor;
@@ -438,16 +438,10 @@ public static class AutocastSettingsWindow
             #region Word of Alliance
             if (AbilityHeader("VPE_WordofAlliance"))
             {
-                Settings.WordOfAllianceMaxGoodwill = Mathf.RoundToInt(
-                    listing.SliderLabeled(
-                        "BetterAutocastVPE.WordOfAllianceMaxGoodwill".TranslateSafe(
-                            Settings.WordOfAllianceMaxGoodwill
-                        ),
-                        Settings.WordOfAllianceMaxGoodwill,
-                        -100,
-                        100
-                    )
-                );
+                Checkbox("WordOfAllianceCheckArea", ref Settings.WordOfAllianceCheckAllowedArea);
+                listing.Label("BetterAutocastVPE.WordOfAllianceGoodwillRange".TranslateSafe());
+
+                listing.IntRange(ref Settings.WordOfAllianceGoodwill, -100, 100);
             }
             #endregion Word of Alliance
 

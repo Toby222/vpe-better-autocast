@@ -1,178 +1,201 @@
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Reflection;
 using Verse;
 
 namespace BetterAutocastVPE.Settings;
 
 public class AutocastSettings : ModSettings
 {
-    private readonly HashSet<string> defaultDraftedAutocastDefs =
-    [
-        "VPE_AdrenalineRush",
-        "VPE_BladeFocus",
-        "VPE_ControlledFrenzy",
-        "VPE_Deathshield",
-        "VPE_FireShield",
-        "VPE_FiringFocus",
-        "VPE_Ghostwalk",
-        "VPE_GuidedShot",
-        "VPE_IceShield",
-        "VPE_Invisibility",
-        "VPE_Overshield",
-        "VPE_SpeedBoost",
-        "VPE_StaticAura",
-    ];
-    private readonly HashSet<string> defaultUndraftedAutocastDefs =
-    [
-        "VPE_Darkvision",
-        "VPE_Deathshield",
-        "VPE_Eclipse",
-        "VPE_EnchantQuality",
-        "VPE_Enthrall",
-        "VPE_Ghostwalk",
-        "VPE_IceCrystal",
-        "VPE_Mend",
-        "VPE_Power",
-        "VPE_PsychicGuidance",
-        "VPE_SolarPinhole",
-        "VPE_SolarPinholeSunlamp",
-        "VPE_SootheFemale",
-        "VPE_SootheMale",
-        "VPE_SpeedBoost",
-        "VPE_StealVitality",
-        "VPE_WordofAlliance",
-        "VPE_WordofImmunity",
-        "VPE_WordofJoy",
-        "VPE_WordofProductivity",
-        "VPE_WordofSerenity",
-        "VPEP_BrainLeech",
-    ];
-    private readonly HashSet<string> defaultBlockedJobDefs =
-    [
-        "BetterAutocastVPE_GotoLocationAndCastAbilityOnce",
-        "DeliverToBed",
-        "Ingest",
-        "LayDown",
-        "SpectateCeremony",
-        "Goto",
-        "VFEA_GotoTargetAndUseAbility",
-        "VFEA_UseAbility",
-        "Wait_Asleep",
-        "Wait_Downed",
-    ];
-    private readonly HashSet<string> defaultWordOfSerenityIgnoredMentalStateDefs =
-    [
-        "BerserkTrance",
-        "BerserkWarcall",
-        "Crying",
-        "Giggling",
-    ];
+    private static HashSet<string> DefaultDraftedAutocastDefs() =>
+        [
+            "VPE_AdrenalineRush",
+            "VPE_BladeFocus",
+            "VPE_ControlledFrenzy",
+            "VPE_Deathshield",
+            "VPE_FireShield",
+            "VPE_FiringFocus",
+            "VPE_Ghostwalk",
+            "VPE_GuidedShot",
+            "VPE_IceShield",
+            "VPE_Invisibility",
+            "VPE_Overshield",
+            "VPE_SpeedBoost",
+            "VPE_StaticAura",
+        ];
+
+    private static HashSet<string> DefaultUndraftedAutocastDefs() =>
+        [
+            "VPE_CraftTimeskip",
+            "VPE_Darkvision",
+            "VPE_Deathshield",
+            "VPE_Eclipse",
+            "VPE_EnchantQuality",
+            "VPE_Enthrall",
+            "VPE_Ghostwalk",
+            "VPE_IceCrystal",
+            "VPE_Mend",
+            "VPE_Power",
+            "VPE_PsychicGuidance",
+            "VPE_SolarPinhole",
+            "VPE_SolarPinholeSunlamp",
+            "VPE_SootheFemale",
+            "VPE_SootheMale",
+            "VPE_SpeedBoost",
+            "VPE_StealVitality",
+            "VPE_WordofAlliance",
+            "VPE_WordofImmunity",
+            "VPE_WordofJoy",
+            "VPE_WordofProductivity",
+            "VPE_WordofSerenity",
+            "VPEP_BrainLeech",
+        ];
+
+    private static HashSet<string> DefaultBlockedJobDefs() =>
+        [
+            "BetterAutocastVPE_GotoLocationAndCastAbilityOnce",
+            "DeliverToBed",
+            "Ingest",
+            "LayDown",
+            "SpectateCeremony",
+            "Goto",
+            "VFEA_GotoTargetAndUseAbility",
+            "VFEA_UseAbility",
+            "Wait_Asleep",
+            "Wait_Downed",
+        ];
+
+    private static HashSet<string> DefaultWordOfSerenityIgnoredMentalStateDefs() =>
+        ["BerserkTrance", "BerserkWarcall", "Crying", "Giggling"];
 
     public AutocastSettings()
     {
-        BetterAutocastVPE.DebugLog("Initiating settings");
-        BlockedJobDefs ??= defaultBlockedJobDefs;
-        DraftedAutocastDefs ??= defaultDraftedAutocastDefs;
-        UndraftedAutocastDefs ??= defaultUndraftedAutocastDefs;
-        WordOfSerenityIgnoredMentalStateDefs ??= defaultWordOfSerenityIgnoredMentalStateDefs;
+        BlockedJobDefs = DefaultBlockedJobDefs();
+        DraftedAutocastDefs = DefaultDraftedAutocastDefs();
+        UndraftedAutocastDefs = DefaultUndraftedAutocastDefs();
+        WordOfSerenityIgnoredMentalStateDefs = DefaultWordOfSerenityIgnoredMentalStateDefs();
+        Reset();
     }
 
-    public int AutocastIntervalDrafted = 30;
-    public int AutocastIntervalUndrafted = 600;
+    public int AutocastIntervalDrafted;
+    public int AutocastIntervalUndrafted;
     public HashSet<string> DraftedAutocastDefs;
     public HashSet<string> UndraftedAutocastDefs;
     public HashSet<string> BlockedJobDefs;
 
-    public float MendHealthThreshold = 0.5f;
-    public bool MendPawns = true;
-    public bool MendInStockpile = true;
-    public bool MendOnlyNamedStockpiles = true;
-    public bool MendInStorage = true;
-    public bool MendOnlyNamedStorageGroups = false;
+    public float MendHealthThreshold;
+    public bool MendPawns;
+    public bool MendInStockpile;
+    public bool MendOnlyNamedStockpiles;
+    public bool MendInStorage;
+    public bool MendOnlyNamedStorageGroups;
 
-    public bool EnchantInStockpile = true;
-    public bool EnchantOnlyNamedStockpiles = true;
-    public bool EnchantInStorage = true;
-    public bool EnchantOnlyNamedStorageGroups = false;
+    public bool EnchantInStockpile;
+    public bool EnchantOnlyNamedStockpiles;
+    public bool EnchantInStorage;
+    public bool EnchantOnlyNamedStorageGroups;
 
-    public bool PowerBuildings = true;
-    public bool PowerMechs = true;
+    public bool PowerBuildings;
+    public bool PowerMechs;
 
-    public bool StealVitalityFromPrisoners = true;
-    public bool StealVitalityFromSlaves = true;
-    public bool StealVitalityFromColonists = true;
-    public bool StealVitalityFromVisitors = false;
+    public bool StealVitalityFromPrisoners;
+    public bool StealVitalityFromSlaves;
+    public bool StealVitalityFromColonists;
+    public bool StealVitalityFromVisitors;
 
-    public bool DeathshieldColonists = true;
-    public bool DeathshieldColonyAnimals = false;
-    public bool DeathshieldSlaves = false;
-    public bool DeathshieldPrisoners = false;
-    public bool DeathshieldVisitors = false;
+    public bool DeathshieldColonists;
+    public bool DeathshieldColonyAnimals;
+    public bool DeathshieldSlaves;
+    public bool DeathshieldPrisoners;
+    public bool DeathshieldVisitors;
 
-    public float WordOfJoyMoodThreshold = 0.2f;
+    public float WordOfJoyMoodThreshold;
 
-    public bool WordOfSerenityTargetScaria = false;
-    public bool WordOfSerenityTargetColonists = true;
-    public bool WordOfSerenityTargetColonyAnimals = false;
-    public bool WordOfSerenityTargetWildAnimals = false;
-    public bool WordOfSerenityTargetSlaves = false;
-    public bool WordOfSerenityTargetPrisoners = false;
-    public bool WordOfSerenityTargetVisitors = false;
+    public bool WordOfSerenityTargetScaria;
+    public bool WordOfSerenityTargetColonists;
+    public bool WordOfSerenityTargetColonyAnimals;
+    public bool WordOfSerenityTargetWildAnimals;
+    public bool WordOfSerenityTargetSlaves;
+    public bool WordOfSerenityTargetPrisoners;
+    public bool WordOfSerenityTargetVisitors;
     public HashSet<string> WordOfSerenityIgnoredMentalStateDefs;
 
-    public bool SootheColonistsCheck = true;
-    public float SootheColonistsMaximumMood = 0.5f;
-    public bool SootheSlavesCheck = false;
-    public float SootheSlavesMaximumMood = 0.5f;
-    public bool SoothePrisonersCheck = false;
-    public float SoothePrisonersMaximumMood = 0.5f;
-    public bool SootheVisitorsCheck = false;
-    public float SootheVisitorsMaximumMood = 0.5f;
+    public bool SootheColonistsCheck;
+    public float SootheColonistsMaximumMood;
+    public bool SootheSlavesCheck;
+    public float SootheSlavesMaximumMood;
+    public bool SoothePrisonersCheck;
+    public float SoothePrisonersMaximumMood;
+    public bool SootheVisitorsCheck;
+    public float SootheVisitorsMaximumMood;
 
-    public bool BrainLeechTargetPrisoners = true;
-    public bool BrainLeechTargetSlaves = true;
+    public bool BrainLeechTargetPrisoners;
+    public bool BrainLeechTargetSlaves;
 
-    public bool DarkvisionTargetSelf = true;
-    public bool DarkvisionTargetColonists = true;
+    public bool DarkvisionTargetSelf;
+    public bool DarkvisionTargetColonists;
 
-    public bool InvisibilityTargetSelf = true;
-    public bool InvisibilityTargetColonists = true;
+    public bool InvisibilityTargetSelf;
+    public bool InvisibilityTargetColonists;
 
-    public bool OvershieldTargetSelf = true;
-    public bool OvershieldTargetColonists = true;
+    public bool OvershieldTargetSelf;
+    public bool OvershieldTargetColonists;
 
-    public bool WordOfImmunityTargetColonists = true;
-    public bool WordOfImmunityTargetColonyAnimals = false;
-    public bool WordOfImmunityTargetSlaves = true;
-    public bool WordOfImmunityTargetPrisoners = true;
-    public bool WordOfImmunityTargetVisitors = false;
+    public bool WordOfImmunityTargetColonists;
+    public bool WordOfImmunityTargetColonyAnimals;
+    public bool WordOfImmunityTargetSlaves;
+    public bool WordOfImmunityTargetPrisoners;
+    public bool WordOfImmunityTargetVisitors;
 
-    public bool IceShieldTargetSelf = true;
-    public bool IceShieldTargetColonists = true;
-    public bool IceShieldTargetSlaves = false;
-    public bool IceShieldTargetVisitors = false;
+    public bool IceShieldTargetSelf;
+    public bool IceShieldTargetColonists;
+    public bool IceShieldTargetSlaves;
+    public bool IceShieldTargetVisitors;
 
-    public bool FireShieldTargetSelf = true;
-    public bool FireShieldTargetColonists = true;
-    public bool FireShieldTargetSlaves = false;
-    public bool FireShieldTargetVisitors = false;
+    public bool FireShieldTargetSelf;
+    public bool FireShieldTargetColonists;
+    public bool FireShieldTargetSlaves;
+    public bool FireShieldTargetVisitors;
 
-    public bool StaticAuraTargetSelf = true;
-    public bool StaticAuraTargetColonists = true;
-    public bool StaticAuraTargetSlaves = false;
-    public bool StaticAuraTargetVisitors = false;
+    public bool StaticAuraTargetSelf;
+    public bool StaticAuraTargetColonists;
+    public bool StaticAuraTargetSlaves;
+    public bool StaticAuraTargetVisitors;
 
-    public bool EnthrallInStockpile = true;
-    public bool EnthrallOnlyNamedStockpiles = true;
-    public bool EnthrallInStorage = true;
-    public bool EnthrallOnlyNamedStorageGroups = true;
+    public bool EnthrallInStockpile;
+    public bool EnthrallOnlyNamedStockpiles;
+    public bool EnthrallInStorage;
+    public bool EnthrallOnlyNamedStorageGroups;
 
-    public int WordOfAllianceMaxGoodwill = 100;
+    public bool WordOfAllianceCheckAllowedArea;
+    public IntRange WordOfAllianceGoodwill;
 
     #region Scribe Helpers
-    private static void LookField<T>(ref T value, string label, T defaultValue)
-        where T : struct
+
+    private static AutocastSettings DefaultValues() => new();
+
+    private void LookStruct<T>(Expression<Func<T>> expression)
     {
-        Scribe_Values.Look(ref value, label, defaultValue);
+        if (
+            expression.Body
+            is not MemberExpression
+            {
+                Member: MemberInfo { MemberType: MemberTypes.Field, Name: string memberName }
+            }
+        )
+        {
+            throw new ArgumentException(
+                "Invalid expression passed to LookField",
+                nameof(expression)
+            );
+        }
+
+        FieldInfo fieldInfo = typeof(AutocastSettings).GetField(memberName);
+        T? value = fieldInfo.GetValue(this).ChangeType<T>();
+        T defaultValue = fieldInfo.GetValue(DefaultValues()).ChangeType<T>();
+        Scribe_Values.Look<T>(ref value, memberName, defaultValue);
+        fieldInfo.SetValue(this, value);
     }
 
     private static void LookHashSet<T>(
@@ -200,162 +223,287 @@ public class AutocastSettings : ModSettings
     }
     #endregion
 
-    public override void ExposeData()
+    public void Reset()
     {
-        base.ExposeData();
-        LookField(ref AutocastIntervalDrafted, nameof(AutocastIntervalDrafted), 30);
-        LookField(ref AutocastIntervalUndrafted, nameof(AutocastIntervalUndrafted), 600);
+        AutocastIntervalDrafted = 30;
+        AutocastIntervalUndrafted = 600;
 
         #region Mend
-        LookField(ref MendHealthThreshold, nameof(MendHealthThreshold), 0.5f);
-        LookField(ref MendPawns, nameof(MendPawns), true);
-        LookField(ref MendInStockpile, nameof(MendInStockpile), true);
-        LookField(ref MendOnlyNamedStockpiles, nameof(MendOnlyNamedStockpiles), true);
-        LookField(ref MendInStorage, nameof(MendInStorage), true);
-        LookField(ref MendOnlyNamedStorageGroups, nameof(MendOnlyNamedStorageGroups), false);
+        MendHealthThreshold = 0.5f;
+        MendPawns = true;
+        MendInStockpile = true;
+        MendOnlyNamedStockpiles = true;
+        MendInStorage = true;
+        MendOnlyNamedStorageGroups = false;
         #endregion Mend
 
         #region Enchant Quality
-        LookField(ref EnchantInStockpile, nameof(EnchantInStockpile), true);
-        LookField(ref EnchantOnlyNamedStockpiles, nameof(EnchantOnlyNamedStockpiles), true);
-        LookField(ref EnchantInStorage, nameof(EnchantInStorage), true);
-        LookField(ref EnchantOnlyNamedStorageGroups, nameof(EnchantOnlyNamedStorageGroups), false);
+        EnchantInStockpile = true;
+        EnchantOnlyNamedStockpiles = true;
+        EnchantInStorage = true;
+        EnchantOnlyNamedStorageGroups = false;
         #endregion Enchant Quality
 
         #region Power
-        LookField(ref PowerBuildings, nameof(PowerBuildings), true);
-        LookField(ref PowerMechs, nameof(PowerMechs), true);
+        PowerBuildings = true;
+        PowerMechs = true;
         #endregion Power
 
         #region Steal Vitality
-        LookField(ref StealVitalityFromPrisoners, nameof(StealVitalityFromPrisoners), true);
-        LookField(ref StealVitalityFromSlaves, nameof(StealVitalityFromSlaves), true);
-        LookField(ref StealVitalityFromColonists, nameof(StealVitalityFromColonists), true);
-        LookField(ref StealVitalityFromVisitors, nameof(StealVitalityFromVisitors), false);
+        StealVitalityFromPrisoners = true;
+        StealVitalityFromSlaves = true;
+        StealVitalityFromColonists = true;
+        StealVitalityFromVisitors = false;
         #endregion Steal Vitality
 
         #region Deathshield
-        LookField(ref DeathshieldColonists, nameof(DeathshieldColonists), true);
-        LookField(ref DeathshieldColonyAnimals, nameof(DeathshieldColonyAnimals), true);
-        LookField(ref DeathshieldSlaves, nameof(DeathshieldSlaves), false);
-        LookField(ref DeathshieldPrisoners, nameof(DeathshieldPrisoners), false);
-        LookField(ref DeathshieldVisitors, nameof(DeathshieldVisitors), false);
+        DeathshieldColonists = true;
+        DeathshieldColonyAnimals = true;
+        DeathshieldSlaves = false;
+        DeathshieldPrisoners = false;
+        DeathshieldVisitors = false;
         #endregion Deathshield
 
         #region Enthrall
-        LookField(ref EnthrallInStockpile, nameof(EnthrallInStockpile), true);
-        LookField(ref EnthrallOnlyNamedStockpiles, nameof(EnthrallOnlyNamedStockpiles), true);
-        LookField(ref EnthrallInStorage, nameof(EnthrallInStorage), true);
-        LookField(ref EnthrallOnlyNamedStorageGroups, nameof(EnthrallOnlyNamedStorageGroups), true);
+        EnthrallInStockpile = true;
+        EnthrallOnlyNamedStockpiles = true;
+        EnthrallInStorage = true;
+        EnthrallOnlyNamedStorageGroups = true;
         #endregion Enthrall
 
         #region Word of Joy
-        LookField(ref WordOfJoyMoodThreshold, nameof(WordOfJoyMoodThreshold), 0.2f);
+        WordOfJoyMoodThreshold = 0.2f;
         #endregion Word of Joy
 
         #region Word of Serenity
-        LookField(ref WordOfSerenityTargetScaria, nameof(WordOfSerenityTargetScaria), false);
-        LookField(ref WordOfSerenityTargetColonists, nameof(WordOfSerenityTargetColonists), false);
-        LookField(
-            ref WordOfSerenityTargetColonyAnimals,
-            nameof(WordOfSerenityTargetColonyAnimals),
-            false
-        );
-        LookField(
-            ref WordOfSerenityTargetWildAnimals,
-            nameof(WordOfSerenityTargetWildAnimals),
-            false
-        );
-        LookField(ref WordOfSerenityTargetSlaves, nameof(WordOfSerenityTargetSlaves), false);
-        LookField(ref WordOfSerenityTargetPrisoners, nameof(WordOfSerenityTargetPrisoners), false);
-        LookField(ref WordOfSerenityTargetVisitors, nameof(WordOfSerenityTargetVisitors), false);
+        WordOfSerenityTargetScaria = false;
+        WordOfSerenityTargetColonists = true;
+        WordOfSerenityTargetColonyAnimals = false;
+        WordOfSerenityTargetWildAnimals = false;
+        WordOfSerenityTargetSlaves = false;
+        WordOfSerenityTargetPrisoners = false;
+        WordOfSerenityTargetVisitors = false;
+        WordOfSerenityIgnoredMentalStateDefs = DefaultWordOfSerenityIgnoredMentalStateDefs();
+        #endregion Word of Serenity
+
+        #region Brain Leech
+        BrainLeechTargetPrisoners = true;
+        BrainLeechTargetSlaves = true;
+        #endregion Brain Leech
+
+        #region Darkvision
+        DarkvisionTargetSelf = true;
+        DarkvisionTargetColonists = true;
+        #endregion Darkvision
+
+        #region Invisibility
+        InvisibilityTargetSelf = true;
+        InvisibilityTargetColonists = true;
+        #endregion Invisibility
+
+        #region Overshield
+        OvershieldTargetSelf = true;
+        OvershieldTargetColonists = true;
+        #endregion Overshield
+
+        #region Word of Immunity
+        WordOfImmunityTargetColonists = true;
+        WordOfImmunityTargetColonyAnimals = true;
+        WordOfImmunityTargetSlaves = true;
+        WordOfImmunityTargetPrisoners = true;
+        WordOfImmunityTargetVisitors = false;
+        #endregion Word of Immunity
+
+        #region Ice Shield
+        IceShieldTargetSelf = true;
+        IceShieldTargetColonists = true;
+        IceShieldTargetSlaves = false;
+        IceShieldTargetVisitors = false;
+        #endregion Ice Shield
+
+        #region Fire Shield
+        FireShieldTargetSelf = true;
+        FireShieldTargetColonists = true;
+        FireShieldTargetSlaves = false;
+        FireShieldTargetVisitors = false;
+        #endregion Fire Shield
+
+        #region Static Aura
+        StaticAuraTargetSelf = true;
+        StaticAuraTargetColonists = true;
+        StaticAuraTargetSlaves = false;
+        StaticAuraTargetVisitors = false;
+        #endregion Static Aura
+
+        #region Soothe (Female/Male)
+        SootheColonistsCheck = true;
+        SootheColonistsMaximumMood = 0.5f;
+        SootheSlavesCheck = false;
+        SootheSlavesMaximumMood = 0.5f;
+        SoothePrisonersCheck = false;
+        SoothePrisonersMaximumMood = 0.5f;
+        SootheVisitorsCheck = false;
+        SootheVisitorsMaximumMood = 0.5f;
+        #endregion Soothe (Female/Male)
+
+        #region Word of Alliance
+        WordOfAllianceCheckAllowedArea = true;
+        WordOfAllianceGoodwill = new IntRange(-100, 100);
+        #endregion Word of Alliance
+
+        #region General
+        DraftedAutocastDefs = DefaultDraftedAutocastDefs();
+        UndraftedAutocastDefs = DefaultUndraftedAutocastDefs();
+        BlockedJobDefs = DefaultBlockedJobDefs();
+        #endregion General
+    }
+
+    public override void ExposeData()
+    {
+        base.ExposeData();
+
+        LookStruct(() => AutocastIntervalDrafted);
+        LookStruct(() => AutocastIntervalUndrafted);
+
+        #region Mend
+        LookStruct(() => MendHealthThreshold);
+        LookStruct(() => MendPawns);
+        LookStruct(() => MendInStockpile);
+        LookStruct(() => MendOnlyNamedStockpiles);
+        LookStruct(() => MendInStorage);
+        LookStruct(() => MendOnlyNamedStorageGroups);
+        #endregion Mend
+
+        #region Enchant Quality
+        LookStruct(() => EnchantInStockpile);
+        LookStruct(() => EnchantOnlyNamedStockpiles);
+        LookStruct(() => EnchantInStorage);
+        LookStruct(() => EnchantOnlyNamedStorageGroups);
+        #endregion Enchant Quality
+
+        #region Power
+        LookStruct(() => PowerBuildings);
+        LookStruct(() => PowerMechs);
+        #endregion Power
+
+        #region Steal Vitality
+        LookStruct(() => StealVitalityFromPrisoners);
+        LookStruct(() => StealVitalityFromSlaves);
+        LookStruct(() => StealVitalityFromColonists);
+        LookStruct(() => StealVitalityFromVisitors);
+        #endregion Steal Vitality
+
+        #region Deathshield
+        LookStruct(() => DeathshieldColonists);
+        LookStruct(() => DeathshieldColonyAnimals);
+        LookStruct(() => DeathshieldSlaves);
+        LookStruct(() => DeathshieldPrisoners);
+        LookStruct(() => DeathshieldVisitors);
+        #endregion Deathshield
+
+        #region Enthrall
+        LookStruct(() => EnthrallInStockpile);
+        LookStruct(() => EnthrallOnlyNamedStockpiles);
+        LookStruct(() => EnthrallInStorage);
+        LookStruct(() => EnthrallOnlyNamedStorageGroups);
+        #endregion Enthrall
+
+        #region Word of Joy
+        LookStruct(() => WordOfJoyMoodThreshold);
+        #endregion Word of Joy
+
+        #region Word of Serenity
+        LookStruct(() => WordOfSerenityTargetScaria);
+        LookStruct(() => WordOfSerenityTargetColonists);
+        LookStruct(() => WordOfSerenityTargetColonyAnimals);
+        LookStruct(() => WordOfSerenityTargetWildAnimals);
+        LookStruct(() => WordOfSerenityTargetSlaves);
+        LookStruct(() => WordOfSerenityTargetPrisoners);
+        LookStruct(() => WordOfSerenityTargetVisitors);
         LookHashSet(
             ref WordOfSerenityIgnoredMentalStateDefs,
             nameof(WordOfSerenityIgnoredMentalStateDefs),
-            defaultWordOfSerenityIgnoredMentalStateDefs
+            DefaultWordOfSerenityIgnoredMentalStateDefs()
         );
         #endregion Word of Serenity
 
         #region Brain Leech
-        LookField(ref BrainLeechTargetPrisoners, nameof(BrainLeechTargetPrisoners), true);
-        LookField(ref BrainLeechTargetSlaves, nameof(BrainLeechTargetSlaves), true);
+        LookStruct(() => BrainLeechTargetPrisoners);
+        LookStruct(() => BrainLeechTargetSlaves);
         #endregion Brain Leech
 
         #region Darkvision
-        LookField(ref DarkvisionTargetSelf, nameof(DarkvisionTargetSelf), true);
-        LookField(ref DarkvisionTargetColonists, nameof(DarkvisionTargetColonists), true);
+        LookStruct(() => DarkvisionTargetSelf);
+        LookStruct(() => DarkvisionTargetColonists);
         #endregion Darkvision
 
         #region Invisibility
-        LookField(ref InvisibilityTargetSelf, nameof(InvisibilityTargetSelf), true);
-        LookField(ref InvisibilityTargetColonists, nameof(InvisibilityTargetColonists), true);
+        LookStruct(() => InvisibilityTargetSelf);
+        LookStruct(() => InvisibilityTargetColonists);
         #endregion Invisibility
 
         #region Overshield
-        LookField(ref OvershieldTargetSelf, nameof(OvershieldTargetSelf), true);
-        LookField(ref OvershieldTargetColonists, nameof(OvershieldTargetColonists), true);
+        LookStruct(() => OvershieldTargetSelf);
+        LookStruct(() => OvershieldTargetColonists);
         #endregion Overshield
 
         #region Word of Immunity
-        LookField(ref WordOfImmunityTargetColonists, nameof(WordOfImmunityTargetColonists), true);
-        LookField(
-            ref WordOfImmunityTargetColonyAnimals,
-            nameof(WordOfImmunityTargetColonyAnimals),
-            true
-        );
-        LookField(ref WordOfImmunityTargetSlaves, nameof(WordOfImmunityTargetSlaves), true);
-        LookField(ref WordOfImmunityTargetPrisoners, nameof(WordOfImmunityTargetPrisoners), true);
-        LookField(ref WordOfImmunityTargetVisitors, nameof(WordOfImmunityTargetVisitors), false);
+        LookStruct(() => WordOfImmunityTargetColonists);
+        LookStruct(() => WordOfImmunityTargetColonyAnimals);
+        LookStruct(() => WordOfImmunityTargetSlaves);
+        LookStruct(() => WordOfImmunityTargetPrisoners);
+        LookStruct(() => WordOfImmunityTargetVisitors);
         #endregion Word of Immunity
 
         #region Ice Shield
-        LookField(ref IceShieldTargetSelf, nameof(IceShieldTargetSelf), true);
-        LookField(ref IceShieldTargetColonists, nameof(IceShieldTargetColonists), true);
-        LookField(ref IceShieldTargetSlaves, nameof(IceShieldTargetSlaves), false);
-        LookField(ref IceShieldTargetVisitors, nameof(IceShieldTargetVisitors), false);
+        LookStruct(() => IceShieldTargetSelf);
+        LookStruct(() => IceShieldTargetColonists);
+        LookStruct(() => IceShieldTargetSlaves);
+        LookStruct(() => IceShieldTargetVisitors);
         #endregion Ice Shield
 
         #region Fire Shield
-        LookField(ref FireShieldTargetSelf, nameof(FireShieldTargetSelf), true);
-        LookField(ref FireShieldTargetColonists, nameof(FireShieldTargetColonists), true);
-        LookField(ref FireShieldTargetSlaves, nameof(FireShieldTargetSlaves), false);
-        LookField(ref FireShieldTargetVisitors, nameof(FireShieldTargetVisitors), false);
+        LookStruct(() => FireShieldTargetSelf);
+        LookStruct(() => FireShieldTargetColonists);
+        LookStruct(() => FireShieldTargetSlaves);
+        LookStruct(() => FireShieldTargetVisitors);
         #endregion Fire Shield
 
         #region Static Aura
-        LookField(ref StaticAuraTargetSelf, nameof(StaticAuraTargetSelf), true);
-        LookField(ref StaticAuraTargetColonists, nameof(StaticAuraTargetColonists), true);
-        LookField(ref StaticAuraTargetSlaves, nameof(StaticAuraTargetSlaves), false);
-        LookField(ref StaticAuraTargetVisitors, nameof(StaticAuraTargetVisitors), false);
+        LookStruct(() => StaticAuraTargetSelf);
+        LookStruct(() => StaticAuraTargetColonists);
+        LookStruct(() => StaticAuraTargetSlaves);
+        LookStruct(() => StaticAuraTargetVisitors);
         #endregion Static Aura
 
         #region Soothe (Female/Male)
-        LookField(ref SootheColonistsCheck, nameof(SootheColonistsCheck), true);
-        LookField(ref SootheColonistsMaximumMood, nameof(SootheColonistsMaximumMood), 0.5f);
-        LookField(ref SootheSlavesCheck, nameof(SootheSlavesCheck), false);
-        LookField(ref SootheSlavesMaximumMood, nameof(SootheSlavesMaximumMood), 0.5f);
-        LookField(ref SoothePrisonersCheck, nameof(SoothePrisonersCheck), false);
-        LookField(ref SoothePrisonersMaximumMood, nameof(SoothePrisonersMaximumMood), 0.5f);
-        LookField(ref SootheVisitorsCheck, nameof(SootheVisitorsCheck), false);
-        LookField(ref SootheVisitorsMaximumMood, nameof(SootheVisitorsMaximumMood), 0.5f);
+        LookStruct(() => SootheColonistsCheck);
+        LookStruct(() => SootheColonistsMaximumMood);
+        LookStruct(() => SootheSlavesCheck);
+        LookStruct(() => SootheSlavesMaximumMood);
+        LookStruct(() => SoothePrisonersCheck);
+        LookStruct(() => SoothePrisonersMaximumMood);
+        LookStruct(() => SootheVisitorsCheck);
+        LookStruct(() => SootheVisitorsMaximumMood);
         #endregion Soothe (Female/Male)
 
         #region Word of Alliance
-        LookField(ref WordOfAllianceMaxGoodwill, nameof(WordOfAllianceMaxGoodwill), 100);
+        LookStruct(() => WordOfAllianceCheckAllowedArea);
+        LookStruct(() => WordOfAllianceGoodwill);
         #endregion Word of Alliance
 
         #region General
         LookHashSet(
             ref DraftedAutocastDefs,
             nameof(DraftedAutocastDefs),
-            defaultDraftedAutocastDefs
+            DefaultDraftedAutocastDefs()
         );
         LookHashSet(
             ref UndraftedAutocastDefs,
             nameof(UndraftedAutocastDefs),
-            defaultUndraftedAutocastDefs
+            DefaultUndraftedAutocastDefs()
         );
-        LookHashSet(ref BlockedJobDefs, nameof(BlockedJobDefs), defaultBlockedJobDefs);
+        LookHashSet(ref BlockedJobDefs, nameof(BlockedJobDefs), DefaultBlockedJobDefs());
         #endregion General
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
   <BetterAutocastVPE.SettingsCategory>Better Autocasting for VPE</BetterAutocastVPE.SettingsCategory>
-  <BetterAutocastVPE.Clarification>"In range" below considers allowed areas when undrafted, but ignores them when drafted.\n\nForbidden targets are ignored unless drafted.\nThis includes checking if they are in allowed areas, or reserved by a pawn.</BetterAutocastVPE.Clarification>
+  <BetterAutocastVPE.Clarification>"In range" below considers allowed areas when undrafted, but ignores them when drafted.\n\nForbidden targets are ignored unless drafted.\nThis includes checking if they are in allowed areas, or reserved by a pawn.\n\nAll psycasts check if the target is valid by the regular rules before casting.</BetterAutocastVPE.Clarification>
   <BetterAutocastVPE.NoNonexistentDefs>&lt;b&gt;No nonexistent defs configured, nothing to do here.&lt;/b&gt;</BetterAutocastVPE.NoNonexistentDefs>
   <BetterAutocastVPE.Uninstall.Explanation>Removes all elements of this mod from the currently loaded game so you can safely uninstall the mod.\nCreates a backup save both before and after the removal, then puts you in the main menu.\n\nAlso turns off autocasting for all patched psycasts. For technical reasons, this does not check if they can be autocast without the mod and may need to be re-enabled on reload.\n\nOnly works if you currently have a save loaded.</BetterAutocastVPE.Uninstall.Explanation>
   <BetterAutocastVPE.Uninstall>Uninstall the mod from the current game</BetterAutocastVPE.Uninstall>
@@ -52,7 +52,7 @@
   <BetterAutocastVPE.VPE_PsychicGuidance.Explanation>Targets a random non-downed psychically sensitive colonist in range that doesn't have the Psychic Guidance buff.</BetterAutocastVPE.VPE_PsychicGuidance.Explanation>
   <BetterAutocastVPE.VPE_SpeedBoost.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_SpeedBoost.Explanation>
   <BetterAutocastVPE.VPE_StealVitality.Explanation>Targets the pawn with highest psychic sensitivity in range, ignoring those that have no psychic sensitivity, prioritizing by group in the order below.\nThat is, target prisoners first, if no prisoners are available, then target slaves, and so on.</BetterAutocastVPE.VPE_StealVitality.Explanation>
-  <BetterAutocastVPE.VPE_WordofAlliance.Explanation>Will target a pawn of the faction with the least goodwill, prioritizing first by psychic sensitivity then by distance to the casting pawn.\nIgnores factions that don't have normal goodwill, are permanently hostile, or are already above the threshold below.</BetterAutocastVPE.VPE_WordofAlliance.Explanation>
+  <BetterAutocastVPE.VPE_WordofAlliance.Explanation>Will target a pawn of the faction with the least goodwill, prioritizing first by psychic sensitivity then by distance to the casting pawn.\nIgnores factions that don't have normal goodwill, are permanently hostile, or are outside the goodwill range below.\nMinimum value is inclusive, maximum value is exclusive.\nFor example -20 to 20 will cast on a faction with -20 goodwill, but ignore factions with 20 goodwill.</BetterAutocastVPE.VPE_WordofAlliance.Explanation>
   <BetterAutocastVPE.VPE_WordofImmunity.Explanation>Will target the closest pawn in range with an immunizable disease that does not have the Psychic Immunity buff, prioritizing by group in the order below.\nThat is, target colonists first, if no colonists are available, then target colony animals, and so on.</BetterAutocastVPE.VPE_WordofImmunity.Explanation>
   <BetterAutocastVPE.VPE_WordofJoy.Explanation>Targets the closest non-downed psychically sensitive colonist in range without the Joyfuzz effect.</BetterAutocastVPE.VPE_WordofJoy.Explanation>
   <BetterAutocastVPE.VPE_WordofProductivity.Explanation>Targets a random non-downed colonist in range that doesn't have the Productivity buff.</BetterAutocastVPE.VPE_WordofProductivity.Explanation>
@@ -87,7 +87,8 @@
   <BetterAutocastVPE.EnthrallOnlyNamedStorageGroups>Only enthrall corpses in appropriately named storage groups</BetterAutocastVPE.EnthrallOnlyNamedStorageGroups>
   <BetterAutocastVPE.CastDrafted>Cast while drafted</BetterAutocastVPE.CastDrafted>
   <BetterAutocastVPE.CastUndrafted>Cast while undrafted</BetterAutocastVPE.CastUndrafted>
-  <BetterAutocastVPE.WordOfAllianceMaxGoodwill>Maximum goodwill: {0}</BetterAutocastVPE.WordOfAllianceMaxGoodwill>
+  <BetterAutocastVPE.WordOfAllianceCheckArea>Only cast in allowed area</BetterAutocastVPE.WordOfAllianceCheckArea>
+  <BetterAutocastVPE.WordOfAllianceGoodwillRange>Goodwill range:</BetterAutocastVPE.WordOfAllianceGoodwillRange>
   <BetterAutocastVPE.WordOfJoyMoodThreshold>Mood threshold: {0}</BetterAutocastVPE.WordOfJoyMoodThreshold>
   <BetterAutocastVPE.WordOfJoyMoodThreshold.Description>Maximum mood for a pawn to be auto-targeted</BetterAutocastVPE.WordOfJoyMoodThreshold.Description>
   <BetterAutocastVPE.WordOfSerenityTargetScaria>Target pawns with scaria</BetterAutocastVPE.WordOfSerenityTargetScaria>

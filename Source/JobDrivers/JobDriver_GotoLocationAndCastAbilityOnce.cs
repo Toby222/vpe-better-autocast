@@ -41,6 +41,7 @@ public class JobDriver_GotoLocationAndCastAbilityOnce : JobDriver_CastAbilityOnc
     {
         yield return new Toil
         {
+            debugName = "Stop and go to",
             initAction = pawn.pather.StopDead,
             tickAction = delegate
             {

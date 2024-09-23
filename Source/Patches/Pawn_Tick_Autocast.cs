@@ -48,7 +48,6 @@ internal static class Pawn_Tick_Autocast
             )
         )
         {
-            BetterAutocastVPE.DebugLog($"Checking autocast for {ability.def.defName}");
             if (!ability.autoCast)
                 continue;
             if (!ability.IsEnabledForPawn(out _))

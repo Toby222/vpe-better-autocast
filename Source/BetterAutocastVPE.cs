@@ -10,6 +10,7 @@ using System.Globalization;
 using System.Linq;
 using Settings;
 using UnityEngine;
+using VanillaPsycastsExpanded;
 using VFECore.Abilities;
 
 public class BetterAutocastVPE : Mod
@@ -83,6 +84,54 @@ public class BetterAutocastVPE : Mod
     }
 
 #if DEBUG
+    [LudeonTK.DebugAction(
+        category = "Better Autocasting",
+        name = "Give all handled psycasts",
+        allowedGameStates = LudeonTK.AllowedGameStates.PlayingOnMap,
+        requiresIdeology = true,
+        actionType = LudeonTK.DebugActionType.ToolMapForPawns
+    )]
+    public static void GiveAllPsycasts(Pawn pawn)
+    {
+        Traverse
+            .Create(typeof(DebugToolsPawns))
+            .Method("GivePsylink")
+            .GetValue<List<LudeonTK.DebugActionNode>>()
+            .Last()
+            .pawnAction(pawn);
+        PsycastUtility.ResetPsycasts(pawn);
+        pawn.Psycasts().ImproveStats(100);
+        foreach (PsycasterPathDef pathDef in DefDatabase<PsycasterPathDef>.AllDefsListForReading)
+        {
+            pawn.Psycasts().UnlockPath(pathDef);
+        }
+        foreach (
+            AbilityDef ability in PsycastingHandler.abilityHandlers.Keys.Select(defName =>
+                DefDatabase<AbilityDef>.GetNamed(defName)
+            )
+        )
+        {
+            pawn.GetComp<CompAbilities>().GiveAbility(ability);
+        }
+    }
+
+    [LudeonTK.DebugAction(
+        category = "Better Autocasting",
+        name = "List handled psycasts with too many targets",
+        allowedGameStates = LudeonTK.AllowedGameStates.Invalid
+    )]
+    public static void CheckAllPsycastsValid()
+    {
+        DebugError(
+            "Invalid psycasts:\n"
+                + PsycastingHandler
+                    .abilityHandlers.Keys.Where(defName =>
+                        DefDatabase<AbilityDef>.GetNamed(defName).targetCount > 1
+                    )
+                    .ToCommaList()
+        );
+    }
+
     [LudeonTK.DebugAction(
         category = "Better Autocasting",
         name = "Generate mod description",
@@ -160,12 +209,6 @@ public class BetterAutocastVPE : Mod
         );
         traverse.Value = original;
         GenScene.GoToMainMenu();
-    }
-
-    public void ResetSettings()
-    {
-        Settings = new();
-        WriteSettings();
     }
 
     public override void WriteSettings()

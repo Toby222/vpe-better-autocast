@@ -85,23 +85,63 @@ internal static class PsycastingHandler
     /// Tries to create a job to cast the given ability on the given target
     /// </summary>
     /// <returns>If a job was successfully created</returns>
-    private static bool CastAbilityOnTarget(Ability ability, Thing target)
+    private static bool CastAbilityOnTarget(Ability ability, GlobalTargetInfo target)
     {
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
-        if (target is null)
-            throw new ArgumentNullException(nameof(target));
+        if (ability.def.targetCount > 1)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(ability),
+                "Can't autocast with multiple targets"
+            );
+        }
 
-        ability.CreateCastJob(new GlobalTargetInfo(target));
-        return true;
-    }
+        AbilityTargetingMode targetMode = ability.def.targetModes[0];
 
-    private static bool CastAbilityOnTarget(Ability ability, IntVec3 target)
-    {
-        if (ability is null)
-            throw new ArgumentNullException(nameof(ability));
+#if DEBUG
+        const bool showMessages = true;
+#else
+        const bool showMessages = false;
+#endif
 
-        ability.CreateCastJob(new GlobalTargetInfo(target, ability.pawn.MapHeld));
+        bool validated;
+
+        if (targetMode == AbilityTargetingMode.Self)
+        {
+            // Self is not checked for validity, it's always fair game.
+            validated = true;
+        }
+        else if (targetMode == AbilityTargetingMode.Random)
+        {
+            if (ability.targetParams.canTargetLocations)
+            {
+                validated = ability.ValidateTargetTile(target);
+            }
+            else
+            {
+                validated = ability.ValidateTarget((LocalTargetInfo)target, showMessages);
+            }
+        }
+        else if (ability.def.worldTargeting)
+        {
+            validated = ability.ValidateTargetTile(target);
+        }
+        else
+        {
+            // Is this right?
+            validated = ability.ValidateTarget((LocalTargetInfo)target);
+        }
+
+        if (!validated)
+        {
+            BetterAutocastVPE.Warn(
+                $"<b><i>Please report this</i></b> - Failed to validate {ability.def.defName} for {ability.pawn.NameFullColored} on {target.Label} - this is most likely harmless but means that I implemented something wrong."
+            );
+            return false;
+        }
+
+        ability.CreateCastJob(target);
         return true;
     }
     #endregion helper functions
@@ -138,7 +178,9 @@ internal static class PsycastingHandler
             }
             catch (Exception ex)
             {
-                BetterAutocastVPE.Error($"Exception while trying to autocast {ability.def.defName} of {pawn.NameFullColored}:\n{ex}\n{ex.StackTrace}");
+                BetterAutocastVPE.Error(
+                    $"Exception while trying to autocast {ability.def.defName} of {pawn.NameFullColored}:\n{ex}\n{ex.StackTrace}"
+                );
             }
 
             if (wasAutocast)
@@ -647,8 +689,18 @@ internal static class PsycastingHandler
     private static bool HandleMendByPawn(Pawn pawn, Ability ability)
     {
         return pawn.GetPawnsInRange(ability.GetRangeForPawn())
-                .Colonists()
-                .WithDamagedEquipment()
+                .Where(targetPawn =>
+                    (
+                        targetPawn.RaceProps.Humanlike
+                        && targetPawn.Faction == pawn.Faction
+                        && pawn.HasDamagedEquipment()
+                    )
+                    || (
+                        targetPawn.RaceProps.IsMechanoid
+                        && targetPawn.IsMechAlly(pawn)
+                        && MechRepairUtility.CanRepair(targetPawn)
+                    )
+                )
                 .GetRandomClass()
                 is Pawn target
             && CastAbilityOnTarget(ability, target);
@@ -735,10 +787,10 @@ internal static class PsycastingHandler
     {
         return GetRandomValidCellInArea<Area_IceCrystal>(
                 pawn.MapHeld,
-                cell => !cell.Filled(pawn.MapHeld) && cell.GetFirstBuilding(pawn.MapHeld) is null
+                cell => cell.GetFirstBuilding(pawn.MapHeld) is null
             )
                 is IntVec3 target
-            && CastAbilityOnTarget(ability, target);
+            && CastAbilityOnTarget(ability, new GlobalTargetInfo(target, ability.pawn.MapHeld));
     }
 
     private static bool HandleIceShield(Pawn pawn, Ability ability)
@@ -777,7 +829,8 @@ internal static class PsycastingHandler
         BetterAutocastVPE.DebugLog(
             $"HandleSolarPinhole({pawn.NameFullColored}, {ability.def.defName}) -> ({maybeTarget.ToStringSafe()})"
         );
-        return maybeTarget is IntVec3 target && CastAbilityOnTarget(ability, target);
+        return maybeTarget is IntVec3 target
+            && CastAbilityOnTarget(ability, new GlobalTargetInfo(target, ability.pawn.MapHeld));
     }
     #endregion Skipmaster
 
@@ -797,20 +850,25 @@ internal static class PsycastingHandler
     private static bool HandleWordOfAlliance(Pawn pawn, Ability ability)
     {
         Pawn? target = pawn
-            .MapHeld.mapPawns.AllPawnsSpawned.Where(mapPawn =>
-                (
-                    mapPawn is
-                    {
-                        psychicEntropy.PsychicSensitivity: > 0,
-                        Faction: { IsPlayer: false, HasGoodwill: true }
-                    }
+            .MapHeld.mapPawns.AllPawnsSpawned.Where(targetPawn =>
+                targetPawn.Faction is Faction targetFaction
+                && targetFaction != pawn.Faction
+                && targetFaction.CanChangeGoodwillFor(pawn.Faction, 1)
+                && (
+                    !BetterAutocastVPE.Settings.WordOfAllianceCheckAllowedArea
+                    || pawn.Drafted
+                    || (
+                        pawn.playerSettings.EffectiveAreaRestrictionInPawnCurrentMap
+                            is Area allowedArea
+                        && allowedArea[targetPawn.Position]
+                    )
                 )
-                && mapPawn.Faction.PlayerGoodwill
-                    < BetterAutocastVPE.Settings.WordOfAllianceMaxGoodwill
-                && !mapPawn.Faction.def.PermanentlyHostileTo(Find.FactionManager.OfPlayer.def)
+                && targetFaction.PlayerGoodwill
+                    < BetterAutocastVPE.Settings.WordOfAllianceGoodwill.max
+                && targetFaction.PlayerGoodwill
+                    >= BetterAutocastVPE.Settings.WordOfAllianceGoodwill.min
             )
             .OrderBy(mapPawn => mapPawn.Faction.PlayerGoodwill)
-            .ThenByDescending(mapPawn => mapPawn.psychicEntropy.PsychicSensitivity)
             .ThenByDescending(mapPawn => mapPawn.Position.DistanceTo(mapPawn.Position))
             .FirstOrFallback();
         return target is not null && CastAbilityOnTarget(ability, target);

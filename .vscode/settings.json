@@ -3,12 +3,12 @@
   "files.exclude": {
     ".direnv": true,
     ".vscode/obj": true,
-    "*/Assemblies/": true
+    "*/Assemblies/": true,
+    "1.4": true
   },
   "files.readonlyInclude": {
     "log/rimworld.log": true,
-    "About/About.xml": true,
-    "1.4/**/*": true
+    "About/About.xml": true
   },
   "[xml]": {
     "editor.quickSuggestions": {

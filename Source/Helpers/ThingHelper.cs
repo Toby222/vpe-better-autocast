@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
+using RimWorld.Planet;
 using Verse;
 using Verse.AI;
 
@@ -75,7 +76,12 @@ internal static class ThingHelper
         if (thing is null)
             throw new ArgumentNullException(nameof(thing));
 
-        return pawn.Drafted || (!thing.IsForbidden(pawn) && pawn.CanReserve(thing));
+        return pawn.Drafted
+            || (
+                !thing.IsForbidden(pawn)
+                && pawn.CanReserve(thing)
+                && (new GlobalTargetInfo(thing).IsValid)
+            );
     }
 
     internal static T? GetRandomClass<T>(
