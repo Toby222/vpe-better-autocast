@@ -38,5 +38,6 @@ jobs:
         with:
           tag_name: develop
           prerelease: true
+          body: For changes see ${{ github.server_url }}/${{ github.repository }}/blob/${{ github.sha }}/Changelog.md
           files: ./output/*.zip
         if: startsWith(github.ref, 'refs/tags/') == false
