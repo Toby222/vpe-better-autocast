@@ -33,7 +33,7 @@
               nixfmt-rfc-style
               omnisharp-roslyn
               mono
-              libxslt
+              libxslt.bin
               nodePackages.npm
             ];
 
@@ -55,6 +55,7 @@
                   "**/*.xslt"
                   "**/*.json"
                   "**/*.csproj"
+                  ".github/workflows/*"
                 ];
                 settings = {
                   plugins = [ "@prettier/plugin-xml" ];

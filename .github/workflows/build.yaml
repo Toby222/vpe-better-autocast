@@ -1,0 +1,42 @@
+name: Build
+on:
+  - push
+  - workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v3
+      - name: Build mod
+        run: |
+          git clone https://github.com/Vanilla-Expanded/VanillaPsycastsExpanded.git ../VanillaPsycastsExpanded
+          git clone https://github.com/Vanilla-Expanded/VanillaExpandedFramework.git ../VanillaExpandedFramework
+          nix develop
+          mkdir ./output
+          nix-shell -p libxslt.bin --run "./.vscode/build.sh Release"
+          ./.vscode/setup.sh $(realpath ./output/release)
+          nix-shell -p zip --run "zip ./output/release.zip ./output/release/**/*"
+          nix-shell -p libxslt.bin --run "./.vscode/build.sh Debug"
+          ./.vscode/setup.sh $(realpath ./output/debug)
+          nix-shell -p zip --run "zip ./output/debug.zip ./output/debug/**/*"
+      - name: Create release
+        env:
+          version: $(git describe --exact-match --tags)
+        with:
+          prerelease: false
+          make_latest: true
+          body: For changes see ${{ github.server_url }}/${{ github.repository }}/blob/${{ github.sha }}/Changelog.md
+          files: ./output/*.zip
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+      - name: Update Nightly Release
+        uses: andelf/nightly-release@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: develop
+          prerelease: true
+          files: ./output/*.zip
+        if: startsWith(github.ref, 'refs/tags/') == false
