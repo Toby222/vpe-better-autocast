@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
+using VFECore.Abilities;
 
 namespace BetterAutocastVPE.Helpers;
 
@@ -36,20 +37,17 @@ internal static class MendHelper
             ? map.GetThingsInNamedStorageGroup("mend")
             : map.GetThingsInStorage();
 
-#if DEBUG
-        things = things.ToList();
-        BetterAutocastVPE.DebugLog(
-            "DamagedThings" + string.Join(",", things.Select(thing => thing.ToStringSafe()))
-        );
-#endif
-
         return things
             .Where(ThingIsSufficientlyDamaged)
             .Where(thing => PawnIsDraftedOrThingIsAllowedAndReservable(pawn, thing))
             .GetRandomClass(thing => (float)thing.HitPoints / thing.MaxHitPoints);
     }
 
-    internal static Thing? GetRandomAllowedDamagedThingInStockpile(Map map, Pawn pawn)
+    internal static Thing? GetRandomAllowedDamagedThingInStockpile(
+        Map map,
+        Pawn pawn,
+        Ability mendAbility
+    )
     {
         if (map is null)
             throw new ArgumentNullException(nameof(map));
@@ -66,6 +64,7 @@ internal static class MendHelper
         return things
             .Where(thing => PawnIsDraftedOrThingIsAllowedAndReservable(pawn, thing))
             .Where(ThingIsSufficientlyDamaged)
+            .Where(thing => mendAbility.ValidateTarget(thing, false))
             .GetRandomClass(thing => (float)thing.HitPoints / thing.MaxHitPoints);
     }
 

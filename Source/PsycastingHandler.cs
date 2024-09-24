@@ -109,6 +109,7 @@ internal static class PsycastingHandler
 
         if (targetMode == AbilityTargetingMode.Self)
         {
+            BetterAutocastVPE.DebugLog(ability.def.defName + " validating self");
             // Self is not checked for validity, it's always fair game.
             validated = true;
         }
@@ -116,19 +117,23 @@ internal static class PsycastingHandler
         {
             if (ability.targetParams.canTargetLocations)
             {
+                BetterAutocastVPE.DebugLog(ability.def.defName + " validating target tile");
                 validated = ability.ValidateTargetTile(target, showMessages);
             }
             else
             {
+                BetterAutocastVPE.DebugLog(ability.def.defName + " validating target");
                 validated = ability.ValidateTarget((LocalTargetInfo)target, showMessages);
             }
         }
         else if (ability.def.worldTargeting)
         {
+            BetterAutocastVPE.DebugLog(ability.def.defName + " validating target tile");
             validated = ability.ValidateTargetTile(target, showMessages);
         }
         else
         {
+            BetterAutocastVPE.DebugLog(ability.def.defName + " validating target");
             // Is this right?
             validated = ability.ValidateTarget((LocalTargetInfo)target, showMessages);
         }
@@ -699,7 +704,7 @@ internal static class PsycastingHandler
                     (
                         targetPawn.RaceProps.Humanlike
                         && targetPawn.Faction == pawn.Faction
-                        && pawn.HasDamagedEquipment()
+                        && targetPawn.HasDamagedEquipment()
                     )
                     || (
                         targetPawn.RaceProps.IsMechanoid
@@ -714,7 +719,7 @@ internal static class PsycastingHandler
 
     private static bool HandleMendByZone(Pawn pawn, Ability ability)
     {
-        return GetRandomAllowedDamagedThingInStockpile(pawn.Map, pawn) is Thing target
+        return GetRandomAllowedDamagedThingInStockpile(pawn.Map, pawn, ability) is Thing target
             && CastAbilityOnTarget(ability, target);
     }
 

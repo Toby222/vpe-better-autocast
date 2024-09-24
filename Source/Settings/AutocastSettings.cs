@@ -178,7 +178,6 @@ public class AutocastSettings : ModSettings
 
     private void LookStruct<T>(Expression<Func<T>> expression)
     {
-#if DEBUG
         if (
             expression.Body
             is not MemberExpression
@@ -192,7 +191,6 @@ public class AutocastSettings : ModSettings
                 nameof(expression)
             );
         }
-#endif
 
         FieldInfo fieldInfo = typeof(AutocastSettings).GetField(memberName);
         T? value = fieldInfo.GetValue(this).ChangeType<T>();

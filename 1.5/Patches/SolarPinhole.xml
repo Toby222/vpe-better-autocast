@@ -5,6 +5,7 @@
         <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_SolarPinhole"]</xpath>
         <value>
           <distanceToTarget>24.9</distanceToTarget>
+          <requireLineOfSight>false</requireLineOfSight>
           <jobDef>BetterAutocastVPE_GotoLocationAndCastAbilityOnce</jobDef>
         </value>
       </li>

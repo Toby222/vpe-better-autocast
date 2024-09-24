@@ -76,12 +76,7 @@ internal static class ThingHelper
         if (thing is null)
             throw new ArgumentNullException(nameof(thing));
 
-        return pawn.Drafted
-            || (
-                !thing.IsForbidden(pawn)
-                && pawn.CanReserve(thing)
-                && (new GlobalTargetInfo(thing).IsValid)
-            );
+        return pawn.Drafted || (!thing.IsForbidden(pawn) && pawn.CanReserve(thing));
     }
 
     internal static T? GetRandomClass<T>(

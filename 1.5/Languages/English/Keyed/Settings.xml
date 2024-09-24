@@ -64,6 +64,7 @@
   <BetterAutocastVPE.SootheSlaves>Check moods of Slaves</BetterAutocastVPE.SootheSlaves>
   <BetterAutocastVPE.SoothePrisoners>Check moods of Prisoners</BetterAutocastVPE.SoothePrisoners>
   <BetterAutocastVPE.SootheVisitors>Check moods of Visitors</BetterAutocastVPE.SootheVisitors>
+  <BetterAutocastVPE.ShowValidationMessages>Show target validation messages - used for debugging</BetterAutocastVPE.ShowValidationMessages>
   <BetterAutocastVPE.AutocastIntervalDrafted>Drafted autocasting interval: {0} ticks</BetterAutocastVPE.AutocastIntervalDrafted>
   <BetterAutocastVPE.AutocastIntervalDrafted.Description>Autocasting interval while drafted (only applies to patched psycasts)</BetterAutocastVPE.AutocastIntervalDrafted.Description>
   <BetterAutocastVPE.AutocastIntervalUndrafted>Undrafted autocasting interval: {0} ticks</BetterAutocastVPE.AutocastIntervalUndrafted>

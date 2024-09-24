@@ -399,6 +399,7 @@ public static class AutocastSettingsWindow
             confirmReset = true;
         }
 
+        Checkbox("ShowValidationMessages", ref Settings.ShowValidationMessages);
         Settings.AutocastIntervalDrafted = (int)
             listing.SliderLabeled(
                 "BetterAutocastVPE.AutocastIntervalDrafted".TranslateSafe(

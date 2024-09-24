@@ -8,8 +8,9 @@ namespace BetterAutocastVPE.Extensions;
 static class DefExtension
 {
     public static readonly Dictionary<(Def def, Type extension), DefModExtension?> Cache = [];
+
     public static TExtension? GetModExtensionCached<TExtension>(this Def def)
-    where TExtension : DefModExtension
+        where TExtension : DefModExtension
     {
         if (!Cache.ContainsKey((def, typeof(TExtension))))
         {

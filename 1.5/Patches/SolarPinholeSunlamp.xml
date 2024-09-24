@@ -10,6 +10,7 @@
           <value>
             <distanceToTarget>24.9</distanceToTarget>
             <jobDef>BetterAutocastVPE_GotoLocationAndCastAbilityOnce</jobDef>
+            <requireLineOfSight>false</requireLineOfSight>
           </value>
         </li>
         <li Class="PatchOperationReplace">
