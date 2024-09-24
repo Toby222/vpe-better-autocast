@@ -78,6 +78,7 @@ public class AutocastSettings : ModSettings
         Reset();
     }
 
+    public bool ShowValidationMessages;
     public int AutocastIntervalDrafted;
     public int AutocastIntervalUndrafted;
     public HashSet<string> DraftedAutocastDefs;
@@ -177,6 +178,7 @@ public class AutocastSettings : ModSettings
 
     private void LookStruct<T>(Expression<Func<T>> expression)
     {
+#if DEBUG
         if (
             expression.Body
             is not MemberExpression
@@ -190,11 +192,12 @@ public class AutocastSettings : ModSettings
                 nameof(expression)
             );
         }
+#endif
 
         FieldInfo fieldInfo = typeof(AutocastSettings).GetField(memberName);
         T? value = fieldInfo.GetValue(this).ChangeType<T>();
         T defaultValue = fieldInfo.GetValue(DefaultValues()).ChangeType<T>();
-        Scribe_Values.Look<T>(ref value, memberName, defaultValue);
+        Scribe_Values.Look(ref value, memberName, defaultValue);
         fieldInfo.SetValue(this, value);
     }
 
@@ -225,8 +228,14 @@ public class AutocastSettings : ModSettings
 
     public void Reset()
     {
+        #region General
+        ShowValidationMessages = false;
         AutocastIntervalDrafted = 30;
         AutocastIntervalUndrafted = 600;
+        DraftedAutocastDefs = DefaultDraftedAutocastDefs();
+        UndraftedAutocastDefs = DefaultUndraftedAutocastDefs();
+        BlockedJobDefs = DefaultBlockedJobDefs();
+        #endregion General
 
         #region Mend
         MendHealthThreshold = 0.5f;
@@ -350,18 +359,13 @@ public class AutocastSettings : ModSettings
         WordOfAllianceCheckAllowedArea = true;
         WordOfAllianceGoodwill = new IntRange(-100, 100);
         #endregion Word of Alliance
-
-        #region General
-        DraftedAutocastDefs = DefaultDraftedAutocastDefs();
-        UndraftedAutocastDefs = DefaultUndraftedAutocastDefs();
-        BlockedJobDefs = DefaultBlockedJobDefs();
-        #endregion General
     }
 
     public override void ExposeData()
     {
         base.ExposeData();
 
+        LookStruct(() => ShowValidationMessages);
         LookStruct(() => AutocastIntervalDrafted);
         LookStruct(() => AutocastIntervalUndrafted);
 

@@ -102,7 +102,7 @@ internal static class PsycastingHandler
 #if DEBUG
         const bool showMessages = true;
 #else
-        const bool showMessages = false;
+        bool showMessages = BetterAutocastVPE.Settings.ShowValidationMessages;
 #endif
 
         bool validated;
@@ -116,7 +116,7 @@ internal static class PsycastingHandler
         {
             if (ability.targetParams.canTargetLocations)
             {
-                validated = ability.ValidateTargetTile(target);
+                validated = ability.ValidateTargetTile(target, showMessages);
             }
             else
             {
@@ -125,17 +125,21 @@ internal static class PsycastingHandler
         }
         else if (ability.def.worldTargeting)
         {
-            validated = ability.ValidateTargetTile(target);
+            validated = ability.ValidateTargetTile(target, showMessages);
         }
         else
         {
             // Is this right?
-            validated = ability.ValidateTarget((LocalTargetInfo)target);
+            validated = ability.ValidateTarget((LocalTargetInfo)target, showMessages);
         }
 
         if (!validated)
         {
+#if DEBUG
+            BetterAutocastVPE.Error(
+#else
             BetterAutocastVPE.Warn(
+#endif
                 $"<b><i>Please report this</i></b> - Failed to validate {ability.def.defName} for {ability.pawn.NameFullColored} on {target.Label} - this is most likely harmless but means that I implemented something wrong."
             );
             return false;
@@ -306,7 +310,7 @@ internal static class PsycastingHandler
         if (hediffDefName is null)
         {
             AbilityExtension_Hediff? hediffExtension =
-                ability.def.GetModExtension<AbilityExtension_Hediff>();
+                ability.def.GetModExtensionCached<AbilityExtension_Hediff>();
 
             if (hediffExtension is null)
             {
@@ -577,7 +581,9 @@ internal static class PsycastingHandler
 
     private static bool HandleSoothe(Pawn pawn, Ability ability)
     {
-        Gender gender = ability.def.GetModExtension<AbilityExtension_CastPsychicSoothe>().gender;
+        Gender gender = ability
+            .def.GetModExtensionCached<AbilityExtension_CastPsychicSoothe>()!
+            .gender;
         BetterAutocastVPE.DebugLog(ability.def.defName + " - Gender: " + gender);
         Pawn[] validTargets = pawn
             .MapHeld.mapPawns.AllPawnsSpawned.Where(mapPawn =>
@@ -818,13 +824,18 @@ internal static class PsycastingHandler
     #region Skipmaster
     private static bool HandleSolarPinhole(Pawn pawn, Ability ability)
     {
+        bool allowedOnBuildings =
+            ability.def.GetModExtensionCached<AbilityExtension_Spawn>()?.allowOnBuildings != false;
         IntVec3? maybeTarget = GetRandomValidCellInArea<Area_SolarPinhole>(
             pawn.MapHeld,
             cell =>
-                !cell.Filled(pawn.MapHeld)
-                && !pawn
-                    .MapHeld.thingGrid.ThingsListAtFast(cell)
-                    .Any(thing => thing.def.defName is "SolarPinhole" or "SolarPinholeSunlamp")
+            {
+                return !cell.Filled(pawn.Map)
+                    && (allowedOnBuildings || cell.GetFirstBuilding(pawn.Map) is null)
+                    && !pawn
+                        .MapHeld.thingGrid.ThingsListAtFast(cell)
+                        .Any(thing => thing.def.defName is "SolarPinhole" or "SolarPinholeSunlamp");
+            }
         );
         BetterAutocastVPE.DebugLog(
             $"HandleSolarPinhole({pawn.NameFullColored}, {ability.def.defName}) -> ({maybeTarget.ToStringSafe()})"
