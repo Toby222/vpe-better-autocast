@@ -1,3 +1,7 @@
+# 5.0.2.1
+
+- Remove line of sight requirement from Ice Crystal
+
 # 5.0.2
 
 Start keeping a proper changelog

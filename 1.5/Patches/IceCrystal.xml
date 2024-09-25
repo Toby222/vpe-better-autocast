@@ -5,7 +5,7 @@
         <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_IceCrystal"]</xpath>
         <value>
           <jobDef>BetterAutocastVPE_GotoLocationAndCastAbilityOnce</jobDef>
-          <requireLineOfSight>true</requireLineOfSight>
+          <requireLineOfSight>false</requireLineOfSight>
           <distanceToTarget>6.9</distanceToTarget>
           <showUndrafted>true</showUndrafted>
         </value>

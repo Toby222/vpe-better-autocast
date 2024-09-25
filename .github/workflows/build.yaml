@@ -17,10 +17,14 @@ jobs:
           mkdir ./output
           nix-shell -p libxslt.bin --run "./.vscode/build.sh Release"
           ./.vscode/setup.sh $(realpath ./output/release)
-          nix-shell -p zip --run "zip ./output/release.zip ./output/release/**/*"
+          pushd ./output/release
+          nix-shell -p zip --run "zip -r ../release.zip ."
+          popd
           nix-shell -p libxslt.bin --run "./.vscode/build.sh Debug"
           ./.vscode/setup.sh $(realpath ./output/debug)
-          nix-shell -p zip --run "zip ./output/debug.zip ./output/debug/**/*"
+          pushd ./output/debug
+          nix-shell -p zip --run "zip -r ../debug.zip ."
+          popd
       - name: Create release
         env:
           version: $(git describe --exact-match --tags)
