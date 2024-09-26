@@ -21,6 +21,7 @@
         <DebugSymbols>false</DebugSymbols>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <Nullable>enable</Nullable>
+        <Deterministic>True</Deterministic>
         <!-- Contents of About.xml
             See https://rimworldwiki.com/wiki/Modding_Tutorials/About.xml -->
         <ModMetaData>

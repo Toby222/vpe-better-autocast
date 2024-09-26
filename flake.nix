@@ -29,10 +29,8 @@
             inputsFrom = [ config.treefmt.build.devShell ];
             nativeBuildInputs = with pkgs; [
               dotnetCorePackages.dotnet_8.sdk
-              dotnetCorePackages.dotnet_8.runtime
               nixfmt-rfc-style
               omnisharp-roslyn
-              mono
               libxslt.bin
               nodePackages.npm
             ];
@@ -45,7 +43,11 @@
           treefmt.config = {
             projectRootFile = "flake.nix";
             programs = {
-              csharpier.enable = true;
+              csharpier = {
+                enable = true;
+                dotnet-sdk = pkgs.dotnet-sdk_6;
+                package = pkgs.csharpier;
+              };
               nixfmt.enable = true;
               shfmt.enable = true;
               prettier = {
@@ -75,6 +77,8 @@
               };
             };
             settings.global.excludes = [
+              ".direnv"
+              "node_modules"
               "1.4/**/*"
               "*.ase"
               "*.dll"
