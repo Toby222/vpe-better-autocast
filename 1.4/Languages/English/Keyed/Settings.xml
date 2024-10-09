@@ -68,6 +68,8 @@
   <BetterAutocastVPE.AutocastIntervalDrafted.Description>Autocasting interval while drafted (only applies to patched psycasts)</BetterAutocastVPE.AutocastIntervalDrafted.Description>
   <BetterAutocastVPE.AutocastIntervalUndrafted>Undrafted autocasting interval: {0} ticks</BetterAutocastVPE.AutocastIntervalUndrafted>
   <BetterAutocastVPE.AutocastIntervalUndrafted.Description>Autocasting interval while undrafted (only applies to patched psycasts)</BetterAutocastVPE.AutocastIntervalUndrafted.Description>
+  <BetterAutocastVPE.MinFocusThreshold>Minimum psyfocus threshold: {0}%</BetterAutocastVPE.MinFocusThreshold>
+  <BetterAutocastVPE.MinFocusThreshold.Description>Minimum psyfocus amount when a colonist will autocast</BetterAutocastVPE.MinFocusThreshold.Description>
   <BetterAutocastVPE.MendHealthThreshold>Mend health threshold (maximum): {0}</BetterAutocastVPE.MendHealthThreshold>
   <BetterAutocastVPE.MendHealthThreshold.Description>Maximum health for an item to be auto-targeted</BetterAutocastVPE.MendHealthThreshold.Description>
   <BetterAutocastVPE.MendPawns>Mend equipped gear</BetterAutocastVPE.MendPawns>
