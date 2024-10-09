@@ -231,7 +231,7 @@ public class AutocastSettings : ModSettings
         ShowValidationMessages = false;
         AutocastIntervalDrafted = 30;
         AutocastIntervalUndrafted = 600;
-        MinFocusThreshold = 0;
+        MinFocusThreshold = 0.5f;
         DraftedAutocastDefs = DefaultDraftedAutocastDefs();
         UndraftedAutocastDefs = DefaultUndraftedAutocastDefs();
         BlockedJobDefs = DefaultBlockedJobDefs();
