@@ -13,6 +13,10 @@ using UnityEngine;
 using VanillaPsycastsExpanded;
 using VFECore.Abilities;
 
+#if DEBUG
+#warning Building in Debug mode
+#endif
+
 public class BetterAutocastVPE : Mod
 {
     public BetterAutocastVPE(ModContentPack content)

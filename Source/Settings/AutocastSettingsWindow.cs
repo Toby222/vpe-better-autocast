@@ -608,7 +608,7 @@ public static class AutocastSettingsWindow
             if (AbilityHeader("VPE_Deathshield"))
             {
                 Checkbox("TargetColonists", ref Settings.DeathshieldColonists);
-                Checkbox("TargetColonyAnimals", ref Settings.DeathshieldColonists);
+                Checkbox("TargetColonyAnimals", ref Settings.DeathshieldColonyAnimals);
                 Checkbox("TargetSlaves", ref Settings.DeathshieldSlaves);
                 Checkbox("TargetPrisoners", ref Settings.DeathshieldPrisoners);
                 Checkbox("TargetVisitors", ref Settings.DeathshieldVisitors);
