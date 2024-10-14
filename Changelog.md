@@ -1,3 +1,7 @@
+# 5.0.2.2
+
+- Fix "Colony Animals" checkbox for Deathshield setting "Colonist" setting instead
+
 # 5.0.2.1
 
 - Remove line of sight requirement from Ice Crystal
