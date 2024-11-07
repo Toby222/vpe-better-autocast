@@ -115,14 +115,14 @@
         </ModMetaData>
     </PropertyGroup>
     <ItemGroup Condition="'$(GAME_VERSION)'==''">
-        <!-- <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4104" /> -->
+        <!-- <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4243" /> -->
         <Reference Include="RimWorld" HintPath="/home/toby/.local/share/Steam/steamapps/common/RimWorld/RimWorldLinux_Data/Managed/Assembly-CSharp.dll" IncludeAssets="compile" Private="false" />
         <Reference Include="VanillaPsycastsExpanded" HintPath="..\..\VanillaPsycastsExpanded\1.5\Assemblies\VanillaPsycastsExpanded.dll" IncludeAssets="compile" Private="false" />
         <Reference Include="VFECore" HintPath="..\..\VanillaExpandedFramework\1.5\Assemblies\VFECore.dll" IncludeAssets="compile" Private="false" />
         <PackageReference Include="Lib.Harmony" Version="2.3.3" IncludeAssets="compile" />
     </ItemGroup>
     <ItemGroup Condition="'$(GAME_VERSION)'=='v1.5'">
-        <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4104" />
+        <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4243" />
         <!-- <Reference Include="RimWorld" HintPath="/home/toby/.local/share/Steam/steamapps/common/RimWorld/RimWorldLinux_Data/Managed/Assembly-CSharp.dll" IncludeAssets="compile" Private="false" /> -->
         <Reference Include="VanillaPsycastsExpanded" HintPath="..\..\VanillaPsycastsExpanded\1.5\Assemblies\VanillaPsycastsExpanded.dll" IncludeAssets="compile" Private="false" />
         <Reference Include="VFECore" HintPath="..\..\VanillaExpandedFramework\1.5\Assemblies\VFECore.dll" IncludeAssets="compile" Private="false" />

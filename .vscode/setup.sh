@@ -12,7 +12,7 @@ if [ "$target_dir" = "$mod_dir" ]; then
   echo "Target directory is the same as the mod directory. Cloned in RimWorld/Mods. Skipping setup"
 else
   mkdir -p $target_dir
-  rsync -av --exclude '$mod_dir/*' --delete $mod_dir/1.4 $mod_dir/1.5 $mod_dir/Patches $mod_dir/About $mod_dir/README $mod_dir/LICENSE $mod_dir/Changelog.md $target_dir
+  rsync -av --exclude '$mod_dir/*' --delete $mod_dir/1.4 $mod_dir/1.5 $mod_dir/Compatibility $mod_dir/LoadFolders.xml $mod_dir/About $mod_dir/README $mod_dir/LICENSE $mod_dir/Changelog.md $target_dir
 fi
 
 popd

@@ -2,14 +2,14 @@
 <loadFolders>
   <v1.4>
     <li>1.4</li>
-    <li>Patches/1.4/VanillaPsycastsExpanded</li=>
-    <li IfModActive="VanillaExpanded.VPE.Puppeteer">Patches/1.4/Puppeteer</li>
-    <li IfModActive="dgrb.solarpinholeadditions">Patches/1.4/SolarPinholeSunlamp</li>
-  </v1.5>
+    <li>Compatibility/1.4/VanillaPsycastsExpanded</li>
+    <li IfModActive="VanillaExpanded.VPE.Puppeteer">Compatibility/1.4/Puppeteer</li>
+    <li IfModActive="dgrb.solarpinholeadditions">Compatibility/1.4/SolarPinholeSunlamp</li>
+  </v1.4>
   <v1.5>
     <li>1.5</li>
-    <li>Patches/1.5/VanillaPsycastsExpanded</li=>
-    <li IfModActive="VanillaExpanded.VPE.Puppeteer">Patches/1.5/Puppeteer</li>
-    <li IfModActive="dgrb.solarpinholeadditions">Patches/1.5/SolarPinholeSunlamp</li>
+    <li>Compatibility/1.5/VanillaPsycastsExpanded</li>
+    <li IfModActive="VanillaExpanded.VPE.Puppeteer">Compatibility/1.5/Puppeteer</li>
+    <li IfModActive="dgrb.solarpinholeadditions">Compatibility/1.5/SolarPinholeSunlamp</li>
   </v1.5>
 </loadFolders>
