@@ -2,15 +2,15 @@
   <Operation Class="PatchOperationSequence">
     <operations>
       <li Class="PatchOperationAdd">
-        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_Enthrall"]</xpath>
+        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_SolarPinholeSunlamp"]</xpath>
         <value>
-          <showUndrafted>true</showUndrafted>
+          <distanceToTarget>24.9</distanceToTarget>
           <jobDef>BetterAutocastVPE_GotoLocationAndCastAbilityOnce</jobDef>
-          <distanceToTarget>19.9</distanceToTarget>
+          <requireLineOfSight>false</requireLineOfSight>
         </value>
       </li>
       <li Class="PatchOperationReplace">
-        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_SolarPinhole"]/range</xpath>
+        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_SolarPinholeSunlamp"]/range</xpath>
         <value>
           <range>999999</range>
         </value>

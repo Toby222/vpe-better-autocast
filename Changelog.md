@@ -1,3 +1,7 @@
+# 5.0.2.3
+
+- Use LoadFolders.xml instead of PatchOperationFindMod
+
 # 5.0.2.2
 
 - Fix "Colony Animals" checkbox for Deathshield setting "Colonist" setting instead

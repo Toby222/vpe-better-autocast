@@ -1,0 +1,8 @@
+<Patch>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPEP_BrainLeech"]</xpath>
+    <value>
+      <showUndrafted>true</showUndrafted>
+    </value>
+  </Operation>
+</Patch>

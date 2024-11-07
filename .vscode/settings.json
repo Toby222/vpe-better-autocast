@@ -4,7 +4,8 @@
     ".direnv": true,
     ".vscode/obj": true,
     "*/Assemblies/": true,
-    "1.4": true
+    "1.4": true,
+    "Patches/1.4": true
   },
   "files.readonlyInclude": {
     "log/rimworld.log": true,

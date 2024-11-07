@@ -2,14 +2,16 @@
   <Operation Class="PatchOperationSequence">
     <operations>
       <li Class="PatchOperationAdd">
-        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_SolarPinhole"]</xpath>
+        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_IceCrystal"]</xpath>
         <value>
-          <distanceToTarget>24.9</distanceToTarget>
           <jobDef>BetterAutocastVPE_GotoLocationAndCastAbilityOnce</jobDef>
+          <requireLineOfSight>false</requireLineOfSight>
+          <distanceToTarget>6.9</distanceToTarget>
+          <showUndrafted>true</showUndrafted>
         </value>
       </li>
       <li Class="PatchOperationReplace">
-        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_SolarPinhole"]/range</xpath>
+        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_IceCrystal"]/range</xpath>
         <value>
           <range>999999</range>
         </value>
@@ -17,8 +19,8 @@
       <li Class="PatchOperationAdd">
         <xpath>/Defs/DesignationCategoryDef[defName="Zone"]/specialDesignatorClasses</xpath>
         <value>
-          <li>BetterAutocastVPE.Designator_Area_SolarPinhole_Expand</li>
-          <li>BetterAutocastVPE.Designator_Area_SolarPinhole_Clear</li>
+          <li>BetterAutocastVPE.Designator_Area_IceCrystal_Expand</li>
+          <li>BetterAutocastVPE.Designator_Area_IceCrystal_Clear</li>
         </value>
       </li>
     </operations>

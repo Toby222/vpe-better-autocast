@@ -177,6 +177,7 @@ public class AutocastSettings : ModSettings
     private static AutocastSettings DefaultValues() => new();
 
     private void LookStruct<T>(Expression<Func<T>> expression)
+        where T : struct
     {
         if (
             expression.Body
