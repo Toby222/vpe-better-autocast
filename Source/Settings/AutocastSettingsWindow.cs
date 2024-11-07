@@ -425,16 +425,15 @@ public static class AutocastSettingsWindow
                 )
             );
 
-        Settings.MinFocusThreshold = (float)
-            listing.SliderLabeled(
-                "BetterAutocastVPE.MinFocusThreshold".TranslateSafe(
-                    (int)(Settings.MinFocusThreshold * 100)
-                ),
-                Settings.MinFocusThreshold,
-                0f,
-                1f,
-                tooltip: "BetterAutocastVPE.MinFocusThreshold.Description".TranslateSafe()
-            );
+        Settings.MinFocusThreshold = listing.SliderLabeled(
+            "BetterAutocastVPE.MinFocusThreshold".TranslateSafe(
+                Settings.MinFocusThreshold.ToString("P")
+            ),
+            Settings.MinFocusThreshold,
+            0f,
+            1f,
+            tooltip: "BetterAutocastVPE.MinFocusThreshold.Description".TranslateSafe()
+        );
 
         listing.GapLine();
         listing.Label("BetterAutocastVPE.BlockedJobs.Explanation".TranslateSafe());

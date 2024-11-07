@@ -1,3 +1,7 @@
+# 5.0.3.0
+
+- Add minimum psyfocus threshold (Thanks to REDIZIT on GitHub)
+
 # 5.0.2.3
 
 - Use LoadFolders.xml instead of PatchOperationFindMod
