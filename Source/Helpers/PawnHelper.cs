@@ -116,6 +116,7 @@ internal static class PawnHelper
         return pawn?.Downed == false
             && pawn.HasPsylink
             && pawn.Awake()
+            && pawn.psychicEntropy.CurrentPsyfocus >= BetterAutocastVPE.Settings.MinFocusThreshold
             && (
                 pawn.CurJob is null
                 || !BetterAutocastVPE.Settings.BlockedJobDefs.Contains(pawn.CurJobDef.defName)

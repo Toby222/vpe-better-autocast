@@ -81,6 +81,7 @@ public class AutocastSettings : ModSettings
     public bool ShowValidationMessages;
     public int AutocastIntervalDrafted;
     public int AutocastIntervalUndrafted;
+    public float MinFocusThreshold;
     public HashSet<string> DraftedAutocastDefs;
     public HashSet<string> UndraftedAutocastDefs;
     public HashSet<string> BlockedJobDefs;
@@ -231,6 +232,7 @@ public class AutocastSettings : ModSettings
         ShowValidationMessages = false;
         AutocastIntervalDrafted = 30;
         AutocastIntervalUndrafted = 600;
+        MinFocusThreshold = 0.5f;
         DraftedAutocastDefs = DefaultDraftedAutocastDefs();
         UndraftedAutocastDefs = DefaultUndraftedAutocastDefs();
         BlockedJobDefs = DefaultBlockedJobDefs();
@@ -367,6 +369,7 @@ public class AutocastSettings : ModSettings
         LookStruct(() => ShowValidationMessages);
         LookStruct(() => AutocastIntervalDrafted);
         LookStruct(() => AutocastIntervalUndrafted);
+        LookStruct(() => MinFocusThreshold);
 
         #region Mend
         LookStruct(() => MendHealthThreshold);
