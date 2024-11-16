@@ -61,6 +61,8 @@ internal static class PsycastingHandler
                 { "VPE_WordofProductivity", HandleColonistBuff },
                 { "VPE_WordofSerenity", HandleWordOfSerenity },
                 { "VPEP_BrainLeech", HandleBrainLeech },
+                { "VPER_Etch_Runecircle_Greater", HandleEtchRunecircle },
+                { "VPER_Etch_Runecircle", HandleEtchRunecircle },
             }
         );
     #endregion private members
@@ -890,5 +892,61 @@ internal static class PsycastingHandler
         return target is not null && CastAbilityOnTarget(ability, target);
     }
     #endregion Archon
+
+    #region Runesmith
+    private static bool HandleEtchRunecircle(Pawn pawn, Ability ability)
+    {
+        BetterAutocastVPE.DebugLog(
+            $"HandleEtchRunecircle({pawn.NameFullColored}, {ability.def.defName})"
+        );
+        bool validator(IntVec3 cell)
+        {
+            return !cell.Filled(pawn.Map)
+                && cell.GetFirstBuilding(pawn.Map) is null
+                && !pawn
+                    .MapHeld.thingGrid.ThingsListAtFast(cell)
+                    .Any(thing =>
+                        thing.def.defName
+                            is "VPER_Runecircle_Constructible"
+                                or "VPER_Runecircle_Standard"
+                                or "VPER_Runecircle_Greater"
+                    );
+        }
+
+        IntVec3? maybeTarget;
+        switch (ability.def.defName)
+        {
+            case "VPER_Etch_Runecircle":
+                maybeTarget = GetRandomValidCellInArea<Area_Runecircle>(pawn.MapHeld, validator);
+                break;
+            case "VPER_Etch_Runecircle_Greater":
+                maybeTarget = GetRandomValidCellInArea<Area_GreaterRunecircle>(
+                    pawn.MapHeld,
+                    validator
+                );
+                break;
+            default:
+                BetterAutocastVPE.Error(
+                    $"Unknown psycast {ability.def.defName} in HandleEtchRunecircle"
+                );
+                maybeTarget = null;
+                break;
+        }
+        ;
+
+        string thingsattarget = maybeTarget is IntVec3 target_
+            ? string.Join(", ", pawn.MapHeld.thingGrid.ThingsListAtFast(target_))
+            : "no target";
+        BetterAutocastVPE.DebugLog(
+            $"{maybeTarget?.GetFirstBuilding(pawn.Map).ToStringSafe()}, {thingsattarget}"
+        );
+
+        BetterAutocastVPE.DebugLog(
+            $"HandleEtchRunecircle({pawn.NameFullColored}, {ability.def.defName}) -> ({maybeTarget.ToStringSafe()})"
+        );
+        return maybeTarget is IntVec3 target
+            && CastAbilityOnTarget(ability, new GlobalTargetInfo(target, ability.pawn.MapHeld));
+    }
+    #endregion Runesmith
     #endregion handlers
 }

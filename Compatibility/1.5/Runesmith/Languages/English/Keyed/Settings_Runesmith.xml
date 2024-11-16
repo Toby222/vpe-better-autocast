@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <BetterAutocastVPE.VPER_Etch_Runecircle_Greater.Explanation>Preferred to normal etch runecircles if both are available to cast. Will etch greater runecircles on a random cell in the Greater Runecircle Spot area.\nWill only target cells that don't already have any runecircle of any level.</BetterAutocastVPE.VPER_Etch_Runecircle_Greater.Explanation>
+  <BetterAutocastVPE.VPER_Etch_Runecircle.Explanation>Will etch runecircles on a random cell in the Runecircle Spot area.\nWill only target cells that don't already have any runecircle of any level.</BetterAutocastVPE.VPER_Etch_Runecircle.Explanation>
+</LanguageData>

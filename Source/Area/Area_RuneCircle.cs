@@ -4,36 +4,38 @@ using Verse;
 
 namespace BetterAutocastVPE;
 
-public class Area_IceCrystal : Area
+public class Area_Runecircle : Area
 {
-    public override string Label => "BetterAutocastVPE.IceCrystalArea".TranslateSafe();
+    public override string Label => "BetterAutocastVPE.RunecircleArea".TranslateSafe();
 
-    public override Color Color => new(0.1f, 0.1f, 0.9f);
+    public override Color Color => new(0.31f, 0.33f, 0.36f);
 
     public override int ListPriority => 1000;
 
-    public Area_IceCrystal() { }
+    public Area_Runecircle() { }
 
-    public Area_IceCrystal(AreaManager areaManager)
+    public Area_Runecircle(AreaManager areaManager)
         : base(areaManager) { }
 
     public override string GetUniqueLoadID()
     {
-        return "Area_" + ID + "_IceCrystal";
+        return "Area_" + ID + "_Runecircle";
     }
 }
 
-public class Designator_Area_IceCrystal : Designator_Cells
+public class Designator_Area_Runecircle : Designator_Cells
 {
+    public static bool ModActive;
+
     private readonly DesignateMode mode;
 
-    public override bool Visible => BetterAutocastVPE.Settings.ShowIceCrystalArea;
+    public override bool Visible => ModActive && BetterAutocastVPE.Settings.ShowRunecircleArea;
 
     public override int DraggableDimensions => 2;
 
     public override bool DragDrawMeasurements => true;
 
-    protected Designator_Area_IceCrystal(DesignateMode mode)
+    protected Designator_Area_Runecircle(DesignateMode mode)
     {
         this.mode = mode;
         soundDragSustain = SoundDefOf.Designate_DragStandard;
@@ -47,7 +49,7 @@ public class Designator_Area_IceCrystal : Designator_Cells
         {
             return false;
         }
-        bool cellContained = Map.areaManager.Get<Area_IceCrystal>()[c];
+        bool cellContained = Map.areaManager.Get<Area_Runecircle>()[c];
         return mode switch
         {
             DesignateMode.Add => !cellContained,
@@ -58,38 +60,38 @@ public class Designator_Area_IceCrystal : Designator_Cells
 
     public override void DesignateSingleCell(IntVec3 c)
     {
-        Map.areaManager.Get<Area_IceCrystal>()[c] = mode == DesignateMode.Add;
+        Map.areaManager.Get<Area_Runecircle>()[c] = mode == DesignateMode.Add;
     }
 
     public override void SelectedUpdate()
     {
         GenUI.RenderMouseoverBracket();
-        Map.areaManager.Get<Area_IceCrystal>().MarkForDraw();
+        Map.areaManager.Get<Area_Runecircle>().MarkForDraw();
     }
 }
 
-public class Designator_Area_IceCrystal_Expand : Designator_Area_IceCrystal
+public class Designator_Area_Runecircle_Expand : Designator_Area_Runecircle
 {
-    public Designator_Area_IceCrystal_Expand()
+    public Designator_Area_Runecircle_Expand()
         : base(DesignateMode.Add)
     {
-        defaultLabel = "BetterAutocastVPE.IceCrystalArea.Expand".TranslateSafe();
-        defaultDesc = "BetterAutocastVPE.IceCrystalArea.Expand.Description".TranslateSafe();
-        icon = ContentFinder<Texture2D>.Get("UI/Icons/BetterAutocastVPE/IceCrystalArea");
+        defaultLabel = "BetterAutocastVPE.RunecircleArea.Expand".TranslateSafe();
+        defaultDesc = "BetterAutocastVPE.RunecircleArea.Expand.Description".TranslateSafe();
+        icon = ContentFinder<Texture2D>.Get("UI/Icons/BetterAutocastVPE/RunecircleArea");
         soundDragSustain = SoundDefOf.Designate_DragAreaAdd;
         soundDragChanged = SoundDefOf.Designate_DragZone_Changed;
         soundSucceeded = SoundDefOf.Designate_ZoneAdd_Stockpile;
     }
 }
 
-public class Designator_Area_IceCrystal_Clear : Designator_Area_IceCrystal
+public class Designator_Area_Runecircle_Clear : Designator_Area_Runecircle
 {
-    public Designator_Area_IceCrystal_Clear()
+    public Designator_Area_Runecircle_Clear()
         : base(DesignateMode.Remove)
     {
-        defaultLabel = "BetterAutocastVPE.IceCrystalArea.Remove".TranslateSafe();
-        defaultDesc = "BetterAutocastVPE.IceCrystalArea.Remove.Description".TranslateSafe();
-        icon = ContentFinder<Texture2D>.Get("UI/Icons/BetterAutocastVPE/IceCrystalAreaOff");
+        defaultLabel = "BetterAutocastVPE.RunecircleArea.Remove".TranslateSafe();
+        defaultDesc = "BetterAutocastVPE.RunecircleArea.Remove.Description".TranslateSafe();
+        icon = ContentFinder<Texture2D>.Get("UI/Icons/BetterAutocastVPE/RunecircleAreaOff");
         soundDragSustain = SoundDefOf.Designate_DragAreaDelete;
         soundDragChanged = null;
         soundSucceeded = SoundDefOf.Designate_ZoneDelete;

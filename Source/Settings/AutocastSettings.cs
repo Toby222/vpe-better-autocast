@@ -50,6 +50,8 @@ public class AutocastSettings : ModSettings
             "VPE_WordofProductivity",
             "VPE_WordofSerenity",
             "VPEP_BrainLeech",
+            "VPER_Etch_Runecircle",
+            "VPER_Etch_Runecircle_Greater",
         ];
 
     private static HashSet<string> DefaultBlockedJobDefs() =>
@@ -134,6 +136,15 @@ public class AutocastSettings : ModSettings
 
     public bool BrainLeechTargetPrisoners;
     public bool BrainLeechTargetSlaves;
+
+    public bool ShowRunecircleArea;
+    public bool ShowGreaterRunecircleArea;
+
+    public bool ShowCraftTimeskipArea;
+
+    public bool ShowSolarPinholeArea;
+
+    public bool ShowIceCrystalArea;
 
     public bool DarkvisionTargetSelf;
     public bool DarkvisionTargetColonists;
@@ -301,6 +312,26 @@ public class AutocastSettings : ModSettings
         BrainLeechTargetSlaves = true;
         #endregion Brain Leech
 
+        #region Craft Timeskip
+        ShowCraftTimeskipArea = true;
+        #endregion Craft Timeskip
+
+        #region Solar Pinhole
+        ShowSolarPinholeArea = true;
+        #endregion Solar Pinhole
+
+        #region Ice Crystal
+        ShowIceCrystalArea = true;
+        #endregion Ice Crystal
+
+        #region Etch Greater Runecircle
+        ShowGreaterRunecircleArea = true;
+        #endregion Etch Greater Runecircle
+
+        #region Etch Runecircle
+        ShowRunecircleArea = true;
+        #endregion Etch Runecircle
+
         #region Darkvision
         DarkvisionTargetSelf = true;
         DarkvisionTargetColonists = true;
@@ -442,6 +473,26 @@ public class AutocastSettings : ModSettings
         LookStruct(() => DarkvisionTargetSelf);
         LookStruct(() => DarkvisionTargetColonists);
         #endregion Darkvision
+
+        #region Craft Timeskip
+        LookStruct(() => ShowCraftTimeskipArea);
+        #endregion Craft Timeskip
+
+        #region Solar Pinhole
+        LookStruct(() => ShowSolarPinholeArea);
+        #endregion Solar Pinhole
+
+        #region Ice Crystal
+        LookStruct(() => ShowIceCrystalArea);
+        #endregion Ice Crystal
+
+        #region Etch Greater Runecircle
+        LookStruct(() => ShowGreaterRunecircleArea);
+        #endregion Etch Greater Runecircle
+
+        #region Etch Runecircle
+        LookStruct(() => ShowRunecircleArea);
+        #endregion Etch Runecircle
 
         #region Invisibility
         LookStruct(() => InvisibilityTargetSelf);

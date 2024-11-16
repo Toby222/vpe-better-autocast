@@ -38,6 +38,8 @@ public class BetterAutocastVPE : Mod
             $"Running Version {Assembly.GetAssembly(typeof(BetterAutocastVPE)).GetName().Version} {build} compiled for RimWorld version {GAME_VERSION}"
         );
 
+        Designator_Area_Runecircle.ModActive = ModsConfig.IsActive("Chairheir.VPERunesmith");
+
         Harmony harmony = new("dev.tobot.vpe-better-autocast");
         if (
             UnregisterPatch(

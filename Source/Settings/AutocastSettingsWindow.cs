@@ -333,17 +333,19 @@ public static class AutocastSettingsWindow
             AutocastSettingsWindow.Checkbox(listing, labelKey, ref value);
         }
 
-        bool AbilityHeader(string abilityDefName)
+        bool AbilityHeader(string abilityDefName, string? modId = null)
         {
-            return AutocastSettingsWindow.AbilityHeader(listing, abilityDefName);
+            return (modId is null || ModsConfig.IsActive(modId))
+                && AutocastSettingsWindow.AbilityHeader(listing, abilityDefName);
         }
 
-        bool PsycasterPathHeader(string psycasterPathDefName)
+        bool PsycasterPathHeader(string psycasterPathDefName, string? modId = null)
         {
-            return AutocastSettingsWindow.PsycasterPathHeader(listing, psycasterPathDefName);
+            return (modId is null || ModsConfig.IsActive(modId))
+                && AutocastSettingsWindow.PsycasterPathHeader(listing, psycasterPathDefName);
         }
 
-        Rect viewRect = new(inRect.x, inRect.y, inRect.width - 16f, settingsHeight);
+        Rect viewRect = new(x: inRect.x, inRect.y, inRect.width - 16f, settingsHeight);
         Widgets.BeginScrollView(inRect, ref settingsScrollPosition, viewRect);
         listing.Begin(new Rect(viewRect.x, viewRect.y, viewRect.width, float.PositiveInfinity));
 
@@ -443,7 +445,7 @@ public static class AutocastSettingsWindow
 
         if (PsycasterPathHeader("VPE_Archon"))
         {
-            listing.Indent();
+            listing.Indent(12f);
             listing.ColumnWidth -= 12f;
 
             #region Word of Alliance
@@ -461,24 +463,27 @@ public static class AutocastSettingsWindow
             #endregion Word of Productivity
 
             listing.ColumnWidth += 12f;
-            listing.Outdent();
+            listing.Outdent(12f);
         }
-        // if (PsycasterPathHeader("VPE_Archotechist")) { listing.Indent(); listing.ColumnWidth -= 12f; listing.ColumnWidth += 12f; listing.Outdent(); }
+        // if (PsycasterPathHeader("VPE_Archotechist")) { listing.Indent(12f); listing.ColumnWidth -= 12f; listing.ColumnWidth += 12f; listing.Outdent(12f); }
         if (PsycasterPathHeader("VPE_Chronopath"))
         {
-            listing.Indent();
+            listing.Indent(12f);
             listing.ColumnWidth -= 12f;
 
             #region Craft Timeskip
-            AbilityHeader("VPE_CraftTimeskip");
+            if (AbilityHeader("VPE_CraftTimeskip"))
+            {
+                Checkbox("ShowCraftTimeskipArea", ref Settings.ShowCraftTimeskipArea);
+            }
             #endregion Craft Timeskip
 
             listing.ColumnWidth += 12f;
-            listing.Outdent();
+            listing.Outdent(12f);
         }
         if (PsycasterPathHeader("VPE_Conflagrator"))
         {
-            listing.Indent();
+            listing.Indent(12f);
             listing.ColumnWidth -= 12f;
 
             #region Fire Shield
@@ -492,11 +497,11 @@ public static class AutocastSettingsWindow
             #endregion Fire Shield
 
             listing.ColumnWidth += 12f;
-            listing.Outdent();
+            listing.Outdent(12f);
         }
         if (PsycasterPathHeader("VPE_Empath"))
         {
-            listing.Indent();
+            listing.Indent(12f);
             listing.ColumnWidth -= 12f;
 
             #region Soothe (Female/Male)
@@ -576,15 +581,18 @@ public static class AutocastSettingsWindow
             #endregion Word of Serenity
 
             listing.ColumnWidth += 12f;
-            listing.Outdent();
+            listing.Outdent(12f);
         }
         if (PsycasterPathHeader("VPE_Frostshaper"))
         {
-            listing.Indent();
+            listing.Indent(12f);
             listing.ColumnWidth -= 12f;
 
             #region Ice Crystal
-            AbilityHeader("VPE_IceCrystal");
+            if (AbilityHeader("VPE_IceCrystal"))
+            {
+                Checkbox("ShowIceCrystalArea", ref Settings.ShowIceCrystalArea);
+            }
             #endregion Ice Crystal
 
             #region Ice Shield
@@ -598,20 +606,23 @@ public static class AutocastSettingsWindow
             #endregion Ice Shield
 
             listing.ColumnWidth += 12f;
-            listing.Outdent();
+            listing.Outdent(12f);
         }
         if (PsycasterPathHeader("VPE_Harmonist"))
         {
-            listing.Indent();
+            listing.Indent(12f);
             listing.ColumnWidth -= 12f;
 
             #region Psychic Guidance
             AbilityHeader("VPE_PsychicGuidance");
             #endregion Psychic Guidance
+
+            listing.ColumnWidth += 12f;
+            listing.Outdent(12f);
         }
         if (PsycasterPathHeader("VPE_Necropath"))
         {
-            listing.Indent();
+            listing.Indent(12f);
             listing.ColumnWidth -= 12f;
 
             #region Deathshield
@@ -657,11 +668,11 @@ public static class AutocastSettingsWindow
             #endregion Steal vitality
 
             listing.ColumnWidth += 12f;
-            listing.Outdent();
+            listing.Outdent(12f);
         }
         if (PsycasterPathHeader("VPE_Nightstalker"))
         {
-            listing.Indent();
+            listing.Indent(12f);
             listing.ColumnWidth -= 12f;
 
             #region Darkvision
@@ -677,11 +688,11 @@ public static class AutocastSettingsWindow
             #endregion Eclipse
 
             listing.ColumnWidth += 12f;
-            listing.Outdent();
+            listing.Outdent(12f);
         }
         if (PsycasterPathHeader("VPE_Protector"))
         {
-            listing.Indent();
+            listing.Indent(12f);
             listing.ColumnWidth -= 12f;
 
             #region Invisibility
@@ -712,11 +723,11 @@ public static class AutocastSettingsWindow
             #endregion Word of Immunity
 
             listing.ColumnWidth += 12f;
-            listing.Outdent();
+            listing.Outdent(12f);
         }
-        if (PsycasterPathHeader("VPEP_Puppeteer"))
+        if (PsycasterPathHeader("VPEP_Puppeteer", "VanillaExpanded.VPE.Puppeteer"))
         {
-            listing.Indent();
+            listing.Indent(12f);
             listing.ColumnWidth -= 12f;
 
             #region Brain Leech
@@ -728,30 +739,54 @@ public static class AutocastSettingsWindow
             #endregion Brain Leech
 
             listing.ColumnWidth += 12f;
-            listing.Outdent();
+            listing.Outdent(12f);
+        }
+        if (PsycasterPathHeader("VPER_Runesmith", "Chairheir.VPERunesmith"))
+        {
+            listing.Indent(12f);
+            listing.ColumnWidth -= 12f;
+
+            #region Etch Runecircle
+            if (AbilityHeader("VPER_Etch_Runecircle"))
+            {
+                Checkbox("ShowRunecircleArea", ref Settings.ShowRunecircleArea);
+            }
+            #endregion Etch Runecircle
+            #region Etch Greater Runecircle
+            if (AbilityHeader("VPER_Etch_Runecircle_Greater"))
+            {
+                Checkbox("ShowGreaterRunecircleArea", ref Settings.ShowGreaterRunecircleArea);
+            }
+            #endregion Etch Greater Runecircle
+
+            listing.ColumnWidth += 12f;
+            listing.Outdent(12f);
         }
         if (PsycasterPathHeader("VPE_Skipmaster"))
         {
-            listing.Indent();
+            listing.Indent(12f);
             listing.ColumnWidth -= 12f;
 
             #region Solar Pinhole
-            AbilityHeader("VPE_SolarPinhole");
+            if (AbilityHeader("VPE_SolarPinhole"))
+            {
+                Checkbox("ShowSolarPinholeArea", ref Settings.ShowSolarPinholeArea);
+            }
             #endregion Solar Pinhole
 
             #region Large Solar Pinhole
-            if (ModsConfig.IsActive("dgrb.solarpinholeadditions"))
+            if (AbilityHeader("VPE_SolarPinholeSunlamp", "dgrb.solarpinholeadditions"))
             {
-                AbilityHeader("VPE_SolarPinholeSunlamp");
+                Checkbox("ShowSolarPinholeArea", ref Settings.ShowSolarPinholeArea);
             }
             #endregion Large Solar Pinhole
 
             listing.ColumnWidth += 12f;
-            listing.Outdent();
+            listing.Outdent(12f);
         }
         if (PsycasterPathHeader("VPE_Staticlord"))
         {
-            listing.Indent();
+            listing.Indent(12f);
             listing.ColumnWidth -= 12f;
 
             #region Static Aura
@@ -765,11 +800,11 @@ public static class AutocastSettingsWindow
             #endregion Static Aura
 
             listing.ColumnWidth += 12f;
-            listing.Outdent();
+            listing.Outdent(12f);
         }
         if (PsycasterPathHeader("VPE_Technomancer"))
         {
-            listing.Indent();
+            listing.Indent(12f);
             listing.ColumnWidth -= 12f;
 
             #region Mend
@@ -822,11 +857,11 @@ public static class AutocastSettingsWindow
             #endregion Power
 
             listing.ColumnWidth += 12f;
-            listing.Outdent();
+            listing.Outdent(12f);
         }
         if (PsycasterPathHeader("VPE_Warlord"))
         {
-            listing.Indent();
+            listing.Indent(12f);
             listing.ColumnWidth -= 12f;
 
             #region Adrenaline Rush
@@ -854,9 +889,9 @@ public static class AutocastSettingsWindow
             #endregion Speed boost
 
             listing.ColumnWidth += 12f;
-            listing.Outdent();
+            listing.Outdent(12f);
         }
-        // if (PsycasterPathHeader("VPE_Wildspeaker")) { listing.Indent(); listing.ColumnWidth -= 12f; listing.ColumnWidth += 12f; listing.Outdent(); }
+        // if (PsycasterPathHeader("VPE_Wildspeaker")) { listing.Indent(12f); listing.ColumnWidth -= 12f; listing.ColumnWidth += 12f; listing.Outdent(12f); }
 
         listing.End();
         settingsHeight = listing.CurHeight;

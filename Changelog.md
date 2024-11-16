@@ -1,3 +1,11 @@
+# 5.1.0.0
+
+- Add support for Etch Runecircle from VPE Runesmith
+- Add options for hiding unwanted area designators
+  - with 5 different Areas, it was starting to get crowded
+- Move more files into proper Compatibility folders
+- Small fixes in settings GUI
+
 # 5.0.3.0
 
 - Add minimum psyfocus threshold (Thanks to REDIZIT on GitHub)

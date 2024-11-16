@@ -1,104 +1,45 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-  <BetterAutocastVPE.SettingsCategory>Better Autocasting for VPE</BetterAutocastVPE.SettingsCategory>
-  <BetterAutocastVPE.Clarification>"In range" below considers allowed areas when undrafted, but ignores them when drafted.\n\nForbidden targets are ignored unless drafted.\nThis includes checking if they are in allowed areas, or reserved by a pawn.\n\nAll psycasts check if the target is valid by the regular rules before casting.</BetterAutocastVPE.Clarification>
-  <BetterAutocastVPE.NoNonexistentDefs>&lt;b&gt;No nonexistent defs configured, nothing to do here.&lt;/b&gt;</BetterAutocastVPE.NoNonexistentDefs>
-  <BetterAutocastVPE.Uninstall.Explanation>Removes all elements of this mod from the currently loaded game so you can safely uninstall the mod.\nCreates a backup save both before and after the removal, then puts you in the main menu.\n\nAlso turns off autocasting for all patched psycasts. For technical reasons, this does not check if they can be autocast without the mod and may need to be re-enabled on reload.\n\nOnly works if you currently have a save loaded.</BetterAutocastVPE.Uninstall.Explanation>
-  <BetterAutocastVPE.Uninstall>Uninstall the mod from the current game</BetterAutocastVPE.Uninstall>
-  <BetterAutocastVPE.Uninstall.Confirmation>Are you sure you want to uninstall the mod from the current game</BetterAutocastVPE.Uninstall.Confirmation>
-  <BetterAutocastVPE.Uninstall.Disabled>Load a save to uninstall this mod from it</BetterAutocastVPE.Uninstall.Disabled>
-  <BetterAutocastVPE.ResetSettings>Reset settings</BetterAutocastVPE.ResetSettings>
-  <BetterAutocastVPE.ResetSettings.Confirmation>&lt;b&gt;Really reset settings?&lt;/b&gt;</BetterAutocastVPE.ResetSettings.Confirmation>
-  <BetterAutocastVPE.TargetSelf>Target self</BetterAutocastVPE.TargetSelf>
-  <BetterAutocastVPE.TargetColonists>Target colonists</BetterAutocastVPE.TargetColonists>
-  <BetterAutocastVPE.TargetColonyAnimals>Target colony animals</BetterAutocastVPE.TargetColonyAnimals>
-  <BetterAutocastVPE.TargetWildAnimals>Target wild animals</BetterAutocastVPE.TargetWildAnimals>
-  <BetterAutocastVPE.TargetPrisoners>Target prisoners</BetterAutocastVPE.TargetPrisoners>
-  <BetterAutocastVPE.TargetSlaves>Target slaves</BetterAutocastVPE.TargetSlaves>
-  <BetterAutocastVPE.TargetVisitors>Target visitors</BetterAutocastVPE.TargetVisitors>
-  <BetterAutocastVPE.TargetEnemies>Target enemies</BetterAutocastVPE.TargetEnemies>
-  <BetterAutocastVPE.BlockedJobs.EnableAll>Check all checkboxes</BetterAutocastVPE.BlockedJobs.EnableAll>
+  <BetterAutocastVPE.AutocastIntervalDrafted.Description>Autocasting interval while drafted (only applies to patched psycasts)</BetterAutocastVPE.AutocastIntervalDrafted.Description>
+  <BetterAutocastVPE.AutocastIntervalDrafted>Drafted autocasting interval: {0} ticks</BetterAutocastVPE.AutocastIntervalDrafted>
+  <BetterAutocastVPE.AutocastIntervalUndrafted.Description>Autocasting interval while undrafted (only applies to patched psycasts)</BetterAutocastVPE.AutocastIntervalUndrafted.Description>
+  <BetterAutocastVPE.AutocastIntervalUndrafted>Undrafted autocasting interval: {0} ticks</BetterAutocastVPE.AutocastIntervalUndrafted>
+  <BetterAutocastVPE.BlockedJobs.defNameExplanation>The defName of the JobDef</BetterAutocastVPE.BlockedJobs.defNameExplanation>
+  <BetterAutocastVPE.BlockedJobs.DisableAll.Confirmation>&lt;b&gt;Really uncheck all checkboxes?&lt;/b&gt;</BetterAutocastVPE.BlockedJobs.DisableAll.Confirmation>
   <BetterAutocastVPE.BlockedJobs.DisableAll>Uncheck all checkboxes</BetterAutocastVPE.BlockedJobs.DisableAll>
   <BetterAutocastVPE.BlockedJobs.EnableAll.Confirmation>&lt;b&gt;Really check all checkboxes?&lt;/b&gt;</BetterAutocastVPE.BlockedJobs.EnableAll.Confirmation>
-  <BetterAutocastVPE.BlockedJobs.DisableAll.Confirmation>&lt;b&gt;Really uncheck all checkboxes?&lt;/b&gt;</BetterAutocastVPE.BlockedJobs.DisableAll.Confirmation>
-  <BetterAutocastVPE.BlockedJobs>Blocked Jobs</BetterAutocastVPE.BlockedJobs>
+  <BetterAutocastVPE.BlockedJobs.EnableAll>Check all checkboxes</BetterAutocastVPE.BlockedJobs.EnableAll>
   <BetterAutocastVPE.BlockedJobs.Explanation>Manage which jobs should not be interrupted for autocasting.</BetterAutocastVPE.BlockedJobs.Explanation>
   <BetterAutocastVPE.BlockedJobs.Manager.Explanation>A list of all JobDefs and a toggle on if it should <![CDATA[<b><i>not</i></b>]]> be interrupted for autocasting.</BetterAutocastVPE.BlockedJobs.Manager.Explanation>
-  <BetterAutocastVPE.BlockedJobs.defNameExplanation>The defName of the JobDef</BetterAutocastVPE.BlockedJobs.defNameExplanation>
-  <BetterAutocastVPE.BlockedJobs.reportStringExplanation>The reportString of the JobDef</BetterAutocastVPE.BlockedJobs.reportStringExplanation>
   <BetterAutocastVPE.BlockedJobs.Nonexistent.Explanation>JobDefs that don't exist but are still configured.\nBecause they are from uninstalled mods, removed by updates, etc.\nThey can be kept without problem or cleaned up here.</BetterAutocastVPE.BlockedJobs.Nonexistent.Explanation>
-  <BetterAutocastVPE.VPE_AdrenalineRush.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_AdrenalineRush.Explanation>
-  <BetterAutocastVPE.VPE_BladeFocus.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_BladeFocus.Explanation>
-  <BetterAutocastVPE.VPE_ControlledFrenzy.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_ControlledFrenzy.Explanation>
-  <BetterAutocastVPE.VPE_Darkvision.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychically sensitive colonist without the buff in casting range.</BetterAutocastVPE.VPE_Darkvision.Explanation>
-  <BetterAutocastVPE.VPE_Deathshield.Explanation>Targets the closest pawn without death shield in range, prioritizing by group in the order below.\nThat is, targets colonists firsts, then colony animals if no colonists are available, and so on.</BetterAutocastVPE.VPE_Deathshield.Explanation>
-  <BetterAutocastVPE.VPE_Ghostwalk.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_Ghostwalk.Explanation>
-  <BetterAutocastVPE.VPE_Eclipse.Explanation>Will autocast when there is no ongoing eclipse</BetterAutocastVPE.VPE_Eclipse.Explanation>
-  <BetterAutocastVPE.VPE_EnchantQuality.Explanation>Will look for enchantable items in the order listed below.\n\nWhen looking for items in "appropriately named" places, will look for names containing the word "enchant".\nFor example: `Enchanting`, `enchant`, `The Enchantress of Florence`</BetterAutocastVPE.VPE_EnchantQuality.Explanation>
-  <BetterAutocastVPE.VPE_Enthrall.Explanation>Will look for corpses in the order listed below.\n\nWhen looking for items in "appropriately named" places, will look for names containing the word "thrall".\nFor example: `Thrall corpses`, `Enthralling`, `thrall`</BetterAutocastVPE.VPE_Enthrall.Explanation>
-  <BetterAutocastVPE.VPE_Power.Explanation>Targets the building with the biggest power draw. If no buildings currently consuming power are found, targets a random colony mech.</BetterAutocastVPE.VPE_Power.Explanation>
-  <BetterAutocastVPE.VPE_FiringFocus.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_FiringFocus.Explanation>
-  <BetterAutocastVPE.VPE_GuidedShot.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_GuidedShot.Explanation>
-  <BetterAutocastVPE.VPE_IceShield.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychic sensitive pawn without the buff in casting range, in the order below.</BetterAutocastVPE.VPE_IceShield.Explanation>
-  <BetterAutocastVPE.VPE_FireShield.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychic sensitive pawn without the buff in casting range, in the order below.</BetterAutocastVPE.VPE_FireShield.Explanation>
-  <BetterAutocastVPE.VPE_StaticAura.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychic sensitive pawn without the buff in casting range, in the order below.</BetterAutocastVPE.VPE_StaticAura.Explanation>
-  <BetterAutocastVPE.VPE_Invisibility.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychic sensitive colonist without the buff in casting range.</BetterAutocastVPE.VPE_Invisibility.Explanation>
-  <BetterAutocastVPE.VPE_Overshield.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychic sensitive colonist without the buff in casting range.</BetterAutocastVPE.VPE_Overshield.Explanation>
-  <BetterAutocastVPE.VPE_IceCrystal.Explanation>Will create ice crystals on a random cell in the Ice Crystal Spot area.\nWill only target cells without buildings.</BetterAutocastVPE.VPE_IceCrystal.Explanation>
-  <BetterAutocastVPE.VPE_SolarPinhole.Explanation>Will create solar pinholes on a random cell in the Solar Pinhole Spot area.\nWill only target cells that don't already have a solar pinhole.</BetterAutocastVPE.VPE_SolarPinhole.Explanation>
-  <BetterAutocastVPE.VPE_SolarPinholeSunlamp.Explanation>Preferred to normal solar pinhole if both are available to cast. Will create solar pinholes on a random cell in the Solar Pinhole Spot area.\nWill only target cells that don't already have a solar pinhole.\nLarge and normal solar pinholes will prevent the other from being created at that spot.</BetterAutocastVPE.VPE_SolarPinholeSunlamp.Explanation>
-  <BetterAutocastVPE.VPE_CraftTimeskip.Explanation>Will cast craft timeskip on the closest unfinished item the Craft Timeskip Workshop area.\n(Note that this isn't using stockpiles because you rarely store unfinished items.)</BetterAutocastVPE.VPE_CraftTimeskip.Explanation>
-  <BetterAutocastVPE.VPE_Mend.Explanation>Will look for damaged items in the order listed below.\n\nWhen looking for items in "appropriately named" places, will look for names containing the word "mend".\nFor example: `Mending`, `mend`, `The First Amendment`</BetterAutocastVPE.VPE_Mend.Explanation>
-  <BetterAutocastVPE.VPE_PsychicGuidance.Explanation>Targets a random non-downed psychically sensitive colonist in range that doesn't have the Psychic Guidance buff.</BetterAutocastVPE.VPE_PsychicGuidance.Explanation>
-  <BetterAutocastVPE.VPE_SpeedBoost.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_SpeedBoost.Explanation>
-  <BetterAutocastVPE.VPE_StealVitality.Explanation>Targets the pawn with highest psychic sensitivity in range, ignoring those that have no psychic sensitivity, prioritizing by group in the order below.\nThat is, target prisoners first, if no prisoners are available, then target slaves, and so on.</BetterAutocastVPE.VPE_StealVitality.Explanation>
-  <BetterAutocastVPE.VPE_WordofAlliance.Explanation>Will target a pawn of the faction with the least goodwill, prioritizing first by psychic sensitivity then by distance to the casting pawn.\nIgnores factions that don't have normal goodwill, are permanently hostile, or are outside the goodwill range below.\nMinimum value is inclusive, maximum value is exclusive.\nFor example -20 to 20 will cast on a faction with -20 goodwill, but ignore factions with 20 goodwill.</BetterAutocastVPE.VPE_WordofAlliance.Explanation>
-  <BetterAutocastVPE.VPE_WordofImmunity.Explanation>Will target the closest pawn in range with an immunizable disease that does not have the Psychic Immunity buff, prioritizing by group in the order below.\nThat is, target colonists first, if no colonists are available, then target colony animals, and so on.</BetterAutocastVPE.VPE_WordofImmunity.Explanation>
-  <BetterAutocastVPE.VPE_WordofJoy.Explanation>Targets the closest non-downed psychically sensitive colonist in range without the Joyfuzz effect.</BetterAutocastVPE.VPE_WordofJoy.Explanation>
-  <BetterAutocastVPE.VPE_WordofProductivity.Explanation>Targets a random non-downed colonist in range that doesn't have the Productivity buff.</BetterAutocastVPE.VPE_WordofProductivity.Explanation>
-  <BetterAutocastVPE.VPE_WordofSerenity.Explanation>Targets the closest psychically sensitive pawn in range with an ongoing mental state.</BetterAutocastVPE.VPE_WordofSerenity.Explanation>
-  <BetterAutocastVPE.VPEP_BrainLeech.Explanation>Targets the closest psychically sensitive pawn in range, prioritzing by group in the order below.\nThat is, target prisoners first, if no prisoners are available, then target slaves.</BetterAutocastVPE.VPEP_BrainLeech.Explanation>
-  <BetterAutocastVPE.Soothe.Explanation>Autocasts if any map pawn is below the given mood and doesn't have the psychic soothe buff.\nPawns get ignored for the check if their category is disabled.</BetterAutocastVPE.Soothe.Explanation>
-  <BetterAutocastVPE.SootheColonists>Check moods of Colonists</BetterAutocastVPE.SootheColonists>
-  <BetterAutocastVPE.SootheTargetMinimumMood>Target minimum mood: {0}</BetterAutocastVPE.SootheTargetMinimumMood>
-  <BetterAutocastVPE.SootheSlaves>Check moods of Slaves</BetterAutocastVPE.SootheSlaves>
-  <BetterAutocastVPE.SoothePrisoners>Check moods of Prisoners</BetterAutocastVPE.SoothePrisoners>
-  <BetterAutocastVPE.SootheVisitors>Check moods of Visitors</BetterAutocastVPE.SootheVisitors>
-  <BetterAutocastVPE.ShowValidationMessages>Show target validation messages - used for debugging</BetterAutocastVPE.ShowValidationMessages>
-  <BetterAutocastVPE.AutocastIntervalDrafted>Drafted autocasting interval: {0} ticks</BetterAutocastVPE.AutocastIntervalDrafted>
-  <BetterAutocastVPE.AutocastIntervalDrafted.Description>Autocasting interval while drafted (only applies to patched psycasts)</BetterAutocastVPE.AutocastIntervalDrafted.Description>
-  <BetterAutocastVPE.AutocastIntervalUndrafted>Undrafted autocasting interval: {0} ticks</BetterAutocastVPE.AutocastIntervalUndrafted>
-  <BetterAutocastVPE.AutocastIntervalUndrafted.Description>Autocasting interval while undrafted (only applies to patched psycasts)</BetterAutocastVPE.AutocastIntervalUndrafted.Description>
-  <BetterAutocastVPE.MinFocusThreshold>Minimum psyfocus threshold: {0}</BetterAutocastVPE.MinFocusThreshold>
-  <BetterAutocastVPE.MinFocusThreshold.Description>Minimum psyfocus amount for a colonist to autocast</BetterAutocastVPE.MinFocusThreshold.Description>
-  <BetterAutocastVPE.MendHealthThreshold>Mend health threshold (maximum): {0}</BetterAutocastVPE.MendHealthThreshold>
-  <BetterAutocastVPE.MendHealthThreshold.Description>Maximum health for an item to be auto-targeted</BetterAutocastVPE.MendHealthThreshold.Description>
-  <BetterAutocastVPE.MendPawns>Mend equipped gear</BetterAutocastVPE.MendPawns>
-  <BetterAutocastVPE.MendInStockpile>Mend items in stockpiles</BetterAutocastVPE.MendInStockpile>
-  <BetterAutocastVPE.MendOnlyNamedStockpiles>Only mend items in appropriately named stockpiles</BetterAutocastVPE.MendOnlyNamedStockpiles>
-  <BetterAutocastVPE.MendInStorage>Mend items in storage (e.g. shelves)</BetterAutocastVPE.MendInStorage>
-  <BetterAutocastVPE.MendOnlyNamedStorageGroups>Only mend items in appropriately named storage groups</BetterAutocastVPE.MendOnlyNamedStorageGroups>
-  <BetterAutocastVPE.PowerBuildings>Provide power to buildings</BetterAutocastVPE.PowerBuildings>
-  <BetterAutocastVPE.PowerMechs>Provide power to colony mechs</BetterAutocastVPE.PowerMechs>
-  <BetterAutocastVPE.EnchantInStockpile>Enchant items in stockpiles</BetterAutocastVPE.EnchantInStockpile>
-  <BetterAutocastVPE.EnchantOnlyNamedStockpiles>Only enchant items in appropriately named stockpiles</BetterAutocastVPE.EnchantOnlyNamedStockpiles>
-  <BetterAutocastVPE.EnchantInStorage>Enchant items in storage (e.g. shelves)</BetterAutocastVPE.EnchantInStorage>
-  <BetterAutocastVPE.EnchantOnlyNamedStorageGroups>Only enchant items in appropriately named storage groups</BetterAutocastVPE.EnchantOnlyNamedStorageGroups>
-  <BetterAutocastVPE.EnthrallInStockpile>Enthrall corpses in stockpiles</BetterAutocastVPE.EnthrallInStockpile>
-  <BetterAutocastVPE.EnthrallOnlyNamedStockpiles>Only enthrall corpses in appropriately named stockpiles</BetterAutocastVPE.EnthrallOnlyNamedStockpiles>
-  <BetterAutocastVPE.EnthrallInStorage>Enthrall corpses in storage (e.g. shelves)</BetterAutocastVPE.EnthrallInStorage>
-  <BetterAutocastVPE.EnthrallOnlyNamedStorageGroups>Only enthrall corpses in appropriately named storage groups</BetterAutocastVPE.EnthrallOnlyNamedStorageGroups>
+  <BetterAutocastVPE.BlockedJobs.reportStringExplanation>The reportString of the JobDef</BetterAutocastVPE.BlockedJobs.reportStringExplanation>
+  <BetterAutocastVPE.BlockedJobs>Blocked Jobs</BetterAutocastVPE.BlockedJobs>
   <BetterAutocastVPE.CastDrafted>Cast while drafted</BetterAutocastVPE.CastDrafted>
   <BetterAutocastVPE.CastUndrafted>Cast while undrafted</BetterAutocastVPE.CastUndrafted>
-  <BetterAutocastVPE.WordOfAllianceCheckArea>Only cast in allowed area</BetterAutocastVPE.WordOfAllianceCheckArea>
-  <BetterAutocastVPE.WordOfAllianceGoodwillRange>Goodwill range:</BetterAutocastVPE.WordOfAllianceGoodwillRange>
-  <BetterAutocastVPE.WordOfJoyMoodThreshold>Mood threshold: {0}</BetterAutocastVPE.WordOfJoyMoodThreshold>
-  <BetterAutocastVPE.WordOfJoyMoodThreshold.Description>Maximum mood for a pawn to be auto-targeted</BetterAutocastVPE.WordOfJoyMoodThreshold.Description>
-  <BetterAutocastVPE.WordOfSerenityTargetScaria>Target pawns with scaria</BetterAutocastVPE.WordOfSerenityTargetScaria>
-  <BetterAutocastVPE.IgnoredMentalStates>Ignored mental states</BetterAutocastVPE.IgnoredMentalStates>
-  <BetterAutocastVPE.IgnoredMentalStates.Explanation>Manage which mental states should <![CDATA[<b><i>not</i></b>]]> be targeted by pawns autocasting Word of Serenity.</BetterAutocastVPE.IgnoredMentalStates.Explanation>
-  <BetterAutocastVPE.IgnoredMentalStates.Manager.Explanation>A list of all MentalStateDefs and a toggle on if they should <![CDATA[<b><i>not</i></b>]]> be targeted by pawns autocasting by Word of Serenity.</BetterAutocastVPE.IgnoredMentalStates.Manager.Explanation>
+  <BetterAutocastVPE.Clarification>"In range" below considers allowed areas when undrafted, but ignores them when drafted.\n\nForbidden targets are ignored unless drafted.\nThis includes checking if they are in allowed areas, or reserved by a pawn.\n\nAll psycasts check if the target is valid by the regular rules before casting.</BetterAutocastVPE.Clarification>
   <BetterAutocastVPE.IgnoredMentalStates.defNameExplanation>The defName of the MentalStateDefs</BetterAutocastVPE.IgnoredMentalStates.defNameExplanation>
+  <BetterAutocastVPE.IgnoredMentalStates.Explanation>Manage which mental states should <![CDATA[<b><i>not</i></b>]]> be targeted by pawns autocasting Word of Serenity.</BetterAutocastVPE.IgnoredMentalStates.Explanation>
   <BetterAutocastVPE.IgnoredMentalStates.labelExplanation>The label of the MentalStateDefs</BetterAutocastVPE.IgnoredMentalStates.labelExplanation>
+  <BetterAutocastVPE.IgnoredMentalStates.Manager.Explanation>A list of all MentalStateDefs and a toggle on if they should <![CDATA[<b><i>not</i></b>]]> be targeted by pawns autocasting by Word of Serenity.</BetterAutocastVPE.IgnoredMentalStates.Manager.Explanation>
   <BetterAutocastVPE.IgnoredMentalStates.Nonexistent.Explanation>MentalStateDefs that don't exist but are still configured.\nBecause they are from uninstalled mods, removed by updates, etc.\nThey can be kept without problem or cleaned up here.</BetterAutocastVPE.IgnoredMentalStates.Nonexistent.Explanation>
+  <BetterAutocastVPE.IgnoredMentalStates>Ignored mental states</BetterAutocastVPE.IgnoredMentalStates>
+  <BetterAutocastVPE.MinFocusThreshold.Description>Minimum psyfocus amount for a colonist to autocast</BetterAutocastVPE.MinFocusThreshold.Description>
+  <BetterAutocastVPE.MinFocusThreshold>Minimum psyfocus threshold: {0}</BetterAutocastVPE.MinFocusThreshold>
+  <BetterAutocastVPE.NoNonexistentDefs>&lt;b&gt;No nonexistent defs configured, nothing to do here.&lt;/b&gt;</BetterAutocastVPE.NoNonexistentDefs>
+  <BetterAutocastVPE.ResetSettings.Confirmation>&lt;b&gt;Really reset settings?&lt;/b&gt;</BetterAutocastVPE.ResetSettings.Confirmation>
+  <BetterAutocastVPE.ResetSettings>Reset settings</BetterAutocastVPE.ResetSettings>
+  <BetterAutocastVPE.SettingsCategory>Better Autocasting for VPE</BetterAutocastVPE.SettingsCategory>
+  <BetterAutocastVPE.ShowValidationMessages>Show target validation messages - used for debugging</BetterAutocastVPE.ShowValidationMessages>
+  <BetterAutocastVPE.TargetColonists>Target colonists</BetterAutocastVPE.TargetColonists>
+  <BetterAutocastVPE.TargetColonyAnimals>Target colony animals</BetterAutocastVPE.TargetColonyAnimals>
+  <BetterAutocastVPE.TargetEnemies>Target enemies</BetterAutocastVPE.TargetEnemies>
+  <BetterAutocastVPE.TargetPrisoners>Target prisoners</BetterAutocastVPE.TargetPrisoners>
+  <BetterAutocastVPE.TargetSelf>Target self</BetterAutocastVPE.TargetSelf>
+  <BetterAutocastVPE.TargetSlaves>Target slaves</BetterAutocastVPE.TargetSlaves>
+  <BetterAutocastVPE.TargetVisitors>Target visitors</BetterAutocastVPE.TargetVisitors>
+  <BetterAutocastVPE.TargetWildAnimals>Target wild animals</BetterAutocastVPE.TargetWildAnimals>
+  <BetterAutocastVPE.Uninstall.Confirmation>Are you sure you want to uninstall the mod from the current game</BetterAutocastVPE.Uninstall.Confirmation>
+  <BetterAutocastVPE.Uninstall.Disabled>Load a save to uninstall this mod from it</BetterAutocastVPE.Uninstall.Disabled>
+  <BetterAutocastVPE.Uninstall.Explanation>Removes all elements of this mod from the currently loaded game so you can safely uninstall the mod.\nCreates a backup save both before and after the removal, then puts you in the main menu.\n\nAlso turns off autocasting for all patched psycasts. For technical reasons, this does not check if they can be autocast without the mod and may need to be re-enabled on reload.\n\nOnly works if you currently have a save loaded.</BetterAutocastVPE.Uninstall.Explanation>
+  <BetterAutocastVPE.Uninstall>Uninstall the mod from the current game</BetterAutocastVPE.Uninstall>
 </LanguageData>

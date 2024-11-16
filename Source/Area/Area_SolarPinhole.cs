@@ -27,6 +27,8 @@ public class Designator_Area_SolarPinhole : Designator_Cells
 {
     private readonly DesignateMode mode;
 
+    public override bool Visible => BetterAutocastVPE.Settings.ShowSolarPinholeArea;
+
     public override int DraggableDimensions => 2;
 
     public override bool DragDrawMeasurements => true;

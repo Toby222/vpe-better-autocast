@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <BetterAutocastVPE.VPE_AdrenalineRush.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_AdrenalineRush.Explanation>
+  <BetterAutocastVPE.VPE_BladeFocus.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_BladeFocus.Explanation>
+  <BetterAutocastVPE.VPE_ControlledFrenzy.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_ControlledFrenzy.Explanation>
+  <BetterAutocastVPE.VPE_CraftTimeskip.Explanation>Will cast craft timeskip on the closest unfinished item the Craft Timeskip Workshop area.\n(Note that this isn't using stockpiles because you rarely store unfinished items.)</BetterAutocastVPE.VPE_CraftTimeskip.Explanation>
+  <BetterAutocastVPE.VPE_Darkvision.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychically sensitive colonist without the buff in casting range.</BetterAutocastVPE.VPE_Darkvision.Explanation>
+  <BetterAutocastVPE.VPE_Deathshield.Explanation>Targets the closest pawn without death shield in range, prioritizing by group in the order below.\nThat is, targets colonists firsts, then colony animals if no colonists are available, and so on.</BetterAutocastVPE.VPE_Deathshield.Explanation>
+  <BetterAutocastVPE.VPE_Eclipse.Explanation>Will autocast when there is no ongoing eclipse</BetterAutocastVPE.VPE_Eclipse.Explanation>
+  <BetterAutocastVPE.VPE_EnchantQuality.Explanation>Will look for enchantable items in the order listed below.\n\nWhen looking for items in "appropriately named" places, will look for names containing the word "enchant".\nFor example: `Enchanting`, `enchant`, `The Enchantress of Florence`</BetterAutocastVPE.VPE_EnchantQuality.Explanation>
+  <BetterAutocastVPE.VPE_Enthrall.Explanation>Will look for corpses in the order listed below.\n\nWhen looking for items in "appropriately named" places, will look for names containing the word "thrall".\nFor example: `Thrall corpses`, `Enthralling`, `thrall`</BetterAutocastVPE.VPE_Enthrall.Explanation>
+  <BetterAutocastVPE.VPE_FireShield.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychic sensitive pawn without the buff in casting range, in the order below.</BetterAutocastVPE.VPE_FireShield.Explanation>
+  <BetterAutocastVPE.VPE_FiringFocus.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_FiringFocus.Explanation>
+  <BetterAutocastVPE.VPE_Ghostwalk.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_Ghostwalk.Explanation>
+  <BetterAutocastVPE.VPE_GuidedShot.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_GuidedShot.Explanation>
+  <BetterAutocastVPE.VPE_IceCrystal.Explanation>Will create ice crystals on a random cell in the Ice Crystal Spot area.\nWill only target cells without buildings.</BetterAutocastVPE.VPE_IceCrystal.Explanation>
+  <BetterAutocastVPE.VPE_IceShield.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychic sensitive pawn without the buff in casting range, in the order below.</BetterAutocastVPE.VPE_IceShield.Explanation>
+  <BetterAutocastVPE.VPE_Invisibility.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychic sensitive colonist without the buff in casting range.</BetterAutocastVPE.VPE_Invisibility.Explanation>
+  <BetterAutocastVPE.VPE_Mend.Explanation>Will look for damaged items in the order listed below.\n\nWhen looking for items in "appropriately named" places, will look for names containing the word "mend".\nFor example: `Mending`, `mend`, `The First Amendment`</BetterAutocastVPE.VPE_Mend.Explanation>
+  <BetterAutocastVPE.VPE_Overshield.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychic sensitive colonist without the buff in casting range.</BetterAutocastVPE.VPE_Overshield.Explanation>
+  <BetterAutocastVPE.VPE_Power.Explanation>Targets the building with the biggest power draw. If no buildings currently consuming power are found, targets a random colony mech.</BetterAutocastVPE.VPE_Power.Explanation>
+  <BetterAutocastVPE.VPE_PsychicGuidance.Explanation>Targets a random non-downed psychically sensitive colonist in range that doesn't have the Psychic Guidance buff.</BetterAutocastVPE.VPE_PsychicGuidance.Explanation>
+  <BetterAutocastVPE.VPE_SolarPinhole.Explanation>Will create solar pinholes on a random cell in the Solar Pinhole Spot area.\nWill only target cells that don't already have a solar pinhole.</BetterAutocastVPE.VPE_SolarPinhole.Explanation>
+  <BetterAutocastVPE.VPE_SolarPinholeSunlamp.Explanation>Preferred to normal solar pinhole if both are available to cast. Will create solar pinholes on a random cell in the Solar Pinhole Spot area.\nWill only target cells that don't already have a solar pinhole.\nLarge and normal solar pinholes will prevent the other from being created at that spot.</BetterAutocastVPE.VPE_SolarPinholeSunlamp.Explanation>
+  <BetterAutocastVPE.VPE_SpeedBoost.Explanation>Will autocast whenever they do not have the buff applied.</BetterAutocastVPE.VPE_SpeedBoost.Explanation>
+  <BetterAutocastVPE.VPE_StaticAura.Explanation>Will autocast whenever they do not have the buff applied.\nOtherwise will target the closest non-downed psychic sensitive pawn without the buff in casting range, in the order below.</BetterAutocastVPE.VPE_StaticAura.Explanation>
+  <BetterAutocastVPE.VPE_StealVitality.Explanation>Targets the pawn with highest psychic sensitivity in range, ignoring those that have no psychic sensitivity, prioritizing by group in the order below.\nThat is, target prisoners first, if no prisoners are available, then target slaves, and so on.</BetterAutocastVPE.VPE_StealVitality.Explanation>
+  <BetterAutocastVPE.VPE_WordofAlliance.Explanation>Will target a pawn of the faction with the least goodwill, prioritizing first by psychic sensitivity then by distance to the casting pawn.\nIgnores factions that don't have normal goodwill, are permanently hostile, or are outside the goodwill range below.\nMinimum value is inclusive, maximum value is exclusive.\nFor example -20 to 20 will cast on a faction with -20 goodwill, but ignore factions with 20 goodwill.</BetterAutocastVPE.VPE_WordofAlliance.Explanation>
+  <BetterAutocastVPE.VPE_WordofImmunity.Explanation>Will target the closest pawn in range with an immunizable disease that does not have the Psychic Immunity buff, prioritizing by group in the order below.\nThat is, target colonists first, if no colonists are available, then target colony animals, and so on.</BetterAutocastVPE.VPE_WordofImmunity.Explanation>
+  <BetterAutocastVPE.VPE_WordofJoy.Explanation>Targets the closest non-downed psychically sensitive colonist in range without the Joyfuzz effect.</BetterAutocastVPE.VPE_WordofJoy.Explanation>
+  <BetterAutocastVPE.VPE_WordofProductivity.Explanation>Targets a random non-downed colonist in range that doesn't have the Productivity buff.</BetterAutocastVPE.VPE_WordofProductivity.Explanation>
+  <BetterAutocastVPE.VPE_WordofSerenity.Explanation>Targets the closest psychically sensitive pawn in range with an ongoing mental state.</BetterAutocastVPE.VPE_WordofSerenity.Explanation>
+  <BetterAutocastVPE.EnchantInStockpile>Enchant items in stockpiles</BetterAutocastVPE.EnchantInStockpile>
+  <BetterAutocastVPE.EnchantInStorage>Enchant items in storage (e.g. shelves)</BetterAutocastVPE.EnchantInStorage>
+  <BetterAutocastVPE.EnchantOnlyNamedStockpiles>Only enchant items in appropriately named stockpiles</BetterAutocastVPE.EnchantOnlyNamedStockpiles>
+  <BetterAutocastVPE.EnchantOnlyNamedStorageGroups>Only enchant items in appropriately named storage groups</BetterAutocastVPE.EnchantOnlyNamedStorageGroups>
+  <BetterAutocastVPE.EnthrallInStockpile>Enthrall corpses in stockpiles</BetterAutocastVPE.EnthrallInStockpile>
+  <BetterAutocastVPE.EnthrallInStorage>Enthrall corpses in storage (e.g. shelves)</BetterAutocastVPE.EnthrallInStorage>
+  <BetterAutocastVPE.EnthrallOnlyNamedStockpiles>Only enthrall corpses in appropriately named stockpiles</BetterAutocastVPE.EnthrallOnlyNamedStockpiles>
+  <BetterAutocastVPE.EnthrallOnlyNamedStorageGroups>Only enthrall corpses in appropriately named storage groups</BetterAutocastVPE.EnthrallOnlyNamedStorageGroups>
+  <BetterAutocastVPE.MendHealthThreshold.Description>Maximum health for an item to be auto-targeted</BetterAutocastVPE.MendHealthThreshold.Description>
+  <BetterAutocastVPE.MendHealthThreshold>Mend health threshold (maximum): {0}</BetterAutocastVPE.MendHealthThreshold>
+  <BetterAutocastVPE.MendInStockpile>Mend items in stockpiles</BetterAutocastVPE.MendInStockpile>
+  <BetterAutocastVPE.MendInStorage>Mend items in storage (e.g. shelves)</BetterAutocastVPE.MendInStorage>
+  <BetterAutocastVPE.MendOnlyNamedStockpiles>Only mend items in appropriately named stockpiles</BetterAutocastVPE.MendOnlyNamedStockpiles>
+  <BetterAutocastVPE.MendOnlyNamedStorageGroups>Only mend items in appropriately named storage groups</BetterAutocastVPE.MendOnlyNamedStorageGroups>
+  <BetterAutocastVPE.MendPawns>Mend equipped gear</BetterAutocastVPE.MendPawns>
+  <BetterAutocastVPE.PowerBuildings>Provide power to buildings</BetterAutocastVPE.PowerBuildings>
+  <BetterAutocastVPE.PowerMechs>Provide power to colony mechs</BetterAutocastVPE.PowerMechs>
+  <BetterAutocastVPE.Soothe.Explanation>Autocasts if any map pawn is below the given mood and doesn't have the psychic soothe buff.\nPawns get ignored for the check if their category is disabled.</BetterAutocastVPE.Soothe.Explanation>
+  <BetterAutocastVPE.SootheColonists>Check moods of Colonists</BetterAutocastVPE.SootheColonists>
+  <BetterAutocastVPE.SoothePrisoners>Check moods of Prisoners</BetterAutocastVPE.SoothePrisoners>
+  <BetterAutocastVPE.SootheSlaves>Check moods of Slaves</BetterAutocastVPE.SootheSlaves>
+  <BetterAutocastVPE.SootheTargetMinimumMood>Target minimum mood: {0}</BetterAutocastVPE.SootheTargetMinimumMood>
+  <BetterAutocastVPE.SootheVisitors>Check moods of Visitors</BetterAutocastVPE.SootheVisitors>
+  <BetterAutocastVPE.WordOfAllianceCheckArea>Only cast in allowed area</BetterAutocastVPE.WordOfAllianceCheckArea>
+  <BetterAutocastVPE.WordOfAllianceGoodwillRange>Goodwill range:</BetterAutocastVPE.WordOfAllianceGoodwillRange>
+  <BetterAutocastVPE.WordOfJoyMoodThreshold.Description>Maximum mood for a pawn to be auto-targeted</BetterAutocastVPE.WordOfJoyMoodThreshold.Description>
+  <BetterAutocastVPE.WordOfJoyMoodThreshold>Mood threshold: {0}</BetterAutocastVPE.WordOfJoyMoodThreshold>
+  <BetterAutocastVPE.WordOfSerenityTargetScaria>Target pawns with scaria</BetterAutocastVPE.WordOfSerenityTargetScaria>
+</LanguageData>

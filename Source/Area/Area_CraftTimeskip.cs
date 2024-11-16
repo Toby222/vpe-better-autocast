@@ -27,6 +27,8 @@ public class Designator_Area_CraftTimeskip : Designator_Cells
 {
     private readonly DesignateMode mode;
 
+    public override bool Visible => BetterAutocastVPE.Settings.ShowCraftTimeskipArea;
+
     public override int DraggableDimensions => 2;
 
     public override bool DragDrawMeasurements => true;
