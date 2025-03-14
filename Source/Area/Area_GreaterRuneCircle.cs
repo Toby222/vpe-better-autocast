@@ -27,7 +27,9 @@ public class Designator_Area_GreaterRunecircle : Designator_Cells
 {
     private readonly DesignateMode mode;
 
-    public override bool Visible => Designator_Area_Runecircle.ModActive && BetterAutocastVPE.Settings.ShowGreaterRunecircleArea;
+    public override bool Visible =>
+        Designator_Area_Runecircle.ModActive
+        && BetterAutocastVPE.Settings.ShowGreaterRunecircleArea;
 
     public override int DraggableDimensions => 2;
 

@@ -61,8 +61,9 @@ public class BetterAutocastVPE : Mod
 
         DebugLog("PatchAll ran successfully");
         // Casting necessary for compat with Harmony 2.2.2.0 (game versions under 1.5)
-        HarmonyMethod postfix =
-            new(((Delegate)Patches.CanAutoCast_EnableHandledPsycasts.Postfix).Method);
+        HarmonyMethod postfix = new(
+            ((Delegate)Patches.CanAutoCast_EnableHandledPsycasts.Postfix).Method
+        );
         DebugLog("postfix created successfully");
 
         MethodInfo ability = typeof(Ability).GetMethod(
