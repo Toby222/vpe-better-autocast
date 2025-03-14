@@ -126,7 +126,7 @@ internal static class PawnHelper
     internal static IEnumerable<Pawn> LowJoy(this IEnumerable<Pawn> pawns)
     {
         return pawns.Where(pawn =>
-            pawn.needs.TryGetNeed<Need_Joy>()?.CurLevel
+            pawn.needs.TryGetNeed<Need_Joy>()?.CurLevelPercentage
             <= BetterAutocastVPE.Settings.WordOfJoyMoodThreshold
         );
     }

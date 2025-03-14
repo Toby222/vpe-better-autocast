@@ -1,3 +1,8 @@
+# 5.2.0.0
+
+- Update the development environment
+- Fix Word of Joy using mood value instead of mood percentage when choosing targets
+
 # 5.1.0.0
 
 - Add support for Etch Runecircle from VPE Runesmith
