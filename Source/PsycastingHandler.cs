@@ -57,7 +57,7 @@ internal static class PsycastingHandler
                 { "VPE_StealVitality", HandleStealVitality },
                 { "VPE_WordofAlliance", HandleWordOfAlliance },
                 { "VPE_WordofImmunity", HandleWordOfImmunity },
-                { "VPE_WordofJoy", HandleColonistBuff },
+                { "VPE_WordofJoy", HandleWordOfJoy },
                 { "VPE_WordofProductivity", HandleColonistBuff },
                 { "VPE_WordofSerenity", HandleWordOfSerenity },
                 { "VPEP_BrainLeech", HandleBrainLeech },
@@ -255,7 +255,7 @@ internal static class PsycastingHandler
             .PsychicallySensitive();
 
         if (!allowDowned)
-            pawnsInRange = pawnsInRange.Where(pawn => !pawn.Downed);
+            pawnsInRange = pawnsInRange.NotDown();
 
         Pawn[] validPawnsInRange = pawnsInRange.ToArray();
 
@@ -555,6 +555,32 @@ internal static class PsycastingHandler
     #endregion Puppeteer
 
     #region Empath
+    private static bool HandleWordOfJoy(Pawn pawn, Ability ability)
+    {
+        if (pawn is null)
+            throw new ArgumentNullException(nameof(pawn));
+        if (ability is null)
+            throw new ArgumentNullException(nameof(ability));
+
+        Pawn? target = pawn.GetPawnsInRange(ability.GetRangeForPawn())
+            .LowJoy()
+            .WithoutHediff(ability.def.defName)
+            .PsychicallySensitive()
+            .NotDown()
+            .Colonists()
+            .ClosestTo(pawn);
+
+#if DEBUG
+        if (target is not null)
+        {
+            Need_Joy targetNeed = target.needs.TryGetNeed<Need_Joy>()!;
+            BetterAutocastVPE.Log($"Autocasting Word of Joy on {target.NameFullColored} with joy of {targetNeed.CurLevelPercentage}");
+        }
+#endif
+
+        return target is not null && CastAbilityOnTarget(ability, target);
+    }
+
     private static bool HandleWordOfSerenity(Pawn pawn, Ability ability)
     {
         List<TargetType> targets = new(6);

@@ -1,7 +1,11 @@
+# 5.2.1.0
+
+- Actually use LowJoy in Word of Joy handling
+
 # 5.2.0.0
 
 - Update the development environment
-- Fix Word of Joy using mood value instead of mood percentage when choosing targets
+- Fix LowJoy helper method using mood value instead of mood percentage when choosing targets
 
 # 5.1.0.0
 
