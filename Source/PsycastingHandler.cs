@@ -932,7 +932,6 @@ internal static class PsycastingHandler
                 maybeTarget = null;
                 break;
         }
-        ;
 
         string thingsattarget = maybeTarget is IntVec3 target_
             ? string.Join(", ", pawn.MapHeld.thingGrid.ThingsListAtFast(target_))

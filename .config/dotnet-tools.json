@@ -3,8 +3,11 @@
   "isRoot": true,
   "tools": {
     "roslynator.dotnet.cli": {
-      "version": "0.9.0",
-      "commands": ["roslynator"]
+      "version": "0.10.1",
+      "commands": [
+        "roslynator"
+      ],
+      "rollForward": false
     }
   }
 }
