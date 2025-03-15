@@ -1,3 +1,7 @@
+# 5.4.0.0
+
+- Fix Word of Immunity not checking for immunizable hediffs
+
 # 5.3.0.0
 
 - Expose Debug Logging option for reporting issues
