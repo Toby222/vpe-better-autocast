@@ -1,3 +1,7 @@
+# 5.3.0.0
+
+- Expose Debug Logging option for reporting issues
+
 # 5.2.1.0
 
 - Actually use LowJoy in Word of Joy handling

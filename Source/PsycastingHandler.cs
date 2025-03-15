@@ -147,9 +147,17 @@ internal static class PsycastingHandler
 #else
             BetterAutocastVPE.Warn(
 #endif
-                $"<b><i>Please report this</i></b> - Failed to validate {ability.def.defName} for {ability.pawn.NameFullColored} on {target.Label} - this is most likely harmless but means that I implemented something wrong."
+                $"<b><i>Please report this</i></b> - Failed to validate {ability.def.defName} for {ability.pawn.NameFullColored} on {target.Label} ({target}) - this is most likely harmless but means that I implemented something wrong."
             );
             return false;
+        }
+        else
+        {
+#if DEBUG
+            BetterAutocastVPE.DebugLog(
+                $"Validated cast of {ability.def.defName} for {ability.pawn.NameFullColored} on {target.Label} ({target})"
+            );
+#endif
         }
 
         ability.CreateCastJob(target);
@@ -569,14 +577,6 @@ internal static class PsycastingHandler
             .NotDown()
             .Colonists()
             .ClosestTo(pawn);
-
-#if DEBUG
-        if (target is not null)
-        {
-            Need_Joy targetNeed = target.needs.TryGetNeed<Need_Joy>()!;
-            BetterAutocastVPE.Log($"Autocasting Word of Joy on {target.NameFullColored} with joy of {targetNeed.CurLevelPercentage}");
-        }
-#endif
 
         return target is not null && CastAbilityOnTarget(ability, target);
     }

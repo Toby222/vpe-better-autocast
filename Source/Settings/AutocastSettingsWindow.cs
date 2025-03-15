@@ -401,6 +401,7 @@ public static class AutocastSettingsWindow
             confirmReset = true;
         }
 
+        Checkbox("DebugLog", ref Settings.DebugLog);
         Checkbox("ShowValidationMessages", ref Settings.ShowValidationMessages);
         Settings.AutocastIntervalDrafted = (int)
             listing.SliderLabeled(

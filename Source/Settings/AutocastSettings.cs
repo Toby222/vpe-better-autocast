@@ -80,6 +80,7 @@ public class AutocastSettings : ModSettings
         Reset();
     }
 
+    public bool DebugLog;
     public bool ShowValidationMessages;
     public int AutocastIntervalDrafted;
     public int AutocastIntervalUndrafted;
@@ -240,6 +241,7 @@ public class AutocastSettings : ModSettings
     public void Reset()
     {
         #region General
+        DebugLog = false;
         ShowValidationMessages = false;
         AutocastIntervalDrafted = 30;
         AutocastIntervalUndrafted = 600;
@@ -397,6 +399,7 @@ public class AutocastSettings : ModSettings
     {
         base.ExposeData();
 
+        LookStruct(() => DebugLog);
         LookStruct(() => ShowValidationMessages);
         LookStruct(() => AutocastIntervalDrafted);
         LookStruct(() => AutocastIntervalUndrafted);

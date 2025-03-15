@@ -8,6 +8,7 @@ namespace BetterAutocastVPE;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Settings;
 using UnityEngine;
 using VanillaPsycastsExpanded;
@@ -267,13 +268,16 @@ public class BetterAutocastVPE : Mod
 
     const string LogPrefix = "Better Autocasting - ";
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void DebugError(string message, int? key = null)
     {
-#if DEBUG
-        Error(message, key);
+#if !DEBUG
+        if (Settings?.DebugLog == true)
 #endif
+            Error(message, key);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Error(string message, int? key = null)
     {
         if (key is int keyNotNull)
@@ -282,13 +286,16 @@ public class BetterAutocastVPE : Mod
             Verse.Log.Error(LogPrefix + message);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void DebugWarn(string message, int? key = null)
     {
-#if DEBUG
-        Warn(message, key);
+#if !DEBUG
+        if (Settings?.DebugLog == true)
 #endif
+            Warn(message, key);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Warn(string message, int? key = null)
     {
         if (key is int keyNotNull)
@@ -297,13 +304,16 @@ public class BetterAutocastVPE : Mod
             Verse.Log.Warning(LogPrefix + message);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void DebugLog(string message)
     {
-#if DEBUG
-        Log(message);
+#if !DEBUG
+        if (Settings?.DebugLog == true)
 #endif
+            Log(message);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Log(string message)
     {
         Verse.Log.Message(LogPrefix + message);
