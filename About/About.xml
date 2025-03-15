@@ -11,7 +11,7 @@
     <li>1.4</li>
     <li>1.5</li>
   </supportedVersions>
-  <modVersion IgnoreIfNoMatchingField="True">5.3.0.0</modVersion>
+  <modVersion IgnoreIfNoMatchingField="True">5.4.0.0</modVersion>
   <url>https://github.com/Toby222/vpe-better-autocast/</url>
   <modDependencies/>
   <modDependenciesByVersion>
