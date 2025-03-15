@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using RimWorld;
 using Verse;
 
@@ -10,14 +11,6 @@ using static ThingHelper;
 
 internal static class PawnHelper
 {
-    internal static IEnumerable<Pawn> WithoutHediff(
-        this IEnumerable<Pawn> pawns,
-        string hediffDefName
-    )
-    {
-        return pawns.Where(pawn => !pawn.HasHediff(hediffDefName));
-    }
-
     internal static T? ClosestTo<T>(this IEnumerable<T> things, Thing origin)
         where T : Thing
     {
@@ -50,9 +43,9 @@ internal static class PawnHelper
         return pawns.Where(pawn => pawn.IsColonist);
     }
 
-    internal static IEnumerable<Pawn> Immunizable(this IEnumerable<Pawn> pawns)
+    internal static bool Immunizable(this Pawn pawn)
     {
-        return pawns.Where(pawn => pawn.health.hediffSet.HasImmunizableNotImmuneHediff());
+        return pawn.health.hediffSet.HasImmunizableNotImmuneHediff();
     }
 
     internal static IEnumerable<Pawn> Slaves(this IEnumerable<Pawn> pawns)
@@ -70,11 +63,6 @@ internal static class PawnHelper
         return pawns.Where(pawn => !pawn.PawnIsDown());
     }
 
-    internal static IEnumerable<Pawn> WithMentalBreak(this IEnumerable<Pawn> pawns)
-    {
-        return pawns.Where(pawn => pawn.MentalState != null);
-    }
-
     internal static Pawn HighestSensitivity(this IEnumerable<Pawn> pawns)
     {
         return pawns
@@ -86,6 +74,10 @@ internal static class PawnHelper
     {
         return pawns.Where(pawn => pawn.psychicEntropy?.IsPsychicallySensitive is true);
     }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static bool DoesNotHaveHediff(this Pawn pawn, string hediffDefName) =>
+        !HasHediff(pawn, hediffDefName);
 
     internal static bool HasHediff(this Pawn pawn, string hediffDefName)
     {
@@ -123,11 +115,9 @@ internal static class PawnHelper
             );
     }
 
-    internal static IEnumerable<Pawn> LowJoy(this IEnumerable<Pawn> pawns)
+    internal static bool LowJoy(this Pawn pawn)
     {
-        return pawns.Where(pawn =>
-            pawn.needs.TryGetNeed<Need_Joy>()?.CurLevelPercentage
-            <= BetterAutocastVPE.Settings.WordOfJoyMoodThreshold
-        );
+        return pawn.needs.TryGetNeed<Need_Joy>()?.CurLevelPercentage
+            <= BetterAutocastVPE.Settings.WordOfJoyMoodThreshold;
     }
 }

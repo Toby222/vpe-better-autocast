@@ -289,9 +289,7 @@ internal static class PsycastingHandler
             {
                 FinalTargetType.Random => targets.GetRandomClass(),
                 FinalTargetType.Closest => targets.ClosestTo(pawn),
-                FinalTargetType.MostPsychicallySensitive => targets
-                    .OrderByDescending(pawn => pawn.psychicEntropy.PsychicSensitivity)
-                    .FirstOrDefault(),
+                FinalTargetType.MostPsychicallySensitive => targets.HighestSensitivity(),
 #if DEBUG
                 _ => throw new NotImplementedException(),
 #else
@@ -314,7 +312,8 @@ internal static class PsycastingHandler
         TargetType[] targetPriority,
         FinalTargetType finalTarget,
         bool allowDowned,
-        string? hediffDefName = null
+        string? hediffDefName = null,
+        Func<Pawn, bool>? extraValidator = null
     )
     {
         if (hediffDefName is null)
@@ -346,7 +345,9 @@ internal static class PsycastingHandler
             ability,
             targetPriority,
             finalTarget,
-            pawn => !pawn.HasHediff(hediffDefName),
+            extraValidator is null
+                ? pawn => pawn.DoesNotHaveHediff(hediffDefName)
+                : pawn => pawn.DoesNotHaveHediff(hediffDefName) && extraValidator(pawn),
             allowDowned
         );
     }
@@ -404,7 +405,14 @@ internal static class PsycastingHandler
         if (BetterAutocastVPE.Settings.WordOfImmunityTargetVisitors)
             targets.Add(TargetType.Visitors);
 
-        return HandleHediffPsycast(pawn, ability, targets.ToArray(), FinalTargetType.Closest, true);
+        return HandleHediffPsycast(
+            pawn,
+            ability,
+            targets.ToArray(),
+            FinalTargetType.Closest,
+            true,
+            extraValidator: PawnHelper.Immunizable
+        );
     }
     #endregion Protector
 
@@ -563,23 +571,15 @@ internal static class PsycastingHandler
     #endregion Puppeteer
 
     #region Empath
-    private static bool HandleWordOfJoy(Pawn pawn, Ability ability)
-    {
-        if (pawn is null)
-            throw new ArgumentNullException(nameof(pawn));
-        if (ability is null)
-            throw new ArgumentNullException(nameof(ability));
-
-        Pawn? target = pawn.GetPawnsInRange(ability.GetRangeForPawn())
-            .LowJoy()
-            .WithoutHediff(ability.def.defName)
-            .PsychicallySensitive()
-            .NotDown()
-            .Colonists()
-            .ClosestTo(pawn);
-
-        return target is not null && CastAbilityOnTarget(ability, target);
-    }
+    private static bool HandleWordOfJoy(Pawn pawn, Ability ability) =>
+        HandleHediffPsycast(
+            pawn,
+            ability,
+            [TargetType.Colonists],
+            FinalTargetType.Closest,
+            false,
+            extraValidator: PawnHelper.LowJoy
+        );
 
     private static bool HandleWordOfSerenity(Pawn pawn, Ability ability)
     {
@@ -622,7 +622,7 @@ internal static class PsycastingHandler
             .MapHeld.mapPawns.AllPawnsSpawned.Where(mapPawn =>
                 !mapPawn.Dead
                 && mapPawn.gender == gender
-                && !mapPawn.HasHediff("VPE_PsychicSoothe")
+                && mapPawn.DoesNotHaveHediff("VPE_PsychicSoothe")
                 && mapPawn.needs.mood is Need_Mood mood
                 && (
                     (
