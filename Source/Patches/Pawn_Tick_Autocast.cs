@@ -18,6 +18,8 @@ internal static class Pawn_Tick_Autocast
     {
         if (__instance is null)
             throw new ArgumentNullException(nameof(__instance));
+        if (BetterAutocastVPE.Settings is not { } settings)
+            throw new Exception("Settings are not initialized yet for some reason?");
 
         int interval = __instance.Drafted
             ? BetterAutocastVPE.Settings.AutocastIntervalDrafted

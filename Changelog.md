@@ -1,3 +1,7 @@
+# 5.4.0.1
+
+- Attempted fix at possible NRE in Pawn_Tick_Patch
+
 # 5.4.0.0
 
 - Fix Word of Immunity not checking for immunizable hediffs
