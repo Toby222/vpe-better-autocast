@@ -696,6 +696,15 @@ public static class AutocastSettingsWindow
             listing.Indent(12f);
             listing.ColumnWidth -= 12f;
 
+            #region Focus
+            if (AbilityHeader("VPE_Focus"))
+            {
+                Checkbox("TargetSelf", ref Settings.FocusTargetSelf);
+                Checkbox("TargetColonists", ref Settings.FocusTargetColonists);
+                Checkbox("TargetSlaves", ref Settings.FocusTargetSlaves);
+            }
+            #endregion Focus
+
             #region Invisibility
             if (AbilityHeader("VPE_Invisibility"))
             {

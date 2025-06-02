@@ -39,6 +39,7 @@ internal static class PsycastingHandler
                 { "VPE_Enthrall", HandleEnthrall },
                 { "VPE_FireShield", HandleFireShield },
                 { "VPE_FiringFocus", HandleSelfBuff },
+                { "VPE_Focus", HandleFocus },
                 { "VPE_Ghostwalk", HandleSelfBuff },
                 { "VPE_GuidedShot", HandleSelfBuff },
                 { "VPE_IceCrystal", HandleIceCrystal },
@@ -316,12 +317,7 @@ internal static class PsycastingHandler
         Func<Pawn, bool>? extraValidator = null
     )
     {
-        if (hediffDefName is null)
-        {
-            HediffPsycastCache.TryGetValue(ability.def.defName, out hediffDefName);
-        }
-
-        if (hediffDefName is null)
+        if (hediffDefName is null && !HediffPsycastCache.TryGetValue(ability.def.defName, out hediffDefName))
         {
             AbilityExtension_Hediff? hediffExtension =
                 ability.def.GetModExtensionCached<AbilityExtension_Hediff>();
@@ -414,6 +410,25 @@ internal static class PsycastingHandler
             extraValidator: PawnHelper.Immunizable
         );
     }
+
+    private static bool HandleFocus(Pawn pawn, Ability ability)
+    {
+        List<TargetType> targets = new(3);
+        if (BetterAutocastVPE.Settings.FocusTargetSelf)
+            targets.Add(TargetType.Self);
+        if (BetterAutocastVPE.Settings.FocusTargetColonists)
+            targets.Add(TargetType.Colonists);
+        if (BetterAutocastVPE.Settings.FocusTargetSlaves)
+            targets.Add(TargetType.Slaves);
+
+        return HandleHediffPsycast(
+            pawn,
+            ability,
+            targets.ToArray(),
+            FinalTargetType.Closest,
+            false
+        );
+    }
     #endregion Protector
 
     #region Necropath
@@ -470,7 +485,7 @@ internal static class PsycastingHandler
                 ||
                 // TODO: Probably make this timeout configurable
                 disappears.ticksToDisappear <= (GenDate.TicksPerHour * 4),
-            true /* Mind the different capitalization */
+            true
         );
     }
 

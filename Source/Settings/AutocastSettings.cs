@@ -33,6 +33,7 @@ public class AutocastSettings : ModSettings
             "VPE_Eclipse",
             "VPE_EnchantQuality",
             "VPE_Enthrall",
+            "VPE_Focus",
             "VPE_Ghostwalk",
             "VPE_IceCrystal",
             "VPE_Mend",
@@ -50,8 +51,8 @@ public class AutocastSettings : ModSettings
             "VPE_WordofProductivity",
             "VPE_WordofSerenity",
             "VPEP_BrainLeech",
-            "VPER_Etch_Runecircle",
             "VPER_Etch_Runecircle_Greater",
+            "VPER_Etch_Runecircle",
         ];
 
     private static HashSet<string> DefaultBlockedJobDefs() =>
@@ -150,6 +151,10 @@ public class AutocastSettings : ModSettings
     public bool DarkvisionTargetSelf;
     public bool DarkvisionTargetColonists;
 
+    public bool FocusTargetSelf;
+    public bool FocusTargetColonists;
+    public bool FocusTargetSlaves;
+
     public bool InvisibilityTargetSelf;
     public bool InvisibilityTargetColonists;
 
@@ -201,7 +206,7 @@ public class AutocastSettings : ModSettings
         )
         {
             throw new ArgumentException(
-                "Invalid expression passed to LookField",
+                "Invalid expression passed to LookStruct",
                 nameof(expression)
             );
         }
@@ -343,6 +348,12 @@ public class AutocastSettings : ModSettings
         InvisibilityTargetSelf = true;
         InvisibilityTargetColonists = true;
         #endregion Invisibility
+
+        #region Focus
+        FocusTargetSelf = true;
+        FocusTargetColonists = true;
+        FocusTargetSlaves = false;
+        #endregion Focus
 
         #region Overshield
         OvershieldTargetSelf = true;
@@ -514,6 +525,12 @@ public class AutocastSettings : ModSettings
         LookStruct(() => WordOfImmunityTargetPrisoners);
         LookStruct(() => WordOfImmunityTargetVisitors);
         #endregion Word of Immunity
+
+        #region Focus
+        LookStruct(() => FocusTargetSelf);
+        LookStruct(() => FocusTargetColonists);
+        LookStruct(() => FocusTargetSlaves);
+        #endregion Focus
 
         #region Ice Shield
         LookStruct(() => IceShieldTargetSelf);

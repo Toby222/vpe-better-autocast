@@ -1,3 +1,7 @@
+# 5.5.0.0
+
+- Add support for Protector's Focus psycast
+
 # 5.4.0.1
 
 - Attempted fix at possible NRE in Pawn_Tick_Patch
