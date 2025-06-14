@@ -317,7 +317,10 @@ internal static class PsycastingHandler
         Func<Pawn, bool>? extraValidator = null
     )
     {
-        if (hediffDefName is null && !HediffPsycastCache.TryGetValue(ability.def.defName, out hediffDefName))
+        if (
+            hediffDefName is null
+            && !HediffPsycastCache.TryGetValue(ability.def.defName, out hediffDefName)
+        )
         {
             AbilityExtension_Hediff? hediffExtension =
                 ability.def.GetModExtensionCached<AbilityExtension_Hediff>();

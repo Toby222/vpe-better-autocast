@@ -1,3 +1,7 @@
+# 5.5.1.0
+
+- Add search
+
 # 5.5.0.0
 
 - Add support for Protector's Focus psycast

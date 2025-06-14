@@ -6,6 +6,7 @@ using VFECore.UItils;
 namespace BetterAutocastVPE.Settings;
 
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using VanillaPsycastsExpanded;
 using Windows;
 
@@ -14,6 +15,13 @@ public static class AutocastSettingsWindow
     private static Vector2 settingsScrollPosition = new();
 
     private static float settingsHeight;
+    private static string searchString = string.Empty;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static bool MatchesSearch(string value)
+    {
+        return value.IndexOf(searchString, System.StringComparison.OrdinalIgnoreCase) >= 0;
+    }
 
     public static bool confirmUninstall;
     public static bool confirmReset;
@@ -24,7 +32,7 @@ public static class AutocastSettingsWindow
     private static readonly HashSet<string> expandedPaths = [];
 
 #if DEBUG
-    private static PsycasterPathDef? currentPsycasterPath = null;
+    private static PsycasterPathDef? currentPsycasterPath;
 #endif
 
     static bool PsycasterPathHeader(Listing_Standard listing, string psycasterPathDefName)
@@ -41,12 +49,20 @@ public static class AutocastSettingsWindow
             );
             return false;
         }
-        listing.GapLine();
 
-        bool expanded = expandedPaths.Contains(psycasterPathDefName);
 #if DEBUG
         currentPsycasterPath = psycasterPathDef;
 #endif
+
+        if (!string.IsNullOrWhiteSpace(searchString))
+        {
+            return true;
+        }
+
+        listing.GapLine();
+
+        bool expanded = expandedPaths.Contains(psycasterPathDefName);
+
         Rect psycasterPathRow = listing.GetRect(
             Text.CalcHeight(psycasterPathDef.LabelCap, listing.ColumnWidth)
         );
@@ -75,12 +91,15 @@ public static class AutocastSettingsWindow
 
     static bool AbilityHeader_Soothe(Listing_Standard listing)
     {
-        listing.GapLine();
-
-        bool expanded = expandedDefs.Contains("VPE_SootheFemale");
-
         AbilityDef abilityDefFemale = DefDatabase<AbilityDef>.GetNamed("VPE_SootheFemale");
         AbilityDef abilityDefMale = DefDatabase<AbilityDef>.GetNamed("VPE_SootheMale");
+
+        string labelCap = abilityDefFemale.LabelCap + " & " + abilityDefMale.LabelCap;
+        if (!MatchesSearch(labelCap))
+            return false;
+
+        listing.GapLine();
+
 #if DEBUG
         if (currentPsycasterPath is null)
         {
@@ -98,23 +117,21 @@ public static class AutocastSettingsWindow
         }
 #endif
 
-        string labelCap = abilityDefFemale.LabelCap + " & " + abilityDefMale.LabelCap;
         Rect abilityLabelRow = listing.GetRect(
             Text.CalcHeight(labelCap, listing.ColumnWidth - 12f)
         );
 
+        bool expanded = expandedDefs.Contains("VPE_SootheFemale");
         Widgets.DrawHighlightIfMouseover(abilityLabelRow);
         if (Widgets.ButtonInvisible(abilityLabelRow))
         {
             if (expanded)
             {
                 expandedDefs.Remove("VPE_SootheFemale");
-                expandedDefs.Remove("VPE_SootheMale");
             }
             else
             {
                 expandedDefs.Add("VPE_SootheFemale");
-                expandedDefs.Add("VPE_SootheMale");
             }
             expanded = !expanded;
         }
@@ -208,11 +225,14 @@ public static class AutocastSettingsWindow
 
     static bool AbilityHeader(Listing_Standard listing, string abilityDefName)
     {
+        AbilityDef abilityDef = DefDatabase<AbilityDef>.GetNamed(abilityDefName);
+
+        string labelCap = abilityDef.LabelCap.ToString();
+        if (!MatchesSearch(labelCap))
+            return false;
+
         listing.GapLine();
 
-        bool expanded = expandedDefs.Contains(abilityDefName);
-
-        AbilityDef abilityDef = DefDatabase<AbilityDef>.GetNamed(abilityDefName);
 #if DEBUG
         if (currentPsycasterPath is null)
         {
@@ -234,6 +254,7 @@ public static class AutocastSettingsWindow
             Text.CalcHeight(abilityDef.LabelCap, listing.ColumnWidth - 12f)
         );
 
+        bool expanded = expandedDefs.Contains(abilityDefName);
         Widgets.DrawHighlightIfMouseover(abilityLabelRow);
         if (Widgets.ButtonInvisible(abilityLabelRow))
         {
@@ -345,109 +366,120 @@ public static class AutocastSettingsWindow
                 && AutocastSettingsWindow.PsycasterPathHeader(listing, psycasterPathDefName);
         }
 
-        Rect viewRect = new(x: inRect.x, inRect.y, inRect.width - 16f, settingsHeight);
+        searchString = Widgets.TextField(inRect.TakeTopPart(30f), searchString);
+        Rect viewRect = new(inRect.x, inRect.y, inRect.width - 16f, settingsHeight);
         Widgets.BeginScrollView(inRect, ref settingsScrollPosition, viewRect);
         listing.Begin(new Rect(viewRect.x, viewRect.y, viewRect.width, float.PositiveInfinity));
 
-        listing.Label("BetterAutocastVPE.Clarification".TranslateSafe());
-
-        listing.GapLine();
-
         #region General
 
-        bool inGame = Current.Game is not null;
-        string uninstallLabel = inGame
-            ? confirmUninstall
-                ? "BetterAutocastVPE.Uninstall.Confirmation"
-                : "BetterAutocastVPE.Uninstall"
-            : "BetterAutocastVPE.Uninstall.Disabled";
-
-        listing.Label("BetterAutocastVPE.Uninstall.Explanation".TranslateSafe());
-
-        Color prevColor = GUI.color;
-        if (confirmUninstall && inGame)
+        if (string.IsNullOrWhiteSpace(searchString))
         {
-            GUI.color = Color.red;
-        }
+            listing.Label("BetterAutocastVPE.Clarification".TranslateSafe());
 
-        if (listing.ButtonText(uninstallLabel.TranslateSafe()) && inGame)
-        {
-            if (confirmUninstall)
-                LoadedModManager.GetMod<BetterAutocastVPE>().Uninstall();
-            else
-                confirmUninstall = true;
-        }
+            listing.GapLine();
 
-        if (confirmUninstall)
-        {
-            GUI.color = prevColor;
-        }
+            bool inGame = Current.Game is not null;
+            string uninstallLabel = inGame
+                ? confirmUninstall
+                    ? "BetterAutocastVPE.Uninstall.Confirmation"
+                    : "BetterAutocastVPE.Uninstall"
+                : "BetterAutocastVPE.Uninstall.Disabled";
 
-        listing.GapLine();
+            listing.Label("BetterAutocastVPE.Uninstall.Explanation".TranslateSafe());
 
-        if (confirmReset)
-        {
-            prevColor = GUI.color;
-            GUI.color = Color.red;
-            if (listing.ButtonText("BetterAutocastVPE.ResetSettings.Confirmation".TranslateSafe()))
+            Color prevColor = GUI.color;
+            if (confirmUninstall && inGame)
             {
-                Settings.Reset();
-                confirmReset = false;
+                GUI.color = Color.red;
             }
-            GUI.color = prevColor;
-        }
-        else if (listing.ButtonText("BetterAutocastVPE.ResetSettings".TranslateSafe()))
-        {
-            confirmReset = true;
-        }
 
-        Checkbox("DebugLog", ref Settings.DebugLog);
-        Checkbox("ShowValidationMessages", ref Settings.ShowValidationMessages);
-        Settings.AutocastIntervalDrafted = (int)
-            listing.SliderLabeled(
-                "BetterAutocastVPE.AutocastIntervalDrafted".TranslateSafe(
-                    Settings.AutocastIntervalDrafted
-                ),
-                Settings.AutocastIntervalDrafted,
-                1f,
-                10000f,
-                tooltip: "BetterAutocastVPE.AutocastIntervalDrafted.Description".TranslateSafe(
-                    Settings.AutocastIntervalDrafted
+            if (listing.ButtonText(uninstallLabel.TranslateSafe()) && inGame)
+            {
+                if (confirmUninstall)
+                    LoadedModManager.GetMod<BetterAutocastVPE>().Uninstall();
+                else
+                    confirmUninstall = true;
+            }
+
+            if (confirmUninstall)
+            {
+                GUI.color = prevColor;
+            }
+
+            listing.GapLine();
+
+            if (confirmReset)
+            {
+                prevColor = GUI.color;
+                GUI.color = Color.red;
+                if (
+                    listing.ButtonText(
+                        "BetterAutocastVPE.ResetSettings.Confirmation".TranslateSafe()
+                    )
                 )
-            );
-        Settings.AutocastIntervalUndrafted = (int)
-            listing.SliderLabeled(
-                "BetterAutocastVPE.AutocastIntervalUndrafted".TranslateSafe(
-                    Settings.AutocastIntervalUndrafted
+                {
+                    Settings.Reset();
+                    confirmReset = false;
+                }
+                GUI.color = prevColor;
+            }
+            else if (listing.ButtonText("BetterAutocastVPE.ResetSettings".TranslateSafe()))
+            {
+                confirmReset = true;
+            }
+
+            Checkbox("DebugLog", ref Settings.DebugLog);
+            Checkbox("ShowValidationMessages", ref Settings.ShowValidationMessages);
+            Settings.AutocastIntervalDrafted = (int)
+                listing.SliderLabeled(
+                    "BetterAutocastVPE.AutocastIntervalDrafted".TranslateSafe(
+                        Settings.AutocastIntervalDrafted
+                    ),
+                    Settings.AutocastIntervalDrafted,
+                    1f,
+                    10000f,
+                    tooltip: "BetterAutocastVPE.AutocastIntervalDrafted.Description".TranslateSafe(
+                        Settings.AutocastIntervalDrafted
+                    )
+                );
+            Settings.AutocastIntervalUndrafted = (int)
+                listing.SliderLabeled(
+                    "BetterAutocastVPE.AutocastIntervalUndrafted".TranslateSafe(
+                        Settings.AutocastIntervalUndrafted
+                    ),
+                    Settings.AutocastIntervalUndrafted,
+                    1f,
+                    10000f,
+                    tooltip: "BetterAutocastVPE.AutocastIntervalUndrafted.Description".TranslateSafe(
+                        Settings.AutocastIntervalUndrafted
+                    )
+                );
+
+            Settings.MinFocusThreshold = listing.SliderLabeled(
+                "BetterAutocastVPE.MinFocusThreshold".TranslateSafe(
+                    Settings.MinFocusThreshold.ToString("P")
                 ),
-                Settings.AutocastIntervalUndrafted,
+                Settings.MinFocusThreshold,
+                0f,
                 1f,
-                10000f,
-                tooltip: "BetterAutocastVPE.AutocastIntervalUndrafted.Description".TranslateSafe(
-                    Settings.AutocastIntervalUndrafted
-                )
+                tooltip: "BetterAutocastVPE.MinFocusThreshold.Description".TranslateSafe()
             );
 
-        Settings.MinFocusThreshold = listing.SliderLabeled(
-            "BetterAutocastVPE.MinFocusThreshold".TranslateSafe(
-                Settings.MinFocusThreshold.ToString("P")
-            ),
-            Settings.MinFocusThreshold,
-            0f,
-            1f,
-            tooltip: "BetterAutocastVPE.MinFocusThreshold.Description".TranslateSafe()
-        );
+            listing.GapLine();
+            listing.Label("BetterAutocastVPE.BlockedJobs.Explanation".TranslateSafe());
+            if (listing.ButtonText("BetterAutocastVPE.BlockedJobs".TranslateSafe()))
+                Find.WindowStack.Add(new BlockedJobsListWindow());
+        }
 
-        listing.GapLine();
-        listing.Label("BetterAutocastVPE.BlockedJobs.Explanation".TranslateSafe());
-        if (listing.ButtonText("BetterAutocastVPE.BlockedJobs".TranslateSafe()))
-            Find.WindowStack.Add(new BlockedJobsListWindow());
         #endregion General
+
+        float indent = string.IsNullOrWhiteSpace(searchString) ? 12f : 0f;
 
         if (PsycasterPathHeader("VPE_Archon"))
         {
-            listing.Indent(12f);
-            listing.ColumnWidth -= 12f;
+            listing.Indent(indent);
+            listing.ColumnWidth -= indent;
 
             #region Word of Alliance
             if (AbilityHeader("VPE_WordofAlliance"))
@@ -463,14 +495,14 @@ public static class AutocastSettingsWindow
             AbilityHeader("VPE_WordofProductivity");
             #endregion Word of Productivity
 
-            listing.ColumnWidth += 12f;
-            listing.Outdent(12f);
+            listing.ColumnWidth += indent;
+            listing.Outdent(indent);
         }
-        // if (PsycasterPathHeader("VPE_Archotechist")) { listing.Indent(12f); listing.ColumnWidth -= 12f; listing.ColumnWidth += 12f; listing.Outdent(12f); }
+        // if (PsycasterPathHeader("VPE_Archotechist")) { listing.Indent(indent); listing.ColumnWidth -= indent; listing.ColumnWidth += indent; listing.Outdent(indent); }
         if (PsycasterPathHeader("VPE_Chronopath"))
         {
-            listing.Indent(12f);
-            listing.ColumnWidth -= 12f;
+            listing.Indent(indent);
+            listing.ColumnWidth -= indent;
 
             #region Craft Timeskip
             if (AbilityHeader("VPE_CraftTimeskip"))
@@ -479,13 +511,13 @@ public static class AutocastSettingsWindow
             }
             #endregion Craft Timeskip
 
-            listing.ColumnWidth += 12f;
-            listing.Outdent(12f);
+            listing.ColumnWidth += indent;
+            listing.Outdent(indent);
         }
         if (PsycasterPathHeader("VPE_Conflagrator"))
         {
-            listing.Indent(12f);
-            listing.ColumnWidth -= 12f;
+            listing.Indent(indent);
+            listing.ColumnWidth -= indent;
 
             #region Fire Shield
             if (AbilityHeader("VPE_FireShield"))
@@ -497,13 +529,13 @@ public static class AutocastSettingsWindow
             }
             #endregion Fire Shield
 
-            listing.ColumnWidth += 12f;
-            listing.Outdent(12f);
+            listing.ColumnWidth += indent;
+            listing.Outdent(indent);
         }
         if (PsycasterPathHeader("VPE_Empath"))
         {
-            listing.Indent(12f);
-            listing.ColumnWidth -= 12f;
+            listing.Indent(indent);
+            listing.ColumnWidth -= indent;
 
             #region Soothe (Female/Male)
             if (AbilityHeader_Soothe(listing))
@@ -581,13 +613,13 @@ public static class AutocastSettingsWindow
             }
             #endregion Word of Serenity
 
-            listing.ColumnWidth += 12f;
-            listing.Outdent(12f);
+            listing.ColumnWidth += indent;
+            listing.Outdent(indent);
         }
         if (PsycasterPathHeader("VPE_Frostshaper"))
         {
-            listing.Indent(12f);
-            listing.ColumnWidth -= 12f;
+            listing.Indent(indent);
+            listing.ColumnWidth -= indent;
 
             #region Ice Crystal
             if (AbilityHeader("VPE_IceCrystal"))
@@ -606,25 +638,25 @@ public static class AutocastSettingsWindow
             }
             #endregion Ice Shield
 
-            listing.ColumnWidth += 12f;
-            listing.Outdent(12f);
+            listing.ColumnWidth += indent;
+            listing.Outdent(indent);
         }
         if (PsycasterPathHeader("VPE_Harmonist"))
         {
-            listing.Indent(12f);
-            listing.ColumnWidth -= 12f;
+            listing.Indent(indent);
+            listing.ColumnWidth -= indent;
 
             #region Psychic Guidance
             AbilityHeader("VPE_PsychicGuidance");
             #endregion Psychic Guidance
 
-            listing.ColumnWidth += 12f;
-            listing.Outdent(12f);
+            listing.ColumnWidth += indent;
+            listing.Outdent(indent);
         }
         if (PsycasterPathHeader("VPE_Necropath"))
         {
-            listing.Indent(12f);
-            listing.ColumnWidth -= 12f;
+            listing.Indent(indent);
+            listing.ColumnWidth -= indent;
 
             #region Deathshield
             if (AbilityHeader("VPE_Deathshield"))
@@ -668,13 +700,13 @@ public static class AutocastSettingsWindow
             }
             #endregion Steal vitality
 
-            listing.ColumnWidth += 12f;
-            listing.Outdent(12f);
+            listing.ColumnWidth += indent;
+            listing.Outdent(indent);
         }
         if (PsycasterPathHeader("VPE_Nightstalker"))
         {
-            listing.Indent(12f);
-            listing.ColumnWidth -= 12f;
+            listing.Indent(indent);
+            listing.ColumnWidth -= indent;
 
             #region Darkvision
             if (AbilityHeader("VPE_Darkvision"))
@@ -688,13 +720,13 @@ public static class AutocastSettingsWindow
             AbilityHeader("VPE_Eclipse");
             #endregion Eclipse
 
-            listing.ColumnWidth += 12f;
-            listing.Outdent(12f);
+            listing.ColumnWidth += indent;
+            listing.Outdent(indent);
         }
         if (PsycasterPathHeader("VPE_Protector"))
         {
-            listing.Indent(12f);
-            listing.ColumnWidth -= 12f;
+            listing.Indent(indent);
+            listing.ColumnWidth -= indent;
 
             #region Focus
             if (AbilityHeader("VPE_Focus"))
@@ -732,13 +764,13 @@ public static class AutocastSettingsWindow
             }
             #endregion Word of Immunity
 
-            listing.ColumnWidth += 12f;
-            listing.Outdent(12f);
+            listing.ColumnWidth += indent;
+            listing.Outdent(indent);
         }
         if (PsycasterPathHeader("VPEP_Puppeteer", "VanillaExpanded.VPE.Puppeteer"))
         {
-            listing.Indent(12f);
-            listing.ColumnWidth -= 12f;
+            listing.Indent(indent);
+            listing.ColumnWidth -= indent;
 
             #region Brain Leech
             if (AbilityHeader("VPEP_BrainLeech"))
@@ -748,13 +780,13 @@ public static class AutocastSettingsWindow
             }
             #endregion Brain Leech
 
-            listing.ColumnWidth += 12f;
-            listing.Outdent(12f);
+            listing.ColumnWidth += indent;
+            listing.Outdent(indent);
         }
         if (PsycasterPathHeader("VPER_Runesmith", "Chairheir.VPERunesmith"))
         {
-            listing.Indent(12f);
-            listing.ColumnWidth -= 12f;
+            listing.Indent(indent);
+            listing.ColumnWidth -= indent;
 
             #region Etch Runecircle
             if (AbilityHeader("VPER_Etch_Runecircle"))
@@ -769,13 +801,13 @@ public static class AutocastSettingsWindow
             }
             #endregion Etch Greater Runecircle
 
-            listing.ColumnWidth += 12f;
-            listing.Outdent(12f);
+            listing.ColumnWidth += indent;
+            listing.Outdent(indent);
         }
         if (PsycasterPathHeader("VPE_Skipmaster"))
         {
-            listing.Indent(12f);
-            listing.ColumnWidth -= 12f;
+            listing.Indent(indent);
+            listing.ColumnWidth -= indent;
 
             #region Solar Pinhole
             if (AbilityHeader("VPE_SolarPinhole"))
@@ -791,13 +823,13 @@ public static class AutocastSettingsWindow
             }
             #endregion Large Solar Pinhole
 
-            listing.ColumnWidth += 12f;
-            listing.Outdent(12f);
+            listing.ColumnWidth += indent;
+            listing.Outdent(indent);
         }
         if (PsycasterPathHeader("VPE_Staticlord"))
         {
-            listing.Indent(12f);
-            listing.ColumnWidth -= 12f;
+            listing.Indent(indent);
+            listing.ColumnWidth -= indent;
 
             #region Static Aura
             if (AbilityHeader("VPE_StaticAura"))
@@ -809,13 +841,13 @@ public static class AutocastSettingsWindow
             }
             #endregion Static Aura
 
-            listing.ColumnWidth += 12f;
-            listing.Outdent(12f);
+            listing.ColumnWidth += indent;
+            listing.Outdent(indent);
         }
         if (PsycasterPathHeader("VPE_Technomancer"))
         {
-            listing.Indent(12f);
-            listing.ColumnWidth -= 12f;
+            listing.Indent(indent);
+            listing.ColumnWidth -= indent;
 
             #region Mend
             if (AbilityHeader("VPE_Mend"))
@@ -866,13 +898,13 @@ public static class AutocastSettingsWindow
             }
             #endregion Power
 
-            listing.ColumnWidth += 12f;
-            listing.Outdent(12f);
+            listing.ColumnWidth += indent;
+            listing.Outdent(indent);
         }
         if (PsycasterPathHeader("VPE_Warlord"))
         {
-            listing.Indent(12f);
-            listing.ColumnWidth -= 12f;
+            listing.Indent(indent);
+            listing.ColumnWidth -= indent;
 
             #region Adrenaline Rush
             AbilityHeader("VPE_AdrenalineRush");
@@ -898,10 +930,10 @@ public static class AutocastSettingsWindow
             AbilityHeader("VPE_SpeedBoost");
             #endregion Speed boost
 
-            listing.ColumnWidth += 12f;
-            listing.Outdent(12f);
+            listing.ColumnWidth += indent;
+            listing.Outdent(indent);
         }
-        // if (PsycasterPathHeader("VPE_Wildspeaker")) { listing.Indent(12f); listing.ColumnWidth -= 12f; listing.ColumnWidth += 12f; listing.Outdent(12f); }
+        // if (PsycasterPathHeader("VPE_Wildspeaker")) { listing.Indent(indent); listing.ColumnWidth -= indent; listing.ColumnWidth += indent; listing.Outdent(indent); }
 
         listing.End();
         settingsHeight = listing.CurHeight;
