@@ -1,3 +1,7 @@
+# 5.5.2.0
+
+- Add search for ignored mental states and blocked jobs
+  
 # 5.5.1.0
 
 - Add search

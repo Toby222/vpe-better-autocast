@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using Verse;
 using VFECore.UItils;
@@ -18,6 +19,14 @@ public class BlockedJobsListWindow : Window
     }
 
     private static float listingHeight;
+    private static string searchString = string.Empty;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static bool MatchesSearch(string defName, string label)
+    {
+        return (defName.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0)
+            || (label.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0);
+    }
 
     private Vector2 scrollPosition = new();
     public override Vector2 InitialSize => new(900f, 700f);
@@ -27,19 +36,26 @@ public class BlockedJobsListWindow : Window
     private bool enableAllConfirm;
     private bool disableAllConfirm;
 
-    public override void DoWindowContents(Rect inRect2)
+    public override void DoWindowContents(Rect windowInRect)
     {
         Text.Font = GameFont.Medium;
         Widgets.Label(
-            new Rect(0f, 0f, inRect2.width - 150f - 17f, 35f),
+            new Rect(0f, 0f, windowInRect.width - 150f - 17f, 35f),
             "BetterAutocastVPE.BlockedJobs".TranslateSafe()
         );
         Text.Font = GameFont.Small;
-        Rect inRect = new(0f, 40f, inRect2.width, inRect2.height - 40f - Window.CloseButSize.y);
+        Rect inRect = new(
+            0f,
+            40f,
+            windowInRect.width,
+            windowInRect.height - 40f - CloseButSize.y
+        );
+
+        searchString = Widgets.TextArea(inRect.TakeTopPart(30f), searchString);
 
         Rect viewRect = new(inRect.x, inRect.y, inRect.width - 16f, listingHeight);
         Widgets.BeginScrollView(
-            inRect.TopPartPixels(inRect.height - Window.CloseButSize.y),
+            inRect.TopPartPixels(inRect.height - CloseButSize.y),
             ref scrollPosition,
             viewRect
         );
@@ -128,12 +144,12 @@ public class BlockedJobsListWindow : Window
 
         listing.Gap();
 
-        JobDef[] allDefsAlphabetic = DefDatabase<JobDef>
-            .AllDefs.OrderBy(def => def.defName[0])
-            .ToArray();
         bool highlight = false;
-        foreach (JobDef jobDef in allDefsAlphabetic)
+        foreach (JobDef jobDef in DefDatabase<JobDef>.AllDefs.OrderBy(def => def.defName[0]))
         {
+            if (!MatchesSearch(jobDef.defName, jobDef.reportString))
+                continue;
+
             float rowHeight = Math.Max(
                 Text.CalcHeight(jobDef.defName, firstColumnWidth),
                 Text.CalcHeight(jobDef.reportString.TrimEnd('.'), secondColumnWidth)
