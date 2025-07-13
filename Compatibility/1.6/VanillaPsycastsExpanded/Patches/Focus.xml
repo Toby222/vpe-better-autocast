@@ -1,0 +1,8 @@
+<Patch>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/VEF.Abilities.AbilityDef[defName="VPE_Focus"]</xpath>
+    <value>
+      <jobDef>BetterAutocastVPE_GotoLocationAndCastAbilityOnce</jobDef>
+    </value>
+  </Operation>
+</Patch>

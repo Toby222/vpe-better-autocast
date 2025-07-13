@@ -13,4 +13,11 @@
     <li IfModActive="dgrb.solarpinholeadditions">Compatibility/1.5/SolarPinholeSunlamp</li>
     <li IfModActive="VanillaExpanded.VPE.Puppeteer">Compatibility/1.5/Puppeteer</li>
   </v1.5>
+  <v1.6>
+    <li>1.6</li>
+    <li>Compatibility/1.6/VanillaPsycastsExpanded</li>
+    <li IfModActive="Chairheir.VPERunesmith">Compatibility/1.6/Runesmith</li>
+    <li IfModActive="dgrb.solarpinholeadditions">Compatibility/1.6/SolarPinholeSunlamp</li>
+    <li IfModActive="VanillaExpanded.VPE.Puppeteer">Compatibility/1.6/Puppeteer</li>
+  </v1.6>
 </loadFolders>

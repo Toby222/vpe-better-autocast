@@ -40,9 +40,6 @@
           treefmt.config = {
             projectRootFile = "flake.nix";
             programs = {
-              csharpier = {
-                enable = true;
-              };
               nixfmt.enable = true;
               shfmt.enable = true;
               prettier = {
@@ -74,7 +71,7 @@
             settings.global.excludes = [
               ".direnv"
               "node_modules"
-              "1.4/**/*"
+              "1.5/**/*"
               "*.ase"
               "*.dll"
               "*.png"

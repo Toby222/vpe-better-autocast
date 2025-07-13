@@ -31,7 +31,9 @@ public class Designator_Area_Runecircle : Designator_Cells
 
     public override bool Visible => ModActive && BetterAutocastVPE.Settings.ShowRunecircleArea;
 
+#if v1_5
     public override int DraggableDimensions => 2;
+#endif
 
     public override bool DragDrawMeasurements => true;
 

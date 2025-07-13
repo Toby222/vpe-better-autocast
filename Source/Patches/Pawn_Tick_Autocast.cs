@@ -3,14 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using Verse;
+
+#if v1_5
 using VFECore.Abilities;
 using Ability = VFECore.Abilities.Ability;
+#else
+using VEF.Abilities;
+using Ability = VEF.Abilities.Ability;
+#endif
 
 namespace BetterAutocastVPE.Patches;
 
 using static Helpers.PawnHelper;
 
+#if v1_5
 [HarmonyPatch(typeof(Pawn), nameof(Pawn.Tick))]
+#else
+[HarmonyPatch(typeof(Pawn), "Tick")]
+#endif
 internal static class Pawn_Tick_Autocast
 {
     [HarmonyPostfix]

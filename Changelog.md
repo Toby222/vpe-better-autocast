@@ -1,3 +1,7 @@
+# 6.0.0.0
+
+- Add dual support for 1.5 and 1.6
+
 # 5.5.2.0
 
 - Add search for ignored mental states and blocked jobs

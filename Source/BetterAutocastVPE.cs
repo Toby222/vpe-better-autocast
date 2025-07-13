@@ -12,7 +12,11 @@ using System.Runtime.CompilerServices;
 using Settings;
 using UnityEngine;
 using VanillaPsycastsExpanded;
+#if v1_5
 using VFECore.Abilities;
+#else
+using VEF.Abilities;
+#endif
 
 #if DEBUG
 #warning Building in Debug mode
@@ -25,6 +29,8 @@ public class BetterAutocastVPE : Mod
     {
 #if v1_5
         const string GAME_VERSION = "v1.5";
+#elif v1_6
+        const string GAME_VERSION = "v1.6";
 #else
 #error No version defined
         const string GAME_VERSION = "UNDEFINED";
@@ -119,7 +125,8 @@ public class BetterAutocastVPE : Mod
             )
         )
         {
-            pawn.GetComp<CompAbilities>().GiveAbility(ability);
+            if (ability is not null)
+                pawn.GetComp<CompAbilities>().GiveAbility(ability);
         }
     }
 
@@ -274,7 +281,7 @@ public class BetterAutocastVPE : Mod
 #if !DEBUG
         if (Settings?.DebugLog == true)
 #endif
-            Error(message, key);
+        Error(message, key);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -292,7 +299,7 @@ public class BetterAutocastVPE : Mod
 #if !DEBUG
         if (Settings?.DebugLog == true)
 #endif
-            Warn(message, key);
+        Warn(message, key);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -310,7 +317,7 @@ public class BetterAutocastVPE : Mod
 #if !DEBUG
         if (Settings?.DebugLog == true)
 #endif
-            Log(message);
+        Log(message);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

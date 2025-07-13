@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
+#if v1_5
 using VFECore.Abilities;
+#else
+using VEF.Abilities;
+#endif
 
 namespace BetterAutocastVPE.Helpers;
 

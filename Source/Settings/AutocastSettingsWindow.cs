@@ -1,7 +1,13 @@
 using UnityEngine;
 using Verse;
+
+#if v1_5
 using VFECore.Abilities;
 using VFECore.UItils;
+#else
+using VEF.Abilities;
+using VEF.Utils;
+#endif
 
 namespace BetterAutocastVPE.Settings;
 
@@ -675,7 +681,7 @@ public static class AutocastSettingsWindow
                 Checkbox("EnthrallInStockpile", ref Settings.EnthrallInStockpile);
                 Checkbox("EnthrallOnlyNamedStockpiles", ref Settings.EnthrallOnlyNamedStockpiles);
                 Checkbox("EnthrallInStorage", ref Settings.EnthrallInStorage);
-#if v1_5
+#if v1_5 || v1_6
                 Checkbox(
                     "EnthrallOnlyNamedStorageGroups",
                     ref Settings.EnthrallOnlyNamedStorageGroups
@@ -865,7 +871,7 @@ public static class AutocastSettingsWindow
                 Checkbox("MendInStockpile", ref Settings.MendInStockpile);
                 Checkbox("MendOnlyNamedStockpiles", ref Settings.MendOnlyNamedStockpiles);
                 Checkbox("MendInStorage", value: ref Settings.MendInStorage);
-#if v1_5
+#if v1_5 || v1_6
                 Checkbox("MendOnlyNamedStorageGroups", ref Settings.MendOnlyNamedStorageGroups);
 #else
                 throw new NotImplementedException();
@@ -879,7 +885,7 @@ public static class AutocastSettingsWindow
                 Checkbox("EnchantInStockpile", ref Settings.EnchantInStockpile);
                 Checkbox("EnchantOnlyNamedStockpiles", ref Settings.EnchantOnlyNamedStockpiles);
                 Checkbox("EnchantInStorage", ref Settings.EnchantInStorage);
-#if v1_5
+#if v1_5 || v1_6
                 Checkbox(
                     "EnchantOnlyNamedStorageGroups",
                     ref Settings.EnchantOnlyNamedStorageGroups

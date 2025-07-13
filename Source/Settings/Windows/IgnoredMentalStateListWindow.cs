@@ -4,7 +4,11 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using Verse;
+#if v1_5
 using VFECore.UItils;
+#else
+using VEF.Utils;
+#endif
 
 namespace BetterAutocastVPE.Settings.Windows;
 

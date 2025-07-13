@@ -4,7 +4,11 @@ using System.Linq;
 using BetterAutocastVPE.Helpers;
 using HarmonyLib;
 using Verse;
+#if v1_5
 using VFECore.Abilities;
+#else
+using VEF.Abilities;
+#endif
 
 namespace BetterAutocastVPE.Patches;
 

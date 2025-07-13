@@ -8,8 +8,13 @@ using RimWorld.Planet;
 using VanillaPsycastsExpanded;
 using VanillaPsycastsExpanded.Technomancer;
 using Verse;
+#if v1_5
 using VFECore.Abilities;
 using Ability = VFECore.Abilities.Ability;
+#else
+using VEF.Abilities;
+using Ability = VEF.Abilities.Ability;
+#endif
 
 namespace BetterAutocastVPE;
 

@@ -1,0 +1,8 @@
+<Patch>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/VEF.Abilities.AbilityDef[defName="VPE_Ghostwalk"]</xpath>
+    <value>
+      <showUndrafted>true</showUndrafted>
+    </value>
+  </Operation>
+</Patch>

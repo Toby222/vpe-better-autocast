@@ -4,7 +4,12 @@ using System.Linq;
 using HarmonyLib;
 using RimWorld;
 using Verse;
+
+#if v1_5
 using Ability = VFECore.Abilities.Ability;
+#else
+using Ability = VEF.Abilities.Ability;
+#endif
 
 namespace BetterAutocastVPE.Helpers;
 
