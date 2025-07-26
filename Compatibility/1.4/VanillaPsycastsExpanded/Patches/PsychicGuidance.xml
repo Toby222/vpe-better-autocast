@@ -17,17 +17,7 @@
         <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_PsychicGuidance"]</xpath>
         <value>
           <distanceToTarget>4.9</distanceToTarget>
-        </value>
-      </li>
-      <li Class="PatchOperationAdd">
-        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_PsychicGuidance"]</xpath>
-        <value>
-          <jobDef>VFEA_GotoTargetAndUseAbility</jobDef>
-        </value>
-      </li>
-      <li Class="PatchOperationAdd">
-        <xpath>/Defs/VFECore.Abilities.AbilityDef[defName="VPE_PsychicGuidance"]</xpath>
-        <value>
+          <jobDef>BetterAutocastVPE_GotoLocationAndCastAbilityOnce</jobDef>
           <requireLineOfSight>false</requireLineOfSight>
         </value>
       </li>

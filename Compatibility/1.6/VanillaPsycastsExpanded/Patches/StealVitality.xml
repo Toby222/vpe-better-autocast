@@ -10,7 +10,7 @@
       <li Class="PatchOperationAdd">
         <xpath>/Defs/VEF.Abilities.AbilityDef[defName="VPE_StealVitality"]</xpath>
         <value>
-          <jobDef>VFEA_GotoTargetAndUseAbility</jobDef>
+          <jobDef>BetterAutocastVPE_GotoLocationAndCastAbilityOnce</jobDef>
           <requireLineOfSight>false</requireLineOfSight>
           <distanceToTarget>6</distanceToTarget>
           <showUndrafted>true</showUndrafted>

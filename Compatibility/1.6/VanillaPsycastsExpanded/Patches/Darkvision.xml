@@ -1,22 +1,18 @@
 <Patch>
   <Operation Class="PatchOperationSequence">
     <operations>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/VEF.Abilities.AbilityDef[defName="VPE_Darkvision"]</xpath>
+        <value>
+          <jobDef>BetterAutocastVPE_GotoLocationAndCastAbilityOnce</jobDef>
+          <distanceToTarget>4.9</distanceToTarget>
+          <requireLineOfSight>false</requireLineOfSight>
+        </value>
+      </li>
       <li Class="PatchOperationReplace">
         <xpath>/Defs/VEF.Abilities.AbilityDef[defName="VPE_Darkvision"]/range</xpath>
         <value>
           <range>999999</range>
-        </value>
-      </li>
-      <li Class="PatchOperationAdd">
-        <xpath>/Defs/VEF.Abilities.AbilityDef[defName="VPE_Darkvision"]</xpath>
-        <value>
-          <distanceToTarget>4.9</distanceToTarget>
-        </value>
-      </li>
-      <li Class="PatchOperationAdd">
-        <xpath>/Defs/VEF.Abilities.AbilityDef[defName="VPE_Darkvision"]</xpath>
-        <value>
-          <jobDef>VFEA_GotoTargetAndUseAbility</jobDef>
         </value>
       </li>
     </operations>

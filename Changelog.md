@@ -1,3 +1,8 @@
+# 6.1.0.0
+
+- Fix areas
+- Fix Darkvision targetting
+
 # 6.0.0.0
 
 - Add dual support for 1.5 and 1.6

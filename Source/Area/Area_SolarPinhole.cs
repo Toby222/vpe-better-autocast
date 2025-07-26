@@ -23,51 +23,9 @@ public class Area_SolarPinhole : Area
     }
 }
 
-public class Designator_Area_SolarPinhole : Designator_Cells
+public class Designator_Area_SolarPinhole(DesignateMode mode) : CellDesignator<Area_SolarPinhole>(mode)
 {
-    private readonly DesignateMode mode;
-
     public override bool Visible => BetterAutocastVPE.Settings.ShowSolarPinholeArea;
-
-#if v1_5
-    public override int DraggableDimensions => 2;
-#endif
-
-    public override bool DragDrawMeasurements => true;
-
-    protected Designator_Area_SolarPinhole(DesignateMode mode)
-    {
-        this.mode = mode;
-        soundDragSustain = SoundDefOf.Designate_DragStandard;
-        soundDragChanged = SoundDefOf.Designate_DragStandard_Changed;
-        useMouseIcon = true;
-    }
-
-    public override AcceptanceReport CanDesignateCell(IntVec3 c)
-    {
-        if (!c.InBounds(Map))
-        {
-            return false;
-        }
-        bool cellContained = Map.areaManager.Get<Area_SolarPinhole>()[c];
-        return mode switch
-        {
-            DesignateMode.Add => !cellContained,
-            DesignateMode.Remove => cellContained,
-            _ => throw new System.NotImplementedException(),
-        };
-    }
-
-    public override void DesignateSingleCell(IntVec3 c)
-    {
-        Map.areaManager.Get<Area_SolarPinhole>()[c] = mode == DesignateMode.Add;
-    }
-
-    public override void SelectedUpdate()
-    {
-        GenUI.RenderMouseoverBracket();
-        Map.areaManager.Get<Area_SolarPinhole>().MarkForDraw();
-    }
 }
 
 public class Designator_Area_SolarPinhole_Expand : Designator_Area_SolarPinhole
@@ -78,9 +36,6 @@ public class Designator_Area_SolarPinhole_Expand : Designator_Area_SolarPinhole
         defaultLabel = "BetterAutocastVPE.SolarPinholeArea.Expand".TranslateSafe();
         defaultDesc = "BetterAutocastVPE.SolarPinholeArea.Expand.Description".TranslateSafe();
         icon = ContentFinder<Texture2D>.Get("UI/Icons/BetterAutocastVPE/SolarPinholeArea");
-        soundDragSustain = SoundDefOf.Designate_DragAreaAdd;
-        soundDragChanged = SoundDefOf.Designate_DragZone_Changed;
-        soundSucceeded = SoundDefOf.Designate_ZoneAdd_Stockpile;
     }
 }
 
@@ -92,8 +47,5 @@ public class Designator_Area_SolarPinhole_Clear : Designator_Area_SolarPinhole
         defaultLabel = "BetterAutocastVPE.SolarPinholeArea.Remove".TranslateSafe();
         defaultDesc = "BetterAutocastVPE.SolarPinholeArea.Remove.Description".TranslateSafe();
         icon = ContentFinder<Texture2D>.Get("UI/Icons/BetterAutocastVPE/SolarPinholeAreaOff");
-        soundDragSustain = SoundDefOf.Designate_DragAreaDelete;
-        soundDragChanged = null;
-        soundSucceeded = SoundDefOf.Designate_ZoneDelete;
     }
 }

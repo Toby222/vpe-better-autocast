@@ -8,6 +8,8 @@ using RimWorld.Planet;
 using VanillaPsycastsExpanded;
 using VanillaPsycastsExpanded.Technomancer;
 using Verse;
+using VanillaPsycastsExpanded.Nightstalker;
+
 #if v1_5
 using VFECore.Abilities;
 using Ability = VFECore.Abilities.Ability;
