@@ -1,3 +1,7 @@
+# 6.1.0.1
+
+- Update images
+
 # 6.1.0.0
 
 - Fix areas
