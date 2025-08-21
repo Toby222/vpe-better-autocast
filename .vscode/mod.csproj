@@ -19,7 +19,7 @@
         <RootNamespace>BetterAutocastVPE</RootNamespace>
         <AssemblyName>BetterAutocastVPE</AssemblyName>
         <LangVersion>latest</LangVersion>
-        <VersionPrefix>6.1.0.1</VersionPrefix>
+        <VersionPrefix>6.1.1.0</VersionPrefix>
         <!-- do not generate pdb file -->
         <DebugType>none</DebugType>
         <DebugSymbols>false</DebugSymbols>

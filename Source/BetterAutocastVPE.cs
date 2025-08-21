@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using Settings;
 using UnityEngine;
 using VanillaPsycastsExpanded;
@@ -187,11 +188,25 @@ public class BetterAutocastVPE : Mod
 
 #nullable enable
 
+    public static string NormalizeForWindows(string value)
+    {
+        return value
+            .Replace("\"", "_")
+            .Replace("\\", "_")
+            .Replace("/", "_")
+            .Replace(":", "_")
+            .Replace("*", "_")
+            .Replace("?", "_")
+            .Replace("<", "_")
+            .Replace(">", "_")
+            .Replace("|", "_");
+    }
+
     public void Uninstall()
     {
         string fileNamePrefix = DateTime.Now.ToString("s", CultureInfo.InvariantCulture);
         GameDataSaveLoader.SaveGame(
-            fileNamePrefix + " - " + "BetterAutocastVPE.BeforeUninstall".TranslateSafe()
+                NormalizeForWindows(fileNamePrefix + " - " + "BetterAutocastVPE.BeforeUninstall".TranslateSafe())
         );
         Find.TickManager.Pause();
         foreach (Map map in Find.Maps)
@@ -220,7 +235,7 @@ public class BetterAutocastVPE : Mod
             .Where(x => !x.ModMetaData.SamePackageId(Content.PackageId))
             .ToList();
         GameDataSaveLoader.SaveGame(
-            fileNamePrefix + " - " + "BetterAutocastVPE.AfterUninstall".TranslateSafe()
+            NormalizeForWindows(fileNamePrefix + " - " + "BetterAutocastVPE.AfterUninstall".TranslateSafe())
         );
         traverse.Value = original;
         GenScene.GoToMainMenu();

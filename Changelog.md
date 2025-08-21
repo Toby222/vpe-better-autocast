@@ -1,3 +1,7 @@
+# 6.1.1.0
+
+- Fix uninstalling on Windows
+
 # 6.1.0.1
 
 - Update images
