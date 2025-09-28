@@ -46,6 +46,7 @@
   <BetterAutocastVPE.MendOnlyNamedStockpiles>Only mend items in appropriately named stockpiles</BetterAutocastVPE.MendOnlyNamedStockpiles>
   <BetterAutocastVPE.MendOnlyNamedStorageGroups>Only mend items in appropriately named storage groups</BetterAutocastVPE.MendOnlyNamedStorageGroups>
   <BetterAutocastVPE.MendPawns>Mend equipped gear</BetterAutocastVPE.MendPawns>
+  <BetterAutocastVPE.MendMechs>Mend colony mechs</BetterAutocastVPE.MendMechs>
   <BetterAutocastVPE.PowerBuildings>Provide power to buildings</BetterAutocastVPE.PowerBuildings>
   <BetterAutocastVPE.PowerMechs>Provide power to colony mechs</BetterAutocastVPE.PowerMechs>
   <BetterAutocastVPE.Soothe.Explanation>Autocasts if any map pawn is below the given mood and doesn't have the psychic soothe buff.\nPawns get ignored for the check if their category is disabled.</BetterAutocastVPE.Soothe.Explanation>

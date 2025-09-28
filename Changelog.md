@@ -1,3 +1,7 @@
+# 6.2.0.0
+
+- Add separate toggle for mending Mechanoids
+
 # 6.1.1.0
 
 - Fix uninstalling on Windows

@@ -868,6 +868,7 @@ public static class AutocastSettingsWindow
                     tooltip: "BetterAutocastVPE.MendHealthThreshold.Description".TranslateSafe()
                 );
                 Checkbox("MendPawns", ref Settings.MendPawns);
+                Checkbox("MendMechs", ref Settings.MendMechs);
                 Checkbox("MendInStockpile", ref Settings.MendInStockpile);
                 Checkbox("MendOnlyNamedStockpiles", ref Settings.MendOnlyNamedStockpiles);
                 Checkbox("MendInStorage", value: ref Settings.MendInStorage);

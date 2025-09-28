@@ -692,7 +692,7 @@ internal static class PsycastingHandler
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
 
-        if (BetterAutocastVPE.Settings.MendPawns && HandleMendByPawn(pawn, ability))
+        if ((BetterAutocastVPE.Settings.MendPawns || BetterAutocastVPE.Settings.MendMechs) && HandleMendByPawn(pawn, ability))
             return true;
         if (BetterAutocastVPE.Settings.MendInStockpile && HandleMendByZone(pawn, ability))
             return true;
@@ -755,12 +755,14 @@ internal static class PsycastingHandler
         return pawn.GetPawnsInRange(ability.GetRangeForPawn())
                 .Where(targetPawn =>
                     (
-                        targetPawn.RaceProps.Humanlike
+                        BetterAutocastVPE.Settings.MendPawns
+                        && targetPawn.RaceProps.Humanlike
                         && targetPawn.Faction == pawn.Faction
                         && targetPawn.HasDamagedEquipment()
                     )
                     || (
-                        targetPawn.RaceProps.IsMechanoid
+                        BetterAutocastVPE.Settings.MendMechs
+                        && targetPawn.RaceProps.IsMechanoid
                         && targetPawn.IsMechAlly(pawn)
                         && MechRepairUtility.CanRepair(targetPawn)
                     )

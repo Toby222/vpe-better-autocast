@@ -92,6 +92,7 @@ public class AutocastSettings : ModSettings
 
     public float MendHealthThreshold;
     public bool MendPawns;
+    public bool MendMechs;
     public bool MendInStockpile;
     public bool MendOnlyNamedStockpiles;
     public bool MendInStorage;
@@ -259,6 +260,7 @@ public class AutocastSettings : ModSettings
         #region Mend
         MendHealthThreshold = 0.5f;
         MendPawns = true;
+        MendMechs = true;
         MendInStockpile = true;
         MendOnlyNamedStockpiles = true;
         MendInStorage = true;
@@ -419,6 +421,7 @@ public class AutocastSettings : ModSettings
         #region Mend
         LookStruct(() => MendHealthThreshold);
         LookStruct(() => MendPawns);
+        LookStruct(() => MendMechs);
         LookStruct(() => MendInStockpile);
         LookStruct(() => MendOnlyNamedStockpiles);
         LookStruct(() => MendInStorage);

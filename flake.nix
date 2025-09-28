@@ -31,7 +31,7 @@
               dotnetCorePackages.sdk_9_0
               nixfmt-rfc-style
               libxslt.bin
-              nodePackages.npm
+              nodePackages_latest.npm
             ];
           };
 
