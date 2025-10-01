@@ -8,7 +8,6 @@ using RimWorld.Planet;
 using VanillaPsycastsExpanded;
 using VanillaPsycastsExpanded.Technomancer;
 using Verse;
-using VanillaPsycastsExpanded.Nightstalker;
 
 #if v1_5
 using VFECore.Abilities;
@@ -65,6 +64,7 @@ internal static class PsycastingHandler
                 { "VPE_StealVitality", HandleStealVitality },
                 { "VPE_WordofAlliance", HandleWordOfAlliance },
                 { "VPE_WordofImmunity", HandleWordOfImmunity },
+                { "VPE_WordofInspiration", HandleWordOfInspiration },
                 { "VPE_WordofJoy", HandleWordOfJoy },
                 { "VPE_WordofProductivity", HandleColonistBuff },
                 { "VPE_WordofSerenity", HandleWordOfSerenity },
@@ -277,7 +277,7 @@ internal static class PsycastingHandler
 
         foreach (TargetType targetType in targetPriority)
         {
-            IEnumerable<Pawn>? targets = targetType switch
+            IEnumerable<Pawn> targets = targetType switch
             {
                 TargetType.Self => targetValidator(pawn) ? [pawn] : [],
                 TargetType.Colonists => validPawnsInRange.Colonists(),
@@ -596,6 +596,28 @@ internal static class PsycastingHandler
     #endregion Puppeteer
 
     #region Empath
+    private static bool HandleWordOfInspiration(Pawn pawn, Ability ability)
+    {
+        List<TargetType> targets = new(2);
+
+        if (BetterAutocastVPE.Settings.WordOfInspirationTargetColonists)
+            targets.Add(TargetType.Colonists);
+        if (BetterAutocastVPE.Settings.WordOfInspirationTargetSlaves)
+            targets.Add(TargetType.Slaves);
+
+        return HandleTargetedPsycast(
+            pawn,
+            ability,
+            targets.ToArray(),
+            FinalTargetType.Closest,
+            pawn =>
+                // ability is only used for the message, which is turned off here, so can be safely nulled instead of working out the types
+                AbilityUtility.ValidateNoInspiration(pawn, showMessages: false, ability: null) &&
+                AbilityUtility.ValidateCanGetInspiration(pawn, showMessages: false, ability: null),
+            false
+        );
+    }
+
     private static bool HandleWordOfJoy(Pawn pawn, Ability ability) =>
         HandleHediffPsycast(
             pawn,
@@ -630,6 +652,7 @@ internal static class PsycastingHandler
             FinalTargetType.Closest,
             pawn =>
                 pawn.MentalState is not null
+                && (BetterAutocastVPE.Settings.WordOfSerenityTargetScaria || !pawn.HasHediff(HediffDefOf.Scaria.defName))
                 && !BetterAutocastVPE.Settings.WordOfSerenityIgnoredMentalStateDefs.Contains(
                     pawn.MentalStateDef.defName
                 ),

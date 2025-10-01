@@ -1,3 +1,8 @@
+# 6.3.1.0
+
+- Add support for Empath's Word of Inspiration
+- Fixed Word of Serenity's Scaria setting being ignored
+
 # 6.3.0.0
 
 - Add support for gravships; Areas now get copied when you jump

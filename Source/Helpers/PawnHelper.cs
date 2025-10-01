@@ -100,7 +100,7 @@ internal static class PawnHelper
                 && pawn.Spawned
                 && pawn.Position.InHorDistOf(referencePawn.Position, range)
                 && PawnIsDraftedOrThingIsAllowedAndReservable(referencePawn, pawn)
-            ) ?? Enumerable.Empty<Pawn>();
+            ) ?? [];
     }
 
     internal static bool CanPsycast(this Pawn pawn)

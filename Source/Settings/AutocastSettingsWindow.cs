@@ -600,6 +600,14 @@ public static class AutocastSettingsWindow
             }
             #endregion Word of Joy
 
+            #region Word of Inspiration
+            if (AbilityHeader("VPE_WordofInspiration"))
+            {
+                Checkbox("TargetColonists", ref Settings.WordOfInspirationTargetColonists);
+                Checkbox("TargetSlaves", ref Settings.WordOfInspirationTargetSlaves);
+            }
+            #endregion Word of Inspiration
+
             #region Word of Serenity
             if (AbilityHeader("VPE_WordofSerenity"))
             {

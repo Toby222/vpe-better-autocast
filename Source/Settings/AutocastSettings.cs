@@ -47,6 +47,7 @@ public class AutocastSettings : ModSettings
             "VPE_StealVitality",
             "VPE_WordofAlliance",
             "VPE_WordofImmunity",
+            "VPE_WordofInspiration",
             "VPE_WordofJoy",
             "VPE_WordofProductivity",
             "VPE_WordofSerenity",
@@ -116,6 +117,11 @@ public class AutocastSettings : ModSettings
     public bool DeathshieldSlaves;
     public bool DeathshieldPrisoners;
     public bool DeathshieldVisitors;
+
+
+    public bool
+    WordOfInspirationTargetColonists;
+    public bool WordOfInspirationTargetSlaves;
 
     public float WordOfJoyMoodThreshold;
 
@@ -301,6 +307,11 @@ public class AutocastSettings : ModSettings
         EnthrallOnlyNamedStorageGroups = true;
         #endregion Enthrall
 
+        #region Word of Inspiration
+        WordOfInspirationTargetColonists = true;
+        WordOfInspirationTargetSlaves = false;
+        #endregion Word of Inspiration
+
         #region Word of Joy
         WordOfJoyMoodThreshold = 0.2f;
         #endregion Word of Joy
@@ -461,6 +472,11 @@ public class AutocastSettings : ModSettings
         LookStruct(() => EnthrallInStorage);
         LookStruct(() => EnthrallOnlyNamedStorageGroups);
         #endregion Enthrall
+
+        #region Word of Inspiration
+        LookStruct(() => WordOfInspirationTargetColonists);
+        LookStruct(() => WordOfInspirationTargetSlaves);
+        #endregion Word of Inspiration
 
         #region Word of Joy
         LookStruct(() => WordOfJoyMoodThreshold);
