@@ -1,3 +1,9 @@
+# 6.3.0.0
+
+- Add support for gravships; Areas now get copied when you jump
+- Fixed Runecircle areas not being added to the map until reload
+- Removed the TryGetAttackVerb patch, on account of I don't understand what it actually does
+
 # 6.2.0.0
 
 - Add separate toggle for mending Mechanoids

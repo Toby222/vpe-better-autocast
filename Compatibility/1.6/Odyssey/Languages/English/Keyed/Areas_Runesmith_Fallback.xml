@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <!-- Needed for Gravship Area copying, will NRE without this -->
+  <BetterAutocastVPE.RunecircleArea>Runecircle spots</BetterAutocastVPE.RunecircleArea>
+  <BetterAutocastVPE.GreaterRunecircleArea>Greater Runecircle spots</BetterAutocastVPE.GreaterRunecircleArea>
+</LanguageData>
