@@ -1,181 +1,181 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup Condition="'$(GAME_VERSION)'==''">
-        <DefineConstants>v1_6</DefineConstants>
-        <OutputPath>../1.6/Assemblies</OutputPath>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(GAME_VERSION)'=='v1.5'">
-        <DefineConstants>v1_5</DefineConstants>
-        <OutputPath>../1.5/Assemblies</OutputPath>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(GAME_VERSION)'=='v1.6'">
-        <DefineConstants>v1_6</DefineConstants>
-        <OutputPath>../1.6/Assemblies</OutputPath>
-    </PropertyGroup>
-    <PropertyGroup>
-        <OutputType>Library</OutputType>
-        <TargetFramework>net480</TargetFramework>
-        <PlatformTarget>x64</PlatformTarget>
-        <!-- Modify [RootNamespace], [AssemblyName], [OutputPath], [VersionPrefix] -->
-        <RootNamespace>BetterAutocastVPE</RootNamespace>
-        <AssemblyName>BetterAutocastVPE</AssemblyName>
-        <LangVersion>latest</LangVersion>
-        <VersionPrefix>6.3.1.1</VersionPrefix>
-        <!-- do not generate pdb file -->
-        <DebugType>none</DebugType>
-        <DebugSymbols>false</DebugSymbols>
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <Nullable>enable</Nullable>
-        <Deterministic>True</Deterministic>
-        <!-- Contents of About.xml
+  <PropertyGroup Condition="'$(GAME_VERSION)'==''">
+    <DefineConstants>v1_6</DefineConstants>
+    <OutputPath>../1.6/Assemblies</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(GAME_VERSION)'=='v1.5'">
+    <DefineConstants>v1_5</DefineConstants>
+    <OutputPath>../1.5/Assemblies</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(GAME_VERSION)'=='v1.6'">
+    <DefineConstants>v1_6</DefineConstants>
+    <OutputPath>../1.6/Assemblies</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net480</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <!-- Modify [RootNamespace], [AssemblyName], [OutputPath], [VersionPrefix] -->
+    <RootNamespace>BetterAutocastVPE</RootNamespace>
+    <AssemblyName>BetterAutocastVPE</AssemblyName>
+    <LangVersion>latest</LangVersion>
+    <VersionPrefix>6.3.1.1</VersionPrefix>
+    <!-- do not generate pdb file -->
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Nullable>enable</Nullable>
+    <Deterministic>True</Deterministic>
+    <!-- Contents of About.xml
             See https://rimworldwiki.com/wiki/Modding_Tutorials/About.xml -->
-        <ModMetaData>
-            <packageId>dev.tobot.vpe.betterautocast</packageId>
-            <name>Better autocasting for Vanilla Psycasts Expanded</name>
-            <authors>
-                <li>NetzachSloth</li>
-                <li>Toby</li>
-            </authors>
-            <description>Some changes to Vanilla Psycasts Expanded to reduce Micro Management and add functional autocasts.\n\n(Because I'm lazy, this description should always be considered out of date. Mechanics should be explained in-game in the mod settings)\n\nSteal Vitality\n	Auto move to target.\n	Add sensitivity scaling.\n	~Scaling set to caster sensitivity.~\n	Show undrafted.\n	Autocasts in this order, Prisoner, Slave, Colonist\nPsychic Guidance\n	Auto move to target.\n	~Scaling set to caster sensitivity.~\n	Autocasts on colonists.\n\nIf there's any more you think I should add, let me know.\n\nHaven't tested much for performance impact, but there shouldn't be too much. This only does its thing every 600 ticks. It checks all colony pawns for abilities, checks for valid targets, then schedules the cast job.</description>
-            <supportedVersions>
-                <li>1.4</li>
-                <li>1.5</li>
-                <li>1.6</li>
-            </supportedVersions>
-            <modVersion IgnoreIfNoMatchingField="True">
-                <!-- Gets automatically populated with VersionPrefix (see above) -->
-            </modVersion>
-            <url>https://github.com/Toby222/vpe-better-autocast/</url>
-            <modDependencies />
-            <modDependenciesByVersion>
-                <v1.4>
-                    <li>
-                        <packageId>brrainz.harmony</packageId>
-                        <displayName>Harmony</displayName>
-                        <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
-                        <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
-                    </li>
-                    <li>
-                        <packageId>OskarPotocki.VanillaFactionsExpanded.Core</packageId>
-                        <displayName>Vanilla Expanded Framework</displayName>
-                        <steamWorkshopUrl>steam://url/CommunityFilePage/2023507013</steamWorkshopUrl>
-                        <downloadUrl>https://github.com/Vanilla-Expanded/VanillaExpandedFramework/releases/latest</downloadUrl>
-                    </li>
-                    <li>
-                        <packageId>VanillaExpanded.VPsycastsE</packageId>
-                        <displayName>Vanilla Psycasts Expanded</displayName>
-                        <steamWorkshopUrl>steam://url/CommunityFilePage/2842502659</steamWorkshopUrl>
-                        <downloadUrl>https://github.com/Vanilla-Expanded/VanillaPsycastsExpanded/releases/latest</downloadUrl>
-                    </li>
-                </v1.4>
-                <v1.5>
-                    <li>
-                        <packageId>brrainz.harmony</packageId>
-                        <displayName>Harmony</displayName>
-                        <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
-                        <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
-                    </li>
-                    <li>
-                        <packageId>OskarPotocki.VanillaFactionsExpanded.Core</packageId>
-                        <displayName>Vanilla Expanded Framework</displayName>
-                        <steamWorkshopUrl>steam://url/CommunityFilePage/2023507013</steamWorkshopUrl>
-                        <downloadUrl>https://github.com/Vanilla-Expanded/VanillaExpandedFramework/releases/latest</downloadUrl>
-                    </li>
-                    <li>
-                        <packageId>VanillaExpanded.VPsycastsE</packageId>
-                        <displayName>Vanilla Psycasts Expanded</displayName>
-                        <steamWorkshopUrl>steam://url/CommunityFilePage/2842502659</steamWorkshopUrl>
-                        <downloadUrl>https://github.com/Vanilla-Expanded/VanillaPsycastsExpanded/releases/latest</downloadUrl>
-                    </li>
-                </v1.5>
-                <v1.6>
-                    <li>
-                        <packageId>brrainz.harmony</packageId>
-                        <displayName>Harmony</displayName>
-                        <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
-                        <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
-                    </li>
-                    <li>
-                        <packageId>OskarPotocki.VanillaFactionsExpanded.Core</packageId>
-                        <displayName>Vanilla Expanded Framework</displayName>
-                        <steamWorkshopUrl>steam://url/CommunityFilePage/2023507013</steamWorkshopUrl>
-                        <downloadUrl>https://github.com/Vanilla-Expanded/VanillaExpandedFramework/releases/latest</downloadUrl>
-                    </li>
-                    <li>
-                        <packageId>VanillaExpanded.VPsycastsE</packageId>
-                        <displayName>Vanilla Psycasts Expanded</displayName>
-                        <steamWorkshopUrl>steam://url/CommunityFilePage/2842502659</steamWorkshopUrl>
-                        <downloadUrl>https://github.com/Vanilla-Expanded/VanillaPsycastsExpanded/releases/latest</downloadUrl>
-                    </li>
-                </v1.6>
-            </modDependenciesByVersion>
-            <loadAfter />
-            <loadAfterByVersion>
-                <v1.4>
-                    <li>brrainz.harmony</li>
-                    <li>OskarPotocki.VanillaFactionsExpanded.Core</li>
-                    <li>VanillaExpanded.VPsycastsE</li>
-                    <li>VanillaExpanded.VPE.Puppeteer</li>
-                </v1.4>
-                <v1.5>
-                    <li>brrainz.harmony</li>
-                    <li>OskarPotocki.VanillaFactionsExpanded.Core</li>
-                    <li>VanillaExpanded.VPsycastsE</li>
-                    <li>VanillaExpanded.VPE.Puppeteer</li>
-                    <li>dgrb.solarpinholeadditions</li>
-                    <li>chairheir.vperunesmith</li>
-                </v1.5>
-                <v1.6>
-                    <li>brrainz.harmony</li>
-                    <li>OskarPotocki.VanillaFactionsExpanded.Core</li>
-                    <li>VanillaExpanded.VPsycastsE</li>
-                    <li>VanillaExpanded.VPE.Puppeteer</li>
-                    <li>dgrb.solarpinholeadditions</li>
-                    <li>chairheir.vperunesmith</li>
-                </v1.6>
-            </loadAfterByVersion>
-            <forceLoadAfter />
-            <loadBefore />
-            <loadBeforeByVersion />
-            <forceLoadBefore />
-            <incompatibleWith />
-            <incompatibleWithByVersion>
-                <v1.4>
-                    <li>NetzachSloth.BetterAutocastVPE</li>
-                </v1.4>
-                <v1.5>
-                    <li>NetzachSloth.BetterAutocastVPE</li>
-                </v1.5>
-                <v1.6>
-                    <li>NetzachSloth.BetterAutocastVPE</li>
-                </v1.6>
-            </incompatibleWithByVersion>
-        </ModMetaData>
-    </PropertyGroup>
-    <ItemGroup Condition="'$(GAME_VERSION)'==''">
-        <!-- <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.9371" /> -->
-        <Reference Include="RimWorld" HintPath="/home/toby/.local/share/Steam/steamapps/common/RimWorld/RimWorldLinux_Data/Managed/Assembly-CSharp.dll" IncludeAssets="compile" Private="false" />
-        <Reference Include="VanillaPsycastsExpanded" HintPath="../../VanillaPsycastsExpanded/1.6/Assemblies/VanillaPsycastsExpanded.dll" IncludeAssets="compile" Private="false" />
-        <Reference Include="VEF" HintPath="../../VanillaExpandedFramework/1.6/Assemblies/VEF.dll" IncludeAssets="compile" Private="false" />
-        <PackageReference Include="Lib.Harmony" Version="2.3.6" IncludeAssets="compile" />
-    </ItemGroup>
-    <ItemGroup Condition="'$(GAME_VERSION)'=='v1.5'">
-        <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4243" />
-        <!-- <Reference Include="RimWorld" HintPath="/home/toby/.local/share/Steam/steamapps/common/RimWorld/RimWorldLinux_Data/Managed/Assembly-CSharp.dll" IncludeAssets="compile" Private="false" /> -->
-        <Reference Include="VanillaPsycastsExpanded" HintPath="..\..\VanillaPsycastsExpanded\1.5\Assemblies\VanillaPsycastsExpanded.dll" IncludeAssets="compile" Private="false" />
-        <Reference Include="VFECore" HintPath="..\..\VanillaExpandedFramework\1.5\Assemblies\VFECore.dll" IncludeAssets="compile" Private="false" />
-        <PackageReference Include="Lib.Harmony" Version="2.3.6" IncludeAssets="compile" />
-    </ItemGroup>
-    <ItemGroup Condition="'$(GAME_VERSION)'=='v1.6'">
-        <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4566" />
-        <!-- <Reference Include="RimWorld" HintPath="/home/replace_this_path_with_your_username/.local/share/Steam/steamapps/common/RimWorld/RimWorldLinux_Data/Managed/Assembly-CSharp.dll" IncludeAssets="compile" Private="false" /> -->
-        <Reference Include="VanillaPsycastsExpanded" HintPath="../../VanillaPsycastsExpanded/1.6/Assemblies/VanillaPsycastsExpanded.dll" IncludeAssets="compile" Private="false" />
-        <Reference Include="VEF" HintPath="../../VanillaExpandedFramework/1.6/Assemblies/VEF.dll" IncludeAssets="compile" Private="false" />
-        <PackageReference Include="Lib.Harmony" Version="2.3.6" IncludeAssets="compile" />
-    </ItemGroup>
-    <ItemGroup>
-        <!-- Mod -->
-        <Compile Include="../Source/**/*.cs" />
-        <PackageReference Include="roslynator.analyzers" Version="4.13.1" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" />
-        <PackageReference Include="roslynator.formatting.analyzers" Version="4.13.1" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" />
-    </ItemGroup>
+    <ModMetaData>
+      <packageId>dev.tobot.vpe.betterautocast</packageId>
+      <name>Better autocasting for Vanilla Psycasts Expanded</name>
+      <authors>
+        <li>NetzachSloth</li>
+        <li>Toby</li>
+      </authors>
+      <description>Some changes to Vanilla Psycasts Expanded to reduce Micro Management and add functional autocasts.\n\n(Because I'm lazy, this description should always be considered out of date. Mechanics should be explained in-game in the mod settings)\n\nSteal Vitality\n	Auto move to target.\n	Add sensitivity scaling.\n	~Scaling set to caster sensitivity.~\n	Show undrafted.\n	Autocasts in this order, Prisoner, Slave, Colonist\nPsychic Guidance\n	Auto move to target.\n	~Scaling set to caster sensitivity.~\n	Autocasts on colonists.\n\nIf there's any more you think I should add, let me know.\n\nHaven't tested much for performance impact, but there shouldn't be too much. This only does its thing every 600 ticks. It checks all colony pawns for abilities, checks for valid targets, then schedules the cast job.</description>
+      <supportedVersions>
+        <li>1.4</li>
+        <li>1.5</li>
+        <li>1.6</li>
+      </supportedVersions>
+      <modVersion IgnoreIfNoMatchingField="True">
+        <!-- Gets automatically populated with VersionPrefix (see above) -->
+      </modVersion>
+      <url>https://github.com/Toby222/vpe-better-autocast/</url>
+      <modDependencies />
+      <modDependenciesByVersion>
+        <v1.4>
+          <li>
+            <packageId>brrainz.harmony</packageId>
+            <displayName>Harmony</displayName>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+            <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+          </li>
+          <li>
+            <packageId>OskarPotocki.VanillaFactionsExpanded.Core</packageId>
+            <displayName>Vanilla Expanded Framework</displayName>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/2023507013</steamWorkshopUrl>
+            <downloadUrl>https://github.com/Vanilla-Expanded/VanillaExpandedFramework/releases/latest</downloadUrl>
+          </li>
+          <li>
+            <packageId>VanillaExpanded.VPsycastsE</packageId>
+            <displayName>Vanilla Psycasts Expanded</displayName>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/2842502659</steamWorkshopUrl>
+            <downloadUrl>https://github.com/Vanilla-Expanded/VanillaPsycastsExpanded/releases/latest</downloadUrl>
+          </li>
+        </v1.4>
+        <v1.5>
+          <li>
+            <packageId>brrainz.harmony</packageId>
+            <displayName>Harmony</displayName>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+            <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+          </li>
+          <li>
+            <packageId>OskarPotocki.VanillaFactionsExpanded.Core</packageId>
+            <displayName>Vanilla Expanded Framework</displayName>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/2023507013</steamWorkshopUrl>
+            <downloadUrl>https://github.com/Vanilla-Expanded/VanillaExpandedFramework/releases/latest</downloadUrl>
+          </li>
+          <li>
+            <packageId>VanillaExpanded.VPsycastsE</packageId>
+            <displayName>Vanilla Psycasts Expanded</displayName>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/2842502659</steamWorkshopUrl>
+            <downloadUrl>https://github.com/Vanilla-Expanded/VanillaPsycastsExpanded/releases/latest</downloadUrl>
+          </li>
+        </v1.5>
+        <v1.6>
+          <li>
+            <packageId>brrainz.harmony</packageId>
+            <displayName>Harmony</displayName>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+            <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+          </li>
+          <li>
+            <packageId>OskarPotocki.VanillaFactionsExpanded.Core</packageId>
+            <displayName>Vanilla Expanded Framework</displayName>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/2023507013</steamWorkshopUrl>
+            <downloadUrl>https://github.com/Vanilla-Expanded/VanillaExpandedFramework/releases/latest</downloadUrl>
+          </li>
+          <li>
+            <packageId>VanillaExpanded.VPsycastsE</packageId>
+            <displayName>Vanilla Psycasts Expanded</displayName>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/2842502659</steamWorkshopUrl>
+            <downloadUrl>https://github.com/Vanilla-Expanded/VanillaPsycastsExpanded/releases/latest</downloadUrl>
+          </li>
+        </v1.6>
+      </modDependenciesByVersion>
+      <loadAfter />
+      <loadAfterByVersion>
+        <v1.4>
+          <li>brrainz.harmony</li>
+          <li>OskarPotocki.VanillaFactionsExpanded.Core</li>
+          <li>VanillaExpanded.VPsycastsE</li>
+          <li>VanillaExpanded.VPE.Puppeteer</li>
+        </v1.4>
+        <v1.5>
+          <li>brrainz.harmony</li>
+          <li>OskarPotocki.VanillaFactionsExpanded.Core</li>
+          <li>VanillaExpanded.VPsycastsE</li>
+          <li>VanillaExpanded.VPE.Puppeteer</li>
+          <li>dgrb.solarpinholeadditions</li>
+          <li>chairheir.vperunesmith</li>
+        </v1.5>
+        <v1.6>
+          <li>brrainz.harmony</li>
+          <li>OskarPotocki.VanillaFactionsExpanded.Core</li>
+          <li>VanillaExpanded.VPsycastsE</li>
+          <li>VanillaExpanded.VPE.Puppeteer</li>
+          <li>dgrb.solarpinholeadditions</li>
+          <li>chairheir.vperunesmith</li>
+        </v1.6>
+      </loadAfterByVersion>
+      <forceLoadAfter />
+      <loadBefore />
+      <loadBeforeByVersion />
+      <forceLoadBefore />
+      <incompatibleWith />
+      <incompatibleWithByVersion>
+        <v1.4>
+          <li>NetzachSloth.BetterAutocastVPE</li>
+        </v1.4>
+        <v1.5>
+          <li>NetzachSloth.BetterAutocastVPE</li>
+        </v1.5>
+        <v1.6>
+          <li>NetzachSloth.BetterAutocastVPE</li>
+        </v1.6>
+      </incompatibleWithByVersion>
+    </ModMetaData>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(GAME_VERSION)'==''">
+    <!-- <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.9371" /> -->
+    <Reference HintPath="/home/toby/.local/share/Steam/steamapps/common/RimWorld/RimWorldLinux_Data/Managed/Assembly-CSharp.dll" Include="RimWorld" IncludeAssets="compile" Private="false" />
+    <Reference HintPath="../../VanillaPsycastsExpanded/1.6/Assemblies/VanillaPsycastsExpanded.dll" Include="VanillaPsycastsExpanded" IncludeAssets="compile" Private="false" />
+    <Reference HintPath="../../VanillaExpandedFramework/1.6/Assemblies/VEF.dll" Include="VEF" IncludeAssets="compile" Private="false" />
+    <PackageReference Include="Lib.Harmony" IncludeAssets="compile" Version="2.3.6" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(GAME_VERSION)'=='v1.5'">
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4243" />
+    <!-- <Reference Include="RimWorld" HintPath="/home/toby/.local/share/Steam/steamapps/common/RimWorld/RimWorldLinux_Data/Managed/Assembly-CSharp.dll" IncludeAssets="compile" Private="false" /> -->
+    <Reference HintPath="../../VanillaPsycastsExpanded/1.5/Assemblies/VanillaPsycastsExpanded.dll" Include="VanillaPsycastsExpanded" IncludeAssets="compile" Private="false" />
+    <Reference HintPath="../../VanillaExpandedFramework/1.5/Assemblies/VFECore.dll" Include="VFECore" IncludeAssets="compile" Private="false" />
+    <PackageReference Include="Lib.Harmony" IncludeAssets="compile" Version="2.3.6" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(GAME_VERSION)'=='v1.6'">
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4566" />
+    <!-- <Reference Include="RimWorld" HintPath="/home/replace_this_path_with_your_username/.local/share/Steam/steamapps/common/RimWorld/RimWorldLinux_Data/Managed/Assembly-CSharp.dll" IncludeAssets="compile" Private="false" /> -->
+    <Reference HintPath="../../VanillaPsycastsExpanded/1.6/Assemblies/VanillaPsycastsExpanded.dll" Include="VanillaPsycastsExpanded" IncludeAssets="compile" Private="false" />
+    <Reference HintPath="../../VanillaExpandedFramework/1.6/Assemblies/VEF.dll" Include="VEF" IncludeAssets="compile" Private="false" />
+    <PackageReference Include="Lib.Harmony" IncludeAssets="compile" Version="2.3.6" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Mod -->
+    <Compile Include="../Source/**/*.cs" />
+    <PackageReference Include="roslynator.analyzers" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" Version="4.14.0" />
+    <PackageReference Include="roslynator.formatting.analyzers" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" Version="4.14.0" />
+  </ItemGroup>
 </Project>

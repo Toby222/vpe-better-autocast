@@ -64,6 +64,22 @@
                         xmlWhitespaceSensitivity = "preserve";
                       };
                     }
+                    {
+                      files = "*.csproj";
+                      options = {
+                        xmlQuoteAttributes = "double";
+                        xmlSortAttributesByKey = true;
+                        xmlWhitespaceSensitivity = "preserve";
+                      };
+                    }
+                    {
+                      files = "*.xslt";
+                      options = {
+                        xmlQuoteAttributes = "double";
+                        xmlSortAttributesByKey = true;
+                        xmlWhitespaceSensitivity = "preserve";
+                      };
+                    }
                   ];
                 };
               };
