@@ -1,5 +1,9 @@
 # 6.3.1.0
 
+- Fix typo in loadAfter for Runesmith
+
+# 6.3.1.0
+
 - Add support for Empath's Word of Inspiration
 - Fixed Word of Serenity's Scaria setting being ignored
 
