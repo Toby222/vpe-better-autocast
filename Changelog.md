@@ -1,3 +1,7 @@
+# 6.3.2.0
+
+- Fix Power targeting lower-draw buildings first
+
 # 6.3.1.1
 
 - Fix typo in loadAfter for Runesmith

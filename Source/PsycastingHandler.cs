@@ -763,8 +763,8 @@ internal static class PsycastingHandler
         // No need to sort if just using the randomly-targeted mechs
         if (BetterAutocastVPE.Settings.PowerBuildings)
         {
-            poweredThings = poweredThings.OrderByDescending(thing =>
-                thing.TryGetComp<CompPowerTrader>()?.PowerOutput ?? float.NegativeInfinity
+            poweredThings = poweredThings.OrderBy(thing =>
+                thing.TryGetComp<CompPowerTrader>()?.PowerOutput ?? float.PositiveInfinity
             );
         }
 
