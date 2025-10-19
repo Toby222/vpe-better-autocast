@@ -749,7 +749,11 @@ internal static class PsycastingHandler
         if (!(BetterAutocastVPE.Settings.PowerMechs || BetterAutocastVPE.Settings.PowerBuildings))
             return false;
 
-        IEnumerable<Thing> poweredThings = pawn.MapHeld.spawnedThings.Where(thing =>
+        IEnumerable<Thing> things = BetterAutocastVPE.Settings.PowerUseRange
+            ? pawn.GetThingsInRange(BetterAutocastVPE.Settings.PowerRange)
+            : pawn.MapHeld.spawnedThings;
+
+        IEnumerable<Thing> poweredThings = things.Where(thing =>
             (
                 BetterAutocastVPE.Settings.PowerBuildings
                 && thing.TryGetComp<CompPowerTrader>() is { PowerOutput: < 0f }

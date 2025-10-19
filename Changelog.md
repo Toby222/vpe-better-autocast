@@ -1,3 +1,7 @@
+# 6.3.3.0
+
+- Add range settings for Power
+
 # 6.3.2.0
 
 - Fix Power targeting lower-draw buildings first

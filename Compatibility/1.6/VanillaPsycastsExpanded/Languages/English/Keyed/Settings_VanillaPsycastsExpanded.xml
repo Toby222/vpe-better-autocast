@@ -50,6 +50,8 @@
   <BetterAutocastVPE.MendMechs>Mend colony mechs</BetterAutocastVPE.MendMechs>
   <BetterAutocastVPE.PowerBuildings>Provide power to buildings</BetterAutocastVPE.PowerBuildings>
   <BetterAutocastVPE.PowerMechs>Provide power to colony mechs</BetterAutocastVPE.PowerMechs>
+  <BetterAutocastVPE.PowerUseRange>Only consider targets in a maximum range</BetterAutocastVPE.PowerUseRange>
+  <BetterAutocastVPE.PowerRange>Maximum range: {0}</BetterAutocastVPE.PowerRange>
   <BetterAutocastVPE.Soothe.Explanation>Autocasts if any map pawn is below the given mood and doesn't have the psychic soothe buff.\nPawns get ignored for the check if their category is disabled.</BetterAutocastVPE.Soothe.Explanation>
   <BetterAutocastVPE.SootheColonists>Check moods of Colonists</BetterAutocastVPE.SootheColonists>
   <BetterAutocastVPE.SoothePrisoners>Check moods of Prisoners</BetterAutocastVPE.SoothePrisoners>

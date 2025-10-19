@@ -351,13 +351,29 @@ public static class AutocastSettingsWindow
         listing.CheckboxLabeled(("BetterAutocastVPE." + labelKey).TranslateSafe(), ref value);
     }
 
+    static void Slider(Listing_Standard listing, string? labelKey, ref float value, float min, float max)
+    {
+
+        if (labelKey is null)
+            value = listing.Slider(value, min, max);
+        else
+            value = listing.SliderLabeled(("BetterAutocastVPE." + labelKey).TranslateSafe(value), value, min, max, 0.3f);
+    }
+
     public static void DoSettingsWindowContents(Rect inRect)
     {
         Listing_Standard listing = new();
 
-        void Checkbox(string labelKey, ref bool value)
+        bool Checkbox(string labelKey, ref bool value)
         {
             AutocastSettingsWindow.Checkbox(listing, labelKey, ref value);
+            return value;
+        }
+
+        float Slider(string? labelKey, ref float value, float min, float max)
+        {
+            AutocastSettingsWindow.Slider(listing, labelKey, ref value, min, max);
+            return value;
         }
 
         bool AbilityHeader(string abilityDefName, string? modId = null)
@@ -910,6 +926,8 @@ public static class AutocastSettingsWindow
             {
                 Checkbox("PowerBuildings", ref Settings.PowerBuildings);
                 Checkbox("PowerMechs", ref Settings.PowerMechs);
+                if (Checkbox("PowerUseRange", ref Settings.PowerUseRange))
+                    Slider("PowerRange", ref Settings.PowerRange, 0f, 400f);
             }
             #endregion Power
 

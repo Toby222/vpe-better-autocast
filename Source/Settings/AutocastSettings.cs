@@ -106,6 +106,8 @@ public class AutocastSettings : ModSettings
 
     public bool PowerBuildings;
     public bool PowerMechs;
+    public bool PowerUseRange;
+    public float PowerRange;
 
     public bool StealVitalityFromPrisoners;
     public bool StealVitalityFromSlaves;
@@ -283,6 +285,8 @@ public class AutocastSettings : ModSettings
         #region Power
         PowerBuildings = true;
         PowerMechs = true;
+        PowerUseRange = false;
+        PowerRange = 20f;
         #endregion Power
 
         #region Steal Vitality
@@ -449,6 +453,8 @@ public class AutocastSettings : ModSettings
         #region Power
         LookStruct(() => PowerBuildings);
         LookStruct(() => PowerMechs);
+        LookStruct(() => PowerUseRange);
+        LookStruct(() => PowerRange);
         #endregion Power
 
         #region Steal Vitality
