@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup Condition="'$(GAME_VERSION)'==''">
+    <GAME_VERSION>v1.6</GAME_VERSION>
     <DefineConstants>v1_6</DefineConstants>
     <OutputPath>../1.6/Assemblies</OutputPath>
   </PropertyGroup>
@@ -151,13 +152,6 @@
       </incompatibleWithByVersion>
     </ModMetaData>
   </PropertyGroup>
-  <ItemGroup Condition="'$(GAME_VERSION)'==''">
-    <!-- <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.9371" /> -->
-    <Reference HintPath="/home/toby/.local/share/Steam/steamapps/common/RimWorld/RimWorldLinux_Data/Managed/Assembly-CSharp.dll" Include="RimWorld" IncludeAssets="compile" Private="false" />
-    <Reference HintPath="../../VanillaPsycastsExpanded/1.6/Assemblies/VanillaPsycastsExpanded.dll" Include="VanillaPsycastsExpanded" IncludeAssets="compile" Private="false" />
-    <Reference HintPath="../../VanillaExpandedFramework/1.6/Assemblies/VEF.dll" Include="VEF" IncludeAssets="compile" Private="false" />
-    <PackageReference Include="Lib.Harmony" IncludeAssets="compile" Version="2.3.6" />
-  </ItemGroup>
   <ItemGroup Condition="'$(GAME_VERSION)'=='v1.5'">
     <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4243" />
     <!-- <Reference Include="RimWorld" HintPath="/home/toby/.local/share/Steam/steamapps/common/RimWorld/RimWorldLinux_Data/Managed/Assembly-CSharp.dll" IncludeAssets="compile" Private="false" /> -->
@@ -170,12 +164,12 @@
     <!-- <Reference Include="RimWorld" HintPath="/home/replace_this_path_with_your_username/.local/share/Steam/steamapps/common/RimWorld/RimWorldLinux_Data/Managed/Assembly-CSharp.dll" IncludeAssets="compile" Private="false" /> -->
     <Reference HintPath="../../VanillaPsycastsExpanded/1.6/Assemblies/VanillaPsycastsExpanded.dll" Include="VanillaPsycastsExpanded" IncludeAssets="compile" Private="false" />
     <Reference HintPath="../../VanillaExpandedFramework/1.6/Assemblies/VEF.dll" Include="VEF" IncludeAssets="compile" Private="false" />
-    <PackageReference Include="Lib.Harmony" IncludeAssets="compile" Version="2.3.6" />
+    <PackageReference Include="Lib.Harmony" IncludeAssets="compile" Version="2.4.1" />
   </ItemGroup>
   <ItemGroup>
     <!-- Mod -->
     <Compile Include="../Source/**/*.cs" />
-    <PackageReference Include="roslynator.analyzers" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" Version="4.14.0" />
-    <PackageReference Include="roslynator.formatting.analyzers" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" Version="4.14.0" />
+    <PackageReference Include="roslynator.analyzers" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" Version="4.14.1" />
+    <PackageReference Include="roslynator.formatting.analyzers" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" Version="4.14.1" />
   </ItemGroup>
 </Project>
