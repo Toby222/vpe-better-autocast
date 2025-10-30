@@ -16,7 +16,7 @@
   <BetterAutocastVPE.BlockedJobs>Blocked Jobs</BetterAutocastVPE.BlockedJobs>
   <BetterAutocastVPE.CastDrafted>Cast while drafted</BetterAutocastVPE.CastDrafted>
   <BetterAutocastVPE.CastUndrafted>Cast while undrafted</BetterAutocastVPE.CastUndrafted>
-  <BetterAutocastVPE.Clarification>"In range" below considers allowed areas when undrafted, but ignores them when drafted.\n\nForbidden targets are ignored unless drafted.\nThis includes checking if they are in allowed areas, or reserved by a pawn.\n\nAll psycasts check if the target is valid by the regular rules before casting.</BetterAutocastVPE.Clarification>
+  <BetterAutocastVPE.Clarification>"In range" below considers allowed areas when undrafted, but ignores them when drafted.\n\nForbidden targets are ignored unless drafted.\nThis includes checking if they are in allowed areas, or reserved by a pawn.\n\nAll psycasts check if the target is valid by the regular rules before casting.\n\nAll psycasts that target pawns without specific hediffs also check that casting wil not be considered a hostile action.</BetterAutocastVPE.Clarification>
   <BetterAutocastVPE.DebugLog>Log messages for debugging autocasting.</BetterAutocastVPE.DebugLog>
   <BetterAutocastVPE.IgnoredMentalStates.defNameExplanation>The defName of the MentalStateDefs</BetterAutocastVPE.IgnoredMentalStates.defNameExplanation>
   <BetterAutocastVPE.IgnoredMentalStates.Explanation>Manage which mental states should <![CDATA[<b><i>not</i></b>]]> be targeted by pawns autocasting Word of Serenity.</BetterAutocastVPE.IgnoredMentalStates.Explanation>

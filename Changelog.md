@@ -1,3 +1,7 @@
+# 6.3.4.0
+
+- All psycasts that target pawns without specific hediffs now also check that casting wil not be considered a hostile action
+
 # 6.3.3.0
 
 - Add range settings for Power

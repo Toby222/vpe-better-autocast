@@ -8,6 +8,8 @@ using RimWorld.Planet;
 using VanillaPsycastsExpanded;
 using VanillaPsycastsExpanded.Technomancer;
 using Verse;
+using Steamworks;
+
 
 #if v1_5
 using VFECore.Abilities;
@@ -346,14 +348,16 @@ internal static class PsycastingHandler
             HediffPsycastCache[ability.def.defName] = hediffDefName;
         }
 
+        static bool ValidateHediffPsycast(Ability ability, Pawn target, string hediffDefName) {
+            return (ability.def.goodwillImpact is >= 0 || target.HomeFaction == Faction.OfPlayerSilentFail) && target.DoesNotHaveHediff(hediffDefName);
+        }
+
         return HandleTargetedPsycast(
             pawn,
             ability,
             targetPriority,
             finalTarget,
-            extraValidator is null
-                ? pawn => pawn.DoesNotHaveHediff(hediffDefName)
-                : pawn => pawn.DoesNotHaveHediff(hediffDefName) && extraValidator(pawn),
+            target => ValidateHediffPsycast(ability, target, hediffDefName) && (extraValidator is null || extraValidator(target)),
             allowDowned
         );
     }
@@ -971,6 +975,7 @@ internal static class PsycastingHandler
             .FirstOrFallback();
         return target is not null && CastAbilityOnTarget(ability, target);
     }
+
     #endregion Archon
 
     #region Runesmith
