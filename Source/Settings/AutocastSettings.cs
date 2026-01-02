@@ -58,12 +58,13 @@ public class AutocastSettings : ModSettings
 
     private static HashSet<string> DefaultBlockedJobDefs() =>
         [
+            "AttackMelee",
             "BetterAutocastVPE_GotoLocationAndCastAbilityOnce",
             "DeliverToBed",
+            "Goto",
             "Ingest",
             "LayDown",
             "SpectateCeremony",
-            "Goto",
             "VFEA_GotoTargetAndUseAbility",
             "VFEA_UseAbility",
             "Wait_Asleep",

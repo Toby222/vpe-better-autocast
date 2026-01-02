@@ -348,7 +348,8 @@ internal static class PsycastingHandler
             HediffPsycastCache[ability.def.defName] = hediffDefName;
         }
 
-        static bool ValidateHediffPsycast(Ability ability, Pawn target, string hediffDefName) {
+        static bool ValidateHediffPsycast(Ability ability, Pawn target, string hediffDefName)
+        {
             return (ability.def.goodwillImpact is >= 0 || target.HomeFaction == Faction.OfPlayerSilentFail) && target.DoesNotHaveHediff(hediffDefName);
         }
 

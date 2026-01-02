@@ -1,3 +1,9 @@
+# 6.4.0.0
+
+- Update depencies and devenv
+- Better logging
+- Add MeleeAttack to default blocked jobs
+
 # 6.3.4.0
 
 - All psycasts that target pawns without specific hediffs now also check that casting wil not be considered a hostile action
