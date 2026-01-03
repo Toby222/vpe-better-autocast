@@ -100,7 +100,8 @@ internal static class PawnHelper
                 && pawn.Spawned
                 && pawn.Position.InHorDistOf(referencePawn.Position, range)
                 && PawnIsDraftedOrThingIsAllowedAndReservable(referencePawn, pawn)
-            ) ?? [];
+            )
+            ?? [];
     }
 
     internal static IEnumerable<Thing> GetThingsInRange(this Pawn referencePawn, float range)
@@ -110,7 +111,8 @@ internal static class PawnHelper
                 && pawn.Spawned
                 && pawn.Position.InHorDistOf(referencePawn.Position, range)
                 && PawnIsDraftedOrThingIsAllowedAndReservable(referencePawn, pawn)
-            ) ?? [];
+            )
+            ?? [];
     }
 
     internal static bool CanPsycast(this Pawn pawn)

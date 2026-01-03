@@ -1,6 +1,5 @@
 using UnityEngine;
 using Verse;
-
 #if v1_5
 using VFECore.Abilities;
 using VFECore.UItils;
@@ -351,13 +350,24 @@ public static class AutocastSettingsWindow
         listing.CheckboxLabeled(("BetterAutocastVPE." + labelKey).TranslateSafe(), ref value);
     }
 
-    static void Slider(Listing_Standard listing, string? labelKey, ref float value, float min, float max)
+    static void Slider(
+        Listing_Standard listing,
+        string? labelKey,
+        ref float value,
+        float min,
+        float max
+    )
     {
-
         if (labelKey is null)
             value = listing.Slider(value, min, max);
         else
-            value = listing.SliderLabeled(("BetterAutocastVPE." + labelKey).TranslateSafe(value), value, min, max, 0.3f);
+            value = listing.SliderLabeled(
+                ("BetterAutocastVPE." + labelKey).TranslateSafe(value),
+                value,
+                min,
+                max,
+                0.3f
+            );
     }
 
     public static void DoSettingsWindowContents(Rect inRect)

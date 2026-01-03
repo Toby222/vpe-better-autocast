@@ -48,12 +48,7 @@ public class BlockedJobsListWindow : Window
             "BetterAutocastVPE.BlockedJobs".TranslateSafe()
         );
         Text.Font = GameFont.Small;
-        Rect inRect = new(
-            0f,
-            40f,
-            windowInRect.width,
-            windowInRect.height - 40f - CloseButSize.y
-        );
+        Rect inRect = new(0f, 40f, windowInRect.width, windowInRect.height - 40f - CloseButSize.y);
 
         searchString = Widgets.TextArea(inRect.TakeTopPart(30f), searchString);
 

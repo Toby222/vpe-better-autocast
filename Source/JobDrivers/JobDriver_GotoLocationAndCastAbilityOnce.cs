@@ -132,15 +132,20 @@ public class JobDriver_GotoLocationAndCastAbilityOnce : JobDriver_CastAbilityOnc
             IntVec3 target = job.targetA.Cell;
             pawn.rotationTracker.FaceTarget(target);
             Map map = pawn.Map;
-            if (GenSight.LineOfSight(pawn.Position, target, map, skipFirstCell: true)
-                && pawn.Position.DistanceTo(target) <= CompAbilities.currentlyCasting.def.distanceToTarget
-                && (!pawn.pather.Moving || pawn.pather.nextCell.GetDoor(map) == null))
+            if (
+                GenSight.LineOfSight(pawn.Position, target, map, skipFirstCell: true)
+                && pawn.Position.DistanceTo(target)
+                    <= CompAbilities.currentlyCasting.def.distanceToTarget
+                && (!pawn.pather.Moving || pawn.pather.nextCell.GetDoor(map) == null)
+            )
             {
                 pawn.pather.StopDead();
                 pawn.rotationTracker.FaceTarget(target);
                 if (job.targetA.Pawn is Pawn victim)
                 {
-                    victim.jobs.TryTakeOrderedJob(JobMaker.MakeJob(VFE_DefOf_Abilities.VFEA_StandAndFaceTarget, pawn));
+                    victim.jobs.TryTakeOrderedJob(
+                        JobMaker.MakeJob(VFE_DefOf_Abilities.VFEA_StandAndFaceTarget, pawn)
+                    );
                 }
                 ReadyForNextToil();
             }
@@ -156,10 +161,22 @@ public class JobDriver_GotoLocationAndCastAbilityOnce : JobDriver_CastAbilityOnc
                     for (int i = 0; i < 9 && (i != 8 || !intVec.IsValid); i++)
                     {
                         IntVec3 intVec2 = target + GenAdj.AdjacentCellsAndInside[i];
-                        if (intVec2.InBounds(map) && intVec2.Walkable(map) && intVec2 != pawn.Position &&
-                        SocialInteractionUtility.IsGoodPositionForInteraction(intVec2, target, map)
-                        && pawn.CanReach(intVec2, PathEndMode.OnCell, Danger.Deadly)
-                        && (!intVec.IsValid || pawn.Position.DistanceToSquared(intVec2) < pawn.Position.DistanceToSquared(intVec)))
+                        if (
+                            intVec2.InBounds(map)
+                            && intVec2.Walkable(map)
+                            && intVec2 != pawn.Position
+                            && SocialInteractionUtility.IsGoodPositionForInteraction(
+                                intVec2,
+                                target,
+                                map
+                            )
+                            && pawn.CanReach(intVec2, PathEndMode.OnCell, Danger.Deadly)
+                            && (
+                                !intVec.IsValid
+                                || pawn.Position.DistanceToSquared(intVec2)
+                                    < pawn.Position.DistanceToSquared(intVec)
+                            )
+                        )
                         {
                             intVec = intVec2;
                         }

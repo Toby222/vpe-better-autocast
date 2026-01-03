@@ -24,7 +24,8 @@ public class Area_CraftTimeskip : Area
     }
 }
 
-public class Designator_Area_CraftTimeskip(DesignateMode mode) : CellDesignator<Area_CraftTimeskip>(mode)
+public class Designator_Area_CraftTimeskip(DesignateMode mode)
+    : CellDesignator<Area_CraftTimeskip>(mode)
 {
     public override bool Visible => BetterAutocastVPE.Settings.ShowCraftTimeskipArea;
 }

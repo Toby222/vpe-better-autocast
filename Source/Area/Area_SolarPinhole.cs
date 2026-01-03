@@ -23,7 +23,8 @@ public class Area_SolarPinhole : Area
     }
 }
 
-public class Designator_Area_SolarPinhole(DesignateMode mode) : CellDesignator<Area_SolarPinhole>(mode)
+public class Designator_Area_SolarPinhole(DesignateMode mode)
+    : CellDesignator<Area_SolarPinhole>(mode)
 {
     public override bool Visible => BetterAutocastVPE.Settings.ShowSolarPinholeArea;
 }

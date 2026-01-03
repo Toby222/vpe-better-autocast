@@ -8,9 +8,6 @@ using RimWorld.Planet;
 using VanillaPsycastsExpanded;
 using VanillaPsycastsExpanded.Technomancer;
 using Verse;
-using Steamworks;
-
-
 #if v1_5
 using VFECore.Abilities;
 using Ability = VFECore.Abilities.Ability;
@@ -350,7 +347,10 @@ internal static class PsycastingHandler
 
         static bool ValidateHediffPsycast(Ability ability, Pawn target, string hediffDefName)
         {
-            return (ability.def.goodwillImpact is >= 0 || target.HomeFaction == Faction.OfPlayerSilentFail) && target.DoesNotHaveHediff(hediffDefName);
+            return (
+                    ability.def.goodwillImpact is >= 0
+                    || target.HomeFaction == Faction.OfPlayerSilentFail
+                ) && target.DoesNotHaveHediff(hediffDefName);
         }
 
         return HandleTargetedPsycast(
@@ -358,7 +358,9 @@ internal static class PsycastingHandler
             ability,
             targetPriority,
             finalTarget,
-            target => ValidateHediffPsycast(ability, target, hediffDefName) && (extraValidator is null || extraValidator(target)),
+            target =>
+                ValidateHediffPsycast(ability, target, hediffDefName)
+                && (extraValidator is null || extraValidator(target)),
             allowDowned
         );
     }
@@ -617,8 +619,12 @@ internal static class PsycastingHandler
             FinalTargetType.Closest,
             pawn =>
                 // ability is only used for the message, which is turned off here, so can be safely nulled instead of working out the types
-                AbilityUtility.ValidateNoInspiration(pawn, showMessages: false, ability: null) &&
-                AbilityUtility.ValidateCanGetInspiration(pawn, showMessages: false, ability: null),
+                AbilityUtility.ValidateNoInspiration(pawn, showMessages: false, ability: null)
+                && AbilityUtility.ValidateCanGetInspiration(
+                    pawn,
+                    showMessages: false,
+                    ability: null
+                ),
             false
         );
     }
@@ -657,7 +663,10 @@ internal static class PsycastingHandler
             FinalTargetType.Closest,
             pawn =>
                 pawn.MentalState is not null
-                && (BetterAutocastVPE.Settings.WordOfSerenityTargetScaria || !pawn.HasHediff(HediffDefOf.Scaria.defName))
+                && (
+                    BetterAutocastVPE.Settings.WordOfSerenityTargetScaria
+                    || !pawn.HasHediff(HediffDefOf.Scaria.defName)
+                )
                 && !BetterAutocastVPE.Settings.WordOfSerenityIgnoredMentalStateDefs.Contains(
                     pawn.MentalStateDef.defName
                 ),
@@ -720,7 +729,10 @@ internal static class PsycastingHandler
         if (ability is null)
             throw new ArgumentNullException(nameof(ability));
 
-        if ((BetterAutocastVPE.Settings.MendPawns || BetterAutocastVPE.Settings.MendMechs) && HandleMendByPawn(pawn, ability))
+        if (
+            (BetterAutocastVPE.Settings.MendPawns || BetterAutocastVPE.Settings.MendMechs)
+            && HandleMendByPawn(pawn, ability)
+        )
             return true;
         if (BetterAutocastVPE.Settings.MendInStockpile && HandleMendByZone(pawn, ability))
             return true;

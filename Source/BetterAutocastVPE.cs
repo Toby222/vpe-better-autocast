@@ -12,7 +12,6 @@ using Verse;
 namespace BetterAutocastVPE;
 
 using Settings;
-
 #if v1_5
 using VFECore.Abilities;
 #else
@@ -30,11 +29,14 @@ public class BetterAutocastVPE : Mod
     {
 #if v1_5
         const string GAME_VERSION = "v1.5";
+        const string VANILLA_EXPANDED_PATCH_NAME = "OskarPotocki.VFECore";
 #elif v1_6
         const string GAME_VERSION = "v1.6";
+        const string VANILLA_EXPANDED_PATCH_NAME = "OskarPotocki.VEF";
 #else
 #error No version defined
         const string GAME_VERSION = "UNDEFINED";
+        const string VANILLA_EXPANDED_PATCH_NAME = "UNDEFINED";
 #endif
 
 #if DEBUG
@@ -55,7 +57,7 @@ public class BetterAutocastVPE : Mod
                 typeof(Pawn),
                 "TryGetAttackVerb",
                 HarmonyPatchType.Postfix,
-                "OskarPotocki.VFECore"
+                VANILLA_EXPANDED_PATCH_NAME
             )
         )
         {
@@ -206,7 +208,9 @@ public class BetterAutocastVPE : Mod
     {
         string fileNamePrefix = DateTime.Now.ToString("s", CultureInfo.InvariantCulture);
         GameDataSaveLoader.SaveGame(
-                NormalizeForWindows(fileNamePrefix + " - " + "BetterAutocastVPE.BeforeUninstall".TranslateSafe())
+            NormalizeForWindows(
+                fileNamePrefix + " - " + "BetterAutocastVPE.BeforeUninstall".TranslateSafe()
+            )
         );
         Find.TickManager.Pause();
         foreach (Map map in Find.Maps)
@@ -235,7 +239,9 @@ public class BetterAutocastVPE : Mod
             .Where(x => !x.ModMetaData.SamePackageId(Content.PackageId))
             .ToList();
         GameDataSaveLoader.SaveGame(
-            NormalizeForWindows(fileNamePrefix + " - " + "BetterAutocastVPE.AfterUninstall".TranslateSafe())
+            NormalizeForWindows(
+                fileNamePrefix + " - " + "BetterAutocastVPE.AfterUninstall".TranslateSafe()
+            )
         );
         traverse.Value = original;
         GenScene.GoToMainMenu();

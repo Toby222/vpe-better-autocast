@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using Verse;
-
 #if v1_5
 using VFECore.Abilities;
 using Ability = VFECore.Abilities.Ability;
@@ -54,7 +53,9 @@ internal static class Pawn_Tick_Autocast
         if (pawn.GetComp<CompAbilities>()?.LearnedAbilities is not List<Ability> abilities)
             return;
 
-        BetterAutocastVPE.DebugLog($"Trying to autocast for {pawn.NameFullColored}{(pawn.CurJob is null ? string.Empty : " " + pawn.GetJobReport())}");
+        BetterAutocastVPE.DebugLog(
+            $"Trying to autocast for {pawn.NameFullColored}{(pawn.CurJob is null ? string.Empty : " " + pawn.GetJobReport())}"
+        );
 
         foreach (
             Ability ability in abilities.OrderByDescending(ability =>

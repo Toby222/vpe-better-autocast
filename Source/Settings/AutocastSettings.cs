@@ -121,9 +121,7 @@ public class AutocastSettings : ModSettings
     public bool DeathshieldPrisoners;
     public bool DeathshieldVisitors;
 
-
-    public bool
-    WordOfInspirationTargetColonists;
+    public bool WordOfInspirationTargetColonists;
     public bool WordOfInspirationTargetSlaves;
 
     public float WordOfJoyMoodThreshold;

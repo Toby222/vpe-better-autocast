@@ -4,7 +4,7 @@ using Verse;
 namespace BetterAutocastVPE;
 
 public class CellDesignator<TArea> : Designator_Cells
-where TArea : Area
+    where TArea : Area
 {
     private readonly DesignateMode mode;
 

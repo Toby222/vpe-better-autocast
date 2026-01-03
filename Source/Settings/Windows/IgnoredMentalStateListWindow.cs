@@ -45,12 +45,7 @@ public class IgnoredMentalStateListWindow : Window
             "BetterAutocastVPE.IgnoredMentalStates".TranslateSafe()
         );
         Text.Font = GameFont.Small;
-        Rect inRect = new Rect(
-            0f,
-            40f,
-            inRect2.width,
-            inRect2.height - 40f - CloseButSize.y
-        );
+        Rect inRect = new Rect(0f, 40f, inRect2.width, inRect2.height - 40f - CloseButSize.y);
 
         searchString = Widgets.TextArea(inRect.TakeTopPart(30f), searchString);
 
@@ -92,7 +87,11 @@ public class IgnoredMentalStateListWindow : Window
         listing.Gap();
 
         bool highlight = false;
-        foreach (MentalStateDef MentalStateDef in DefDatabase<MentalStateDef>.AllDefs.OrderBy(def => def.defName[0]))
+        foreach (
+            MentalStateDef MentalStateDef in DefDatabase<MentalStateDef>.AllDefs.OrderBy(def =>
+                def.defName[0]
+            )
+        )
         {
             if (!MatchesSearch(MentalStateDef.defName, MentalStateDef.label))
                 continue;

@@ -1,3 +1,9 @@
+# 7.0.0.0
+
+- Return of TryGetAttackVerb patch!
+- Fixes incompatibility with Ground Targetter
+- Fixes changing the wrong patch of VEF after their namespace changed
+
 # 6.4.0.0
 
 - Update depencies and devenv

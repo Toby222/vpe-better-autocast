@@ -23,7 +23,8 @@ public class Area_GreaterRunecircle : Area
     }
 }
 
-public class Designator_Area_GreaterRunecircle(DesignateMode mode) : CellDesignator<Area_GreaterRunecircle>(mode)
+public class Designator_Area_GreaterRunecircle(DesignateMode mode)
+    : CellDesignator<Area_GreaterRunecircle>(mode)
 {
     public override bool Visible =>
         Designator_Area_Runecircle.ModActive

@@ -10,7 +10,13 @@ using Verse;
 
 namespace BetterAutocastVPE.Patches;
 
-internal record CustomMoveableAreas(MoveableArea iceCrystal, MoveableArea solarPinhole, MoveableArea craftTimeskip, MoveableArea runecircle, MoveableArea greaterRunecircle) : IExposable
+internal record CustomMoveableAreas(
+    MoveableArea iceCrystal,
+    MoveableArea solarPinhole,
+    MoveableArea craftTimeskip,
+    MoveableArea runecircle,
+    MoveableArea greaterRunecircle
+) : IExposable
 {
     internal static ConditionalWeakTable<MoveableAreas, CustomMoveableAreas> AllMoveableAreas = [];
 
@@ -49,20 +55,28 @@ internal static class MoveableAreasConstructor
 {
     internal static void Postfix(MoveableAreas __instance)
     {
-        CustomMoveableAreas.AllMoveableAreas.AddOrUpdate(__instance, new CustomMoveableAreas(
-            new MoveableArea(),
-            new MoveableArea(),
-            new MoveableArea(),
-            new MoveableArea(),
-            new MoveableArea()
-        ));
+        CustomMoveableAreas.AllMoveableAreas.AddOrUpdate(
+            __instance,
+            new CustomMoveableAreas(
+                new MoveableArea(),
+                new MoveableArea(),
+                new MoveableArea(),
+                new MoveableArea(),
+                new MoveableArea()
+            )
+        );
     }
 }
 
 [HarmonyPatch(typeof(Gravship), "CopyAreas")]
 internal static class GravshipCopyAreas
 {
-    internal static void Postfix(Gravship __instance, Map oldMap, IntVec3 origin, HashSet<IntVec3> engineFloors)
+    internal static void Postfix(
+        Gravship __instance,
+        Map oldMap,
+        IntVec3 origin,
+        HashSet<IntVec3> engineFloors
+    )
     {
         if (!CustomMoveableAreas.AllMoveableAreas.TryGetValue(__instance.areas, out var areas))
         {
@@ -72,7 +86,13 @@ internal static class GravshipCopyAreas
 
         foreach (var area in oldMap.areaManager.AllAreas)
         {
-            var moveableArea = new MoveableArea(__instance, area.Label, area.RenamableLabel, area.Color, area.ID);
+            var moveableArea = new MoveableArea(
+                __instance,
+                area.Label,
+                area.RenamableLabel,
+                area.Color,
+                area.ID
+            );
             foreach (var cell in engineFloors.Intersect(area.ActiveCells))
                 moveableArea.Add(cell - origin);
 
@@ -94,7 +114,7 @@ internal static class GravshipCopyAreas
 internal static class GravshipCopyAreasIntoMap
 {
     private static void CopyArea<T>(MoveableArea area, Map map, IntVec3 root)
-    where T : Area
+        where T : Area
     {
         string areaName = typeof(T).Name;
         BetterAutocastVPE.DebugLog("Copying " + areaName);
@@ -111,9 +131,11 @@ internal static class GravshipCopyAreasIntoMap
             BetterAutocastVPE.DebugError("New map's " + areaName + " is null");
         }
     }
+
     internal static void Postfix(Gravship gravship, Map map, IntVec3 root)
     {
-        if (!CustomMoveableAreas.AllMoveableAreas.TryGetValue(gravship.areas, out var areas)) return;
+        if (!CustomMoveableAreas.AllMoveableAreas.TryGetValue(gravship.areas, out var areas))
+            return;
 
         if (areas.iceCrystal is not null)
         {
