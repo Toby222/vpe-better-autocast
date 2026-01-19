@@ -1,3 +1,7 @@
+# 7.0.1.0
+
+- Fix Focus patch turning it to a touch-range ability
+
 # 7.0.0.0
 
 - Return of TryGetAttackVerb patch!

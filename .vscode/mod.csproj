@@ -19,8 +19,8 @@
     <!-- Modify [RootNamespace], [AssemblyName], [OutputPath], [VersionPrefix] -->
     <RootNamespace>BetterAutocastVPE</RootNamespace>
     <AssemblyName>BetterAutocastVPE</AssemblyName>
-    <LangVersion>latest</LangVersion>
-    <VersionPrefix>7.0.0.0</VersionPrefix>
+    <LangVerszion>latest</LangVerszion>
+    <VersionPrefix>7.0.1.0</VersionPrefix>
     <!-- do not generate pdb file -->
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>

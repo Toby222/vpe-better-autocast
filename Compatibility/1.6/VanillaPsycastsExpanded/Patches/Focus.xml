@@ -1,8 +1,21 @@
 <Patch>
-  <Operation Class="PatchOperationAdd">
-    <xpath>/Defs/VEF.Abilities.AbilityDef[defName="VPE_Focus"]</xpath>
-    <value>
-      <jobDef>BetterAutocastVPE_GotoLocationAndCastAbilityOnce</jobDef>
-    </value>
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/VEF.Abilities.AbilityDef[defName="VPE_Focus"]</xpath>
+        <value>
+          <jobDef>BetterAutocastVPE_GotoLocationAndCastAbilityOnce</jobDef>
+          <requireLineOfSight>false</requireLineOfSight>
+          <distanceToTarget>28</distanceToTarget>
+          <showUndrafted>true</showUndrafted>
+        </value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/VEF.Abilities.AbilityDef[defName="VPE_Focus"]/range</xpath>
+        <value>
+          <range>999999</range>
+        </value>
+      </li>
+    </operations>
   </Operation>
 </Patch>
