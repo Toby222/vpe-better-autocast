@@ -12,11 +12,7 @@ using Verse;
 namespace BetterAutocastVPE;
 
 using Settings;
-#if v1_5
-using VFECore.Abilities;
-#else
 using VEF.Abilities;
-#endif
 
 #if DEBUG
 #warning Building in Debug mode
@@ -27,16 +23,11 @@ public class BetterAutocastVPE : Mod
     public BetterAutocastVPE(ModContentPack content)
         : base(content)
     {
-#if v1_5
-        const string GAME_VERSION = "v1.5";
-        const string VANILLA_EXPANDED_PATCH_NAME = "OskarPotocki.VFECore";
-#elif v1_6
+#if v1_6
         const string GAME_VERSION = "v1.6";
-        const string VANILLA_EXPANDED_PATCH_NAME = "OskarPotocki.VEF";
 #else
 #error No version defined
         const string GAME_VERSION = "UNDEFINED";
-        const string VANILLA_EXPANDED_PATCH_NAME = "UNDEFINED";
 #endif
 
 #if DEBUG
@@ -57,7 +48,7 @@ public class BetterAutocastVPE : Mod
                 typeof(Pawn),
                 "TryGetAttackVerb",
                 HarmonyPatchType.Postfix,
-                VANILLA_EXPANDED_PATCH_NAME
+                "OskarPotocki.VEF"
             )
         )
         {

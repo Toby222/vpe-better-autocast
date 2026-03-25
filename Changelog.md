@@ -1,3 +1,9 @@
+# 7.1.0.0
+
+- Add support for Rock Construct
+- Add support for Steel Construct
+- This is the final update for RimWorld 1.5
+
 # 7.0.1.0
 
 - Fix Focus patch turning it to a touch-range ability

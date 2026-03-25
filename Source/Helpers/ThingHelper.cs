@@ -20,7 +20,6 @@ internal static class ThingHelper
         if (storageGroupName is null)
             throw new ArgumentNullException(nameof(storageGroupName));
 
-#if v1_5 || v1_6
         return HarmonyLib
             .Traverse.Create(map.storageGroups)
             .Field<List<StorageGroup>>("groups")
@@ -29,9 +28,6 @@ internal static class ThingHelper
                 >= 0
             )
             .SelectMany(group => group.HeldThings);
-#else
-        throw new NotImplementedException();
-#endif
     }
 
     internal static IEnumerable<Thing> GetThingsInNamedStockpile(this Map map, string stockpileName)

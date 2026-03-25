@@ -39,12 +39,14 @@ public class AutocastSettings : ModSettings
             "VPE_Mend",
             "VPE_Power",
             "VPE_PsychicGuidance",
+            "VPE_RockConstruct",
             "VPE_SolarPinhole",
             "VPE_SolarPinholeSunlamp",
             "VPE_SootheFemale",
             "VPE_SootheMale",
             "VPE_SpeedBoost",
             "VPE_StealVitality",
+            "VPE_SteelConstruct",
             "VPE_WordofAlliance",
             "VPE_WordofImmunity",
             "VPE_WordofInspiration",
@@ -104,6 +106,18 @@ public class AutocastSettings : ModSettings
     public bool EnchantOnlyNamedStockpiles;
     public bool EnchantInStorage;
     public bool EnchantOnlyNamedStorageGroups;
+
+    public float RockConstructHeatLimit;
+    public bool RockConstructInStockpile;
+    public bool RockConstructOnlyNamedStockpiles;
+    public bool RockConstructInStorage;
+    public bool RockConstructOnlyNamedStorageGroups;
+
+    public float SteelConstructHeatLimit;
+    public bool SteelConstructInStockpile;
+    public bool SteelConstructOnlyNamedStockpiles;
+    public bool SteelConstructInStorage;
+    public bool SteelConstructOnlyNamedStorageGroups;
 
     public bool PowerBuildings;
     public bool PowerMechs;
@@ -281,6 +295,22 @@ public class AutocastSettings : ModSettings
         EnchantOnlyNamedStorageGroups = false;
         #endregion Enchant Quality
 
+        #region Rock Construct
+        RockConstructHeatLimit = 1.0f;
+        RockConstructInStockpile = true;
+        RockConstructOnlyNamedStockpiles = true;
+        RockConstructInStorage = true;
+        RockConstructOnlyNamedStorageGroups = false;
+        #endregion Rock Construct
+
+        #region Steel Construct
+        SteelConstructHeatLimit = 1.0f;
+        SteelConstructInStockpile = true;
+        SteelConstructOnlyNamedStockpiles = true;
+        SteelConstructInStorage = true;
+        SteelConstructOnlyNamedStorageGroups = false;
+        #endregion Steel Construct
+
         #region Power
         PowerBuildings = true;
         PowerMechs = true;
@@ -448,6 +478,22 @@ public class AutocastSettings : ModSettings
         LookStruct(() => EnchantInStorage);
         LookStruct(() => EnchantOnlyNamedStorageGroups);
         #endregion Enchant Quality
+
+        #region Rock Construct
+        LookStruct(() => RockConstructHeatLimit);
+        LookStruct(() => RockConstructInStockpile);
+        LookStruct(() => RockConstructOnlyNamedStockpiles);
+        LookStruct(() => RockConstructInStorage);
+        LookStruct(() => RockConstructOnlyNamedStorageGroups);
+        #endregion Rock Construct
+
+        #region Steel Construct
+        LookStruct(() => SteelConstructHeatLimit);
+        LookStruct(() => SteelConstructInStockpile);
+        LookStruct(() => SteelConstructOnlyNamedStockpiles);
+        LookStruct(() => SteelConstructInStorage);
+        LookStruct(() => SteelConstructOnlyNamedStorageGroups);
+        #endregion Steel Construct
 
         #region Power
         LookStruct(() => PowerBuildings);

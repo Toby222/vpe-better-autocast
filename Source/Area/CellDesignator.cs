@@ -8,13 +8,7 @@ public class CellDesignator<TArea> : Designator_Cells
 {
     private readonly DesignateMode mode;
 
-#if v1_5
-    public override int DraggableDimensions => 2;
-#endif
-
-#if v1_6
     public override DrawStyleCategoryDef DrawStyleCategory => DrawStyleCategoryDefOf.Areas;
-#endif
 
     public override bool DragDrawMeasurements => true;
 

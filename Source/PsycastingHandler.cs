@@ -2,26 +2,22 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using BetterAutocastVPE.Helpers;
 using RimWorld;
 using RimWorld.Planet;
 using VanillaPsycastsExpanded;
 using VanillaPsycastsExpanded.Technomancer;
 using Verse;
-#if v1_5
-using VFECore.Abilities;
-using Ability = VFECore.Abilities.Ability;
-#else
 using VEF.Abilities;
 using Ability = VEF.Abilities.Ability;
-#endif
 
 namespace BetterAutocastVPE;
 
 using static Helpers.AreaHelper;
+using static Helpers.ConstructHelper;
 using static Helpers.EnchantHelper;
 using static Helpers.MendHelper;
 using static Helpers.PawnHelper;
+using static Helpers.ThingHelper;
 using static Helpers.WeatherHelper;
 
 internal static class PsycastingHandler
@@ -54,6 +50,7 @@ internal static class PsycastingHandler
                 { "VPE_Overshield", HandleOvershield },
                 { "VPE_Power", HandlePower },
                 { "VPE_PsychicGuidance", HandleColonistBuff },
+                { "VPE_RockConstruct", HandleRockConstruct },
                 { "VPE_SolarPinhole", HandleSolarPinhole },
                 { "VPE_SolarPinholeSunlamp", HandleSolarPinhole },
                 { "VPE_SootheFemale", HandleSoothe },
@@ -61,6 +58,7 @@ internal static class PsycastingHandler
                 { "VPE_SpeedBoost", HandleSelfBuff },
                 { "VPE_StaticAura", HandleStaticAura },
                 { "VPE_StealVitality", HandleStealVitality },
+                { "VPE_SteelConstruct", HandleSteelConstruct },
                 { "VPE_WordofAlliance", HandleWordOfAlliance },
                 { "VPE_WordofImmunity", HandleWordOfImmunity },
                 { "VPE_WordofInspiration", HandleWordOfInspiration },
@@ -424,7 +422,7 @@ internal static class PsycastingHandler
             targets.ToArray(),
             FinalTargetType.Closest,
             true,
-            extraValidator: PawnHelper.Immunizable
+            extraValidator: Helpers.PawnHelper.Immunizable
         );
     }
 
@@ -636,7 +634,7 @@ internal static class PsycastingHandler
             [TargetType.Colonists],
             FinalTargetType.Closest,
             false,
-            extraValidator: PawnHelper.LowJoy
+            extraValidator: Helpers.PawnHelper.LowJoy
         );
 
     private static bool HandleWordOfSerenity(Pawn pawn, Ability ability)
@@ -733,7 +731,9 @@ internal static class PsycastingHandler
             (BetterAutocastVPE.Settings.MendPawns || BetterAutocastVPE.Settings.MendMechs)
             && HandleMendByPawn(pawn, ability)
         )
+        {
             return true;
+        }
         if (BetterAutocastVPE.Settings.MendInStockpile && HandleMendByZone(pawn, ability))
             return true;
         if (BetterAutocastVPE.Settings.MendInStorage && HandleMendByStorage(pawn, ability))
@@ -791,6 +791,50 @@ internal static class PsycastingHandler
 
         return poweredThings.FirstOrDefault() is Thing target
             && CastAbilityOnTarget(ability, target);
+    }
+
+    private static bool HandleRockConstruct(Pawn pawn, Ability ability)
+    {
+        if (pawn.psychicEntropy.EntropyRelativeValue > BetterAutocastVPE.Settings.RockConstructHeatLimit)
+            return false;
+
+        if (BetterAutocastVPE.Settings.RockConstructInStockpile
+            && GetRandomRockInStockpile(pawn.Map) is Thing stockpileTarget
+            && CastAbilityOnTarget(ability, stockpileTarget))
+        {
+            return true;
+        }
+
+        if (BetterAutocastVPE.Settings.RockConstructInStorage
+            && GetRandomRockInStorage(pawn.Map) is Thing storageTarget
+            && CastAbilityOnTarget(ability, storageTarget))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private static bool HandleSteelConstruct(Pawn pawn, Ability ability)
+    {
+        if (pawn.psychicEntropy.EntropyRelativeValue > BetterAutocastVPE.Settings.SteelConstructHeatLimit)
+            return false;
+
+        if (BetterAutocastVPE.Settings.SteelConstructInStockpile
+            && GetRandomSlagInStockpile(pawn.Map) is Thing stockpileTarget
+            && CastAbilityOnTarget(ability, stockpileTarget))
+        {
+            return true;
+        }
+
+        if (BetterAutocastVPE.Settings.SteelConstructInStorage
+            && GetRandomSlagInStorage(pawn.Map) is Thing storageTarget
+            && CastAbilityOnTarget(ability, storageTarget))
+        {
+            return true;
+        }
+
+        return false;
     }
 
     #region Technomancer helpers

@@ -4,10 +4,6 @@
     <DefineConstants>v1_6</DefineConstants>
     <OutputPath>../1.6/Assemblies</OutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(GAME_VERSION)'=='v1.5'">
-    <DefineConstants>v1_5</DefineConstants>
-    <OutputPath>../1.5/Assemblies</OutputPath>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(GAME_VERSION)'=='v1.6'">
     <DefineConstants>v1_6</DefineConstants>
     <OutputPath>../1.6/Assemblies</OutputPath>
@@ -20,7 +16,7 @@
     <RootNamespace>BetterAutocastVPE</RootNamespace>
     <AssemblyName>BetterAutocastVPE</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <VersionPrefix>7.0.1.1</VersionPrefix>
+    <VersionPrefix>7.1.0.0</VersionPrefix>
     <!-- do not generate pdb file -->
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
@@ -152,12 +148,6 @@
       </incompatibleWithByVersion>
     </ModMetaData>
   </PropertyGroup>
-  <ItemGroup Condition="'$(GAME_VERSION)'=='v1.5'">
-    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4243" />
-    <Reference HintPath="../../VanillaPsycastsExpanded/1.5/Assemblies/VanillaPsycastsExpanded.dll" Include="VanillaPsycastsExpanded" IncludeAssets="compile" Private="false" />
-    <Reference HintPath="../../VanillaExpandedFramework/1.5/Assemblies/VFECore.dll" Include="VFECore" IncludeAssets="compile" Private="false" />
-    <PackageReference Include="Lib.Harmony" IncludeAssets="compile" Version="2.3.6" />
-  </ItemGroup>
   <ItemGroup Condition="'$(GAME_VERSION)'=='v1.6'">
     <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4633" />
     <!-- <Reference Include="RimWorld" HintPath="/home/toby/.local/share/Steam/steamapps/common/RimWorld/RimWorldLinux_Data/Managed/Assembly-CSharp.dll" IncludeAssets="compile" Private="false" /> -->

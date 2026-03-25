@@ -1,12 +1,7 @@
 using UnityEngine;
 using Verse;
-#if v1_5
-using VFECore.Abilities;
-using VFECore.UItils;
-#else
 using VEF.Abilities;
 using VEF.Utils;
-#endif
 
 namespace BetterAutocastVPE.Settings;
 
@@ -352,22 +347,57 @@ public static class AutocastSettingsWindow
 
     static void Slider(
         Listing_Standard listing,
-        string? labelKey,
+        string labelKey,
         ref float value,
         float min,
-        float max
+        float max,
+        string? tooltip
     )
     {
-        if (labelKey is null)
-            value = listing.Slider(value, min, max);
-        else
-            value = listing.SliderLabeled(
-                ("BetterAutocastVPE." + labelKey).TranslateSafe(value),
-                value,
-                min,
-                max,
-                0.3f
-            );
+        value = listing.SliderLabeled(
+            ("BetterAutocastVPE." + labelKey).TranslateSafe(value),
+            value,
+            min,
+            max,
+            0.3f,
+            tooltip
+        );
+    }
+
+    static void Slider(
+        Listing_Standard listing,
+        string labelKey,
+        ref int value,
+        float min,
+        float max,
+        string? tooltip
+    )
+    {
+        value = (int)listing.SliderLabeled(
+            ("BetterAutocastVPE." + labelKey).TranslateSafe(value),
+            value,
+            min,
+            max,
+            0.3f,
+            tooltip
+        );
+    }
+
+    static void SliderPercentage(
+        Listing_Standard listing,
+        string labelKey,
+        ref float value,
+        string? tooltip
+    )
+    {
+        value = listing.SliderLabeled(
+            ("BetterAutocastVPE." + labelKey).TranslateSafe(value.ToString("P")),
+            value,
+            0f,
+            1f,
+            0.3f,
+            tooltip
+        );
     }
 
     public static void DoSettingsWindowContents(Rect inRect)
@@ -380,9 +410,21 @@ public static class AutocastSettingsWindow
             return value;
         }
 
-        float Slider(string? labelKey, ref float value, float min, float max)
+        float Slider(string labelKey, ref float value, float min, float max, string? tooltip)
         {
-            AutocastSettingsWindow.Slider(listing, labelKey, ref value, min, max);
+            AutocastSettingsWindow.Slider(listing, labelKey, ref value, min, max, tooltip);
+            return value;
+        }
+
+        int SliderInt(string labelKey, ref int value, float min, float max, string? tooltip)
+        {
+            AutocastSettingsWindow.Slider(listing, labelKey, ref value, min, max, tooltip);
+            return value;
+        }
+
+        float SliderPercentage(string labelKey, ref float value, string? tooltip)
+        {
+            AutocastSettingsWindow.SliderPercentage(listing, labelKey, ref value, tooltip);
             return value;
         }
 
@@ -463,38 +505,24 @@ public static class AutocastSettingsWindow
 
             Checkbox("DebugLog", ref Settings.DebugLog);
             Checkbox("ShowValidationMessages", ref Settings.ShowValidationMessages);
-            Settings.AutocastIntervalDrafted = (int)
-                listing.SliderLabeled(
-                    "BetterAutocastVPE.AutocastIntervalDrafted".TranslateSafe(
-                        Settings.AutocastIntervalDrafted
-                    ),
-                    Settings.AutocastIntervalDrafted,
-                    1f,
-                    10000f,
-                    tooltip: "BetterAutocastVPE.AutocastIntervalDrafted.Description".TranslateSafe(
-                        Settings.AutocastIntervalDrafted
-                    )
-                );
-            Settings.AutocastIntervalUndrafted = (int)
-                listing.SliderLabeled(
-                    "BetterAutocastVPE.AutocastIntervalUndrafted".TranslateSafe(
-                        Settings.AutocastIntervalUndrafted
-                    ),
-                    Settings.AutocastIntervalUndrafted,
-                    1f,
-                    10000f,
-                    tooltip: "BetterAutocastVPE.AutocastIntervalUndrafted.Description".TranslateSafe(
-                        Settings.AutocastIntervalUndrafted
-                    )
-                );
-
-            Settings.MinFocusThreshold = listing.SliderLabeled(
-                "BetterAutocastVPE.MinFocusThreshold".TranslateSafe(
-                    Settings.MinFocusThreshold.ToString("P")
-                ),
-                Settings.MinFocusThreshold,
-                0f,
+            SliderInt(
+                "AutocastIntervalDrafted",
+                ref Settings.AutocastIntervalDrafted,
                 1f,
+                10000f,
+                "BetterAutocastVPE.AutocastIntervalDrafted.Description".TranslateSafe(Settings.AutocastIntervalDrafted)
+            );
+            SliderInt(
+                "AutocastIntervalUndrafted",
+                ref Settings.AutocastIntervalUndrafted,
+                1f,
+                10000f,
+                "BetterAutocastVPE.AutocastIntervalUndrafted.Description".TranslateSafe(Settings.AutocastIntervalUndrafted)
+            );
+
+            SliderPercentage(
+                "MinFocusThreshold",
+                ref Settings.MinFocusThreshold,
                 tooltip: "BetterAutocastVPE.MinFocusThreshold.Description".TranslateSafe()
             );
 
@@ -573,56 +601,20 @@ public static class AutocastSettingsWindow
             if (AbilityHeader_Soothe(listing))
             {
                 Checkbox("SootheColonists", ref Settings.SootheColonistsCheck);
-                Settings.SootheColonistsMaximumMood = listing.SliderLabeled(
-                    "BetterAutocastVPE.SootheTargetMinimumMood".TranslateSafe(
-                        Settings.SootheColonistsMaximumMood.ToStringPercent()
-                    ),
-                    Settings.SootheColonistsMaximumMood,
-                    0.0f,
-                    1.0f
-                );
+                SliderPercentage("SootheTargetMinimumMood", ref Settings.SootheColonistsMaximumMood, null);
                 Checkbox("SootheSlaves", ref Settings.SootheSlavesCheck);
-                Settings.SootheSlavesMaximumMood = listing.SliderLabeled(
-                    "BetterAutocastVPE.SootheTargetMinimumMood".TranslateSafe(
-                        Settings.SootheSlavesMaximumMood.ToStringPercent()
-                    ),
-                    Settings.SootheSlavesMaximumMood,
-                    0.0f,
-                    1.0f
-                );
+                SliderPercentage("SootheTargetMinimumMood", ref Settings.SootheSlavesMaximumMood, null);
                 Checkbox("SoothePrisoners", ref Settings.SoothePrisonersCheck);
-                Settings.SoothePrisonersMaximumMood = listing.SliderLabeled(
-                    "BetterAutocastVPE.SootheTargetMinimumMood".TranslateSafe(
-                        Settings.SoothePrisonersMaximumMood.ToStringPercent()
-                    ),
-                    Settings.SoothePrisonersMaximumMood,
-                    0.0f,
-                    1.0f
-                );
+                SliderPercentage("SootheTargetMinimumMood", ref Settings.SoothePrisonersMaximumMood, null);
                 Checkbox("SootheVisitors", ref Settings.SootheVisitorsCheck);
-                Settings.SootheVisitorsMaximumMood = listing.SliderLabeled(
-                    "BetterAutocastVPE.SootheTargetMinimumMood".TranslateSafe(
-                        Settings.SootheVisitorsMaximumMood.ToStringPercent()
-                    ),
-                    Settings.SootheVisitorsMaximumMood,
-                    0.0f,
-                    1.0f
-                );
+                SliderPercentage("SootheTargetMinimumMood", ref Settings.SootheVisitorsMaximumMood, null);
             }
             #endregion Soothe (Female/Male)
 
             #region Word of Joy
             if (AbilityHeader("VPE_WordofJoy"))
             {
-                Settings.WordOfJoyMoodThreshold = listing.SliderLabeled(
-                    "BetterAutocastVPE.WordOfJoyMoodThreshold".TranslateSafe(
-                        Settings.WordOfJoyMoodThreshold.ToString("P")
-                    ),
-                    Settings.WordOfJoyMoodThreshold,
-                    0.0f,
-                    1.0f,
-                    tooltip: "BetterAutocastVPE.WordOfJoyMoodThreshold.Description".TranslateSafe()
-                );
+                SliderPercentage("WordOfJoyMoodThreshold", ref Settings.WordOfJoyMoodThreshold, "WordOfJoyMoodThreshold.Description".TranslateSafe());
             }
             #endregion Word of Joy
 
@@ -715,14 +707,10 @@ public static class AutocastSettingsWindow
                 Checkbox("EnthrallInStockpile", ref Settings.EnthrallInStockpile);
                 Checkbox("EnthrallOnlyNamedStockpiles", ref Settings.EnthrallOnlyNamedStockpiles);
                 Checkbox("EnthrallInStorage", ref Settings.EnthrallInStorage);
-#if v1_5 || v1_6
                 Checkbox(
                     "EnthrallOnlyNamedStorageGroups",
                     ref Settings.EnthrallOnlyNamedStorageGroups
                 );
-#else
-                throw new NotImplementedException();
-#endif
             }
             #endregion Enthrall
 
@@ -892,25 +880,13 @@ public static class AutocastSettingsWindow
             #region Mend
             if (AbilityHeader("VPE_Mend"))
             {
-                Settings.MendHealthThreshold = listing.SliderLabeled(
-                    "BetterAutocastVPE.MendHealthThreshold".TranslateSafe(
-                        Settings.MendHealthThreshold.ToString("P")
-                    ),
-                    Settings.MendHealthThreshold,
-                    0.0f,
-                    1.0f,
-                    tooltip: "BetterAutocastVPE.MendHealthThreshold.Description".TranslateSafe()
-                );
+                SliderPercentage("MendThreshold", ref Settings.MendHealthThreshold, "BetterAutocastVPE.MendHealthThreshold.Description".TranslateSafe());
                 Checkbox("MendPawns", ref Settings.MendPawns);
                 Checkbox("MendMechs", ref Settings.MendMechs);
                 Checkbox("MendInStockpile", ref Settings.MendInStockpile);
                 Checkbox("MendOnlyNamedStockpiles", ref Settings.MendOnlyNamedStockpiles);
                 Checkbox("MendInStorage", value: ref Settings.MendInStorage);
-#if v1_5 || v1_6
                 Checkbox("MendOnlyNamedStorageGroups", ref Settings.MendOnlyNamedStorageGroups);
-#else
-                throw new NotImplementedException();
-#endif
             }
             #endregion Mend
 
@@ -920,16 +896,31 @@ public static class AutocastSettingsWindow
                 Checkbox("EnchantInStockpile", ref Settings.EnchantInStockpile);
                 Checkbox("EnchantOnlyNamedStockpiles", ref Settings.EnchantOnlyNamedStockpiles);
                 Checkbox("EnchantInStorage", ref Settings.EnchantInStorage);
-#if v1_5 || v1_6
-                Checkbox(
-                    "EnchantOnlyNamedStorageGroups",
-                    ref Settings.EnchantOnlyNamedStorageGroups
-                );
-#else
-                throw new NotImplementedException();
-#endif
+                Checkbox("EnchantOnlyNamedStorageGroups", ref Settings.EnchantOnlyNamedStorageGroups);
             }
             #endregion Enchant quality
+
+            #region Rock Construct
+            if (AbilityHeader("VPE_RockConstruct"))
+            {
+                SliderPercentage("ConstructHeatLimit", ref Settings.RockConstructHeatLimit, null);
+                Checkbox("ConstructInStockpile", ref Settings.RockConstructInStockpile);
+                Checkbox("ConstructOnlyNamedStockpiles", ref Settings.RockConstructOnlyNamedStockpiles);
+                Checkbox("ConstructInStorage", ref Settings.RockConstructInStorage);
+                Checkbox("ConstructOnlyNamedStorageGroups", ref Settings.RockConstructOnlyNamedStorageGroups);
+            }
+            #endregion Rock Construct
+
+            #region Steel Construct
+            if (AbilityHeader("VPE_SteelConstruct"))
+            {
+                SliderPercentage("ConstructHeatLimit", ref Settings.SteelConstructHeatLimit, null);
+                Checkbox("ConstructInStockpile", ref Settings.SteelConstructInStockpile);
+                Checkbox("ConstructOnlyNamedStockpiles", ref Settings.SteelConstructOnlyNamedStockpiles);
+                Checkbox("ConstructInStorage", ref Settings.SteelConstructInStorage);
+                Checkbox("ConstructOnlyNamedStorageGroups", ref Settings.SteelConstructOnlyNamedStorageGroups);
+            }
+            #endregion Steel Construct
 
             #region Power
             if (AbilityHeader("VPE_Power"))
@@ -937,7 +928,7 @@ public static class AutocastSettingsWindow
                 Checkbox("PowerBuildings", ref Settings.PowerBuildings);
                 Checkbox("PowerMechs", ref Settings.PowerMechs);
                 if (Checkbox("PowerUseRange", ref Settings.PowerUseRange))
-                    Slider("PowerRange", ref Settings.PowerRange, 0f, 400f);
+                    Slider("PowerRange", ref Settings.PowerRange, 0f, 400f, null);
             }
             #endregion Power
 

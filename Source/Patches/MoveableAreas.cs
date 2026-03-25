@@ -1,5 +1,3 @@
-#if v1_6
-
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -159,5 +157,3 @@ internal static class GravshipCopyAreasIntoMap
         }
     }
 }
-
-#endif
