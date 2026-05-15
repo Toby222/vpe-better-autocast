@@ -76,13 +76,29 @@ internal static class GravshipCopyAreas
         HashSet<IntVec3> engineFloors
     )
     {
+        if (__instance is null)
+        {
+            BetterAutocastVPE.Error("Tried to copy areas on gravship that was null");
+            return;
+        }
+        if (oldMap?.areaManager is not { } oldAreaManager)
+        {
+            BetterAutocastVPE.Warn("Tried to copy areas but old map areaManager was missing");
+            return;
+        }
+        if (engineFloors is null)
+        {
+            BetterAutocastVPE.Warn("Tried to copy areas but engineFloors is null");
+            return;
+        }
+
         if (!CustomMoveableAreas.AllMoveableAreas.TryGetValue(__instance.areas, out var areas))
         {
             BetterAutocastVPE.DebugError("Gravship is missing custom moveable areas");
             return;
         }
 
-        foreach (var area in oldMap.areaManager.AllAreas)
+        foreach (var area in oldAreaManager.AllAreas)
         {
             var moveableArea = new MoveableArea(
                 __instance,

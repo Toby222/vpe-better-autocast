@@ -17,13 +17,13 @@ jobs:
           git clone https://github.com/Vanilla-Expanded/VanillaExpandedFramework.git ../VanillaExpandedFramework
           nix develop
           mkdir ./output
-          nix-shell -p libxslt.bin --run "./.vscode/build.sh Release"
-          ./.vscode/setup.sh $(realpath ./output/release)
+          nix-shell -p libxslt.bin --run "./.scripts/build.sh Release"
+          ./.scripts/setup.sh $(realpath ./output/release)
           pushd ./output/release
           nix-shell -p zip --run "zip -r ../release.zip ."
           popd
-          nix-shell -p libxslt.bin --run "./.vscode/build.sh Debug"
-          ./.vscode/setup.sh $(realpath ./output/debug)
+          nix-shell -p libxslt.bin --run "./.scripts/build.sh Debug"
+          ./.scripts/setup.sh $(realpath ./output/debug)
           pushd ./output/debug
           nix-shell -p zip --run "zip -r ../debug.zip ."
           popd

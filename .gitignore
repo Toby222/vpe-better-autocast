@@ -1,5 +1,4 @@
 .direnv
-.vscode/obj
+.scripts/obj
 log
-node_modules
 *.dll

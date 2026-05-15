@@ -1,0 +1,30 @@
+[
+  {
+    "label": "analyze",
+    "command": ".scripts/roslynator.sh",
+  },
+  {
+    "label": "format",
+    "command": ".scripts/fmt.sh",
+  },
+  {
+    "label": "build mod (Debug)",
+    "command": ".scripts/build.sh Debug",
+  },
+  {
+    "label": "build mod (Release)",
+    "command": ".scripts/build.sh Release",
+  },
+  {
+    "label": "run game",
+    "command": ".scripts/launch.sh",
+  },
+  {
+    "label": "run game (quicktest)",
+    "command": ".scripts/launch.sh -quicktest",
+  },
+  {
+    "label": "set up mod directory",
+    "command": ".scripts/setup.sh",
+  },
+]

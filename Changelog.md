@@ -1,3 +1,8 @@
+# 8.0.0.0
+
+- Changed autocast from running on every pawn to instead checking the CompAbility
+- More null checks in MoveableAreas
+
 # 7.1.0.0
 
 - Add support for Rock Construct

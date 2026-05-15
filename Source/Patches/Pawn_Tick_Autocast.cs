@@ -5,36 +5,38 @@ using HarmonyLib;
 using Verse;
 using VEF.Abilities;
 using Ability = VEF.Abilities.Ability;
+using BetterAutocastVPE.Settings;
 
 namespace BetterAutocastVPE.Patches;
 
 using static Helpers.PawnHelper;
 
-[HarmonyPatch(typeof(Pawn), "Tick")]
+[HarmonyPatch(typeof(CompAbilities), nameof(CompAbilities.CompTick))]
 internal static class Pawn_Tick_Autocast
 {
     [HarmonyPostfix]
-    internal static void Postfix(Pawn __instance)
+    internal static void Postfix(CompAbilities __instance)
     {
         if (__instance is null)
             throw new ArgumentNullException(nameof(__instance));
-        if (BetterAutocastVPE.Settings is not { } settings)
+        if (__instance.Pawn is null)
+            throw new ArgumentNullException(nameof(__instance.Pawn));
+
+        if (BetterAutocastVPE.Settings is not AutocastSettings settings)
             throw new Exception("Settings are not initialized yet for some reason?");
 
-        int interval = __instance.Drafted
-            ? BetterAutocastVPE.Settings.AutocastIntervalDrafted
-            : BetterAutocastVPE.Settings.AutocastIntervalUndrafted;
-        if (__instance.HashOffsetTicks() % interval == 0)
+        int interval = __instance.Pawn.Drafted
+            ? settings.AutocastIntervalDrafted
+            : settings.AutocastIntervalUndrafted;
+        if (__instance.Pawn.HashOffsetTicks() % interval == 0)
         {
             ProcessAbilities(__instance);
         }
     }
 
-    private static void ProcessAbilities(Pawn pawn)
+    private static void ProcessAbilities(CompAbilities comp)
     {
-        if (pawn is null)
-            throw new ArgumentNullException(nameof(pawn));
-
+        Pawn pawn = comp.Pawn;
         if (!pawn.IsColonistPlayerControlled)
             return;
 
