@@ -44,6 +44,7 @@ internal static class PsycastingHandler
                 { "VPE_Ghostwalk", HandleSelfBuff },
                 { "VPE_GuidedShot", HandleSelfBuff },
                 { "VPE_IceCrystal", HandleIceCrystal },
+                { "VPE_ColdZone", HandleColdZone },
                 { "VPE_IceShield", HandleIceShield },
                 { "VPE_Invisibility", HandleInvisibility },
                 { "VPE_Mend", HandleMend },
@@ -944,6 +945,16 @@ internal static class PsycastingHandler
                 cell => cell.GetFirstBuilding(pawn.MapHeld) is null
             )
                 is IntVec3 target
+            && CastAbilityOnTarget(ability, new GlobalTargetInfo(target, ability.pawn.MapHeld));
+    }
+
+    private static bool HandleColdZone(Pawn pawn, Ability ability)
+    {
+        var temperatureZones = pawn.Map.GetComponent<MapComponent_PsycastsManager>().temperatureZones;
+        return GetRandomValidCellInArea<Area_ColdZone>(
+            pawn.MapHeld,
+            cell => !temperatureZones.Any(zone => zone.center == cell)
+        ) is IntVec3 target
             && CastAbilityOnTarget(ability, new GlobalTargetInfo(target, ability.pawn.MapHeld));
     }
 

@@ -36,6 +36,7 @@ public class AutocastSettings : ModSettings
             "VPE_Focus",
             "VPE_Ghostwalk",
             "VPE_IceCrystal",
+            "VPE_ColdZone",
             "VPE_Mend",
             "VPE_Power",
             "VPE_PsychicGuidance",
@@ -169,6 +170,7 @@ public class AutocastSettings : ModSettings
     public bool ShowSolarPinholeArea;
 
     public bool ShowIceCrystalArea;
+    public bool ShowColdZoneArea;
 
     public bool DarkvisionTargetSelf;
     public bool DarkvisionTargetColonists;
@@ -377,6 +379,10 @@ public class AutocastSettings : ModSettings
         ShowIceCrystalArea = true;
         #endregion Ice Crystal
 
+        #region Cold Zone
+        ShowColdZoneArea = true;
+        #endregion Cold Zone
+
         #region Etch Greater Runecircle
         ShowGreaterRunecircleArea = true;
         #endregion Etch Greater Runecircle
@@ -569,6 +575,10 @@ public class AutocastSettings : ModSettings
         #region Ice Crystal
         LookStruct(() => ShowIceCrystalArea);
         #endregion Ice Crystal
+
+        #region Cold Zone
+        LookStruct(() => ShowColdZoneArea);
+        #endregion Cold Zone
 
         #region Etch Greater Runecircle
         LookStruct(() => ShowGreaterRunecircleArea);

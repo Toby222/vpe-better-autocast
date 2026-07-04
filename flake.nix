@@ -18,7 +18,7 @@
       devShells = forEachSupportedSystem ({pkgs,...}: {
         default = pkgs.mkShell {
           packages = with pkgs; [
-            dotnetCorePackages.sdk_10_0
+            dotnetCorePackages.sdk_11_0
             nixfmt
             libxslt.bin
             nodejs

@@ -9,28 +9,31 @@ using Verse;
 namespace BetterAutocastVPE.Patches;
 
 internal record CustomMoveableAreas(
-    MoveableArea iceCrystal,
-    MoveableArea solarPinhole,
+    MoveableArea coldZone,
     MoveableArea craftTimeskip,
+    MoveableArea greaterRunecircle,
+    MoveableArea iceCrystal,
     MoveableArea runecircle,
-    MoveableArea greaterRunecircle
+    MoveableArea solarPinhole
 ) : IExposable
 {
     internal static ConditionalWeakTable<MoveableAreas, CustomMoveableAreas> AllMoveableAreas = [];
 
-    public MoveableArea iceCrystal = iceCrystal;
-    public MoveableArea solarPinhole = solarPinhole;
+    public MoveableArea coldZone = coldZone;
     public MoveableArea craftTimeskip = craftTimeskip;
-    public MoveableArea runecircle = runecircle;
     public MoveableArea greaterRunecircle = greaterRunecircle;
+    public MoveableArea iceCrystal = iceCrystal;
+    public MoveableArea runecircle = runecircle;
+    public MoveableArea solarPinhole = solarPinhole;
 
     public void ExposeData()
     {
-        Scribe_Deep.Look(ref iceCrystal, nameof(iceCrystal));
-        Scribe_Deep.Look(ref solarPinhole, nameof(solarPinhole));
+        Scribe_Deep.Look(ref coldZone, nameof(coldZone));
         Scribe_Deep.Look(ref craftTimeskip, nameof(craftTimeskip));
-        Scribe_Deep.Look(ref runecircle, nameof(runecircle));
         Scribe_Deep.Look(ref greaterRunecircle, nameof(greaterRunecircle));
+        Scribe_Deep.Look(ref iceCrystal, nameof(iceCrystal));
+        Scribe_Deep.Look(ref runecircle, nameof(runecircle));
+        Scribe_Deep.Look(ref solarPinhole, nameof(solarPinhole));
     }
 }
 
@@ -56,6 +59,7 @@ internal static class MoveableAreasConstructor
         CustomMoveableAreas.AllMoveableAreas.AddOrUpdate(
             __instance,
             new CustomMoveableAreas(
+                new MoveableArea(),
                 new MoveableArea(),
                 new MoveableArea(),
                 new MoveableArea(),
@@ -110,16 +114,18 @@ internal static class GravshipCopyAreas
             foreach (var cell in engineFloors.Intersect(area.ActiveCells))
                 moveableArea.Add(cell - origin);
 
-            if (area is Area_IceCrystal)
-                areas.iceCrystal = moveableArea;
-            else if (area is Area_SolarPinhole)
-                areas.solarPinhole = moveableArea;
+            if (area is Area_ColdZone)
+                areas.coldZone = moveableArea;
             else if (area is Area_CraftTimeskip)
                 areas.craftTimeskip = moveableArea;
-            else if (area is Area_Runecircle)
-                areas.runecircle = moveableArea;
             else if (area is Area_GreaterRunecircle)
                 areas.greaterRunecircle = moveableArea;
+            else if (area is Area_IceCrystal)
+                areas.iceCrystal = moveableArea;
+            else if (area is Area_Runecircle)
+                areas.runecircle = moveableArea;
+            else if (area is Area_SolarPinhole)
+                areas.solarPinhole = moveableArea;
         }
     }
 }

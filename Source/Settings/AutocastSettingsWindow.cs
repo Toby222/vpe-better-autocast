@@ -660,6 +660,13 @@ public static class AutocastSettingsWindow
             }
             #endregion Ice Crystal
 
+            #region Cold Zone
+            if (AbilityHeader("VPE_ColdZone"))
+            {
+                Checkbox("ShowColdZoneArea", ref Settings.ShowColdZoneArea);
+            }
+            #endregion Cold Zone
+
             #region Ice Shield
             if (AbilityHeader("VPE_IceShield"))
             {

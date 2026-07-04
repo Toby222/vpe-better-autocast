@@ -7,6 +7,13 @@
   <BetterAutocastVPE.IceCrystalArea.Remove.Description>Removes Ice Crystal spots. Frostshapers will no longer automatically cast Ice Crystal in this area.</BetterAutocastVPE.IceCrystalArea.Remove.Description>
   <BetterAutocastVPE.ShowIceCrystalArea>Show Ice Crystal spots designators</BetterAutocastVPE.ShowIceCrystalArea>
 
+  <BetterAutocastVPE.ColdZoneArea>Cold Zone²</BetterAutocastVPE.ColdZoneArea>
+  <BetterAutocastVPE.ColdZoneArea.Expand>Expand Cold Zone area</BetterAutocastVPE.ColdZoneArea.Expand>
+  <BetterAutocastVPE.ColdZoneArea.Expand.Description>Designate an area where Frostshapers will automatically cast Cold Zone.</BetterAutocastVPE.ColdZoneArea.Expand.Description>
+  <BetterAutocastVPE.ColdZoneArea.Remove>Shrink Cold Zone Zone</BetterAutocastVPE.ColdZoneArea.Remove>
+  <BetterAutocastVPE.ColdZoneArea.Remove.Description>Removes Ice Crystal spots. Frostshapers will no longer automatically cast Ice Crystal in this area.</BetterAutocastVPE.ColdZoneArea.Remove.Description>
+  <BetterAutocastVPE.ShowColdZoneArea>Show Cold Zone area designators</BetterAutocastVPE.ShowColdZoneArea>
+
   <BetterAutocastVPE.SolarPinholeArea>Solar Pinhole spots</BetterAutocastVPE.SolarPinholeArea>
   <BetterAutocastVPE.SolarPinholeArea.Expand>Add Solar Pinhole spots</BetterAutocastVPE.SolarPinholeArea.Expand>
   <BetterAutocastVPE.SolarPinholeArea.Expand.Description>Designate an area where Skipmasters will automatically cast Solar Pinhole.</BetterAutocastVPE.SolarPinholeArea.Expand.Description>

@@ -1,3 +1,8 @@
+# 8.1.0.0
+
+- Fix some bugs relating to gravships and uninstalling if Runesmith was installed
+- Add support for Frostmancer's Cold Zone
+
 # 8.0.0.0
 
 - Changed autocast from running on every pawn to instead checking the CompAbility

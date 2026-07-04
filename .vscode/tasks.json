@@ -1,0 +1,99 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "analyze",
+      "type": "shell",
+      "group": "none",
+      "command": ".scripts/roslynator.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "format",
+      "type": "shell",
+      "group": "none",
+      "command": ".scripts/fmt.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "build mod (Debug)",
+      "type": "shell",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "command": ".scripts/build.sh",
+      "problemMatcher": [
+        "$msCompile"
+      ],
+      "dependsOn": []
+    },
+    {
+      "label": "build mod (Release)",
+      "type": "shell",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "command": ".scripts/build.sh Release",
+      "problemMatcher": [
+        "$msCompile"
+      ],
+      "dependsOn": []
+    },
+    {
+      "label": "run game (Debug)",
+      "type": "shell",
+      "group": {
+        "kind": "none",
+        "isDefault": true
+      },
+      "command": ".scripts/launch.sh",
+      "problemMatcher": [],
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "build mod (Debug)",
+        "set up mod directory"
+      ]
+    },
+    {
+      "label": "run game (Release)",
+      "type": "shell",
+      "group": {
+        "kind": "none",
+        "isDefault": true
+      },
+      "command": ".scripts/launch.sh",
+      "problemMatcher": [],
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "build mod (Release)",
+        "set up mod directory"
+      ]
+    },
+    {
+      "label": "run game (Debug + quicktest)",
+      "type": "shell",
+      "group": {
+        "kind": "none",
+        "isDefault": true
+      },
+      "command": ".scripts/launch.sh -quicktest",
+      "problemMatcher": [],
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "build mod (Debug)",
+        "set up mod directory"
+      ]
+    },
+    {
+      "label": "set up mod directory",
+      "type": "shell",
+      "group": {
+        "kind": "none"
+      },
+      "command": ".scripts/setup.sh",
+      "problemMatcher": []
+    }
+  ]
+}
