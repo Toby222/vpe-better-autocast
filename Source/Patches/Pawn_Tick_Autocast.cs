@@ -12,7 +12,7 @@ namespace BetterAutocastVPE.Patches;
 using static Helpers.PawnHelper;
 
 [HarmonyPatch(typeof(CompAbilities), nameof(CompAbilities.CompTick))]
-internal static class Pawn_Tick_Autocast
+internal static class CompAbilities_Tick_Autocast
 {
     [HarmonyPostfix]
     internal static void Postfix(CompAbilities __instance)
@@ -20,7 +20,7 @@ internal static class Pawn_Tick_Autocast
         if (__instance is null)
             throw new ArgumentNullException(nameof(__instance));
         if (__instance.Pawn is null)
-            throw new ArgumentNullException(nameof(__instance.Pawn));
+            return;
 
         if (BetterAutocastVPE.Settings is not AutocastSettings settings)
             throw new Exception("Settings are not initialized yet for some reason?");

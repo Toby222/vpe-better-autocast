@@ -1,3 +1,7 @@
+# 8.1.1.0
+- Don't error if a CompAbility ends up on a non-Pawn
+  - e.g. UnnaturalCorpse
+
 # 8.1.0.0
 
 - Fix some bugs relating to gravships and uninstalling if Runesmith was installed
