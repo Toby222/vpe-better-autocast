@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <BetterAutocastVPE.RunecircleArea>Runecircle spots</BetterAutocastVPE.RunecircleArea>
+  <BetterAutocastVPE.RunecircleArea.Expand>Add Runecircle spots</BetterAutocastVPE.RunecircleArea.Expand>
+  <BetterAutocastVPE.RunecircleArea.Expand.Description>Designate an area where Runesmiths will automatically cast Runecircle.</BetterAutocastVPE.RunecircleArea.Expand.Description>
+  <BetterAutocastVPE.RunecircleArea.Remove>Remove Runecircle spots</BetterAutocastVPE.RunecircleArea.Remove>
+  <BetterAutocastVPE.RunecircleArea.Remove.Description>Removes Runecircle spots. Runesmiths will no longer automatically cast Runecircle in this area.</BetterAutocastVPE.RunecircleArea.Remove.Description>
+  <BetterAutocastVPE.ShowRunecircleArea>Show Runecircle spots designators</BetterAutocastVPE.ShowRunecircleArea>
+
+  <BetterAutocastVPE.GreaterRunecircleArea>Greater Runecircle spots</BetterAutocastVPE.GreaterRunecircleArea>
+  <BetterAutocastVPE.GreaterRunecircleArea.Expand>Add Greater Runecircle spots</BetterAutocastVPE.GreaterRunecircleArea.Expand>
+  <BetterAutocastVPE.GreaterRunecircleArea.Expand.Description>Designate an area where Runesmiths will automatically cast Greater Runecircle spots.</BetterAutocastVPE.GreaterRunecircleArea.Expand.Description>
+  <BetterAutocastVPE.GreaterRunecircleArea.Remove>Remove Greater Runecircle spots</BetterAutocastVPE.GreaterRunecircleArea.Remove>
+  <BetterAutocastVPE.GreaterRunecircleArea.Remove.Description>Removes Greater Runecircle spots. Runesmiths will no longer automatically cast Greater Runecircle spots in this area.</BetterAutocastVPE.GreaterRunecircleArea.Remove.Description>
+  <BetterAutocastVPE.ShowGreaterRunecircleArea>Show Greater Runecircle spots designators</BetterAutocastVPE.ShowGreaterRunecircleArea>
+</LanguageData>

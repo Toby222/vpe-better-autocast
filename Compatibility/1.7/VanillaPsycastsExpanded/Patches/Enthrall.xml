@@ -1,0 +1,20 @@
+<Patch>
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/VEF.Abilities.AbilityDef[defName="VPE_Enthrall"]</xpath>
+        <value>
+          <showUndrafted>true</showUndrafted>
+          <jobDef>BetterAutocastVPE_GotoLocationAndCastAbilityOnce</jobDef>
+          <distanceToTarget>19.9</distanceToTarget>
+        </value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/VEF.Abilities.AbilityDef[defName="VPE_Enthrall"]/range</xpath>
+        <value>
+          <range>999999</range>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>

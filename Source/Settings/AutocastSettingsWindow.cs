@@ -440,6 +440,7 @@ public static class AutocastSettingsWindow
                 && AutocastSettingsWindow.PsycasterPathHeader(listing, psycasterPathDefName);
         }
 
+        BetterAutocastVPE.DebugLog($"Settings window with height {settingsHeight}");
         searchString = Widgets.TextField(inRect.TakeTopPart(30f), searchString);
         Rect viewRect = new(inRect.x, inRect.y, inRect.width - 16f, settingsHeight);
         Widgets.BeginScrollView(inRect, ref settingsScrollPosition, viewRect);

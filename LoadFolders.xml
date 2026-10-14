@@ -21,4 +21,12 @@
     <li IfModActive="dgrb.solarpinholeadditions">Compatibility/1.6/SolarPinholeSunlamp</li>
     <li IfModActive="VanillaExpanded.VPE.Puppeteer">Compatibility/1.6/Puppeteer</li>
   </v1.6>
+  <v1.7>
+    <li>1.7</li>
+    <li>Compatibility/1.7/VanillaPsycastsExpanded</li>
+    <li IfModActive="Ludeon.RimWorld.Odyssey" IfModNotActive="Chairheir.VPERunesmith">Compatibility/1.7/Odyssey</li>
+    <li IfModActive="Chairheir.VPERunesmith">Compatibility/1.7/Runesmith</li>
+    <li IfModActive="dgrb.solarpinholeadditions">Compatibility/1.7/SolarPinholeSunlamp</li>
+    <li IfModActive="VanillaExpanded.VPE.Puppeteer">Compatibility/1.7/Puppeteer</li>
+  </v1.7>
 </loadFolders>

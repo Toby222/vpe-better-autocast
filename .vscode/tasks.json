@@ -5,14 +5,14 @@
       "label": "analyze",
       "type": "shell",
       "group": "none",
-      "command": ".scripts/roslynator.sh",
+      "command": "roslynator.sh",
       "problemMatcher": []
     },
     {
       "label": "format",
       "type": "shell",
       "group": "none",
-      "command": ".scripts/fmt.sh",
+      "command": "fmt.sh",
       "problemMatcher": []
     },
     {
@@ -22,7 +22,7 @@
         "kind": "build",
         "isDefault": true
       },
-      "command": ".scripts/build.sh",
+      "command": "build.sh",
       "problemMatcher": [
         "$msCompile"
       ],
@@ -35,7 +35,7 @@
         "kind": "build",
         "isDefault": true
       },
-      "command": ".scripts/build.sh Release",
+      "command": "build.sh Release",
       "problemMatcher": [
         "$msCompile"
       ],
@@ -48,7 +48,7 @@
         "kind": "none",
         "isDefault": true
       },
-      "command": ".scripts/launch.sh",
+      "command": "launch.sh",
       "problemMatcher": [],
       "dependsOrder": "sequence",
       "dependsOn": [
@@ -63,7 +63,7 @@
         "kind": "none",
         "isDefault": true
       },
-      "command": ".scripts/launch.sh",
+      "command": "launch.sh",
       "problemMatcher": [],
       "dependsOrder": "sequence",
       "dependsOn": [
@@ -78,7 +78,7 @@
         "kind": "none",
         "isDefault": true
       },
-      "command": ".scripts/launch.sh -quicktest",
+      "command": "launch.sh -quicktest",
       "problemMatcher": [],
       "dependsOrder": "sequence",
       "dependsOn": [
@@ -92,7 +92,7 @@
       "group": {
         "kind": "none"
       },
-      "command": ".scripts/setup.sh",
+      "command": "setup.sh",
       "problemMatcher": []
     }
   ]

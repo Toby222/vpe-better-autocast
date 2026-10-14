@@ -1,0 +1,19 @@
+<Patch>
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/VEF.Abilities.AbilityDef[defName="VPE_CraftTimeskip"]</xpath>
+        <value>
+          <showUndrafted>true</showUndrafted>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/DesignationCategoryDef[defName="Zone"]/specialDesignatorClasses</xpath>
+        <value>
+          <li>BetterAutocastVPE.Designator_Area_CraftTimeskip_Expand</li>
+          <li>BetterAutocastVPE.Designator_Area_CraftTimeskip_Clear</li>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>

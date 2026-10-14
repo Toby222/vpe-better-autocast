@@ -1,3 +1,7 @@
+# 9.0.0.0
+
+- First rebuild for RimWorld 1.7
+
 # 8.1.1.0
 - Don't error if a CompAbility ends up on a non-Pawn
   - e.g. UnnaturalCorpse

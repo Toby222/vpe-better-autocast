@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <BetterAutocastVPE.VPEP_BrainLeech.Explanation>Targets the closest psychically sensitive pawn in range, prioritzing by group in the order below.\nThat is, target prisoners first, if no prisoners are available, then target slaves.</BetterAutocastVPE.VPEP_BrainLeech.Explanation>
+</LanguageData>

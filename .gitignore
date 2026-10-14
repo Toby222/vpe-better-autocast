@@ -1,4 +1,4 @@
 .direnv
-.scripts/obj
+obj
 log
 *.dll

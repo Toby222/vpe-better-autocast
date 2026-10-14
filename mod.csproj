@@ -1,28 +1,34 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup Condition="'$(GAME_VERSION)'==''">
-    <GAME_VERSION>v1.6</GAME_VERSION>
+    <GAME_VERSION>v1.7</GAME_VERSION>
   </PropertyGroup>
   <PropertyGroup Condition="'$(GAME_VERSION)'=='v1.6'">
     <DefineConstants>v1_6</DefineConstants>
-    <OutputPath>../1.6/Assemblies</OutputPath>
+    <OutputPath>./1.6/Assemblies</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(GAME_VERSION)'=='v1.7'">
+    <DefineConstants>v1_7</DefineConstants>
+    <OutputPath>./1.7/Assemblies</OutputPath>
   </PropertyGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net481</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework Condition="'$(GAME_VERSION)'=='v1.6'">net481</TargetFramework>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
     <PlatformTarget>x64</PlatformTarget>
     <!-- Modify [RootNamespace], [AssemblyName], [OutputPath], [VersionPrefix] -->
     <RootNamespace>BetterAutocastVPE</RootNamespace>
     <AssemblyName>BetterAutocastVPE</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <VersionPrefix>8.1.1.0</VersionPrefix>
+    <VersionPrefix>9.0.0.0</VersionPrefix>
     <!-- do not generate pdb file -->
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <Nullable>enable</Nullable>
-    <Deterministic>True</Deterministic>
+    <Deterministic>true</Deterministic>
     <!-- Contents of About.xml
-            See https://rimworldwiki.com/wiki/Modding_Tutorials/About.xml -->
+         See https://rimworldwiki.com/wiki/Modding_Tutorials/About.xml -->
     <ModMetaData>
       <packageId>dev.tobot.vpe.betterautocast</packageId>
       <name>Better autocasting for Vanilla Psycasts Expanded</name>
@@ -35,6 +41,7 @@
         <li>1.4</li>
         <li>1.5</li>
         <li>1.6</li>
+        <li>1.7</li>
       </supportedVersions>
       <modVersion IgnoreIfNoMatchingField="True">
         <!-- Gets automatically populated with VersionPrefix (see above) -->
@@ -102,6 +109,26 @@
             <downloadUrl>https://github.com/Vanilla-Expanded/VanillaPsycastsExpanded/releases/latest</downloadUrl>
           </li>
         </v1.6>
+        <v1.7>
+          <li>
+            <packageId>brrainz.harmony</packageId>
+            <displayName>Harmony</displayName>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+            <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+          </li>
+          <li>
+            <packageId>OskarPotocki.VanillaFactionsExpanded.Core</packageId>
+            <displayName>Vanilla Expanded Framework</displayName>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/2023507013</steamWorkshopUrl>
+            <downloadUrl>https://github.com/Vanilla-Expanded/VanillaExpandedFramework/releases/latest</downloadUrl>
+          </li>
+          <li>
+            <packageId>VanillaExpanded.VPsycastsE</packageId>
+            <displayName>Vanilla Psycasts Expanded</displayName>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/2842502659</steamWorkshopUrl>
+            <downloadUrl>https://github.com/Vanilla-Expanded/VanillaPsycastsExpanded/releases/latest</downloadUrl>
+          </li>
+        </v1.7>
       </modDependenciesByVersion>
       <loadAfter />
       <loadAfterByVersion>
@@ -127,6 +154,14 @@
           <li>dgrb.solarpinholeadditions</li>
           <li>chairheir.vperunesmith</li>
         </v1.6>
+        <v1.7>
+          <li>brrainz.harmony</li>
+          <li>OskarPotocki.VanillaFactionsExpanded.Core</li>
+          <li>VanillaExpanded.VPsycastsE</li>
+          <li>VanillaExpanded.VPE.Puppeteer</li>
+          <li>dgrb.solarpinholeadditions</li>
+          <li>chairheir.vperunesmith</li>
+        </v1.7>
       </loadAfterByVersion>
       <forceLoadAfter />
       <loadBefore />
@@ -143,20 +178,32 @@
         <v1.6>
           <li>NetzachSloth.BetterAutocastVPE</li>
         </v1.6>
+        <v1.7>
+          <li>NetzachSloth.BetterAutocastVPE</li>
+        </v1.7>
       </incompatibleWithByVersion>
     </ModMetaData>
   </PropertyGroup>
   <ItemGroup Condition="'$(GAME_VERSION)'=='v1.6'">
-    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4633" />
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4871" />
     <!-- <Reference Include="RimWorld" HintPath="/home/toby/.local/share/Steam/steamapps/common/RimWorld/RimWorldLinux_Data/Managed/Assembly-CSharp.dll" IncludeAssets="compile" Private="false" /> -->
-    <Reference HintPath="../../VanillaPsycastsExpanded/1.6/Assemblies/VanillaPsycastsExpanded.dll" Include="VanillaPsycastsExpanded" IncludeAssets="compile" Private="false" />
-    <Reference HintPath="../../VanillaExpandedFramework/1.6/Assemblies/VEF.dll" Include="VEF" IncludeAssets="compile" Private="false" />
-    <PackageReference Include="Lib.Harmony" IncludeAssets="compile" Version="2.4.2" />
+    <Reference HintPath="../VanillaPsycastsExpanded/1.6/Assemblies/VanillaPsycastsExpanded.dll" Include="VanillaPsycastsExpanded" IncludeAssets="compile" Private="false" />
+    <Reference HintPath="../VanillaExpandedFramework/1.6/Assemblies/VEF.dll" Include="VEF" IncludeAssets="compile" Private="false" />
+    <PackageReference Include="Lib.Harmony" IncludeAssets="compile" Version="2.4.3" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(GAME_VERSION)'=='v1.7'">
+    <!-- <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4871" /> -->
+    <Reference Include="RimWorld" HintPath="/home/toby/.local/share/Steam/steamapps/common/RimWorld/Assembly-CSharp.dll" IncludeAssets="compile" Private="false" />
+    <Reference Include="UnityStubs" HintPath="/home/toby/.local/share/Steam/steamapps/common/RimWorld/UnityStubs.dll" IncludeAssets="compile" Private="false" />
+    <Reference Include="Waylith" HintPath="/home/toby/.local/share/Steam/steamapps/common/RimWorld/Waylith.dll" IncludeAssets="compile" Private="false" />
+    <Reference HintPath="../VanillaPsycastsExpanded/1.6/Assemblies/VanillaPsycastsExpanded.dll" Include="VanillaPsycastsExpanded" IncludeAssets="compile" Private="false" />
+    <Reference HintPath="../VanillaExpandedFramework/1.7/Assemblies/VEF.dll" Include="VEF" IncludeAssets="compile" Private="false" />
+    <PackageReference Include="Lib.Harmony" IncludeAssets="compile" Version="3.0.0-rc.2" />
   </ItemGroup>
   <ItemGroup>
     <!-- Mod -->
-    <Compile Include="../Source/**/*.cs" />
-    <PackageReference Include="roslynator.analyzers" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" Version="4.15.0" />
-    <PackageReference Include="roslynator.formatting.analyzers" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" Version="4.15.0" />
+    <!-- <Compile Include="../Source/**/*.cs" /> -->
+    <PackageReference Include="roslynator.analyzers" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" Version="5.0.1" />
+    <PackageReference Include="roslynator.formatting.analyzers" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" Version="5.0.1" />
   </ItemGroup>
 </Project>

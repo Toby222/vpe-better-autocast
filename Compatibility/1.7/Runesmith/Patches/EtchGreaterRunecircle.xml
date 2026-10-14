@@ -1,0 +1,27 @@
+<Patch>
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/VEF.Abilities.AbilityDef[defName="VPER_Etch_Runecircle_Greater"]</xpath>
+        <value>
+          <jobDef>BetterAutocastVPE_GotoLocationAndCastAbilityOnce</jobDef>
+          <requireLineOfSight>false</requireLineOfSight>
+          <distanceToTarget>1.7</distanceToTarget>
+        </value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/VEF.Abilities.AbilityDef[defName="VPER_Etch_Runecircle_Greater"]/range</xpath>
+        <value>
+          <range>999999</range>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/DesignationCategoryDef[defName="Zone"]/specialDesignatorClasses</xpath>
+        <value>
+          <li>BetterAutocastVPE.Designator_Area_GreaterRunecircle_Expand</li>
+          <li>BetterAutocastVPE.Designator_Area_GreaterRunecircle_Clear</li>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>

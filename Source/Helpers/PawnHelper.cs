@@ -63,7 +63,7 @@ internal static class PawnHelper
         return pawns.Where(pawn => !pawn.PawnIsDown());
     }
 
-    internal static Pawn HighestSensitivity(this IEnumerable<Pawn> pawns)
+    internal static Pawn? HighestSensitivity(this IEnumerable<Pawn> pawns)
     {
         return pawns
             .OrderByDescending(pawn => pawn.psychicEntropy.PsychicSensitivity)

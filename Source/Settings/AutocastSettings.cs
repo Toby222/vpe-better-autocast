@@ -235,7 +235,8 @@ public class AutocastSettings : ModSettings
             );
         }
 
-        FieldInfo fieldInfo = typeof(AutocastSettings).GetField(memberName);
+        FieldInfo? fieldInfo = typeof(AutocastSettings).GetField(memberName);
+        if (fieldInfo is null) throw new ArgumentException($"Failed to get field {memberName} of AutocastSettings");
         T? value = fieldInfo.GetValue(this).ChangeType<T>();
         T defaultValue = fieldInfo.GetValue(DefaultValues()).ChangeType<T>();
         Scribe_Values.Look(ref value, memberName, defaultValue);

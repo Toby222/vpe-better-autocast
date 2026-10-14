@@ -25,6 +25,8 @@ public class BetterAutocastVPE : Mod
     {
 #if v1_6
         const string GAME_VERSION = "v1.6";
+#elif v1_7
+        const string GAME_VERSION = "v1.7";
 #else
 #error No version defined
         const string GAME_VERSION = "UNDEFINED";
@@ -36,7 +38,7 @@ public class BetterAutocastVPE : Mod
         const string build = "Release";
 #endif
         Log(
-            $"Running Version {Assembly.GetAssembly(typeof(BetterAutocastVPE)).GetName().Version} {build} compiled for RimWorld version {GAME_VERSION}"
+            $"Running Version {Assembly.GetAssembly(typeof(BetterAutocastVPE))?.GetName().Version} {build} compiled for RimWorld version {GAME_VERSION}"
         );
 
         Designator_Area_Runecircle.ModActive = ModsConfig.IsActive("Chairheir.VPERunesmith");
@@ -67,23 +69,27 @@ public class BetterAutocastVPE : Mod
         );
         DebugLog("postfix created successfully");
 
-        MethodInfo ability = typeof(Ability).GetMethod(
+        MethodInfo? ability = typeof(Ability).GetMethod(
             "get_" + nameof(Ability.CanAutoCast),
             BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.Public
         );
-        MethodInfo ability_spawn = typeof(Ability_Spawn).GetMethod(
+        MethodInfo? ability_spawn = typeof(Ability_Spawn).GetMethod(
             "get_" + nameof(Ability_Spawn.CanAutoCast),
             BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.Public
         );
-        MethodInfo ability_spawnbuilding = typeof(Ability_SpawnBuilding).GetMethod(
+        MethodInfo? ability_spawnbuilding = typeof(Ability_SpawnBuilding).GetMethod(
             "get_" + nameof(Ability_SpawnBuilding.CanAutoCast),
             BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.Public
         );
-
-        harmony.Patch(ability, postfix: postfix);
-        harmony.Patch(ability_spawn, postfix: postfix);
-        harmony.Patch(ability_spawnbuilding, postfix: postfix);
-        DebugLog("Patched CanAutoCast");
+        if (ability is null || ability_spawn is null || ability_spawnbuilding is null)
+            Error($"Failed to get methods to patch: {ability} {ability_spawn} {ability_spawnbuilding}");
+        else
+        {
+            harmony.Patch(ability, postfix: postfix);
+            harmony.Patch(ability_spawn, postfix: postfix);
+            harmony.Patch(ability_spawnbuilding, postfix: postfix);
+            DebugLog("Patched CanAutoCast");
+        }
 
         Settings = GetSettings<AutocastSettings>();
         // In case some of the values were null (e.g. added between versions), write with default values.
@@ -260,7 +266,7 @@ public class BetterAutocastVPE : Mod
         try
         {
             // Get the MethodInfo for the private method using reflection
-            MethodInfo targetMethod = targetType.GetMethod(
+            MethodInfo? targetMethod = targetType.GetMethod(
                 methodName,
                 BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public
             );
