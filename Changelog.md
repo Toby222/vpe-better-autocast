@@ -1,3 +1,12 @@
+# 9.0.0.2
+
+- Update Preview
+- Slight organizational changes of source
+
+# 9.0.0.1
+
+- Fix GitHub workflow
+
 # 9.0.0.0
 
 - First rebuild for RimWorld 1.7

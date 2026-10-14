@@ -82,7 +82,9 @@ public class BetterAutocastVPE : Mod
             BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.Public
         );
         if (ability is null || ability_spawn is null || ability_spawnbuilding is null)
+        {
             Error($"Failed to get methods to patch: {ability} {ability_spawn} {ability_spawnbuilding}");
+        }
         else
         {
             harmony.Patch(ability, postfix: postfix);
