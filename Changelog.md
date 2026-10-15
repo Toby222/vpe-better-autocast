@@ -1,5 +1,9 @@
 # 9.0.0.2
 
+- Update Krafs.Rimworld.Ref and Lib.Harmony
+
+# 9.0.0.2
+
 - Update Preview
 - Slight organizational changes of source
 
