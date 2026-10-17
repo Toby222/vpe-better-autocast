@@ -20,7 +20,7 @@
     <RootNamespace>BetterAutocastVPE</RootNamespace>
     <AssemblyName>BetterAutocastVPE</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <VersionPrefix>9.0.0.3</VersionPrefix>
+    <VersionPrefix>9.0.0.4</VersionPrefix>
     <!-- do not generate pdb file -->
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
@@ -191,8 +191,8 @@
     <PackageReference Include="Lib.Harmony" IncludeAssets="compile" Version="2.4.3" />
   </ItemGroup>
   <ItemGroup Condition="'$(GAME_VERSION)'=='v1.7'">
-    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.7.4977-alpha.2" />
-    <Reference Include="VanillaPsycastsExpanded" HintPath="../VanillaPsycastsExpanded/1.6/Assemblies/VanillaPsycastsExpanded.dll" IncludeAssets="compile" Private="false" />
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.7.4979-alpha" />
+    <Reference Include="VanillaPsycastsExpanded" HintPath="../VanillaPsycastsExpanded/1.7/Assemblies/VanillaPsycastsExpanded.dll" IncludeAssets="compile" Private="false" />
     <Reference Include="VEF" HintPath="../VanillaExpandedFramework/1.7/Assemblies/VEF.dll" IncludeAssets="compile" Private="false" />
     <PackageReference Include="Lib.Harmony" IncludeAssets="compile" Version="3.0.0-rc.3" />
   </ItemGroup>

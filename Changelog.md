@@ -1,3 +1,7 @@
+# 9.0.0.4
+
+- Update Krafs.Rimworld.Ref and Vanilla Psycasts Expanded
+
 # 9.0.0.3
 
 - Update Krafs.Rimworld.Ref and Lib.Harmony
